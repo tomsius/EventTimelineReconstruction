@@ -3,7 +3,6 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
@@ -17,10 +16,8 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Commands\" />
     <Folder Include="Stores\" />
     <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
