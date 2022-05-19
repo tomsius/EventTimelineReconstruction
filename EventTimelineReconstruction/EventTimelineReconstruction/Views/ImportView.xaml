@@ -31,6 +31,7 @@
                          VerticalAlignment="Center" 
                          HorizontalAlignment="Left" 
                          x:Name="FileNameTextBox" 
+                         Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
                          Padding="6,3,6,3" 
                          Margin="0, 0, 10, 0" />
                 <TextBlock IsHitTestVisible="False" Text="File path" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
@@ -50,7 +51,7 @@
                 Style="{StaticResource BorderlessButton}"
                 Content="Choose file..."
                 VerticalAlignment="Center"
-                Click="ChooseFileButton_Click" />
+                Command="{Binding ChooseFileCommand}"/>
         </StackPanel>
         <Grid Width="500" Margin="0, 0, 0, 50">
             <Grid.ColumnDefinitions>
@@ -66,9 +67,9 @@
                 Margin="0, 0, 0, 10"
                 FontSize="14" />
                 <DatePicker 
-                Width="150" 
-                Margin="0, 0, 0, 5" 
-                x:Name="FromDate" />
+                    Width="150" 
+                    Margin="0, 0, 0, 5" 
+                    SelectedDate="{Binding FromDate}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.45*" />
@@ -78,11 +79,12 @@
 
                     <Grid Grid.Column="0" HorizontalAlignment="Right">
                         <TextBox 
-                        Width="40" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Left" 
-                        x:Name="FromHoursTextBox" 
-                        Padding="6,3,6,3" />
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="FromHoursTextBox" 
+                            Text="{Binding FromHours, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3" />
                         <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -105,11 +107,12 @@
                     Grid.Column="1" />
                     <Grid Grid.Column="2" HorizontalAlignment="Left">
                         <TextBox 
-                        Width="40" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Left" 
-                        x:Name="FromMinutesTextBox" 
-                        Padding="6,3,6,3" />
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="FromMinutesTextBox" 
+                            Text="{Binding FromMinutes, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3"/>
                         <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -134,9 +137,9 @@
                 Margin="0, 0, 0, 10"
                 FontSize="14" />
                 <DatePicker 
-                Width="150" 
-                Margin="0, 0, 0, 5" 
-                x:Name="ToDate" />
+                    Width="150" 
+                    Margin="0, 0, 0, 5"
+                    SelectedDate="{Binding ToDate}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.45*" />
@@ -146,11 +149,12 @@
 
                     <Grid Grid.Column="0" HorizontalAlignment="Right">
                         <TextBox 
-                        Width="40" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Left" 
-                        x:Name="ToHoursTextBox" 
-                        Padding="6,3,6,3" />
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="ToHoursTextBox" 
+                            Text="{Binding ToHours, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3" />
                         <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -173,11 +177,12 @@
                     Grid.Column="1" />
                     <Grid Grid.Column="2" HorizontalAlignment="Left">
                         <TextBox 
-                        Width="40" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Left" 
-                        x:Name="ToMinutesTextBox" 
-                        Padding="6,3,6,3" />
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="ToMinutesTextBox" 
+                            Text="{Binding ToMinutes, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3" />
                         <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -195,18 +200,30 @@
             </StackPanel>
         </Grid>
 
-        <Button 
-            Style="{StaticResource ConfirmationButton}"
-            HorizontalAlignment="Center"
-            VerticalContentAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Width="100"
-            Height="30"
-            Padding="0, 0, 0, 2">
-            <TextBlock
-                Text="Import"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center" />
-        </Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button 
+                Style="{StaticResource ConfirmationButton}"
+                Width="100"
+                Height="30"
+                Padding="0, 0, 0, 2"
+                Command="{Binding ImportCommand}">
+                <TextBlock
+                    Text="Import"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+            </Button>
+            <Button
+                Style="{StaticResource CancelButton}"
+                Width="100"
+                Height="30"
+                Padding="0, 0, 0, 2"
+                Margin="10, 0, 0, 0"
+                Command="{Binding CancelCommand}">
+                <TextBlock
+                    Text="Cancel"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+            </Button>
+        </StackPanel>
     </StackPanel>
 </Window>
