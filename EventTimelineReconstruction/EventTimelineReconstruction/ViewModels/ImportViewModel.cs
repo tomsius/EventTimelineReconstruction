@@ -1,4 +1,5 @@
 ﻿using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.Services;
 using System;
 using System.Windows.Input;
 
@@ -17,7 +18,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         set 
         { 
             _fileName = value;
-            OnPropertyChanged(nameof(FileName));
+            this.OnPropertyChanged(nameof(FileName));
         }
     }
 
@@ -32,7 +33,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         set
         {
             _fromDate = value;
-            OnPropertyChanged(nameof(FromDate));
+            this.OnPropertyChanged(nameof(FromDate));
         }
     }
 
@@ -47,7 +48,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         set
         {
             _fromHours = value;
-            OnPropertyChanged(nameof(FromHours));
+            this.OnPropertyChanged(nameof(FromHours));
         }
     }
 
@@ -62,7 +63,15 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         set
         {
             _fromMinutes = value;
-            OnPropertyChanged(nameof(FromMinutes));
+            this.OnPropertyChanged(nameof(FromMinutes));
+        }
+    }
+
+    public DateTime FromFullDate
+    {
+        get
+        {
+            return new DateTime(FromDate.Year, FromDate.Month, FromDate.Day, FromHours, FromMinutes, 0);
         }
     }
 
@@ -77,7 +86,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         set
         {
             _toDate = value;
-            OnPropertyChanged(nameof(ToDate));
+            this.OnPropertyChanged(nameof(ToDate));
         }
     }
 
@@ -92,7 +101,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         set
         {
             _toHours = value;
-            OnPropertyChanged(nameof(ToHours));
+            this.OnPropertyChanged(nameof(ToHours));
         }
     }
 
@@ -107,7 +116,15 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         set
         {
             _toMinutes = value;
-            OnPropertyChanged(nameof(ToMinutes));
+            this.OnPropertyChanged(nameof(ToMinutes));
+        }
+    }
+
+    public DateTime FullToDate
+    {
+        get
+        {
+            return new DateTime(ToDate.Year, ToDate.Month, ToDate.Day, ToHours, ToMinutes, 0);
         }
     }
 
@@ -118,6 +135,6 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
     public ImportViewModel()
     {
         ChooseFileCommand = new ChooseFileCommand(this);
-        ImportCommand = new ImportEventsCommand(this);
+        ImportCommand = new ImportEventsCommand(this, new L2tCSVEventsImporter());
     }
 }
