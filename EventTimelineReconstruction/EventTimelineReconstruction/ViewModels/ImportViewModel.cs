@@ -1,5 +1,5 @@
 ﻿using EventTimelineReconstruction.Commands;
-using EventTimelineReconstruction.Services;
+using EventTimelineReconstruction.Stores;
 using System;
 using System.Windows.Input;
 
@@ -132,9 +132,9 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
     public ICommand ImportCommand { get; }
     public ICommand CancelCommand { get; }
 
-    public ImportViewModel()
+    public ImportViewModel(EventsStore store)
     {
         ChooseFileCommand = new ChooseFileCommand(this);
-        ImportCommand = new ImportEventsCommand(this, new L2tCSVEventsImporter());
+        ImportCommand = new ImportEventsCommand(this, store);
     }
 }
