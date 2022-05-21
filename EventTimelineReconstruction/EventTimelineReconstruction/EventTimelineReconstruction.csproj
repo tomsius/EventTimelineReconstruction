@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\import.png" />
+    <None Remove="Resources\load.png" />
     <None Remove="Resources\magnifying-glass.ico" />
+    <None Remove="Resources\save.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,12 +18,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Stores\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Resource Include="Resources\import.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\load.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\magnifying-glass.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\save.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
