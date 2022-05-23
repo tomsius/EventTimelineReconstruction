@@ -9,6 +9,17 @@ public partial class ImportView : Window
 {
     public ImportView()
     {
-        InitializeComponent();
+        this.InitializeComponent();
+    }
+
+    private void CloseButton_Click(object sender, RoutedEventArgs e)
+    {
+        Visibility = Visibility.Hidden;
+    }
+
+    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        e.Cancel = true;
+        Visibility = Visibility.Hidden;
     }
 }
