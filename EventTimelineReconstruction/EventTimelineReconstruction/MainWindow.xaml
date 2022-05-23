@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EventTimelineReconstruction"
+        xmlns:views="clr-namespace:EventTimelineReconstruction.Views"
+        xmlns:vms="clr-namespace:EventTimelineReconstruction.ViewModels"
         mc:Ignorable="d"
         Title="Event Timeline Reconstruction" 
         Height="750" 
@@ -45,6 +47,6 @@
             </ToolBar>
         </ToolBarTray>
         <TextBox Width="300" DockPanel.Dock="Right" />
-        <TextBox MinWidth="300" />
+        <views:EventTreeView MinWidth="300"/>
     </DockPanel>
 </Window>

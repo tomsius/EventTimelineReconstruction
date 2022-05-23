@@ -2,6 +2,8 @@
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
 using EventTimelineReconstruction.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Windows;
 
 namespace EventTimelineReconstruction;
@@ -11,18 +13,47 @@ namespace EventTimelineReconstruction;
 /// </summary>
 public partial class App : Application
 {
+    private readonly IHost _host;
+
+    public App()
+    {
+        _host = Host.CreateDefaultBuilder()
+            .ConfigureServices(services => {
+                services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
+                services.AddSingleton<EventsStore>();
+
+                services.AddSingleton<EventTreeViewModel>();
+                services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
+
+
+                services.AddSingleton(s => new ImportView() 
+                {
+                    DataContext = s.GetRequiredService<ImportViewModel>()
+                });
+                services.AddSingleton(s => new EventTreeView() {
+                    DataContext = s.GetRequiredService<EventTreeViewModel>()
+                });
+                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>()) {
+                    DataContext = s.GetRequiredService<EventTreeViewModel>()
+                });
+            })
+            .Build();
+    }
+
     protected override void OnStartup(StartupEventArgs e)
     {
-        //IEventsImporter importer = new L2tCSVEventsImporter();
-        //EventsStore store = new(importer);
+        _host.Start();
 
-        //MainWindow = new ImportView()
-        //{
-        //    DataContext = new ImportViewModel(store)
-        //};
-        MainWindow = new MainWindow();
+        MainWindow = _host.Services.GetRequiredService<MainWindow>();
         MainWindow.Show();
 
         base.OnStartup(e);
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        _host.Dispose();
+
+        base.OnExit(e);
     }
 }

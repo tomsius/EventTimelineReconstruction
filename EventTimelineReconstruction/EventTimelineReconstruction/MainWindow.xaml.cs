@@ -24,22 +24,17 @@ namespace EventTimelineReconstruction
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly ImportView _view;
+
+        public MainWindow(ImportView view)
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            _view = view;
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO - dependency injection
-            IEventsImporter importer = new L2tCSVEventsImporter();
-            EventsStore store = new(importer);
-
-            ImportView view = new ImportView() {
-                DataContext = new ImportViewModel(store)
-            };
-
-            view.Show();
+            _view.Show();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
