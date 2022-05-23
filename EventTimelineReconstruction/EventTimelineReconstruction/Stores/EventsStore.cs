@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
@@ -23,13 +24,13 @@ public class EventsStore
         _eventsImporter = eventsImporter;
     }
 
-    public async Task Load(string path, System.DateTime fromDate, System.DateTime toDate)
+    public async Task Load(string path, DateTime fromDate, DateTime toDate)
     {
         await Task.Run(() => {
             List<EventModel> importedEvents = _eventsImporter.Import(path, fromDate, toDate);
 
             _events.Clear();
             _events.AddRange(importedEvents);
-            });
+        });
     }
 }
