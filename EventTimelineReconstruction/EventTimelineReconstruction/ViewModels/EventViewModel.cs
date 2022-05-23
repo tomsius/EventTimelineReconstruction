@@ -164,11 +164,28 @@ public class EventViewModel : ViewModelBase
         }
     }
 
+    public string DisplayName
+    {
+        get
+        {
+            return string.Format("{0, 10} {1}", FullDate, Filename);
+        }
+    }
+
     public EventViewModel(EventModel eventModel)
     {
         _eventModel = eventModel;
 
         IsVisible = true;
-        Colour = Brushes.Black;
+
+        // TODO - remove random colour assignment
+        Random rnd = new();
+        if (rnd.NextDouble() < 0.3) {
+            Colour = Brushes.Aquamarine;
+        }
+        else
+        {
+            Colour = Brushes.White;
+        }
     }
 }
