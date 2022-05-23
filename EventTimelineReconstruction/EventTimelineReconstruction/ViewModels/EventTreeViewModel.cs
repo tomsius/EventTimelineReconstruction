@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using EventTimelineReconstruction.Models;
 
 namespace EventTimelineReconstruction.ViewModels;
 public class EventTreeViewModel : ViewModelBase
 {
-    private readonly ObservableCollection<EventViewModel> _events;
+    private readonly RangeEnabledObservableCollection<EventViewModel> _events;
 
     public IEnumerable<EventViewModel> Events
     {
@@ -20,13 +18,11 @@ public class EventTreeViewModel : ViewModelBase
         _events = new();
     }
 
-    public void LoadEvents(IEnumerable<EventModel> events)
+    public void LoadEvents(IEnumerable<EventViewModel> events)
     {
         _events.Clear();
+        _events.InsertRange(events);
 
-        foreach (EventModel e in events) {
-            EventViewModel eventViewModel = new(e);
-            _events.Add(eventViewModel);
-        }
+        this.OnPropertyChanged(nameof(Events));
     }
 }

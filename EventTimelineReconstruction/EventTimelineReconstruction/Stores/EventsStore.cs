@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
+using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Stores;
 public class EventsStore
 {
-    private readonly List<EventModel> _events;
+    private readonly List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
 
-    public IEnumerable<EventModel> Events
+    public IEnumerable<EventViewModel> Events
     {
         get
         {
@@ -30,7 +32,7 @@ public class EventsStore
             List<EventModel> importedEvents = _eventsImporter.Import(path, fromDate, toDate);
 
             _events.Clear();
-            _events.AddRange(importedEvents);
+            _events.AddRange(importedEvents.Select(e => new EventViewModel(e)));
         });
     }
 }
