@@ -21,13 +21,14 @@ public partial class App : Application
             .ConfigureServices(services => {
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
                 services.AddSingleton<IWorkSaver, FileWorkSaver>();
+                services.AddSingleton<IWorkLoader, FileWorkLoader>();
 
                 services.AddSingleton<EventsStore>();
 
                 services.AddSingleton<EventTreeViewModel>();
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
                 services.AddSingleton(s => new SaveWorkViewModel(s.GetRequiredService<EventsStore>()));
-
+                services.AddSingleton(s => new LoadWorkViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
 
                 services.AddSingleton(s => new ImportView() 
                 {
@@ -36,10 +37,14 @@ public partial class App : Application
                 services.AddSingleton(s => new SaveWorkView() {
                     DataContext = s.GetRequiredService<SaveWorkViewModel>()
                 });
+
+                services.AddSingleton(s => new LoadWorkView() {
+                    DataContext = s.GetRequiredService<LoadWorkViewModel>()
+                });
                 services.AddSingleton(s => new EventTreeView() {
                     DataContext = s.GetRequiredService<EventTreeViewModel>()
                 });
-                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>()) {
+                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>()) {
                     DataContext = s.GetRequiredService<EventTreeViewModel>()
                 });
             })
