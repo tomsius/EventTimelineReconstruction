@@ -10,12 +10,14 @@ namespace EventTimelineReconstruction
     {
         private readonly ImportView _importView;
         private readonly SaveWorkView _saveWorkView;
+        private readonly LoadWorkView _loadWorkView;
 
-        public MainWindow(ImportView view, SaveWorkView saveWorkView)
+        public MainWindow(ImportView view, SaveWorkView saveWorkView, LoadWorkView loadWorkView)
         {
             this.InitializeComponent();
             _importView = view;
             _saveWorkView = saveWorkView;
+            _loadWorkView = loadWorkView;
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -30,7 +32,7 @@ namespace EventTimelineReconstruction
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Load");
+            _loadWorkView.Show();
         }
     }
 }
