@@ -15,9 +15,9 @@
         ItemsSource="{Binding Events, UpdateSourceTrigger=PropertyChanged}">
         <TreeView.Resources>
             <DataTemplate DataType="{x:Type vms:EventViewModel}">
-                <TextBlock 
+                <TextBlock
                     Text="{Binding DisplayName}" 
-                    Background="{Binding Colour}" />
+                    Foreground="{Binding Colour}"/>
             </DataTemplate>
         </TreeView.Resources>
     </TreeView>
