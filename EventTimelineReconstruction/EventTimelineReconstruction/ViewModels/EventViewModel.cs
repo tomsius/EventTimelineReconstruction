@@ -2,6 +2,8 @@
 using System;
 using System.Windows.Media;
 using EventTimelineReconstruction.Models;
+using System.Linq;
+using System.Text;
 
 namespace EventTimelineReconstruction.ViewModels;
 public class EventViewModel : ViewModelBase
@@ -132,7 +134,7 @@ public class EventViewModel : ViewModelBase
     {
         get
         {
-            return new(_eventModel.Extra);
+            return _eventModel.Extra;
         }
     }
 
@@ -181,11 +183,45 @@ public class EventViewModel : ViewModelBase
         // TODO - remove random colour assignment
         Random rnd = new();
         if (rnd.NextDouble() < 0.3) {
-            Colour = Brushes.Aquamarine;
+            Colour = Brushes.Red;
         }
         else
         {
-            Colour = Brushes.White;
+            Colour = Brushes.Black;
         }
+    }
+
+    public string Serialize()
+    {
+        StringBuilder serializedExtra = new();
+        foreach (KeyValuePair<string, string> pair in _eventModel.Extra) {
+            serializedExtra.Append(pair.Key);
+            serializedExtra.Append(':');
+            serializedExtra.Append(pair.Value);
+            serializedExtra.Append(',');
+        }
+
+        serializedExtra.Remove(serializedExtra.Length - 1, 1);
+
+        return string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22}", 
+            _eventModel.Date.Year, _eventModel.Date.Month, _eventModel.Date.Day, _eventModel.Time.Hour, _eventModel.Time.Minute, _eventModel.Time.Second,
+            _eventModel.Timezone, 
+            _eventModel.MACB, 
+            _eventModel.Source, 
+            _eventModel.SourceType, 
+            _eventModel.Type, 
+            _eventModel.User, 
+            _eventModel.Host, 
+            _eventModel.Short, 
+            _eventModel.Description,
+            _eventModel.Version,
+            _eventModel.Filename,
+            _eventModel.INode,
+            _eventModel.Notes,
+            _eventModel.Format,
+            serializedExtra.ToString(),
+            _isVisible,
+            _colour
+            );
     }
 }
