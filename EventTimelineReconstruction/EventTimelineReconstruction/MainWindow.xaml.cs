@@ -8,22 +8,24 @@ namespace EventTimelineReconstruction
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ImportView _view;
+        private readonly ImportView _importView;
+        private readonly SaveWorkView _saveWorkView;
 
-        public MainWindow(ImportView view)
+        public MainWindow(ImportView view, SaveWorkView saveWorkView)
         {
             this.InitializeComponent();
-            _view = view;
+            _importView = view;
+            _saveWorkView = saveWorkView;
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
-            _view.Show();
+            _importView.Show();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Save");
+            _saveWorkView.Show();
         }
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
