@@ -12,6 +12,7 @@ public class EventsStore
     private readonly List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
     private readonly IWorkSaver _workSaver;
+    private readonly IWorkLoader _workLoader;
 
     public IEnumerable<EventViewModel> Events
     {
@@ -21,11 +22,12 @@ public class EventsStore
         }
     }
 
-    public EventsStore(IEventsImporter eventsImporter, IWorkSaver workSaver)
+    public EventsStore(IEventsImporter eventsImporter, IWorkSaver workSaver, IWorkLoader workLoader)
     {
         _events = new();
         _eventsImporter = eventsImporter;
         _workSaver = workSaver;
+        _workLoader = workLoader;
     }
 
     public async Task Load(string path, DateTime fromDate, DateTime toDate)
@@ -38,8 +40,18 @@ public class EventsStore
         });
     }
 
-    internal async Task SaveWork(string fileName)
+    public async Task SaveWork(string fileName)
     {
         await Task.Run(() => _workSaver.SaveWork(fileName, _events));
+    }
+
+    public async Task LoadWork(string fileName)
+    {
+        await Task.Run(() => {
+            List<EventViewModel> loadedEvents = _workLoader.LoadWork(fileName);
+
+            _events.Clear();
+            _events.AddRange(loadedEvents);
+        });
     }
 }
