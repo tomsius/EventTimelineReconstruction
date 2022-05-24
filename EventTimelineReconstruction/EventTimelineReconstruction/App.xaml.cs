@@ -20,20 +20,26 @@ public partial class App : Application
         _host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => {
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
+                services.AddSingleton<IWorkSaver, FileWorkSaver>();
+
                 services.AddSingleton<EventsStore>();
 
                 services.AddSingleton<EventTreeViewModel>();
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
+                services.AddSingleton(s => new SaveWorkViewModel(s.GetRequiredService<EventsStore>()));
 
 
                 services.AddSingleton(s => new ImportView() 
                 {
                     DataContext = s.GetRequiredService<ImportViewModel>()
                 });
+                services.AddSingleton(s => new SaveWorkView() {
+                    DataContext = s.GetRequiredService<SaveWorkViewModel>()
+                });
                 services.AddSingleton(s => new EventTreeView() {
                     DataContext = s.GetRequiredService<EventTreeViewModel>()
                 });
-                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>()) {
+                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>()) {
                     DataContext = s.GetRequiredService<EventTreeViewModel>()
                 });
             })
