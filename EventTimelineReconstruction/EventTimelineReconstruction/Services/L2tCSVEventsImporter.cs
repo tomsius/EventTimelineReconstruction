@@ -10,10 +10,11 @@ public class L2tCSVEventsImporter : IEventsImporter
 {
     public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
     {
-        List<EventModel> events = new(File.ReadLines(path).Count());
+        IEnumerable<string> rows = File.ReadLines(path);
+        List<EventModel> events = new(rows.Count());
         object lockObj = new();
 
-        Parallel.ForEach(File.ReadLines(path), (line, _, lineNumber) =>
+        Parallel.ForEach(rows, (line, _, lineNumber) =>
         {
             if (lineNumber != 0) {
                 string[] columns = line.Split(',');
