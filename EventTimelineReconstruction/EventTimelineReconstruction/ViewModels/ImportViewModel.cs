@@ -132,13 +132,9 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
     public ICommand ImportCommand { get; }
     public ICommand CancelCommand { get; }
 
-
-    private readonly EventTreeViewModel _viewModel;
-
     public ImportViewModel(EventTreeViewModel viewModel, EventsStore store)
     {
-        _viewModel = viewModel;
         ChooseFileCommand = new ChooseLoadFileCommand(this);
-        ImportCommand = new ImportEventsCommand(this, store, _viewModel);
+        ImportCommand = new ImportEventsCommand(this, store, viewModel);
     }
 }
