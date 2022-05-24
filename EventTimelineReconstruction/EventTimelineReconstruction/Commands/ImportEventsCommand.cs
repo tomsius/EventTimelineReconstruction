@@ -1,8 +1,5 @@
-﻿using EventTimelineReconstruction.Models;
-using EventTimelineReconstruction.Services;
-using EventTimelineReconstruction.Stores;
+﻿using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
