@@ -138,7 +138,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
     public ImportViewModel(EventTreeViewModel viewModel, EventsStore store)
     {
         _viewModel = viewModel;
-        ChooseFileCommand = new ChooseFileCommand(this);
+        ChooseFileCommand = new ChooseLoadFileCommand(this);
         ImportCommand = new ImportEventsCommand(this, store, _viewModel);
     }
 }
