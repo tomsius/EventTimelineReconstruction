@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace EventTimelineReconstruction.ViewModels;
 public class EventTreeViewModel : ViewModelBase
 {
-    private readonly RangeEnabledObservableCollection<EventViewModel> _events;
+    private readonly ObservableCollection<EventViewModel> _events;
 
     public IEnumerable<EventViewModel> Events
     {
@@ -21,8 +22,15 @@ public class EventTreeViewModel : ViewModelBase
     public void LoadEvents(IEnumerable<EventViewModel> events)
     {
         _events.Clear();
-        _events.InsertRange(events);
 
-        this.OnPropertyChanged(nameof(Events));
+        foreach (EventViewModel entity in events) {
+            _events.Add(entity);
+        }
+
+        // TODO - remove test hierarchy
+        _events[0].AddChild(_events[1]);
+        _events[0].AddChild(_events[2]);
+        _events.RemoveAt(1);
+        _events.RemoveAt(2);
     }
 }
