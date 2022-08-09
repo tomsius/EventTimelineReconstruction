@@ -30,7 +30,7 @@ public class EventsStore
         _workLoader = workLoader;
     }
 
-    public async Task Load(string path, DateTime fromDate, DateTime toDate)
+    public async Task Import(string path, DateTime fromDate, DateTime toDate)
     {
         await Task.Run(() => {
             List<EventModel> importedEvents = _eventsImporter.Import(path, fromDate, toDate);
