@@ -9,7 +9,7 @@ using EventTimelineReconstruction.ViewModels;
 namespace EventTimelineReconstruction.Stores;
 public class EventsStore
 {
-    private readonly List<EventViewModel> _events;
+    private List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
     private readonly IWorkSaver _workSaver;
     private readonly IWorkLoader _workLoader;
@@ -37,6 +37,7 @@ public class EventsStore
 
             _events.Clear();
             _events.AddRange(importedEvents.Select(e => new EventViewModel(e)));
+            _events = _events.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
         });
     }
 
@@ -52,6 +53,7 @@ public class EventsStore
 
             _events.Clear();
             _events.AddRange(loadedEvents);
+            _events = _events.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
         });
     }
 }

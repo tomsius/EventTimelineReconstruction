@@ -30,7 +30,7 @@ public class FileWorkLoader : IWorkLoader
             }
         });
 
-        return events.OrderBy(e => e.FullDate).ToList();
+        return events;
     }
 
     private static EventModel ConvertRowToModel(string[] columns)
