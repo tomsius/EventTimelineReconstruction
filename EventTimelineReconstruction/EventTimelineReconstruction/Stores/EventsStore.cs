@@ -11,7 +11,6 @@ public class EventsStore
 {
     private List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
-    private readonly IWorkSaver _workSaver;
     private readonly IWorkLoader _workLoader;
 
     public IEnumerable<EventViewModel> Events
@@ -22,11 +21,10 @@ public class EventsStore
         }
     }
 
-    public EventsStore(IEventsImporter eventsImporter, IWorkSaver workSaver, IWorkLoader workLoader)
+    public EventsStore(IEventsImporter eventsImporter, IWorkLoader workLoader)
     {
         _events = new();
         _eventsImporter = eventsImporter;
-        _workSaver = workSaver;
         _workLoader = workLoader;
     }
 
@@ -39,11 +37,6 @@ public class EventsStore
             _events.AddRange(importedEvents.Select(e => new EventViewModel(e)));
             _events = _events.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
         });
-    }
-
-    public async Task SaveWork(string fileName)
-    {
-        await Task.Run(() => _workSaver.SaveWork(fileName, _events));
     }
 
     public async Task LoadWork(string fileName)

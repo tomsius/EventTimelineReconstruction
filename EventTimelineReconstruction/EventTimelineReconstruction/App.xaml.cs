@@ -27,7 +27,7 @@ public partial class App : Application
 
                 services.AddSingleton<EventTreeViewModel>();
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
-                services.AddSingleton(s => new SaveWorkViewModel(s.GetRequiredService<EventsStore>()));
+                services.AddSingleton<SaveWorkViewModel>();
                 services.AddSingleton(s => new LoadWorkViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
 
                 services.AddSingleton(s => new ImportView() 
