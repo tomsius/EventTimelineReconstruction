@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using EventTimelineReconstruction.Models;
-using System.Linq;
-using System.Threading.Tasks;
 using EventTimelineReconstruction.ViewModels;
 using System;
 using System.IO;
@@ -12,28 +10,84 @@ public class FileWorkLoader : IWorkLoader
 {
     public List<EventViewModel> LoadWork(string path)
     {
-        IEnumerable<string> rows = File.ReadLines(path);
-        List<EventViewModel> events = new(rows.Count());
-        object lockObj = new();
+        List<EventViewModel> events = new();
+        using StreamReader inputStream = new(path);
+        string row = inputStream.ReadLine();
+        int currentDepth = 0;
+        Stack<EventViewModel> stack = new();
 
-        Parallel.ForEach(rows, line => {
-            string[] columns = line.Split(',');
+        while (row != null)
+        {
+            string[] columns = row.Split(',');
+            int depth = GetDepth(columns[0]);
+            columns[0] = columns[0].Trim(new char[] { '\t' });
+
             EventModel eventModel = ConvertRowToModel(columns);
-            EventViewModel eventViewModel = new(eventModel);
-            eventViewModel.IsVisible = bool.Parse(columns[21]);
-            Brush brush = (Brush)new BrushConverter().ConvertFromString(columns[22]);
-            brush.Freeze();
-            eventViewModel.Colour = brush;
+            EventViewModel eventViewModel = ConvertToViewModel(eventModel, columns);
 
-            lock (lockObj) {
+            if (depth == 0)
+            {
                 events.Add(eventViewModel);
             }
-        });
+            else if (depth == currentDepth)
+            {
+                while (depth <= currentDepth) {
+                    stack.Pop();
+                    currentDepth--;
+                }
+
+                currentDepth++;
+
+                EventViewModel current = stack.Peek();
+                current.AddChild(eventViewModel);
+            }
+            else if (depth > currentDepth)
+            {
+                currentDepth++;
+                EventViewModel current = stack.Peek();
+                current.AddChild(eventViewModel);
+            }
+            else if (depth < currentDepth)
+            {
+                while (depth <= currentDepth) {
+                    stack.Pop();
+                    currentDepth--;
+                }
+                
+                EventViewModel current = stack.Pop();
+                current.AddChild(eventViewModel);
+            }
+
+            stack.Push(eventViewModel);
+            row = inputStream.ReadLine();
+        }
 
         return events;
     }
 
-    private static EventModel ConvertRowToModel(string[] columns)
+    private int GetDepth(string col)
+    {
+        int depth = 0;
+
+        while (col[depth] == '\t') {
+            depth++;
+        }
+
+        return depth;
+    }
+
+    private EventViewModel ConvertToViewModel(EventModel eventModel, string[] columns)
+    {
+        EventViewModel eventViewModel = new(eventModel);
+        eventViewModel.IsVisible = bool.Parse(columns[21]);
+        Brush brush = (Brush)new BrushConverter().ConvertFromString(columns[22]);
+        brush.Freeze();
+        eventViewModel.Colour = brush;
+
+        return eventViewModel;
+    }
+
+    private EventModel ConvertRowToModel(string[] columns)
     {
         DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
         TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);

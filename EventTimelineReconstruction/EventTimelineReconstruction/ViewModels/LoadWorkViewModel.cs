@@ -1,4 +1,5 @@
 ﻿using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using System.Windows.Input;
 
@@ -23,9 +24,9 @@ public class LoadWorkViewModel : ViewModelBase, IFileSelectable
     public ICommand ChooseFileCommand { get; }
     public ICommand LoadCommand { get; }
 
-    public LoadWorkViewModel(EventTreeViewModel viewModel, EventsStore store)
+    public LoadWorkViewModel(EventTreeViewModel eventTreeViewModel, EventsStore store, IWorkLoader fileLoader)
     {
         ChooseFileCommand = new ChooseLoadFileCommand(this);
-        LoadCommand = new LoadWorkCommand(this, store, viewModel);
+        LoadCommand = new LoadWorkCommand(this, eventTreeViewModel, store, fileLoader);
     }
 }

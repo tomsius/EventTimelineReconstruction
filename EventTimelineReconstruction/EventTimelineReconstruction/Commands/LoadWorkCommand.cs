@@ -1,20 +1,25 @@
-﻿using EventTimelineReconstruction.Stores;
+﻿using EventTimelineReconstruction.Services;
+using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EventTimelineReconstruction.Commands;
 public class LoadWorkCommand : AsyncCommandBase
 {
     private readonly LoadWorkViewModel _loadWorkViewModel;
-    private readonly EventsStore _store;
     private readonly EventTreeViewModel _eventTreeViewModel;
+    private readonly EventsStore _store;
+    private readonly IWorkLoader _workLoader;
 
-    public LoadWorkCommand(LoadWorkViewModel loadWorkViewModel, EventsStore store, EventTreeViewModel eventTreeViewModel)
+    public LoadWorkCommand(LoadWorkViewModel loadWorkViewModel, EventTreeViewModel eventTreeViewModel, EventsStore store, IWorkLoader workLoader)
     {
         _loadWorkViewModel = loadWorkViewModel;
-        _store = store;
         _eventTreeViewModel = eventTreeViewModel;
+        _store = store;
+        _workLoader = workLoader;
         _loadWorkViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
     }
 
@@ -25,8 +30,14 @@ public class LoadWorkCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
-        await _store.LoadWork(_loadWorkViewModel.FileName);
-        _eventTreeViewModel.LoadEvents(_store.Events);
+        List<EventViewModel> loadedEvents = new();
+
+        await Task.Run(() => {
+            loadedEvents = _workLoader.LoadWork(_loadWorkViewModel.FileName);
+            _store.LoadEvents(loadedEvents);
+        });
+
+        _eventTreeViewModel.LoadEvents(loadedEvents);
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

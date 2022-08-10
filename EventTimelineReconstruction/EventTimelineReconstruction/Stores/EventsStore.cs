@@ -11,7 +11,6 @@ public class EventsStore
 {
     private List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
-    private readonly IWorkLoader _workLoader;
 
     public IEnumerable<EventViewModel> Events
     {
@@ -21,11 +20,10 @@ public class EventsStore
         }
     }
 
-    public EventsStore(IEventsImporter eventsImporter, IWorkLoader workLoader)
+    public EventsStore(IEventsImporter eventsImporter)
     {
         _events = new();
         _eventsImporter = eventsImporter;
-        _workLoader = workLoader;
     }
 
     public async Task Import(string path, DateTime fromDate, DateTime toDate)
@@ -39,14 +37,9 @@ public class EventsStore
         });
     }
 
-    public async Task LoadWork(string fileName)
+    public void LoadEvents(List<EventViewModel> events)
     {
-        await Task.Run(() => {
-            List<EventViewModel> loadedEvents = _workLoader.LoadWork(fileName);
-
-            _events.Clear();
-            _events.AddRange(loadedEvents);
-            _events = _events.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
-        });
+        _events.Clear();
+        _events.AddRange(events);
     }
 }
