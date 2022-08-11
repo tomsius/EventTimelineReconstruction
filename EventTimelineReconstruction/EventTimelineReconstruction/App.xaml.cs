@@ -30,6 +30,7 @@ public partial class App : Application
                 services.AddSingleton<SaveWorkViewModel>();
                 services.AddSingleton<LoadWorkViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();
+                services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>()));
 
                 services.AddSingleton(s => new ImportView() 
                 {
@@ -49,7 +50,7 @@ public partial class App : Application
                     DataContext = s.GetRequiredService<EventDetailsViewModel>()
                 });
                 services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>()) {
-                    DataContext = s.GetRequiredService<EventTreeViewModel>()
+                    DataContext = s.GetRequiredService<MainWindowViewModel>()
                 });
             })
             .Build();
