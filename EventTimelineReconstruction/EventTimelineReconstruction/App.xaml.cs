@@ -25,11 +25,11 @@ public partial class App : Application
 
                 services.AddSingleton<EventsStore>();
 
-                services.AddSingleton<EventTreeViewModel>();
+                services.AddSingleton<EventDetailsViewModel>();
+                services.AddSingleton(s => new EventTreeViewModel(s.GetRequiredService<EventDetailsViewModel>()));
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
                 services.AddSingleton<SaveWorkViewModel>();
                 services.AddSingleton<LoadWorkViewModel>();
-                services.AddSingleton<EventDetailsViewModel>();
                 services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>()));
 
                 services.AddSingleton(s => new ImportView() 
