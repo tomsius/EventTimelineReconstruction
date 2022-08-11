@@ -2,13 +2,22 @@
 using System;
 using System.Windows.Media;
 using EventTimelineReconstruction.Models;
-using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace EventTimelineReconstruction.ViewModels;
 public class EventViewModel : ViewModelBase
 {
     private readonly EventModel _eventModel;
+    private readonly ObservableCollection<EventViewModel> _children;
+
+    public ObservableCollection<EventViewModel> Children
+    {
+        get
+        {
+            return _children;
+        }
+    }
 
     public DateTime FullDate
     {
@@ -189,6 +198,8 @@ public class EventViewModel : ViewModelBase
         {
             Colour = Brushes.Black;
         }
+
+        _children = new();
     }
 
     public string Serialize()
@@ -223,5 +234,10 @@ public class EventViewModel : ViewModelBase
             _isVisible,
             _colour.ToString()
             );
+    }
+
+    public void AddChild(EventViewModel child)
+    {
+        _children.Add(child);
     }
 }

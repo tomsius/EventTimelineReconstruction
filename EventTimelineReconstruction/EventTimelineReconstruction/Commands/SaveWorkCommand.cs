@@ -1,18 +1,20 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
-using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 public class SaveWorkCommand : AsyncCommandBase
 {
     private readonly SaveWorkViewModel _saveWorkViewModel;
-    private readonly EventsStore _store;
+    private readonly EventTreeViewModel _eventTreeViewModel;
+    private readonly IWorkSaver _workSaver;
 
-    public SaveWorkCommand(SaveWorkViewModel saveWorkViewModel, EventsStore store)
+    public SaveWorkCommand(SaveWorkViewModel saveWorkViewModel, EventTreeViewModel eventTreeViewModel, IWorkSaver workSaver)
     {
         _saveWorkViewModel = saveWorkViewModel;
-        _store = store;
+        _eventTreeViewModel = eventTreeViewModel;
+        _workSaver = workSaver;
         _saveWorkViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
     }
 
@@ -23,7 +25,7 @@ public class SaveWorkCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
-        await _store.SaveWork(_saveWorkViewModel.FileName);
+        await Task.Run(() => _workSaver.SaveWork(_saveWorkViewModel.FileName, _eventTreeViewModel.Events));
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -9,10 +9,8 @@ using EventTimelineReconstruction.ViewModels;
 namespace EventTimelineReconstruction.Stores;
 public class EventsStore
 {
-    private readonly List<EventViewModel> _events;
+    private List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
-    private readonly IWorkSaver _workSaver;
-    private readonly IWorkLoader _workLoader;
 
     public IEnumerable<EventViewModel> Events
     {
@@ -22,36 +20,26 @@ public class EventsStore
         }
     }
 
-    public EventsStore(IEventsImporter eventsImporter, IWorkSaver workSaver, IWorkLoader workLoader)
+    public EventsStore(IEventsImporter eventsImporter)
     {
         _events = new();
         _eventsImporter = eventsImporter;
-        _workSaver = workSaver;
-        _workLoader = workLoader;
     }
 
-    public async Task Load(string path, DateTime fromDate, DateTime toDate)
+    public async Task Import(string path, DateTime fromDate, DateTime toDate)
     {
         await Task.Run(() => {
             List<EventModel> importedEvents = _eventsImporter.Import(path, fromDate, toDate);
 
             _events.Clear();
             _events.AddRange(importedEvents.Select(e => new EventViewModel(e)));
+            _events = _events.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
         });
     }
 
-    public async Task SaveWork(string fileName)
+    public void LoadEvents(List<EventViewModel> events)
     {
-        await Task.Run(() => _workSaver.SaveWork(fileName, _events));
-    }
-
-    public async Task LoadWork(string fileName)
-    {
-        await Task.Run(() => {
-            List<EventViewModel> loadedEvents = _workLoader.LoadWork(fileName);
-
-            _events.Clear();
-            _events.AddRange(loadedEvents);
-        });
+        _events.Clear();
+        _events.AddRange(events);
     }
 }

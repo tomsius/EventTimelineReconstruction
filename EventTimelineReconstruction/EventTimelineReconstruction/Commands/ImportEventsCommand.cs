@@ -26,7 +26,7 @@ public class ImportEventsCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
-        await _store.Load(_importViewModel.FileName, _importViewModel.FromDate, _importViewModel.ToDate);
+        await _store.Import(_importViewModel.FileName, _importViewModel.FromDate, _importViewModel.ToDate);
         _eventTreeViewModel.LoadEvents(_store.Events);
     }
 

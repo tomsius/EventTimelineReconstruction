@@ -14,11 +14,11 @@
         VirtualizingPanel.VirtualizationMode="Recycling"
         ItemsSource="{Binding Events, UpdateSourceTrigger=PropertyChanged}">
         <TreeView.Resources>
-            <DataTemplate DataType="{x:Type vms:EventViewModel}">
+            <HierarchicalDataTemplate DataType="{x:Type vms:EventViewModel}" ItemsSource="{Binding Children}">
                 <TextBlock
                     Text="{Binding DisplayName}" 
                     Foreground="{Binding Colour}"/>
-            </DataTemplate>
+            </HierarchicalDataTemplate>
         </TreeView.Resources>
     </TreeView>
 </UserControl>
