@@ -46,7 +46,7 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <TextBox Width="300" DockPanel.Dock="Right" />
+        <views:EventDetailsView Width="300" DockPanel.Dock="Right" />
         <views:EventTreeView MinWidth="300"/>
     </DockPanel>
 </Window>
