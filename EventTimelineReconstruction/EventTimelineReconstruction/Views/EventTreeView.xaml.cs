@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Views
 {
@@ -11,8 +10,6 @@ namespace EventTimelineReconstruction.Views
         public EventTreeView()
         {
             InitializeComponent();
-
-            //DataContext = new EventTreeViewModel();
         }
     }
 }

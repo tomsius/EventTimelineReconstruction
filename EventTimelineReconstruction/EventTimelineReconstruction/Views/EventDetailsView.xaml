@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="EventTimelineReconstruction.Views.EventDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EventTimelineReconstruction.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border BorderBrush="Gray" BorderThickness="0 1 0 1">
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Date" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Time" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="2" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Timezone" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="3" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="MACB" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="4" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Source" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="5" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Source type" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="6" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Type" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="7" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="User" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="8" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Host" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="9" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Short description" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="10" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Description" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="11" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Version" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="12" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Filename" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="13" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="iNode" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="14" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Notes" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="15" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
+                <TextBlock Text="Format" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="16" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 0">
+                <TextBlock Text="Extra" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.DisplayDate}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.DisplayTime}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Timezone}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.MACB}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="4" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Source}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="5" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.SourceType}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="6" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Type}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="7" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.User}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="8" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Host}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="9" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Short}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+            </Border>
+            <Border Grid.Row="10" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.DisplayDescription, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="11" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Version}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="12" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Filename}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+            </Border>
+            <Border Grid.Row="13" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.INode}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="14" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Notes}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="15" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
+                <TextBlock Text="{Binding Path=SelectedEvent.Format}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+            <Border Grid.Row="16" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 0">
+                <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.DisplayExtra, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

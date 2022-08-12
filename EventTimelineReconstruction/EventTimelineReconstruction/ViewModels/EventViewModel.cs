@@ -183,6 +183,66 @@ public class EventViewModel : ViewModelBase
         }
     }
 
+    public string DisplayDate
+    {
+        get
+        {
+            return FullDate.ToString("dd/MM/yyyy");
+        }
+    }
+
+    public string DisplayTime
+    {
+        get
+        {
+            return FullDate.ToString("HH:mm:ss");
+        }
+    }
+
+    public string DisplayDescription
+    {
+        get
+        {
+            StringBuilder sb = new();
+
+            for (int i = 0; i < Description.Length - 1; i++) 
+            {
+                if (Description[i] == ' ' && char.IsUpper(Description[i + 1]))
+                {
+                    sb.Append(Environment.NewLine);
+                    sb.Append(Description[i + 1]);
+                    i++;
+                }
+                else
+                {
+                    sb.Append(Description[i]);
+                }
+            }
+
+            return sb.ToString();
+        }
+    }
+
+    public string DisplayExtra
+    {
+        get
+        {
+            StringBuilder sb = new();
+
+            foreach (KeyValuePair<string, string> kvp in Extra)
+            {
+                sb.Append(kvp.Key.Trim());
+                sb.Append('=');
+                sb.Append(kvp.Value);
+                sb.Append(Environment.NewLine);
+            }
+
+            sb.Remove(sb.Length - 1, 1);
+
+            return sb.ToString();
+        }
+    }
+
     public EventViewModel(EventModel eventModel)
     {
         _eventModel = eventModel;
@@ -191,7 +251,8 @@ public class EventViewModel : ViewModelBase
 
         // TODO - remove random colour assignment
         Random rnd = new();
-        if (rnd.NextDouble() < 0.3) {
+        if (rnd.NextDouble() < 0.3)
+        {
             Colour = Brushes.Red;
         }
         else
@@ -205,7 +266,8 @@ public class EventViewModel : ViewModelBase
     public string Serialize()
     {
         StringBuilder serializedExtra = new();
-        foreach (KeyValuePair<string, string> pair in _eventModel.Extra) {
+        foreach (KeyValuePair<string, string> pair in _eventModel.Extra)
+        {
             serializedExtra.Append(pair.Key);
             serializedExtra.Append(':');
             serializedExtra.Append(pair.Value);

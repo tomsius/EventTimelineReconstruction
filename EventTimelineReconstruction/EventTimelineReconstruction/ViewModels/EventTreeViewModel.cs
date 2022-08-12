@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using EventTimelineReconstruction.Commands;
 
 namespace EventTimelineReconstruction.ViewModels;
 public class EventTreeViewModel : ViewModelBase
@@ -14,9 +16,12 @@ public class EventTreeViewModel : ViewModelBase
         }
     }
 
-    public EventTreeViewModel()
+    public ICommand ShowDetailsCommand { get; }
+
+    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel)
     {
         _events = new();
+        ShowDetailsCommand = new ShowEventDetailsCommand(eventDetailsViewModel);
     }
 
     public void LoadEvents(IEnumerable<EventViewModel> events)
@@ -26,11 +31,5 @@ public class EventTreeViewModel : ViewModelBase
         foreach (EventViewModel entity in events) {
             _events.Add(entity);
         }
-
-        // TODO - remove test hierarchy
-        _events[0].AddChild(_events[1]);
-        _events[0].AddChild(_events[2]);
-        _events.RemoveAt(1);
-        _events.RemoveAt(2);
     }
 }

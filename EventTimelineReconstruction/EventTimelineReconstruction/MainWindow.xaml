@@ -46,7 +46,7 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <TextBox Width="300" DockPanel.Dock="Right" />
-        <views:EventTreeView MinWidth="300"/>
+        <views:EventDetailsView Width="300" DockPanel.Dock="Right" DataContext="{Binding EventDetailsViewModel}" />
+        <views:EventTreeView MinWidth="300" DataContext="{Binding EventTreeViewModel}" />
     </DockPanel>
 </Window>
