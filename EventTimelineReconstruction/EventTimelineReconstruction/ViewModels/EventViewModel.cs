@@ -302,4 +302,9 @@ public class EventViewModel : ViewModelBase
     {
         _children.Add(child);
     }
+
+    public void RemoveChild(EventViewModel child)
+    {
+        _children.Remove(child);
+    }
 }

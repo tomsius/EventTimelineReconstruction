@@ -14,7 +14,12 @@
         HorizontalContentAlignment="Stretch"
         VirtualizingPanel.IsVirtualizing="True"
         VirtualizingPanel.VirtualizationMode="Recycling"
-        ItemsSource="{Binding Events, UpdateSourceTrigger=PropertyChanged}">
+        ItemsSource="{Binding Events, UpdateSourceTrigger=PropertyChanged}"
+        AllowDrop="True"
+        DragOver="TreeView_DragOver"
+        Drop="TreeView_Drop"
+        MouseMove="TreeView_MouseMove"
+        Name="EventsTree">
         <TreeView.Resources>
             <HierarchicalDataTemplate DataType="{x:Type vms:EventViewModel}" ItemsSource="{Binding Children}">
                 <TextBlock
