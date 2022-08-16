@@ -95,11 +95,11 @@ namespace EventTimelineReconstruction.Views
             //Asking user wether he want to drop the dragged TreeViewItem here or not
             if (MessageBox.Show("Would you like to drop " + _sourceItem.DisplayName + " into " + _targetItem.DisplayName + "?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 //adding dragged TreeViewItem in target TreeViewItem
-                AddChild(_sourceItem, _targetItem);
+                MoveChild(_sourceItem, _targetItem);
             }
         }
 
-        public void AddChild(EventViewModel _sourceItem, EventViewModel _targetItem)
+        public void MoveChild(EventViewModel _sourceItem, EventViewModel _targetItem)
         {
             var parentItem = FindParent();
 
