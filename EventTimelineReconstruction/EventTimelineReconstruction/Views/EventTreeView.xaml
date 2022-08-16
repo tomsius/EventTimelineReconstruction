@@ -19,7 +19,8 @@
         DragOver="TreeView_DragOver"
         Drop="TreeView_Drop"
         MouseMove="TreeView_MouseMove"
-        Name="EventsTree">
+        Name="EventsTree"
+        PreviewGiveFeedback="EventsTree_PreviewGiveFeedback">
         <TreeView.Resources>
             <HierarchicalDataTemplate DataType="{x:Type vms:EventViewModel}" ItemsSource="{Binding Children}">
                 <TextBlock

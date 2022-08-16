@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -19,6 +21,69 @@ namespace EventTimelineReconstruction.Views
         public EventTreeView()
         {
             InitializeComponent();
+        }
+
+        public class DraggableAdorner : Adorner
+        {
+            public Point CenterOffset;
+            FormattedText txt;
+            Rect renderRect;
+            SolidColorBrush rectBrush;
+
+            public DraggableAdorner(UIElement adornedElement, UIElement rootVisual) : base(adornedElement)
+            {
+                IsHitTestVisible = false;
+                Point relativePoint = adornedElement.TransformToAncestor(rootVisual)
+                              .Transform(new Point(0, 0));
+                CenterOffset = new Point(-relativePoint.X + 20, -relativePoint.Y);
+
+                EventViewModel eventModel = (adornedElement as TreeViewItem).Header as EventViewModel;
+                txt = new(eventModel.DisplayName, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Segoe UI"), 12, eventModel.Colour, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                renderRect = new Rect(new Size(txt.Width, txt.Height));
+                rectBrush = new SolidColorBrush(Colors.Silver);
+                rectBrush.Opacity = 0.8;
+            }
+            protected override void OnRender(DrawingContext drawingContext)
+            {
+                //drawingContext.DrawRectangle(renderBrush, null, renderRect);
+                drawingContext.DrawRectangle(rectBrush, null, renderRect);
+                drawingContext.DrawText(txt, new Point());
+            }
+        }
+
+        public struct PInPoint
+        {
+            public int X;
+            public int Y;
+            public PInPoint(int x, int y)
+            {
+                X = x; Y = y;
+            }
+            public PInPoint(double x, double y)
+            {
+                X = (int)x; Y = (int)y;
+            }
+            public Point GetPoint(double xOffset = 0, double yOffet = 0)
+            {
+                return new Point(X + xOffset, Y + yOffet);
+            }
+            public Point GetPoint(Point offset)
+            {
+                return new Point(X + offset.X, Y + offset.Y);
+            }
+        }
+
+        [DllImport("user32.dll")]
+        static extern void GetCursorPos(ref PInPoint p);
+
+        private DraggableAdorner myAdornment;
+        public PInPoint pointRef = new PInPoint();
+
+        private void EventsTree_PreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            GetCursorPos(ref pointRef);
+            Point relPos = this.PointFromScreen(pointRef.GetPoint(myAdornment.CenterOffset));
+            myAdornment.Arrange(new Rect(relPos, myAdornment.DesiredSize));
         }
 
         private void TreeView_DragOver(object sender, DragEventArgs e)
@@ -52,7 +117,7 @@ namespace EventTimelineReconstruction.Views
         private bool CheckDropTarget(EventViewModel _sourceItem, EventViewModel _targetItem)
         {
             //Check whether the target item is meeting your condition
-            // TODO - check all subtree above to disallow grouping from the same subtree
+            // TODO - check all subtree above to disallow grouping from the same subtree VisualTreeHelper.GetChild()
             return _sourceItem != _targetItem;
         }
 
@@ -76,8 +141,14 @@ namespace EventTimelineReconstruction.Views
                 _draggedItem = (EventViewModel)EventsTree.SelectedItem;
                 _draggedItemElement = GetNearestContainer(e.OriginalSource as UIElement);
 
-                if (_draggedItem != null) {
+                if (_draggedItem != null && _draggedItemElement != null) {
+                    var adLayer = AdornerLayer.GetAdornerLayer(this);
+                    myAdornment = new DraggableAdorner(_draggedItemElement, EventsTree);
+                    adLayer.Add(myAdornment);
+
                     DragDropEffects finalDropEffect = DragDrop.DoDragDrop(EventsTree, EventsTree.SelectedValue, DragDropEffects.Move);
+
+                    adLayer.Remove(myAdornment);
 
                     //Checking target is not null and item is dragging(moving)
                     if (finalDropEffect == DragDropEffects.Move) {
