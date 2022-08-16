@@ -33,7 +33,12 @@ public class EventTreeViewModel : ViewModelBase
         }
     }
 
-    public void Remove(EventViewModel eventViewModel)
+    public void AddEvent(EventViewModel eventViewModel)
+    {
+        _events.Add(eventViewModel);
+    }
+
+    public void RemoveEvent(EventViewModel eventViewModel)
     {
         _events.Remove(eventViewModel);
     }

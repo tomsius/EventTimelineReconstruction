@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using EventTimelineReconstruction.ViewModels;
@@ -23,8 +24,9 @@ namespace EventTimelineReconstruction.Views
         private void TreeView_DragOver(object sender, DragEventArgs e)
         {
             TreeViewItem item = GetNearestContainer(e.OriginalSource as UIElement);
+            EventViewModel targetViewModel = item?.Header as EventViewModel;
 
-            if (item != null && CheckDropTarget(_draggedItem, item.Header as EventViewModel)) {
+            if (CheckDropTarget(_draggedItem, targetViewModel)) {
                 e.Effects = DragDropEffects.Move;
             }
             else {
@@ -62,8 +64,8 @@ namespace EventTimelineReconstruction.Views
             // Verify that this is a valid drop and then store the drop target
             TreeViewItem targetItem = GetNearestContainer(e.OriginalSource as UIElement);
 
-            if (targetItem != null && _draggedItem != null) {
-                _target = targetItem.Header as EventViewModel;
+            if (_draggedItem != null) {
+                _target = targetItem?.Header as EventViewModel;
                 e.Effects = DragDropEffects.Move;
             }
         }
@@ -78,7 +80,7 @@ namespace EventTimelineReconstruction.Views
                     DragDropEffects finalDropEffect = DragDrop.DoDragDrop(EventsTree, EventsTree.SelectedValue, DragDropEffects.Move);
 
                     //Checking target is not null and item is dragging(moving)
-                    if (finalDropEffect == DragDropEffects.Move && _target != null) {
+                    if (finalDropEffect == DragDropEffects.Move) {
                         // A Move drop was accepted
                         if (_draggedItem != _target) {
                             CopyItem(_draggedItem, _target);
@@ -92,8 +94,10 @@ namespace EventTimelineReconstruction.Views
 
         private void CopyItem(EventViewModel _sourceItem, EventViewModel _targetItem)
         {
+            string targetName = _targetItem != null ? _targetItem.DisplayDate : "first level";
+
             //Asking user wether he want to drop the dragged TreeViewItem here or not
-            if (MessageBox.Show("Would you like to drop " + _sourceItem.DisplayName + " into " + _targetItem.DisplayName + "?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+            if (MessageBox.Show("Would you like to move " + _sourceItem.DisplayName + " into " + targetName + "?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 //adding dragged TreeViewItem in target TreeViewItem
                 MoveChild(_sourceItem, _targetItem);
             }
@@ -106,7 +110,7 @@ namespace EventTimelineReconstruction.Views
             if (parentItem == null) 
             {
                 EventTreeViewModel vm = (EventTreeViewModel)DataContext;
-                vm.Remove(_sourceItem);
+                vm.RemoveEvent(_sourceItem);
             }
             else 
             {
@@ -114,7 +118,15 @@ namespace EventTimelineReconstruction.Views
                 parentViewModel.RemoveChild(_sourceItem);
             }
 
-            _targetItem.AddChild(_sourceItem);
+            if (_targetItem == null)
+            {
+                EventTreeViewModel vm = (EventTreeViewModel)DataContext;
+                vm.AddEvent(_sourceItem);
+            }
+            else
+            {
+                _targetItem.AddChild(_sourceItem);
+            }
         }
 
         private TreeViewItem FindParent()
