@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,7 +45,6 @@ namespace EventTimelineReconstruction.Views
             }
             protected override void OnRender(DrawingContext drawingContext)
             {
-                //drawingContext.DrawRectangle(renderBrush, null, renderRect);
                 drawingContext.DrawRectangle(rectBrush, null, renderRect);
                 drawingContext.DrawText(txt, new Point());
             }
@@ -116,7 +116,23 @@ namespace EventTimelineReconstruction.Views
         private bool CheckDropTarget(EventViewModel _sourceItem, EventViewModel _targetItem)
         {
             //Check whether the target item is meeting your condition
-            // TODO - check all subtree above to disallow grouping from the same subtree VisualTreeHelper.GetChild()
+            Queue<EventViewModel> queue = new();
+            queue.Enqueue(_sourceItem);
+
+            while (queue.Count > 0)
+            {
+                EventViewModel eventViewModel = queue.Dequeue();
+                foreach (EventViewModel child in eventViewModel.Children)
+                {
+                    if (child == _targetItem)
+                    {
+                        return false;
+                    }
+
+                    queue.Enqueue(child);
+                }
+            }
+
             return _sourceItem != _targetItem;
         }
 
