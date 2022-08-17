@@ -308,6 +308,11 @@ public class EventViewModel : ViewModelBase, IComparable
         _children.Remove(child);
     }
 
+    public bool ContainsChild(EventViewModel child)
+    {
+        return _children.Contains(child);
+    }
+
     public int CompareTo(object obj)
     {
         EventViewModel other = obj as EventViewModel;

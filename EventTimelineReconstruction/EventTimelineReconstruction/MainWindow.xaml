@@ -44,6 +44,9 @@
                 <Button ToolTip="Load work from file" Click="LoadButton_Click">
                     <Image Width="32" Source="/Resources/load.png" />
                 </Button>
+                <Button ToolTip="Move event one level up" Command="{Binding MoveEventCommand}">
+                    <Image Width="32" Source="/Resources/load.png" />
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <views:EventDetailsView Width="300" DockPanel.Dock="Right" DataContext="{Binding EventDetailsViewModel}" />
