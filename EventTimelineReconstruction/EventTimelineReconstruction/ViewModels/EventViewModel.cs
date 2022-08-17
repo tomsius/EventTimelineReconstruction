@@ -6,7 +6,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 
 namespace EventTimelineReconstruction.ViewModels;
-public class EventViewModel : ViewModelBase
+public class EventViewModel : ViewModelBase, IComparable
 {
     private readonly EventModel _eventModel;
     private readonly ObservableCollection<EventViewModel> _children;
@@ -306,5 +306,12 @@ public class EventViewModel : ViewModelBase
     public void RemoveChild(EventViewModel child)
     {
         _children.Remove(child);
+    }
+
+    public int CompareTo(object obj)
+    {
+        EventViewModel other = obj as EventViewModel;
+
+        return DisplayName.CompareTo(other.DisplayName);
     }
 }

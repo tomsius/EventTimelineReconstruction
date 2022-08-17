@@ -7,6 +7,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using EventTimelineReconstruction.ViewModels;
+using EventTimelineReconstruction.Extensions;
 
 namespace EventTimelineReconstruction.Views
 {
@@ -192,10 +193,10 @@ namespace EventTimelineReconstruction.Views
         public void MoveChild(EventViewModel _sourceItem, EventViewModel _targetItem)
         {
             var parentItem = FindParent();
+            EventTreeViewModel vm = (EventTreeViewModel)DataContext;
 
             if (parentItem == null) 
             {
-                EventTreeViewModel vm = (EventTreeViewModel)DataContext;
                 vm.RemoveEvent(_sourceItem);
             }
             else 
@@ -206,12 +207,13 @@ namespace EventTimelineReconstruction.Views
 
             if (_targetItem == null)
             {
-                EventTreeViewModel vm = (EventTreeViewModel)DataContext;
                 vm.AddEvent(_sourceItem);
+                vm.UpdateOrdering();
             }
             else
             {
                 _targetItem.AddChild(_sourceItem);
+                _targetItem.Children.Sort();
             }
         }
 

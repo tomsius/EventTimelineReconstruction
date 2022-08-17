@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.Extensions;
 
 namespace EventTimelineReconstruction.ViewModels;
 public class EventTreeViewModel : ViewModelBase
@@ -41,5 +42,10 @@ public class EventTreeViewModel : ViewModelBase
     public void RemoveEvent(EventViewModel eventViewModel)
     {
         _events.Remove(eventViewModel);
+    }
+
+    public void UpdateOrdering()
+    {
+        _events.Sort();
     }
 }
