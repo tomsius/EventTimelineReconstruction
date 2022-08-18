@@ -1,4 +1,7 @@
-﻿namespace EventTimelineReconstruction.ViewModels;
+﻿using System.Windows.Input;
+using EventTimelineReconstruction.Commands;
+
+namespace EventTimelineReconstruction.ViewModels;
 public class MainWindowViewModel
 {
     private readonly EventTreeViewModel _eventTreeViewModel;
@@ -21,9 +24,13 @@ public class MainWindowViewModel
         }
     }
 
+    public ICommand MoveEventCommand { get; }
+
     public MainWindowViewModel(EventTreeViewModel eventTreeViewModel, EventDetailsViewModel eventDetailsViewModel)
     {
         _eventTreeViewModel = eventTreeViewModel;
         _eventDetailsViewModel = eventDetailsViewModel;
+
+        MoveEventCommand = new MoveEventUpCommand(eventTreeViewModel, eventDetailsViewModel);
     }
 }
