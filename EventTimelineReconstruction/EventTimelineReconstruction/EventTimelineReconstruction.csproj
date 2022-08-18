@@ -10,6 +10,7 @@
     <None Remove="Resources\import.png" />
     <None Remove="Resources\load.png" />
     <None Remove="Resources\magnifying-glass.ico" />
+    <None Remove="Resources\moveup.png" />
     <None Remove="Resources\save.png" />
   </ItemGroup>
 
@@ -26,6 +27,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\magnifying-glass.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\moveup.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\save.png">
