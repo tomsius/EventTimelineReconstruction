@@ -6,10 +6,12 @@ namespace EventTimelineReconstruction.Commands;
 public class HideEventCommand : CommandBase
 {
     private readonly EventDetailsViewModel _eventDetailsViewModel;
+    private readonly HiddenEventsViewModel _hiddenEventsViewModel;
 
-    public HideEventCommand(EventDetailsViewModel eventDetailsViewModel)
+    public HideEventCommand(EventDetailsViewModel eventDetailsViewModel, HiddenEventsViewModel hiddenEventsViewModel)
     {
         _eventDetailsViewModel = eventDetailsViewModel;
+        _hiddenEventsViewModel = hiddenEventsViewModel;
         _eventDetailsViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
     }
 
@@ -21,6 +23,7 @@ public class HideEventCommand : CommandBase
     public override void Execute(object parameter)
     {
         _eventDetailsViewModel.SelectedEvent.IsVisible = false;
+        _hiddenEventsViewModel.AddHiddenEvent(_eventDetailsViewModel.SelectedEvent);
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
