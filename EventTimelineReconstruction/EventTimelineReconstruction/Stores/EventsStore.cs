@@ -42,4 +42,31 @@ public class EventsStore
         _events.Clear();
         _events.AddRange(events);
     }
+
+    public List<EventViewModel> GetAllHiddenEvents()
+    {
+        List<EventViewModel> hiddenEvents = new(_events.Count);
+        Queue<EventViewModel> queue = new(_events.Count);
+
+        foreach (EventViewModel eventViewModel in _events)
+        {
+            queue.Enqueue(eventViewModel);
+        }
+
+        while (queue.Count > 0)
+        {
+            EventViewModel current = queue.Dequeue();
+            foreach (EventViewModel eventViewModel in current.Children)
+            {
+                queue.Enqueue(eventViewModel);
+            }
+
+            if (current.IsVisible == false)
+            {
+                hiddenEvents.Add(current);
+            }
+        }
+
+        return hiddenEvents;
+    }
 }

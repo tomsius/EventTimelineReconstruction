@@ -50,6 +50,9 @@
                 <Button ToolTip="Hide selected event" Command="{Binding HideCommand}">
                     <Image Width="32" Source="/Resources/hide.png" />
                 </Button>
+                <Button ToolTip="All hidden events" Click="HiddenEventsButton_Click">
+                    <Image Width="32" Source="/Resources/hidden.png" />
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <views:EventDetailsView Width="300" DockPanel.Dock="Right" DataContext="{Binding EventDetailsViewModel}" />

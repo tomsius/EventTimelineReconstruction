@@ -30,7 +30,8 @@ public partial class App : Application
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
                 services.AddSingleton<SaveWorkViewModel>();
                 services.AddSingleton<LoadWorkViewModel>();
-                services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>()));
+                services.AddSingleton(s => new HiddenEventsViewModel(s.GetRequiredService<EventsStore>()));
+                services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>(), s.GetRequiredService<HiddenEventsViewModel>()));
 
                 services.AddSingleton(s => new ImportView() 
                 {
@@ -49,7 +50,10 @@ public partial class App : Application
                 services.AddSingleton(s => new EventDetailsView() {
                     DataContext = s.GetRequiredService<EventDetailsViewModel>()
                 });
-                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>()) {
+                services.AddSingleton(s => new HiddenEventsView() {
+                    DataContext = s.GetRequiredService<HiddenEventsViewModel>()
+                });
+                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>(), s.GetRequiredService<HiddenEventsView>()) {
                     DataContext = s.GetRequiredService<MainWindowViewModel>()
                 });
             })
