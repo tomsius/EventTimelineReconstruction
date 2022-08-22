@@ -1,7 +1,8 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EventTimelineReconstruction.ViewModels;
 using EventTimelineReconstruction.Extensions;
+using System.Linq;
+using System.ComponentModel;
 
 namespace EventTimelineReconstruction.Commands;
 public class MoveEventUpCommand : CommandBase
@@ -13,26 +14,18 @@ public class MoveEventUpCommand : CommandBase
     {
         _eventDetailsViewModel = eventDetailsViewModel;
         _treeViewModel = treeViewModel;
+        _treeViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
     }
 
     public override bool CanExecute(object parameter)
     {
-        bool isRootLevelItem = false;
-        foreach (EventViewModel item in _treeViewModel.Events) {
-            if (item == _eventDetailsViewModel.SelectedEvent) {
-                isRootLevelItem = true;
-                break;
-            }
-        }
-
-        return isRootLevelItem == false && base.CanExecute(parameter);
+        return _treeViewModel.Events.Any() && base.CanExecute(parameter);
     }
 
     public override void Execute(object parameter)
     {
         Stack<EventViewModel> stack = new();
-        EventViewModel grandParent = null;
-        //EventViewModel parent = null;
+        EventViewModel grandParent;
 
         foreach (EventViewModel item in _treeViewModel.Events)
         {
@@ -41,6 +34,7 @@ public class MoveEventUpCommand : CommandBase
                 item.RemoveChild(_eventDetailsViewModel.SelectedEvent);
 
                 _treeViewModel.UpdateOrdering();
+                _eventDetailsViewModel.SelectedEvent = null;
                 return;
             }
 
@@ -58,12 +52,19 @@ public class MoveEventUpCommand : CommandBase
                     parent.RemoveChild(_eventDetailsViewModel.SelectedEvent);
 
                     grandParent.Children.Sort();
-
+                    _eventDetailsViewModel.SelectedEvent = null;
                     return;
                 }
 
                 stack.Push(parent);
             }
+        }
+    }
+
+    private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(EventTreeViewModel.Events)) {
+            this.OnCanExecuteChanged();
         }
     }
 }
