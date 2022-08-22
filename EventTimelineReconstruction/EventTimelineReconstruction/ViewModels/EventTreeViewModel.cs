@@ -49,6 +49,8 @@ public class EventTreeViewModel : ViewModelBase
         foreach (EventViewModel entity in events) {
             _events.Add(entity);
         }
+
+        this.OnPropertyChanged(nameof(Events));
     }
 
     public void AddEvent(EventViewModel eventViewModel)
