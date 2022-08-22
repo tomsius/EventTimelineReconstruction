@@ -47,6 +47,9 @@
                 <Button ToolTip="Move event one level up" Command="{Binding MoveEventCommand}">
                     <Image Width="32" Source="/Resources/moveup.png" />
                 </Button>
+                <Button ToolTip="Hide selected event" Command="{Binding HideCommand}">
+                    <Image Width="32" Source="/Resources/hide.png" />
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <views:EventDetailsView Width="300" DockPanel.Dock="Right" DataContext="{Binding EventDetailsViewModel}" />
