@@ -4,7 +4,6 @@ using System.Windows;
 using EventTimelineReconstruction.ViewModels;
 using System.Collections.Generic;
 using EventTimelineReconstruction.Extensions;
-using System.Runtime.InteropServices;
 
 namespace EventTimelineReconstruction.Utils;
 
@@ -25,7 +24,7 @@ public static class DragDropUtils
 
     public static bool CheckDropTarget(EventViewModel sourceItem, EventViewModel targetItem)
     {
-        //Check whether the target item is meeting your condition
+        //Check whether the target item is meeting condition
         Queue<EventViewModel> queue = new();
         queue.Enqueue(sourceItem);
 
@@ -56,13 +55,13 @@ public static class DragDropUtils
 
     private static void MoveChild(EventViewModel sourceItem, EventViewModel targetItem, TreeViewItem draggedItemElement, EventTreeViewModel vm)
     {
-        var parentItem = FindParent(draggedItemElement);
+        TreeViewItem parentItem = FindParent(draggedItemElement);
 
         if (parentItem == null) {
             vm.RemoveEvent(sourceItem);
         }
         else {
-            var parentViewModel = parentItem.Header as EventViewModel;
+            EventViewModel parentViewModel = parentItem.Header as EventViewModel;
             parentViewModel.RemoveChild(sourceItem);
         }
 
@@ -85,7 +84,4 @@ public static class DragDropUtils
 
         return (parent as ItemsControl) as TreeViewItem;
     }
-
-    [DllImport("user32.dll")]
-    public static extern void GetCursorPos(ref PInPoint p);
 }

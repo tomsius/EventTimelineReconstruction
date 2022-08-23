@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using EventTimelineReconstruction.ViewModels;
 
-namespace EventTimelineReconstruction.Services
+namespace EventTimelineReconstruction.Services;
+
+public interface IWorkSaver
 {
-    public interface IWorkSaver
-    {
-        public void SaveWork(string path, IEnumerable<EventViewModel> events);
-    }
+    public void SaveWork(string path, IEnumerable<EventViewModel> events);
 }

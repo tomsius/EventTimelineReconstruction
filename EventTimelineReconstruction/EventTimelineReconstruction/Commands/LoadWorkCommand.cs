@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace EventTimelineReconstruction.Commands;
+
 public class LoadWorkCommand : AsyncCommandBase
 {
     private readonly LoadWorkViewModel _loadWorkViewModel;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EventTimelineReconstruction.Models;
 
 namespace EventTimelineReconstruction.Services;
+
 public class L2tCSVEventsImporter : IEventsImporter
 {
     public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)

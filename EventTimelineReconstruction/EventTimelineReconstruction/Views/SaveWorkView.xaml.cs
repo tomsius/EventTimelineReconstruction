@@ -2,14 +2,12 @@
 using System.Windows;
 
 namespace EventTimelineReconstruction.Views;
-/// <summary>
-/// Interaction logic for SaveWorkView.xaml
-/// </summary>
+
 public partial class SaveWorkView : Window
 {
     public SaveWorkView()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)

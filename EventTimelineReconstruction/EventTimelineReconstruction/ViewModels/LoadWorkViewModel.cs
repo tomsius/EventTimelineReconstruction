@@ -4,6 +4,7 @@ using EventTimelineReconstruction.Stores;
 using System.Windows.Input;
 
 namespace EventTimelineReconstruction.ViewModels;
+
 public class LoadWorkViewModel : ViewModelBase, IFileSelectable
 {
     private string _fileName;

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Services;
+
 public class FileWorkSaver : IWorkSaver
 {
     public void SaveWork(string path, IEnumerable<EventViewModel> events)
@@ -23,7 +20,7 @@ public class FileWorkSaver : IWorkSaver
             string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
             outputStream.WriteLine(dataToWrite);
 
-            WriteTreeToFile(eventViewModel.Children, outputStream, currentLevel + 1);
+            this.WriteTreeToFile(eventViewModel.Children, outputStream, currentLevel + 1);
         }
     }
 }

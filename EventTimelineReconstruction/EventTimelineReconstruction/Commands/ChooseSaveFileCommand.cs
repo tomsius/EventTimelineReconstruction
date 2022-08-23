@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 
 namespace EventTimelineReconstruction.Commands;
+
 public class ChooseSaveFileCommand : CommandBase
 {
     private readonly IFileSelectable _viewModel;
@@ -13,8 +14,10 @@ public class ChooseSaveFileCommand : CommandBase
 
     public override void Execute(object parameter)
     {
-        SaveFileDialog saveFileDialog = new();
-        saveFileDialog.Filter = "Event Timeline Reconstruction files (*.etr)|*.etr";
+        SaveFileDialog saveFileDialog = new()
+        {
+            Filter = "Event Timeline Reconstruction files (*.etr)|*.etr"
+        };
 
         if (saveFileDialog.ShowDialog() == true) {
             _viewModel.FileName = saveFileDialog.FileName;

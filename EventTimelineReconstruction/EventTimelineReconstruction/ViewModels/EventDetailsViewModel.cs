@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace EventTimelineReconstruction.ViewModels;
 
-namespace EventTimelineReconstruction.ViewModels;
 public class EventDetailsViewModel : ViewModelBase
 {
     private EventViewModel _selectedEvent;

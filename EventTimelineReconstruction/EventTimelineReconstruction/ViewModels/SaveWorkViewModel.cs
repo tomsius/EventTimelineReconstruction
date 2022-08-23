@@ -1,9 +1,9 @@
 ﻿using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Services;
-using EventTimelineReconstruction.Stores;
 
 namespace EventTimelineReconstruction.ViewModels;
+
 public class SaveWorkViewModel : ViewModelBase, IFileSelectable
 {
     private string _fileName;

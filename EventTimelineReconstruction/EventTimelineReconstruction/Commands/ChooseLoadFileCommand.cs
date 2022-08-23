@@ -14,8 +14,10 @@ public class ChooseLoadFileCommand : CommandBase
 
     public override void Execute(object parameter)
     {
-        OpenFileDialog openFileDialog = new();
-        openFileDialog.Filter = "CSV files (*.csv)|*.csv|Event Timeline Reconstruction files (*.etr*)|*.etr";
+        OpenFileDialog openFileDialog = new()
+        {
+            Filter = "CSV files (*.csv)|*.csv|Event Timeline Reconstruction files (*.etr*)|*.etr"
+        };
 
         if (openFileDialog.ShowDialog() == true)
         {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.ComponentModel;
 
 namespace EventTimelineReconstruction.Commands;
+
 public class MoveEventUpCommand : CommandBase
 {
     private readonly EventTreeViewModel _treeViewModel;

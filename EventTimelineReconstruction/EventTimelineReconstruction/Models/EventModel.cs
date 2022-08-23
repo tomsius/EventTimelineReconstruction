@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace EventTimelineReconstruction.Models;
+
 public class EventModel
 {
     public DateOnly Date { get; }

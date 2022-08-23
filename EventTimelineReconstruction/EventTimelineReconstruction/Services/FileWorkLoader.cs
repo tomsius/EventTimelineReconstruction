@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Media;
 
 namespace EventTimelineReconstruction.Services;
+
 public class FileWorkLoader : IWorkLoader
 {
     public List<EventViewModel> LoadWork(string path)
@@ -65,7 +66,7 @@ public class FileWorkLoader : IWorkLoader
         return events;
     }
 
-    private int GetDepth(string col)
+    private static int GetDepth(string col)
     {
         int depth = 0;
 
@@ -76,18 +77,7 @@ public class FileWorkLoader : IWorkLoader
         return depth;
     }
 
-    private EventViewModel ConvertToViewModel(EventModel eventModel, string[] columns)
-    {
-        EventViewModel eventViewModel = new(eventModel);
-        eventViewModel.IsVisible = bool.Parse(columns[21]);
-        Brush brush = (Brush)new BrushConverter().ConvertFromString(columns[22]);
-        brush.Freeze();
-        eventViewModel.Colour = brush;
-
-        return eventViewModel;
-    }
-
-    private EventModel ConvertRowToModel(string[] columns)
+    private static EventModel ConvertRowToModel(string[] columns)
     {
         DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
         TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
@@ -144,5 +134,16 @@ public class FileWorkLoader : IWorkLoader
         }
 
         return extra;
+    }
+
+    private static EventViewModel ConvertToViewModel(EventModel eventModel, string[] columns)
+    {
+        EventViewModel eventViewModel = new(eventModel);
+        eventViewModel.IsVisible = bool.Parse(columns[21]);
+        Brush brush = (Brush)new BrushConverter().ConvertFromString(columns[22]);
+        brush.Freeze();
+        eventViewModel.Colour = brush;
+
+        return eventViewModel;
     }
 }

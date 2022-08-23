@@ -9,6 +9,7 @@ using EventTimelineReconstruction.Extensions;
 using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
+
 public class EventTreeViewModel : ViewModelBase
 {
     private readonly ObservableCollection<EventViewModel> _events;
@@ -21,12 +22,13 @@ public class EventTreeViewModel : ViewModelBase
         }
     }
 
+    public PInPoint pointRef;
+
     public EventViewModel DraggedItem{ get; set; }
     public EventViewModel Target { get; set; }
     public TreeViewItem DraggedItemElement { get; set; }
     public DraggableAdorner MyAdornment { get; set; }
-    public PInPoint pointRef;
-
+    
     public ICommand ShowDetailsCommand { get; }
     public ICommand DragOverCommand { get; }
     public ICommand DropCommand { get; }
@@ -36,7 +38,9 @@ public class EventTreeViewModel : ViewModelBase
     public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel)
     {
         _events = new();
+
         pointRef = new PInPoint();
+
         ShowDetailsCommand = new ShowEventDetailsCommand(eventDetailsViewModel);
         DragOverCommand = new DragOverEventCommand(this);
         DropCommand = new DropEventCommand(this);
@@ -52,7 +56,7 @@ public class EventTreeViewModel : ViewModelBase
             _events.Add(entity);
         }
 
-        ApplyFilters();
+        this.ApplyFilters();
 
         this.OnPropertyChanged(nameof(Events));
     }

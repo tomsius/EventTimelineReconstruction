@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Extensions;
+
 public static class EventViewModelExtensions
 {
     public static void Sort(this ObservableCollection<EventViewModel> collection)

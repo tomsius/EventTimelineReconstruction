@@ -130,7 +130,6 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
 
     public ICommand ChooseFileCommand { get; }
     public ICommand ImportCommand { get; }
-    public ICommand CancelCommand { get; }
 
     public ImportViewModel(EventTreeViewModel viewModel, EventsStore store)
     {

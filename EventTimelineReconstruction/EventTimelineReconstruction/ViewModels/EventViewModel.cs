@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 
 namespace EventTimelineReconstruction.ViewModels;
+
 public class EventViewModel : ViewModelBase, IComparable
 {
     private readonly EventModel _eventModel;
@@ -148,6 +149,7 @@ public class EventViewModel : ViewModelBase, IComparable
     }
 
     private bool _isVisible;
+
     public bool IsVisible
     {
         get
@@ -162,6 +164,7 @@ public class EventViewModel : ViewModelBase, IComparable
     }
 
     private Brush _colour;
+
     public Brush Colour
     {
         get
@@ -246,7 +249,7 @@ public class EventViewModel : ViewModelBase, IComparable
     public EventViewModel(EventModel eventModel)
     {
         _eventModel = eventModel;
-
+        _children = new();
         IsVisible = true;
 
         // TODO - remove random colour assignment
@@ -259,8 +262,6 @@ public class EventViewModel : ViewModelBase, IComparable
         {
             Colour = Brushes.Black;
         }
-
-        _children = new();
     }
 
     public string Serialize()

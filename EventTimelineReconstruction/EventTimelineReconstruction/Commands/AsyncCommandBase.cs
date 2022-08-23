@@ -1,7 +1,7 @@
-﻿
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace EventTimelineReconstruction.Commands;
+
 public abstract class AsyncCommandBase : CommandBase
 {
     private bool _isExecuting;

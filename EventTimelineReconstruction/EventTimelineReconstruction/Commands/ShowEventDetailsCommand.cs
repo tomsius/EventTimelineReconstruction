@@ -15,9 +15,9 @@ public class ShowEventDetailsCommand : CommandBase
     public override void Execute(object parameter)
     {
         RoutedPropertyChangedEventArgs<object> e = (RoutedPropertyChangedEventArgs<object>)parameter;
-        EventViewModel eventViewModel = e.NewValue as EventViewModel;
 
-        if (eventViewModel != null) {
+        if (e.NewValue is EventViewModel eventViewModel)
+        {
             _eventDetailsViewModel.SelectedEvent = eventViewModel;
         }
     }

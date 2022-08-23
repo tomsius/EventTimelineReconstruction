@@ -6,8 +6,7 @@ namespace EventTimelineReconstruction.CustomInvokers;
 
 public sealed class CustomCommandInvoker : TriggerAction<DependencyObject>
 {
-    public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-            "Command", typeof(ICommand), typeof(CustomCommandInvoker), null);
+    public readonly static DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(CustomCommandInvoker), null);
 
     public ICommand Command
     {
@@ -23,8 +22,9 @@ public sealed class CustomCommandInvoker : TriggerAction<DependencyObject>
 
     protected override void Invoke(object parameter)
     {
-        if (this.AssociatedObject != null) {
+        if (AssociatedObject != null) {
             ICommand command = Command;
+
             if ((command != null) && command.CanExecute(parameter)) {
                 command.Execute(parameter);
             }

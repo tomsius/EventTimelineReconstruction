@@ -2,6 +2,7 @@
 using EventTimelineReconstruction.Commands;
 
 namespace EventTimelineReconstruction.ViewModels;
+
 public class MainWindowViewModel
 {
     private readonly EventTreeViewModel _eventTreeViewModel;

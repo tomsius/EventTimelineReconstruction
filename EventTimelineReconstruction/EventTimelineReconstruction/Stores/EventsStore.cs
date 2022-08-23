@@ -7,6 +7,7 @@ using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Stores;
+
 public class EventsStore
 {
     private List<EventViewModel> _events;
