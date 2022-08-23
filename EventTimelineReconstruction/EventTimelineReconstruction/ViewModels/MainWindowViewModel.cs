@@ -33,6 +33,6 @@ public class MainWindowViewModel
         _eventDetailsViewModel = eventDetailsViewModel;
 
         MoveEventCommand = new MoveEventUpCommand(eventTreeViewModel, eventDetailsViewModel);
-        HideCommand = new HideEventCommand(eventDetailsViewModel, hiddenEventsViewModel);
+        HideCommand = new HideEventCommand(eventTreeViewModel, eventDetailsViewModel, hiddenEventsViewModel);
     }
 }

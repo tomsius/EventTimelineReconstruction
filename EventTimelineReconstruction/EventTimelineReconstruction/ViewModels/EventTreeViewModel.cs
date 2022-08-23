@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Extensions;
@@ -50,6 +52,8 @@ public class EventTreeViewModel : ViewModelBase
             _events.Add(entity);
         }
 
+        ApplyFilters();
+
         this.OnPropertyChanged(nameof(Events));
     }
 
@@ -66,5 +70,45 @@ public class EventTreeViewModel : ViewModelBase
     public void UpdateOrdering()
     {
         _events.Sort();
+    }
+
+    public void ApplyFilters()
+    {
+        ICollectionView eventsDataSourceView = CollectionViewSource.GetDefaultView(Events);
+
+        eventsDataSourceView.Filter = eventModel =>
+        {
+            ICollectionView childrenDataSourceView;
+            Queue<EventViewModel> queue = new();
+
+            foreach (EventViewModel child in ((EventViewModel)eventModel).Children)
+            {
+                queue.Enqueue(child);
+            }
+
+            while (queue.Count > 0)
+            {
+                EventViewModel eventViewModel = queue.Dequeue();
+
+                foreach (EventViewModel child in eventViewModel.Children)
+                {
+                    queue.Enqueue(child);
+                }
+
+                childrenDataSourceView = CollectionViewSource.GetDefaultView(eventViewModel.Children);
+                childrenDataSourceView.Filter = childModel =>
+                {
+                    return ((EventViewModel)childModel).IsVisible;
+                };
+            }
+
+            childrenDataSourceView = CollectionViewSource.GetDefaultView(((EventViewModel)eventModel).Children);
+            childrenDataSourceView.Filter = childModel =>
+            {
+                return ((EventViewModel)childModel).IsVisible;
+            };
+
+            return ((EventViewModel)eventModel).IsVisible;
+        };
     }
 }

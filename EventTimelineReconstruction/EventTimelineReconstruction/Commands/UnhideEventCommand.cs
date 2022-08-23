@@ -6,10 +6,12 @@ namespace EventTimelineReconstruction.Commands;
 public class UnhideEventCommand : CommandBase
 {
     private readonly HiddenEventsViewModel _hiddenEventsViewModel;
+    private readonly EventTreeViewModel _eventTreeViewModel;
 
-    public UnhideEventCommand(HiddenEventsViewModel hiddenEventsViewModel)
+    public UnhideEventCommand(HiddenEventsViewModel hiddenEventsViewModel, EventTreeViewModel eventTreeViewModel)
     {
         _hiddenEventsViewModel = hiddenEventsViewModel;
+        _eventTreeViewModel = eventTreeViewModel;
         _hiddenEventsViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
     }
 
@@ -22,6 +24,7 @@ public class UnhideEventCommand : CommandBase
     {
         _hiddenEventsViewModel.SelectedHiddenEvent.IsVisible = true;
         _hiddenEventsViewModel.RemoveHiddenEvent(_hiddenEventsViewModel.SelectedHiddenEvent);
+        _eventTreeViewModel.ApplyFilters();
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
