@@ -27,6 +27,7 @@ public class HideEventCommand : CommandBase
         _eventDetailsViewModel.SelectedEvent.IsVisible = false;
         _hiddenEventsViewModel.AddHiddenEvent(_eventDetailsViewModel.SelectedEvent);
         _eventTreeViewModel.ApplyFilters();
+        _eventDetailsViewModel.SelectedEvent = null;
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
