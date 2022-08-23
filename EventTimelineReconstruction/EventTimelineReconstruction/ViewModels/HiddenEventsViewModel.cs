@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
@@ -17,11 +18,6 @@ public class HiddenEventsViewModel : ViewModelBase
     {
         get
         {
-            if (_hiddenEvents == null)
-            {
-                Initialize();
-            }
-
             return _hiddenEvents;
         }
     }
@@ -45,24 +41,29 @@ public class HiddenEventsViewModel : ViewModelBase
     public ICommand UnhideCommand { get; }
 
 
-    public HiddenEventsViewModel(EventsStore eventsStore)
+    public HiddenEventsViewModel(EventsStore eventsStore, EventTreeViewModel eventTreeViewModel)
     {
         _hiddenEvents = new();
         _eventsStore = eventsStore;
 
-        UnhideCommand = new UnhideEventCommand(this);
+        UnhideCommand = new UnhideEventCommand(this, eventTreeViewModel);
+
+        eventTreeViewModel.PropertyChanged += this.Initialize;
     }
 
-    private void Initialize()
+    public void Initialize(object sender, PropertyChangedEventArgs e)
     {
-        List<EventViewModel> hiddenEvents = _eventsStore.GetAllHiddenEvents();
-        _hiddenEvents.Clear();
+        if (e.PropertyName == nameof(EventTreeViewModel.Events))
+        {
+            List<EventViewModel> hiddenEvents = _eventsStore.GetAllHiddenEvents();
+            _hiddenEvents.Clear();
 
-        foreach (EventViewModel entity in hiddenEvents) {
-            _hiddenEvents.Add(entity);
+            foreach (EventViewModel entity in hiddenEvents) {
+                _hiddenEvents.Add(entity);
+            }
+
+            _hiddenEvents.Sort();
         }
-
-        _hiddenEvents.Sort();
     }
 
     public void AddHiddenEvent(EventViewModel hiddenEvent)
