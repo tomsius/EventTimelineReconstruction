@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\hidden.png" />
+    <None Remove="Resources\hide.png" />
     <None Remove="Resources\import.png" />
     <None Remove="Resources\load.png" />
     <None Remove="Resources\magnifying-glass.ico" />
@@ -20,6 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\hidden.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\hide.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\import.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

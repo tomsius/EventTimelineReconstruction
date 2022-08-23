@@ -25,12 +25,14 @@ public class MainWindowViewModel
     }
 
     public ICommand MoveEventCommand { get; }
+    public ICommand HideCommand { get; }
 
-    public MainWindowViewModel(EventTreeViewModel eventTreeViewModel, EventDetailsViewModel eventDetailsViewModel)
+    public MainWindowViewModel(EventTreeViewModel eventTreeViewModel, EventDetailsViewModel eventDetailsViewModel, HiddenEventsViewModel hiddenEventsViewModel)
     {
         _eventTreeViewModel = eventTreeViewModel;
         _eventDetailsViewModel = eventDetailsViewModel;
 
         MoveEventCommand = new MoveEventUpCommand(eventTreeViewModel, eventDetailsViewModel);
+        HideCommand = new HideEventCommand(eventTreeViewModel, eventDetailsViewModel, hiddenEventsViewModel);
     }
 }
