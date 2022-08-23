@@ -15,11 +15,12 @@ public class MoveEventUpCommand : CommandBase
         _eventDetailsViewModel = eventDetailsViewModel;
         _treeViewModel = treeViewModel;
         _treeViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
+        _eventDetailsViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
     }
 
     public override bool CanExecute(object parameter)
     {
-        return _treeViewModel.Events.Any() && base.CanExecute(parameter);
+        return _treeViewModel.Events.Any() && _eventDetailsViewModel.SelectedEvent != null && base.CanExecute(parameter);
     }
 
     public override void Execute(object parameter)
@@ -63,7 +64,7 @@ public class MoveEventUpCommand : CommandBase
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(EventTreeViewModel.Events)) {
+        if (e.PropertyName == nameof(EventTreeViewModel.Events) || e.PropertyName == nameof(EventDetailsViewModel.SelectedEvent)) {
             this.OnCanExecuteChanged();
         }
     }
