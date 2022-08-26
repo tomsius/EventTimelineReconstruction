@@ -1,25 +1,30 @@
-﻿using EventTimelineReconstruction.Stores;
+﻿using System.Windows.Controls;
+using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
 public class ApplyFiltersCommand : CommandBase
 {
-    private FilterViewModel _filterViewModel;
     private readonly FilteringStore _filteringStore;
+    private readonly EventTreeViewModel _eventTreeViewModel;
 
-    public ApplyFiltersCommand(FilterViewModel filterViewModel, FilteringStore filteringStore)
+    public ApplyFiltersCommand(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel)
     {
-        _filterViewModel = filterViewModel;
         _filteringStore = filteringStore;
+        _eventTreeViewModel = eventTreeViewModel;
     }
 
     public override void Execute(object parameter)
     {
-        _filteringStore.AreAllFiltersApplied = _filterViewModel.AreAllFiltersApplied;
-        _filteringStore.Keyword = _filterViewModel.Keyword;
-        _filteringStore.FromDate = _filterViewModel.FullFromDate;
-        _filteringStore.ToDate = _filterViewModel.FullToDate;
-        _filteringStore.SetEventTypes(_filterViewModel.ChosenEventTypes);
+        object[] values = parameter as object[];
+        Button enableButton = values[0] as Button;
+        Button disableButton = values[1] as Button;
+
+        enableButton.IsEnabled = !enableButton.IsEnabled;
+        disableButton.IsEnabled = !disableButton.IsEnabled;
+
+        _filteringStore.IsEnabled = disableButton.IsEnabled;
+        _eventTreeViewModel.ApplyFilters();
     }
 }
