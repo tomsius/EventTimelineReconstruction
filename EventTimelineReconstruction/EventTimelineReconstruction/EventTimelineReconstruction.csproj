@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\filter.png" />
     <None Remove="Resources\hidden.png" />
     <None Remove="Resources\hide.png" />
     <None Remove="Resources\import.png" />
@@ -22,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\filter.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\hidden.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

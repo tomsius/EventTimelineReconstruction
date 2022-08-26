@@ -1,0 +1,426 @@
+﻿<Window x:Class="EventTimelineReconstruction.Views.FilterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:customInvokers="clr-namespace:EventTimelineReconstruction.CustomInvokers"
+        xmlns:converters="clr-namespace:EventTimelineReconstruction.Converters"
+        mc:Ignorable="d"
+        Title="Filtering..."
+        Height="720"
+        Width="400"
+        MinHeight="720"
+        MinWidth="400"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <converters:FilterButtonsConverter x:Key="ButtonConverter" />
+    </Window.Resources>
+    <DockPanel Margin="20" LastChildFill="True">
+        <TextBlock
+            FontSize="24"
+            FontWeight="Bold"
+            Text="Event filtering"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Margin="0 0 0 20"
+            DockPanel.Dock="Top"/>
+
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Top" Margin="0 0 0 50">
+            <Button
+                x:Name="EnableButton"
+                Width="95"
+                Height="30"
+                Padding="26 5 26 0"
+                Margin="0 0 0 0"
+                Content="Enable"
+                FontWeight="Bold"
+                IsEnabled="True"
+                Style="{StaticResource ToggleSwitchEnable}"
+                Command="{Binding FilterCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ButtonConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}" />
+                        <Binding ElementName="DisableButton" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                x:Name="DisableButton"
+                Width="95"
+                Height="30"
+                Padding="23 5 23 0"
+                Margin="0 0 0 0"
+                Content="Disable"
+                FontWeight="Bold"
+                IsEnabled="False"
+                Style="{StaticResource ToggleSwitchDisable}"
+                Command="{Binding FilterCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ButtonConverter}">
+                        <Binding ElementName="EnableButton" />
+                        <Binding RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
+            <Button 
+                Style="{StaticResource ConfirmationButton}"
+                Width="120"
+                Height="30"
+                Padding="0, 0, 0, 2"
+                Command="{Binding ApplyCommand}">
+                <TextBlock
+                    Text="Apply options"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+            </Button>
+            <Button
+                Style="{StaticResource CancelButton}"
+                Width="100"
+                Height="30"
+                Padding="0, 0, 0, 2"
+                Margin="10, 0, 0, 0"
+                Click="CloseButton_Click">
+                <TextBlock
+                    Text="Close"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical">
+            <DockPanel LastChildFill="False">
+                <TextBlock
+                    FontSize="14"
+                    Text="Filtering type"
+                    DockPanel.Dock="Left"/>
+                <ComboBox DockPanel.Dock="Right" Width="250">
+                    <ComboBoxItem IsSelected="True" Content="Show events matching at least one filter" />
+                    <ComboBoxItem Content="Show events matching all filters" />
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding FilterChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </DockPanel>
+
+            <Separator Margin="0 5 0 5" />
+
+            <DockPanel LastChildFill="False">
+                <TextBlock
+                FontSize="14"
+                Text="Event types"
+                DockPanel.Dock="Left"/>
+                <StackPanel DockPanel.Dock="Right" Margin="0 0 67 0">
+                    <CheckBox Width="170" Margin="0 0 0 5" Content="Select all" IsThreeState="True">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Loaded">
+                                <customInvokers:CustomCommandInvoker Command="{Binding InitializeCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                    <StackPanel Orientation="Vertical" Margin="30 0 0 0">
+                        <CheckBox Width="170" Content="Analytics Creation Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Analytics Previous Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Content Deletion Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Content Modification Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Creation Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Expiration Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="File Last Modification Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Installation Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Access Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Checked Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Connection Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Login Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Password Reset">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Shutdown Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Time Executed">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Last Visited Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Metadata Modification Time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox Width="170" Content="Not a time">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+
+            <Separator Margin="0 5 0 5" />
+
+            <DockPanel LastChildFill="False">
+                <TextBlock
+                FontSize="14"
+                Text="Keyword"
+                DockPanel.Dock="Left"/>
+                <TextBox 
+                DockPanel.Dock="Right"
+                Width="250" 
+                Text="{Binding Keyword, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <Separator Margin="0 5 0 5" />
+
+            <DockPanel LastChildFill="False">
+                <TextBlock
+                FontSize="14"
+                Text="Date"
+                DockPanel.Dock="Left"/>
+                <Grid DockPanel.Dock="Right" Height="auto" Width="250">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="110" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                    FontSize="14"
+                    Text="From"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    Margin="0 0 0 5" />
+                    <TextBlock
+                    FontSize="14"
+                    Text="To"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    Margin="0 0 0 5" />
+                    <DatePicker
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    SelectedDate="{Binding FromDate}"
+                    Margin="0 0 0 5" />
+                    <DatePicker
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    SelectedDate="{Binding ToDate}" 
+                    Margin="0 0 0 5" />
+                    <DockPanel
+                    Grid.Row="2"
+                    Grid.Column="0">
+                        <Grid DockPanel.Dock="Left">
+                            <TextBox 
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="FromHoursTextBox" 
+                            Text="{Binding FromHours, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3"
+                            />
+                            <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=FromHoursTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid DockPanel.Dock="Right">
+                            <TextBox 
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="FromMinutesTextBox" 
+                            Text="{Binding FromMinutes, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3"/>
+                            <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=FromMinutesTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <TextBlock 
+                    Text=":" 
+                    FontSize="14"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel
+                    Grid.Row="2"
+                    Grid.Column="2">
+                        <Grid DockPanel.Dock="Left">
+                            <TextBox 
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="ToHoursTextBox" 
+                            Text="{Binding ToHours, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3" />
+                            <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=ToHoursTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid DockPanel.Dock="Right">
+                            <TextBox 
+                            Width="40" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" 
+                            x:Name="ToMinutesTextBox" 
+                            Text="{Binding ToMinutes, UpdateSourceTrigger=PropertyChanged}"
+                            Padding="6,3,6,3"/>
+                            <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=ToMinutesTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <TextBlock 
+                    Text=":" 
+                    FontSize="14"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+                    </DockPanel>
+                </Grid>
+            </DockPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

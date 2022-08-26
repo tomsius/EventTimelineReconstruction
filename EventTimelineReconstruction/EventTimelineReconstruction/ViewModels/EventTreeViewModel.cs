@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -6,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Extensions;
+using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
@@ -13,6 +15,7 @@ namespace EventTimelineReconstruction.ViewModels;
 public class EventTreeViewModel : ViewModelBase
 {
     private readonly ObservableCollection<EventViewModel> _events;
+    private readonly FilteringStore _filteringStore;
 
     public IEnumerable<EventViewModel> Events
     {
@@ -35,11 +38,11 @@ public class EventTreeViewModel : ViewModelBase
     public ICommand MouseMoveCommand { get; }
     public ICommand GiveFeedbackCommand { get; }
 
-    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel)
+    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore)
     {
         _events = new();
-
         pointRef = new PInPoint();
+        _filteringStore = filteringStore;
 
         ShowDetailsCommand = new ShowEventDetailsCommand(eventDetailsViewModel);
         DragOverCommand = new DragOverEventCommand(this);
@@ -102,17 +105,115 @@ public class EventTreeViewModel : ViewModelBase
                 childrenDataSourceView = CollectionViewSource.GetDefaultView(eventViewModel.Children);
                 childrenDataSourceView.Filter = childModel =>
                 {
-                    return ((EventViewModel)childModel).IsVisible;
+                    return this.ShouldBeShown(childModel as EventViewModel);
                 };
             }
 
             childrenDataSourceView = CollectionViewSource.GetDefaultView(((EventViewModel)eventModel).Children);
             childrenDataSourceView.Filter = childModel =>
             {
-                return ((EventViewModel)childModel).IsVisible;
+                return this.ShouldBeShown(childModel as EventViewModel);
             };
 
-            return ((EventViewModel)eventModel).IsVisible;
+            return this.ShouldBeShown(eventModel as EventViewModel);
         };
+    }
+
+    private bool ShouldBeShown(EventViewModel model)
+    {
+        bool isMatchingFilters = true;
+
+        if (_filteringStore.IsEnabled)
+        {
+            isMatchingFilters = this.DoesMatchFilters(model);
+        }
+
+        return model.IsVisible && isMatchingFilters;
+    }
+
+    private bool DoesMatchFilters(EventViewModel model)
+    {
+        bool isMatchingEventType = DoesMatchChosenEventType(model.Type);
+        bool isMatchingKeyword = DoesMatchKeyword(model);
+        bool isMatchingDateInterval = DoesMatchDateInterval(model.FullDate);
+
+        if (_filteringStore.AreAllFiltersApplied)
+        {
+            return isMatchingEventType && isMatchingKeyword && isMatchingDateInterval;
+        }
+        else
+        {
+            return isMatchingEventType || isMatchingKeyword || isMatchingDateInterval;
+        }
+    }
+
+    private bool DoesMatchChosenEventType(string eventType)
+    {
+        foreach (KeyValuePair<string, bool> pair in _filteringStore.ChosenEventTypes)
+        {
+            string filterType = pair.Key;
+            bool isApplied = pair.Value;
+
+            if (isApplied && eventType == filterType)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool DoesMatchKeyword(EventViewModel model)
+    {
+        if (model.SourceType.ToLower().Contains(_filteringStore.Keyword))
+        {
+            return true;
+        }
+
+        if (model.User.ToLower().Contains(_filteringStore.Keyword))
+        {
+            return true;
+        }
+
+        if (model.Host.ToLower().Contains(_filteringStore.Keyword))
+        {
+            return true;
+        }
+
+        if (model.Description.ToLower().Contains(_filteringStore.Keyword))
+        {
+            return true;
+        }
+
+        if (model.Filename.ToLower().Contains(_filteringStore.Keyword))
+        {
+            return true;
+        }
+
+        if (model.Notes.ToLower().Contains(_filteringStore.Keyword))
+        {
+            return true;
+        }
+
+        foreach (KeyValuePair<string, string> pair in model.Extra)
+        {
+            string key = pair.Key;
+            string value = pair.Value;
+
+            if (key.ToLower().Contains(_filteringStore.Keyword) || value.ToLower().Contains(_filteringStore.Keyword))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool DoesMatchDateInterval(DateTime eventDate)
+    {
+        DateTime startTime = _filteringStore.FromDate;
+        DateTime endTime = _filteringStore.ToDate;
+
+        return eventDate >= startTime && eventDate <= endTime;
     }
 }

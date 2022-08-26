@@ -77,5 +77,57 @@
             <Setter Property="Border.CornerRadius" Value="5" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>
+
+        <Style x:Key="ToggleSwitchEnable" TargetType="Button">
+            <Setter Property="Foreground" Value="#000000" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border 
+                            x:Name="BorderEnable" 
+                            Background="#FFFFFF"
+                            CornerRadius="5 0 0 5"
+                            BorderBrush="#000000"
+                            BorderThickness="1 1 0.5 1">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter TargetName="BorderEnable" Property="Background" Value="#0067C0" />
+                                <Setter Property="Cursor" Value="Arrow" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ToggleSwitchDisable" TargetType="Button">
+            <Setter Property="Foreground" Value="#000000" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border 
+                            x:Name="BorderDisable" 
+                            Background="#FFFFFF"
+                            CornerRadius="0 5 5 0"
+                            BorderBrush="#000000"
+                            BorderThickness="1 1 0.5 1">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter TargetName="BorderDisable" Property="Background" Value="#0067C0" />
+                                <Setter Property="Cursor" Value="Arrow" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

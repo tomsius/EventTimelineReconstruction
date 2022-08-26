@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace EventTimelineReconstruction.Views;
 
-public partial class HiddenEventsView : Window
+public partial class FilterView : Window
 {
-    public HiddenEventsView()
+    public FilterView()
     {
         this.InitializeComponent();
     }

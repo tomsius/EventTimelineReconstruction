@@ -30,6 +30,13 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="_Options">
+                <MenuItem Header="F_iltering options" Click="FilterButton_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/filter.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
         </Menu>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
@@ -48,8 +55,11 @@
                 <Button ToolTip="Hide selected event" Command="{Binding HideCommand}">
                     <Image Width="32" Source="/Resources/hide.png" />
                 </Button>
-                <Button ToolTip="All hidden events" Click="HiddenEventsButton_Click">
+                <Button ToolTip="Show all hidden events" Click="HiddenEventsButton_Click">
                     <Image Width="32" Source="/Resources/hidden.png" />
+                </Button>
+                <Button ToolTip="Filter events" Click="FilterButton_Click">
+                    <Image Width="32" Source="/Resources/filter.png" />
                 </Button>
             </ToolBar>
         </ToolBarTray>
