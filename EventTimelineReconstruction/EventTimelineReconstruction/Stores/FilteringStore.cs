@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 
 namespace EventTimelineReconstruction.Stores;
 
@@ -14,13 +13,14 @@ public class FilteringStore
 
     public string Keyword { get; set; }
 
-    public DateTime? FromDate { get; set; }
+    public DateTime FromDate { get; set; }
 
-    public DateTime? ToDate { get; set; }
+    public DateTime ToDate { get; set; }
 
     public FilteringStore()
     {
         IsEnabled = false;
+        Keyword = string.Empty;
         ChosenEventTypes = new();
     }
 
