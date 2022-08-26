@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:customInvokers="clr-namespace:EventTimelineReconstruction.CustomInvokers"
+        xmlns:converters="clr-namespace:EventTimelineReconstruction.Converters"
         mc:Ignorable="d"
         Title="Filtering..."
-        Height="640"
+        Height="720"
         Width="400"
-        MinHeight="640"
+        MinHeight="720"
         MinWidth="400"
         Closing="Window_Closing">
+    <Window.Resources>
+        <converters:FilterButtonsConverter x:Key="ButtonConverter" />
+    </Window.Resources>
     <DockPanel Margin="20" LastChildFill="True">
         <TextBlock
             FontSize="24"
@@ -22,15 +26,54 @@
             Margin="0 0 0 20"
             DockPanel.Dock="Top"/>
 
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Top" Margin="0 0 0 50">
+            <Button
+                x:Name="EnableButton"
+                Width="95"
+                Height="30"
+                Padding="26 5 26 0"
+                Margin="0 0 0 0"
+                Content="Enable"
+                FontWeight="Bold"
+                IsEnabled="True"
+                Style="{StaticResource ToggleSwitchEnable}"
+                Command="{Binding FilterCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ButtonConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}" />
+                        <Binding ElementName="DisableButton" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                x:Name="DisableButton"
+                Width="95"
+                Height="30"
+                Padding="23 5 23 0"
+                Margin="0 0 0 0"
+                Content="Disable"
+                FontWeight="Bold"
+                IsEnabled="False"
+                Style="{StaticResource ToggleSwitchDisable}"
+                Command="{Binding FilterCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ButtonConverter}">
+                        <Binding ElementName="EnableButton" />
+                        <Binding RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
             <Button 
                 Style="{StaticResource ConfirmationButton}"
-                Width="100"
+                Width="120"
                 Height="30"
                 Padding="0, 0, 0, 2"
                 Command="{Binding ApplyCommand}">
                 <TextBlock
-                    Text="Apply"
+                    Text="Apply options"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
@@ -51,9 +94,9 @@
         <StackPanel Orientation="Vertical">
             <DockPanel LastChildFill="False">
                 <TextBlock
-                FontSize="14"
-                Text="Filtering type"
-                DockPanel.Dock="Left"/>
+                    FontSize="14"
+                    Text="Filtering type"
+                    DockPanel.Dock="Left"/>
                 <ComboBox DockPanel.Dock="Right" Width="250">
                     <ComboBoxItem IsSelected="True" Content="Show events matching at least one filter" />
                     <ComboBoxItem Content="Show events matching all filters" />
