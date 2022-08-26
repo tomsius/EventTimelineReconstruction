@@ -21,14 +21,16 @@ public partial class App : Application
                 services.AddSingleton<IWorkLoader, FileWorkLoader>();
 
                 services.AddSingleton<EventsStore>();
+                services.AddSingleton<FilteringStore>();
 
                 services.AddSingleton<EventDetailsViewModel>();
-                services.AddSingleton(s => new EventTreeViewModel(s.GetRequiredService<EventDetailsViewModel>()));
+                services.AddSingleton<EventTreeViewModel>();
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
                 services.AddSingleton<SaveWorkViewModel>();
                 services.AddSingleton<LoadWorkViewModel>();
                 services.AddSingleton(s => new HiddenEventsViewModel(s.GetRequiredService<EventsStore>(), s.GetRequiredService<EventTreeViewModel>()));
                 services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>(), s.GetRequiredService<HiddenEventsViewModel>()));
+                services.AddSingleton<FilterViewModel>();
 
                 services.AddSingleton(s => new ImportView() 
                 {
@@ -50,7 +52,11 @@ public partial class App : Application
                 services.AddSingleton(s => new HiddenEventsView() {
                     DataContext = s.GetRequiredService<HiddenEventsViewModel>()
                 });
-                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>(), s.GetRequiredService<HiddenEventsView>()) {
+                services.AddSingleton(s => new FilterView()
+                {
+                    DataContext = s.GetRequiredService<FilterViewModel>()
+                });
+                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>(), s.GetRequiredService<HiddenEventsView>(), s.GetRequiredService<FilterView>()) {
                     DataContext = s.GetRequiredService<MainWindowViewModel>()
                 });
             })
