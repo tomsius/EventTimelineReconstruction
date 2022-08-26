@@ -48,9 +48,9 @@ public class FilterViewModel : ViewModelBase
         }
     }
 
-    private DateTime? _fromDate;
+    private DateTime _fromDate = DateTime.Now;
 
-    public DateTime? FromDate
+    public DateTime FromDate
     {
         get
         {
@@ -93,24 +93,17 @@ public class FilterViewModel : ViewModelBase
         }
     }
 
-    public DateTime? FullFromDate
+    public DateTime FullFromDate
     {
         get
         {
-            if (_fromDate.HasValue)
-            {
-                return new DateTime(FromDate.Value.Year, FromDate.Value.Month, FromDate.Value.Day, FromHours ?? 0, FromMinutes ?? 0, 0);
-            }
-            else
-            {
-                return null;
-            }
+            return new DateTime(FromDate.Year, FromDate.Month, FromDate.Day, FromHours ?? 0, FromMinutes ?? 0, 0);
         }
     }
 
-    private DateTime? _toDate;
+    private DateTime _toDate = DateTime.Now;
 
-    public DateTime? ToDate
+    public DateTime ToDate
     {
         get
         {
@@ -153,18 +146,11 @@ public class FilterViewModel : ViewModelBase
         }
     }
 
-    public DateTime? FullToDate
+    public DateTime FullToDate
     {
         get
         {
-            if (_toDate.HasValue)
-            {
-                return new DateTime(ToDate.Value.Year, ToDate.Value.Month, ToDate.Value.Day, ToHours ?? 0, ToMinutes ?? 0, 0);
-            }
-            else
-            {
-                return null;
-            }
+            return new DateTime(ToDate.Year, ToDate.Month, ToDate.Day, ToHours ?? 0, ToMinutes ?? 0, 0);
         }
     }
 
@@ -172,16 +158,19 @@ public class FilterViewModel : ViewModelBase
     public ICommand FilterChangedCommand { get; }
     public ICommand FilterCheckedCommand { get; }
     public ICommand ApplyCommand { get; }
+    public ICommand FilterCommand { get; }
 
-    public FilterViewModel(FilteringStore filteringStore)
+    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel)
     {
         _areAllFiltersApplied = false;
+        _keyword = string.Empty;
         _chosenEventTypes = new();
 
         InitializeCommand = new InitializeEventTypesCommand(this);
         FilterChangedCommand = new FilterTypeChangedCommand(this);
         FilterCheckedCommand = new FilterTypeCheckedCommand(this);
-        ApplyCommand = new ApplyFiltersCommand(this, filteringStore);
+        ApplyCommand = new ApplyFilterOptionsCommand(this, filteringStore, eventTreeViewModel);
+        FilterCommand = new ApplyFiltersCommand(filteringStore, eventTreeViewModel);
     }
 
     public void UpdateChosenEventType(string key, bool value)
