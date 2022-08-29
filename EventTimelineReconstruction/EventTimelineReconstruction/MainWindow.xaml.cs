@@ -11,6 +11,7 @@ public partial class MainWindow : Window
     private readonly HiddenEventsView _hiddenEventsView;
     private readonly FilterView _filterView;
     private readonly ChangeColourView _changeColourView;
+    private readonly ColourView _colourView;
 
     public MainWindow(
         ImportView view, 
@@ -18,7 +19,8 @@ public partial class MainWindow : Window
         LoadWorkView loadWorkView, 
         HiddenEventsView hiddenEventsView, 
         FilterView filterView,
-        ChangeColourView changeColourView)
+        ChangeColourView changeColourView,
+        ColourView colourView)
     {
         this.InitializeComponent();
         _importView = view;
@@ -27,6 +29,7 @@ public partial class MainWindow : Window
         _hiddenEventsView = hiddenEventsView;
         _filterView = filterView;
         _changeColourView = changeColourView;
+        _colourView = colourView;
     }
 
     private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -57,5 +60,10 @@ public partial class MainWindow : Window
     private void ChangeEventColourButton_Click(object sender, RoutedEventArgs e)
     {
         _changeColourView.Show();
+    }
+
+    private void ChangeColourByTypeButton_Click(object sender, RoutedEventArgs e)
+    {
+        _colourView.Show();
     }
 }
