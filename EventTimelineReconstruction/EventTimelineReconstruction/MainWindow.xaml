@@ -61,6 +61,9 @@
                 <Button ToolTip="Filter events" Click="FilterButton_Click">
                     <Image Width="32" Source="/Resources/filter.png" />
                 </Button>
+                <Button ToolTip="Change event's colour" Click="ChangeEventColourButton_Click">
+                    <Image Width="32" Source="/Resources/marker.png" />
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <views:EventDetailsView Width="300" DockPanel.Dock="Right" DataContext="{Binding EventDetailsViewModel}" />
