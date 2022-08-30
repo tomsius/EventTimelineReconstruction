@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EventTimelineReconstruction.Views"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:customInvokers="clr-namespace:EventTimelineReconstruction.CustomInvokers"
         mc:Ignorable="d"
         Title="Colour options..." 
         Height="680" 
         Width="350"
         MinHeight="680"
         MinWidth="350"
+        Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
     <StackPanel Margin="20" Width="290" Orientation="Vertical">
         <TextBlock
@@ -35,76 +38,190 @@
         <StackPanel Margin="0 0 0 50" Orientation="Vertical">
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Analytics Creation Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Analytics Previous Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Content Deletion Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Content Modification Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Creation Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Expiration Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="File Last Modification Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Installation Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Access Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Checked Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Connection Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Login Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Password Reset" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Shutdown Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Time Executed" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Last Visited Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Metadata Modification Time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Width="170" Text="Not a time" DockPanel.Dock="Left"/>
-                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right" />
+                <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedColorChanged">
+                            <customInvokers:CustomCommandInvoker Command="{Binding ColourChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:ColorPicker>
             </DockPanel>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <customInvokers:CustomCommandInvoker Command="{Binding InitializeCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button 
