@@ -22,6 +22,7 @@ public partial class App : Application
 
                 services.AddSingleton<EventsStore>();
                 services.AddSingleton<FilteringStore>();
+                services.AddSingleton<ColouringStore>();
 
                 services.AddSingleton<EventDetailsViewModel>();
                 services.AddSingleton<EventTreeViewModel>();
@@ -32,9 +33,12 @@ public partial class App : Application
                 services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>(), s.GetRequiredService<HiddenEventsViewModel>()));
                 services.AddSingleton<FilterViewModel>();
                 services.AddSingleton<ChangeColourViewModel>();
+                services.AddSingleton<ColourViewModel>();
 
-
-                services.AddSingleton<ColourView>();
+                services.AddSingleton(s => new ColourView()
+                {
+                    DataContext = s.GetRequiredService<ColourViewModel>()
+                });
                 services.AddSingleton(s => new ChangeColourView()
                 {
                     DataContext = s.GetRequiredService<ChangeColourViewModel>()
