@@ -24,9 +24,9 @@ public class FilteringStore
         ChosenEventTypes = new();
     }
 
-    public void SetEventTypes(Dictionary<string, bool> filterType)
+    public void SetEventTypes(Dictionary<string, bool> filterTypes)
     {
-        foreach (KeyValuePair<string, bool> pair in filterType)
+        foreach (KeyValuePair<string, bool> pair in filterTypes)
         {
             string key = pair.Key;
             bool value = pair.Value;
