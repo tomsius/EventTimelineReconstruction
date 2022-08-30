@@ -7,22 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\fillcolour.png" />
     <None Remove="Resources\filter.png" />
     <None Remove="Resources\hidden.png" />
     <None Remove="Resources\hide.png" />
     <None Remove="Resources\import.png" />
     <None Remove="Resources\load.png" />
     <None Remove="Resources\magnifying-glass.ico" />
+    <None Remove="Resources\marker.png" />
     <None Remove="Resources\moveup.png" />
     <None Remove="Resources\save.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.4.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\fillcolour.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\filter.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -39,6 +45,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\magnifying-glass.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\marker.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\moveup.png">

@@ -22,6 +22,7 @@ public partial class App : Application
 
                 services.AddSingleton<EventsStore>();
                 services.AddSingleton<FilteringStore>();
+                services.AddSingleton<ColouringStore>();
 
                 services.AddSingleton<EventDetailsViewModel>();
                 services.AddSingleton<EventTreeViewModel>();
@@ -31,32 +32,46 @@ public partial class App : Application
                 services.AddSingleton(s => new HiddenEventsViewModel(s.GetRequiredService<EventsStore>(), s.GetRequiredService<EventTreeViewModel>()));
                 services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>(), s.GetRequiredService<HiddenEventsViewModel>()));
                 services.AddSingleton<FilterViewModel>();
+                services.AddSingleton<ChangeColourViewModel>();
+                services.AddSingleton<ColourViewModel>();
 
+                services.AddSingleton(s => new ColourView()
+                {
+                    DataContext = s.GetRequiredService<ColourViewModel>()
+                });
+                services.AddSingleton(s => new ChangeColourView()
+                {
+                    DataContext = s.GetRequiredService<ChangeColourViewModel>()
+                });
                 services.AddSingleton(s => new ImportView() 
                 {
                     DataContext = s.GetRequiredService<ImportViewModel>()
                 });
-                services.AddSingleton(s => new SaveWorkView() {
+                services.AddSingleton(s => new SaveWorkView() 
+                {
                     DataContext = s.GetRequiredService<SaveWorkViewModel>()
                 });
-
-                services.AddSingleton(s => new LoadWorkView() {
+                services.AddSingleton(s => new LoadWorkView() 
+                {
                     DataContext = s.GetRequiredService<LoadWorkViewModel>()
                 });
-                services.AddSingleton(s => new EventTreeView() {
+                services.AddSingleton(s => new EventTreeView() 
+                {
                     DataContext = s.GetRequiredService<EventTreeViewModel>()
                 });
-                services.AddSingleton(s => new EventDetailsView() {
+                services.AddSingleton(s => new EventDetailsView() 
+                {
                     DataContext = s.GetRequiredService<EventDetailsViewModel>()
                 });
-                services.AddSingleton(s => new HiddenEventsView() {
+                services.AddSingleton(s => new HiddenEventsView() 
+                {
                     DataContext = s.GetRequiredService<HiddenEventsViewModel>()
                 });
                 services.AddSingleton(s => new FilterView()
                 {
                     DataContext = s.GetRequiredService<FilterViewModel>()
                 });
-                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>(), s.GetRequiredService<HiddenEventsView>(), s.GetRequiredService<FilterView>()) {
+                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>(), s.GetRequiredService<HiddenEventsView>(), s.GetRequiredService<FilterView>(), s.GetRequiredService<ChangeColourView>(), s.GetRequiredService<ColourView>()) {
                     DataContext = s.GetRequiredService<MainWindowViewModel>()
                 });
             })

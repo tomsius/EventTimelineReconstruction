@@ -38,13 +38,13 @@ public class EventTreeViewModel : ViewModelBase
     public ICommand MouseMoveCommand { get; }
     public ICommand GiveFeedbackCommand { get; }
 
-    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore)
+    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore, ChangeColourViewModel changeColourViewModel)
     {
         _events = new();
         pointRef = new PInPoint();
         _filteringStore = filteringStore;
 
-        ShowDetailsCommand = new ShowEventDetailsCommand(eventDetailsViewModel);
+        ShowDetailsCommand = new ShowEventDetailsCommand(eventDetailsViewModel, changeColourViewModel);
         DragOverCommand = new DragOverEventCommand(this);
         DropCommand = new DropEventCommand(this);
         MouseMoveCommand = new MouseMoveEventCommand(this, eventDetailsViewModel);
@@ -133,9 +133,9 @@ public class EventTreeViewModel : ViewModelBase
 
     private bool DoesMatchFilters(EventViewModel model)
     {
-        bool isMatchingEventType = DoesMatchChosenEventType(model.Type);
-        bool isMatchingKeyword = DoesMatchKeyword(model);
-        bool isMatchingDateInterval = DoesMatchDateInterval(model.FullDate);
+        bool isMatchingEventType = this.DoesMatchChosenEventType(model.Type);
+        bool isMatchingKeyword = this.DoesMatchKeyword(model);
+        bool isMatchingDateInterval = this.DoesMatchDateInterval(model.FullDate);
 
         if (_filteringStore.AreAllFiltersApplied)
         {

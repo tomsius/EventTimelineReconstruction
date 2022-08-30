@@ -6,10 +6,12 @@ namespace EventTimelineReconstruction.Commands;
 public class ShowEventDetailsCommand : CommandBase
 {
     private readonly EventDetailsViewModel _eventDetailsViewModel;
+    private readonly ChangeColourViewModel _changeColourViewModel;
 
-    public ShowEventDetailsCommand(EventDetailsViewModel eventDetailsViewModel)
+    public ShowEventDetailsCommand(EventDetailsViewModel eventDetailsViewModel, ChangeColourViewModel changeColourViewModel)
     {
         _eventDetailsViewModel = eventDetailsViewModel;
+        _changeColourViewModel = changeColourViewModel;
     }
 
     public override void Execute(object parameter)
@@ -19,6 +21,7 @@ public class ShowEventDetailsCommand : CommandBase
         if (e.NewValue is EventViewModel eventViewModel)
         {
             _eventDetailsViewModel.SelectedEvent = eventViewModel;
+            _changeColourViewModel.SetBrushColour(eventViewModel.Colour);
         }
     }
 }

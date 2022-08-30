@@ -36,6 +36,11 @@
                         <Image Source="/Resources/filter.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="_Colouring options" Click="ChangeColourByTypeButton_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/fillcolour.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <ToolBarTray DockPanel.Dock="Top">
@@ -49,6 +54,7 @@
                 <Button ToolTip="Load work from file" Click="LoadButton_Click">
                     <Image Width="32" Source="/Resources/load.png" />
                 </Button>
+                <Separator />
                 <Button ToolTip="Move event one level up" Command="{Binding MoveEventCommand}">
                     <Image Width="32" Source="/Resources/moveup.png" />
                 </Button>
@@ -60,6 +66,12 @@
                 </Button>
                 <Button ToolTip="Filter events" Click="FilterButton_Click">
                     <Image Width="32" Source="/Resources/filter.png" />
+                </Button>
+                <Button ToolTip="Change event's colour" Click="ChangeEventColourButton_Click">
+                    <Image Width="32" Source="/Resources/marker.png" />
+                </Button>
+                <Button ToolTip="Change colouring of each event type" Click="ChangeColourByTypeButton_Click">
+                    <Image Width="32" Source="/Resources/fillcolour.png" />
                 </Button>
             </ToolBar>
         </ToolBarTray>

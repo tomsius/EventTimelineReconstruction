@@ -251,17 +251,7 @@ public class EventViewModel : ViewModelBase, IComparable
         _eventModel = eventModel;
         _children = new();
         IsVisible = true;
-
-        // TODO - remove random colour assignment
-        Random rnd = new();
-        if (rnd.NextDouble() < 0.3)
-        {
-            Colour = Brushes.Red;
-        }
-        else
-        {
-            Colour = Brushes.Black;
-        }
+        Colour = Brushes.Black;
     }
 
     public string Serialize()
