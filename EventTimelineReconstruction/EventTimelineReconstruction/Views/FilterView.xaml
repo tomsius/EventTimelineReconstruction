@@ -12,6 +12,7 @@
         Width="400"
         MinHeight="720"
         MinWidth="400"
+        Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
     <Window.Resources>
         <converters:FilterButtonsConverter x:Key="ButtonConverter" />

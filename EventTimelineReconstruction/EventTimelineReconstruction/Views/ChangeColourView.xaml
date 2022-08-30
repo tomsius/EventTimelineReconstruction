@@ -11,6 +11,7 @@
         Width="500"
         MinHeight="250"
         MinWidth="300"
+        Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
     <StackPanel Margin="20" Orientation="Vertical">
         <TextBlock
