@@ -25,7 +25,7 @@ public class ChangeColourViewModel : ViewModelBase
 
     public ChangeColourViewModel(EventDetailsViewModel eventDetailsViewModel)
     {
-        ApplyCommand = new ChangeEventColourcommand(this, eventDetailsViewModel);
+        ApplyCommand = new ChangeEventColourCommand(this, eventDetailsViewModel);
     }
 
     public void SetBrushColour(Brush colour)
