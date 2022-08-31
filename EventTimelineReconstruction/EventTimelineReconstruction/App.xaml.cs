@@ -35,6 +35,7 @@ public partial class App : Application
                 services.AddSingleton<ChangeColourViewModel>();
                 services.AddSingleton<ColourViewModel>();
 
+                services.AddSingleton<IntegrityView>();
                 services.AddSingleton(s => new ColourView()
                 {
                     DataContext = s.GetRequiredService<ColourViewModel>()
@@ -71,7 +72,15 @@ public partial class App : Application
                 {
                     DataContext = s.GetRequiredService<FilterViewModel>()
                 });
-                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>(), s.GetRequiredService<HiddenEventsView>(), s.GetRequiredService<FilterView>(), s.GetRequiredService<ChangeColourView>(), s.GetRequiredService<ColourView>()) {
+                services.AddSingleton(s => new MainWindow(
+                    s.GetRequiredService<ImportView>(), 
+                    s.GetRequiredService<SaveWorkView>(), 
+                    s.GetRequiredService<LoadWorkView>(), 
+                    s.GetRequiredService<HiddenEventsView>(),
+                    s.GetRequiredService<FilterView>(), 
+                    s.GetRequiredService<ChangeColourView>(),
+                    s.GetRequiredService<ColourView>(), 
+                    s.GetRequiredService<IntegrityView>()) {
                     DataContext = s.GetRequiredService<MainWindowViewModel>()
                 });
             })
