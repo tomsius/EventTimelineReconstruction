@@ -24,6 +24,7 @@ public partial class App : Application
                 services.AddSingleton<FilteringStore>();
                 services.AddSingleton<ColouringStore>();
 
+                services.AddSingleton<IntegrityViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();
                 services.AddSingleton<EventTreeViewModel>();
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
@@ -35,7 +36,10 @@ public partial class App : Application
                 services.AddSingleton<ChangeColourViewModel>();
                 services.AddSingleton<ColourViewModel>();
 
-                services.AddSingleton<IntegrityView>();
+                services.AddSingleton(s => new IntegrityView()
+                {
+                    DataContext = s.GetRequiredService<IntegrityViewModel>()
+                });
                 services.AddSingleton(s => new ColourView()
                 {
                     DataContext = s.GetRequiredService<ColourViewModel>()
