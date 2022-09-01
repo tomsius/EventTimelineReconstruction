@@ -30,9 +30,9 @@
             Margin="0 0 0 50"/>
 
         <StackPanel Grid.Row="1" Margin="0 0 0 50" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
                 <Grid>
-                    <TextBox Width="400" 
+                    <TextBox Width="420" 
                          VerticalAlignment="Center" 
                          HorizontalAlignment="Left" 
                          x:Name="FileNameTextBox" 
@@ -204,18 +204,19 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-
-            <TextBlock Text="-or-" HorizontalAlignment="Center" Margin="0 20 0 20" Foreground="Silver" FontSize="14" />
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
-                <TextBlock Text="Hash value" FontSize="14" Margin="0 0 10 0" />
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+                <TextBlock Text="Hash value" FontSize="14" Margin="0 0 20 0" />
                 <TextBox Width="420" Text="{Binding HashValue, UpdateSourceTrigger=PropertyChanged}" FontSize="14" />
             </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Margin="0 0 0 50">
-            <TextBlock Text="Events' integrity is OK." FontSize="20" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock Text="Events' integrity is compromised." FontSize="20" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="FileOKTextBlock" Text="File's integrity is OK." FontSize="20" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="FileUnknownTextBlock" Text="File's integrity is unknown." FontSize="20" Foreground="Orange" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="FileCompromisedTextBlock" Text="File's integrity is compromised." FontSize="20" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="EventsOKTextBlock" Text="Events' integrity is OK." FontSize="20" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="EventsCompromisedTextBlock" Text="Events' integrity is compromised." FontSize="20" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
         </StackPanel>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
