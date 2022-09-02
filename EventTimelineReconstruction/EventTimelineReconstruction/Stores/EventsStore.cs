@@ -70,4 +70,47 @@ public class EventsStore
 
         return hiddenEvents;
     }
+
+    public List<EventModel> GetStoredEventModels()
+    {
+        List<EventModel> eventModels = new();
+        Queue<EventViewModel> queue = new(_events.Count);
+
+        foreach (EventViewModel eventViewModel in _events)
+        {
+            queue.Enqueue(eventViewModel);
+        }
+
+        while (queue.Count > 0)
+        {
+            EventViewModel current = queue.Dequeue();
+            foreach (EventViewModel eventViewModel in current.Children)
+            {
+                queue.Enqueue(eventViewModel);
+            }
+
+            EventModel eventModel = new(
+                new DateOnly(current.FullDate.Year, current.FullDate.Month, current.FullDate.Day),
+                new TimeOnly(current.FullDate.Hour, current.FullDate.Minute, current.FullDate.Second),
+                current.Timezone,
+                current.MACB,
+                current.Source,
+                current.SourceType,
+                current.Type,
+                current.User,
+                current.Host,
+                current.Short,
+                current.Description,
+                current.Version,
+                current.Filename,
+                current.INode,
+                current.Notes,
+                current.Format,
+                current.Extra
+                );
+            eventModels.Add(eventModel);
+        }
+
+        return eventModels;
+    }
 }
