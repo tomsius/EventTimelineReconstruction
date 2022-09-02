@@ -67,7 +67,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         }
     }
 
-    public DateTime FromFullDate
+    public DateTime FullFromDate
     {
         get
         {
