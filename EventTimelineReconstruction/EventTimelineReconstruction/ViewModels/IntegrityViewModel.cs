@@ -1,22 +1,24 @@
-﻿using EventTimelineReconstruction.Commands;
-using EventTimelineReconstruction.Stores;
+﻿using System.Windows.Input;
 using System;
-using System.Windows.Input;
+using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Services;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class ImportViewModel : ViewModelBase, IFileSelectable
+public class IntegrityViewModel : ViewModelBase, IFileSelectable
 {
     private string _fileName;
 
     public string FileName
     {
-        get 
-        { 
-            return _fileName; 
+        get
+        {
+            return _fileName;
         }
-        set 
-        { 
+
+        set
+        {
             _fileName = value;
             this.OnPropertyChanged(nameof(FileName));
         }
@@ -128,12 +130,27 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         }
     }
 
-    public ICommand ChooseFileCommand { get; }
-    public ICommand ImportCommand { get; }
+    private string _hashValue;
 
-    public ImportViewModel(EventTreeViewModel viewModel, EventsStore store)
+    public string HashValue
+    {
+        get
+        {
+            return _hashValue;
+        }
+        set
+        {
+            _hashValue = value;
+            this.OnPropertyChanged(nameof(HashValue));
+        }
+    }
+
+    public ICommand ChooseFileCommand { get; }
+    public ICommand CheckCommand { get; }
+
+    public IntegrityViewModel(EventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter)
     {
         ChooseFileCommand = new ChooseLoadFileCommand(this);
-        ImportCommand = new ImportEventsCommand(this, store, viewModel);
+        CheckCommand = new CheckIntegrityCommand(this, eventsStore, hashCalculator, eventsImporter);
     }
 }

@@ -19,11 +19,13 @@ public partial class App : Application
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
                 services.AddSingleton<IWorkSaver, FileWorkSaver>();
                 services.AddSingleton<IWorkLoader, FileWorkLoader>();
+                services.AddSingleton<IHashCalculator, SHA256Calculator>();
 
                 services.AddSingleton<EventsStore>();
                 services.AddSingleton<FilteringStore>();
                 services.AddSingleton<ColouringStore>();
 
+                services.AddSingleton<IntegrityViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();
                 services.AddSingleton<EventTreeViewModel>();
                 services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
@@ -35,6 +37,10 @@ public partial class App : Application
                 services.AddSingleton<ChangeColourViewModel>();
                 services.AddSingleton<ColourViewModel>();
 
+                services.AddSingleton(s => new IntegrityView()
+                {
+                    DataContext = s.GetRequiredService<IntegrityViewModel>()
+                });
                 services.AddSingleton(s => new ColourView()
                 {
                     DataContext = s.GetRequiredService<ColourViewModel>()
@@ -71,7 +77,15 @@ public partial class App : Application
                 {
                     DataContext = s.GetRequiredService<FilterViewModel>()
                 });
-                services.AddSingleton(s => new MainWindow(s.GetRequiredService<ImportView>(), s.GetRequiredService<SaveWorkView>(), s.GetRequiredService<LoadWorkView>(), s.GetRequiredService<HiddenEventsView>(), s.GetRequiredService<FilterView>(), s.GetRequiredService<ChangeColourView>(), s.GetRequiredService<ColourView>()) {
+                services.AddSingleton(s => new MainWindow(
+                    s.GetRequiredService<ImportView>(), 
+                    s.GetRequiredService<SaveWorkView>(), 
+                    s.GetRequiredService<LoadWorkView>(), 
+                    s.GetRequiredService<HiddenEventsView>(),
+                    s.GetRequiredService<FilterView>(), 
+                    s.GetRequiredService<ChangeColourView>(),
+                    s.GetRequiredService<ColourView>(), 
+                    s.GetRequiredService<IntegrityView>()) {
                     DataContext = s.GetRequiredService<MainWindowViewModel>()
                 });
             })
