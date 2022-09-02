@@ -1,6 +1,8 @@
 ﻿using System.Windows.Input;
 using System;
 using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Services;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -67,7 +69,7 @@ public class IntegrityViewModel : ViewModelBase, IFileSelectable
         }
     }
 
-    public DateTime FromFullDate
+    public DateTime FullFromDate
     {
         get
         {
@@ -146,9 +148,9 @@ public class IntegrityViewModel : ViewModelBase, IFileSelectable
     public ICommand ChooseFileCommand { get; }
     public ICommand CheckCommand { get; }
 
-    public IntegrityViewModel()
+    public IntegrityViewModel(EventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter)
     {
         ChooseFileCommand = new ChooseLoadFileCommand(this);
-        CheckCommand = new CheckIntegrityCommand(this);
+        CheckCommand = new CheckIntegrityCommand(this, eventsStore, hashCalculator, eventsImporter);
     }
 }
