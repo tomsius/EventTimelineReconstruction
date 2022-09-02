@@ -4,14 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EventTimelineReconstruction.Views"
+        xmlns:converters="clr-namespace:EventTimelineReconstruction.Converters"
         mc:Ignorable="d"
         Title="Integrity checkup..." 
         Height="520" 
         Width="700"
         MinHeight="520"
-        MinWidth="600"
+        MinWidth="700"
         Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
+    <Window.Resources>
+        <converters:IntegrityResultsConverter x:Key="ButtonConverter" />
+    </Window.Resources>
     <Grid Margin="20" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -207,16 +211,16 @@
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
                 <TextBlock Text="Hash value" FontSize="14" Margin="0 0 20 0" />
-                <TextBox Width="420" Text="{Binding HashValue, UpdateSourceTrigger=PropertyChanged}" FontSize="14" />
+                <TextBox MinWidth="420" MaxWidth="550" Text="{Binding HashValue, UpdateSourceTrigger=PropertyChanged}" FontSize="14" />
             </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Margin="0 0 0 50">
-            <TextBlock x:Name="FileOKTextBlock" Text="File's integrity is OK." FontSize="20" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="FileUnknownTextBlock" Text="File's integrity is unknown." FontSize="20" Foreground="Orange" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="FileCompromisedTextBlock" Text="File's integrity is compromised." FontSize="20" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="EventsOKTextBlock" Text="Events' integrity is OK." FontSize="20" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="EventsCompromisedTextBlock" Text="Events' integrity is compromised." FontSize="20" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="FileOKTextBlock" Text="File's integrity is OK." FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="FileUnknownTextBlock" Text="File's integrity is unknown." FontSize="14" Foreground="Orange" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="FileCompromisedTextBlock" Text="File's integrity is compromised." FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="EventsOKTextBlock" Text="Events' integrity is OK." FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <TextBlock x:Name="EventsCompromisedTextBlock" Text="Events' integrity is compromised." FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
         </StackPanel>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -226,6 +230,15 @@
                 Height="30"
                 Padding="0, 0, 0, 2"
                 Command="{Binding CheckCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ButtonConverter}">
+                        <Binding ElementName="FileOKTextBlock" />
+                        <Binding ElementName="FileUnknownTextBlock" />
+                        <Binding ElementName="FileCompromisedTextBlock" />
+                        <Binding ElementName="EventsOKTextBlock" />
+                        <Binding ElementName="EventsCompromisedTextBlock" />
+                    </MultiBinding>
+                </Button.CommandParameter>
                 <TextBlock
                     Text="Check"
                     HorizontalAlignment="Center"
