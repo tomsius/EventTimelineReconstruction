@@ -19,6 +19,7 @@ public partial class App : Application
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
                 services.AddSingleton<IWorkSaver, FileWorkSaver>();
                 services.AddSingleton<IWorkLoader, FileWorkLoader>();
+                services.AddSingleton<IHashCalculator, SHA256Calculator>();
 
                 services.AddSingleton<EventsStore>();
                 services.AddSingleton<FilteringStore>();
