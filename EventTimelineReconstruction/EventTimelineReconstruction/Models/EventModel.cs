@@ -60,4 +60,72 @@ public class EventModel
         Format = format;
         Extra = extra;
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is EventModel other)
+        {
+            if (Date.CompareTo(other.Date) != 0 ||
+                Time.CompareTo(other.Time) != 0 || 
+                !Timezone.Equals(other.Timezone) || 
+                MACB != other.MACB || 
+                Source != other.Source || 
+                SourceType != other.SourceType || 
+                Type != other.Type ||
+                User != other.User ||
+                Host != other.Host ||
+                Short != other.Short ||
+                Description != other.Description ||
+                Version.CompareTo(other.Version) != 0 ||
+                Filename != other.Filename ||
+                INode != other.INode ||
+                Notes != other.Notes ||
+                Format != other.Format ||
+                Extra.Count != other.Extra.Count)
+            {
+                return false;
+            }
+
+            foreach (KeyValuePair<string, string> pair in Extra)
+            {
+                string key = pair.Key;
+                string value = pair.Value;
+
+                if (!other.Extra.ContainsKey(key) || value != other.Extra[key])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        HashCode hashCode = new();
+        hashCode.Add(Date);
+        hashCode.Add(Time);
+        hashCode.Add(Timezone);
+        hashCode.Add(MACB);
+        hashCode.Add(Source);
+        hashCode.Add(SourceType);
+        hashCode.Add(Type);
+        hashCode.Add(User);
+        hashCode.Add(Host);
+        hashCode.Add(Short);
+        hashCode.Add(Description);
+        hashCode.Add(Version);
+        hashCode.Add(Filename);
+        hashCode.Add(INode);
+        hashCode.Add(Notes);
+        hashCode.Add(Format);
+        hashCode.Add(Extra);
+
+        return hashCode.GetHashCode();
+    }
 }
