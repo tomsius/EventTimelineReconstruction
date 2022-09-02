@@ -74,7 +74,7 @@
                     <Image Width="32" Source="/Resources/fillcolour.png" />
                 </Button>
                 <Button ToolTip="Check events' integrity" Click="CheckIntegrityButton_Click">
-                    <Image Width="32" Source="/Resources/fillcolour.png" />
+                    <Image Width="32" Source="/Resources/lock.png" />
                 </Button>
             </ToolBar>
         </ToolBarTray>

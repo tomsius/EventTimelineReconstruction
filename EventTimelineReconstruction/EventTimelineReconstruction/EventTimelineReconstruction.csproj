@@ -13,6 +13,7 @@
     <None Remove="Resources\hide.png" />
     <None Remove="Resources\import.png" />
     <None Remove="Resources\load.png" />
+    <None Remove="Resources\lock.png" />
     <None Remove="Resources\magnifying-glass.ico" />
     <None Remove="Resources\marker.png" />
     <None Remove="Resources\moveup.png" />
@@ -42,6 +43,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\load.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\lock.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\magnifying-glass.ico">
