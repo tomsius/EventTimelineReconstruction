@@ -14,7 +14,7 @@ namespace EventTimelineReconstruction.ViewModels;
 
 public class EventTreeViewModel : ViewModelBase
 {
-    private readonly ObservableCollection<EventViewModel> _events;
+    private readonly RangeEnabledObservableCollection<EventViewModel> _events;
     private readonly FilteringStore _filteringStore;
 
     public IEnumerable<EventViewModel> Events
@@ -51,16 +51,12 @@ public class EventTreeViewModel : ViewModelBase
         GiveFeedbackCommand = new GiveEventFeedbackCommand(this);
     }
 
-    public void LoadEvents(IEnumerable<EventViewModel> events)
+    public void LoadEvents(List<EventViewModel> events)
     {
         _events.Clear();
-
-        foreach (EventViewModel entity in events) {
-            _events.Add(entity);
-        }
+        _events.AddRange(events);
 
         this.ApplyFilters();
-
         this.OnPropertyChanged(nameof(Events));
     }
 
@@ -87,6 +83,11 @@ public class EventTreeViewModel : ViewModelBase
         {
             ICollectionView childrenDataSourceView;
             Queue<EventViewModel> queue = new();
+
+            if (eventModel is null)
+            {
+                return false;
+            }
 
             foreach (EventViewModel child in ((EventViewModel)eventModel).Children)
             {
