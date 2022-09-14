@@ -11,9 +11,6 @@
              d:DesignWidth="800"
              Loaded="Window_Loaded">
     <TreeView 
-        HorizontalContentAlignment="Stretch"
-        VirtualizingPanel.IsVirtualizing="True"
-        VirtualizingPanel.VirtualizationMode="Recycling"
         ItemsSource="{Binding Events, UpdateSourceTrigger=PropertyChanged}"
         AllowDrop="True">
         <TreeView.Resources>
@@ -40,10 +37,5 @@
                 <customInvokers:CustomCommandInvoker Command="{Binding GiveFeedbackCommand}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
-        <TreeView.ItemContainerStyle>
-            <Style TargetType="{x:Type TreeViewItem}">
-                <Setter Property="IsExpanded" Value="True" />
-            </Style>
-        </TreeView.ItemContainerStyle>
     </TreeView>
 </UserControl>
