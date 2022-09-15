@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
-using EventTimelineReconstruction.Extensions;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 
@@ -25,6 +23,17 @@ public class EventTreeViewModel : ViewModelBase
         }
     }
 
+    private readonly ICollectionView _eventsView;
+
+    public ICollectionView EventsView
+    {
+        get
+        {
+            return _eventsView;
+        }
+    }
+
+
     public PInPoint pointRef;
 
     public EventViewModel DraggedItem{ get; set; }
@@ -41,6 +50,9 @@ public class EventTreeViewModel : ViewModelBase
     public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore, ChangeColourViewModel changeColourViewModel)
     {
         _events = new();
+        _eventsView = new ListCollectionView(_events);
+        (_eventsView as ListCollectionView).CustomSort = new EventSorter();
+
         pointRef = new PInPoint();
         _filteringStore = filteringStore;
 
@@ -70,18 +82,10 @@ public class EventTreeViewModel : ViewModelBase
         _events.Remove(eventViewModel);
     }
 
-    public void UpdateOrdering()
-    {
-        _events.Sort();
-    }
-
     public void ApplyFilters()
     {
-        ICollectionView eventsDataSourceView = CollectionViewSource.GetDefaultView(Events);
-
-        eventsDataSourceView.Filter = eventModel =>
+        _eventsView.Filter = eventModel =>
         {
-            ICollectionView childrenDataSourceView;
             Queue<EventViewModel> queue = new();
 
             if (eventModel is null)
@@ -103,15 +107,13 @@ public class EventTreeViewModel : ViewModelBase
                     queue.Enqueue(child);
                 }
 
-                childrenDataSourceView = CollectionViewSource.GetDefaultView(eventViewModel.Children);
-                childrenDataSourceView.Filter = childModel =>
+                eventViewModel.ChildrenView.Filter = childModel =>
                 {
                     return this.ShouldBeShown(childModel as EventViewModel);
                 };
             }
 
-            childrenDataSourceView = CollectionViewSource.GetDefaultView(((EventViewModel)eventModel).Children);
-            childrenDataSourceView.Filter = childModel =>
+            ((EventViewModel)eventModel).ChildrenView.Filter = childModel =>
             {
                 return this.ShouldBeShown(childModel as EventViewModel);
             };

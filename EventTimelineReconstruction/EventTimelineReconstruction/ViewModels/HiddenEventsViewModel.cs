@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Data;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
-using EventTimelineReconstruction.Extensions;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -18,6 +19,16 @@ public class HiddenEventsViewModel : ViewModelBase
         get
         {
             return _hiddenEvents;
+        }
+    }
+
+    private readonly CollectionView _hiddenEventsView;
+
+    public CollectionView HiddenEventsView
+    {
+        get
+        {
+            return _hiddenEventsView;
         }
     }
 
@@ -39,10 +50,15 @@ public class HiddenEventsViewModel : ViewModelBase
 
     public ICommand UnhideCommand { get; }
 
+    private readonly static object _lock = new();
 
     public HiddenEventsViewModel(EventsStore eventsStore, EventTreeViewModel eventTreeViewModel)
     {
         _hiddenEvents = new();
+        BindingOperations.EnableCollectionSynchronization(_hiddenEvents, _lock);
+        _hiddenEventsView = new ListCollectionView(_hiddenEvents);
+        (_hiddenEventsView as ListCollectionView).CustomSort = new EventSorter();
+
         _eventsStore = eventsStore;
 
         UnhideCommand = new UnhideEventCommand(this, eventTreeViewModel);
@@ -60,15 +76,12 @@ public class HiddenEventsViewModel : ViewModelBase
             foreach (EventViewModel entity in hiddenEvents) {
                 _hiddenEvents.Add(entity);
             }
-
-            _hiddenEvents.Sort();
         }
     }
 
     public void AddHiddenEvent(EventViewModel hiddenEvent)
     {
         _hiddenEvents.Add(hiddenEvent);
-        _hiddenEvents.Sort();
     }
 
     public void RemoveHiddenEvent(EventViewModel hiddenEvent)

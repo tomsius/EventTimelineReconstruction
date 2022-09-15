@@ -11,10 +11,10 @@
              d:DesignWidth="800"
              Loaded="Window_Loaded">
     <TreeView 
-        ItemsSource="{Binding Events, UpdateSourceTrigger=PropertyChanged}"
+        ItemsSource="{Binding EventsView, UpdateSourceTrigger=PropertyChanged}"
         AllowDrop="True">
         <TreeView.Resources>
-            <HierarchicalDataTemplate DataType="{x:Type vms:EventViewModel}" ItemsSource="{Binding Children}">
+            <HierarchicalDataTemplate DataType="{x:Type vms:EventViewModel}" ItemsSource="{Binding ChildrenView}">
                 <TextBlock
                     Text="{Binding DisplayName}" 
                     Foreground="{Binding Colour}"/>

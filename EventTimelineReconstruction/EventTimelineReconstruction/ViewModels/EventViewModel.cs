@@ -4,6 +4,8 @@ using System.Windows.Media;
 using EventTimelineReconstruction.Models;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Windows.Data;
+using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -17,6 +19,16 @@ public class EventViewModel : ViewModelBase, IComparable
         get
         {
             return _children;
+        }
+    }
+
+    private readonly CollectionView _childrenView;
+
+    public CollectionView ChildrenView
+    {
+        get
+        {
+            return _childrenView;
         }
     }
 
@@ -246,12 +258,18 @@ public class EventViewModel : ViewModelBase, IComparable
         }
     }
 
+    private readonly static object _lock = new();
+
     public EventViewModel(EventModel eventModel)
     {
         _eventModel = eventModel;
-        _children = new();
         IsVisible = true;
         Colour = Brushes.Black;
+
+        _children = new();
+        BindingOperations.EnableCollectionSynchronization(_children, _lock);
+        _childrenView = new ListCollectionView(_children);
+        (_childrenView as ListCollectionView).CustomSort = new EventSorter();
     }
 
     public string Serialize()

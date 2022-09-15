@@ -3,7 +3,6 @@ using System.Windows.Media;
 using System.Windows;
 using EventTimelineReconstruction.ViewModels;
 using System.Collections.Generic;
-using EventTimelineReconstruction.Extensions;
 
 namespace EventTimelineReconstruction.Utils;
 
@@ -67,11 +66,9 @@ public static class DragDropUtils
 
         if (targetItem == null) {
             vm.AddEvent(sourceItem);
-            vm.UpdateOrdering();
         }
         else {
             targetItem.AddChild(sourceItem);
-            targetItem.Children.Sort();
         }
     }
 
