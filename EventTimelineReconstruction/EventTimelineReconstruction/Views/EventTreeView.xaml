@@ -14,7 +14,9 @@
         ItemsSource="{Binding EventsView, UpdateSourceTrigger=PropertyChanged}"
         AllowDrop="True">
         <TreeView.Resources>
-            <HierarchicalDataTemplate DataType="{x:Type vms:EventViewModel}" ItemsSource="{Binding ChildrenView}">
+            <HierarchicalDataTemplate 
+                DataType="{x:Type vms:EventViewModel}" 
+                ItemsSource="{Binding Children}">
                 <TextBlock
                     Text="{Binding DisplayName}" 
                     Foreground="{Binding Colour}"/>

@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 
@@ -86,6 +90,7 @@ public class EventTreeViewModel : ViewModelBase
     {
         _eventsView.Filter = eventModel =>
         {
+            ICollectionView childrenDataSourceView;
             Queue<EventViewModel> queue = new();
 
             if (eventModel is null)
@@ -101,19 +106,20 @@ public class EventTreeViewModel : ViewModelBase
             while (queue.Count > 0)
             {
                 EventViewModel eventViewModel = queue.Dequeue();
-
                 foreach (EventViewModel child in eventViewModel.Children)
                 {
                     queue.Enqueue(child);
                 }
 
-                eventViewModel.ChildrenView.Filter = childModel =>
+                childrenDataSourceView = CollectionViewSource.GetDefaultView(eventViewModel.Children);
+                childrenDataSourceView.Filter = childModel =>
                 {
                     return this.ShouldBeShown(childModel as EventViewModel);
                 };
             }
 
-            ((EventViewModel)eventModel).ChildrenView.Filter = childModel =>
+            childrenDataSourceView = CollectionViewSource.GetDefaultView(((EventViewModel)eventModel).Children);
+            childrenDataSourceView.Filter = childModel =>
             {
                 return this.ShouldBeShown(childModel as EventViewModel);
             };

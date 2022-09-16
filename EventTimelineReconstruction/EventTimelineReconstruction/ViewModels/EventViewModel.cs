@@ -4,31 +4,20 @@ using System.Windows.Media;
 using EventTimelineReconstruction.Models;
 using System.Text;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
-using EventTimelineReconstruction.Utils;
+using EventTimelineReconstruction.Extensions;
 
 namespace EventTimelineReconstruction.ViewModels;
 
 public class EventViewModel : ViewModelBase, IComparable
 {
     private readonly EventModel _eventModel;
-    private readonly ObservableCollection<EventViewModel> _children;
+    private ObservableCollection<EventViewModel> _children;
 
     public ObservableCollection<EventViewModel> Children
     {
         get
         {
             return _children;
-        }
-    }
-
-    private readonly CollectionView _childrenView;
-
-    public CollectionView ChildrenView
-    {
-        get
-        {
-            return _childrenView;
         }
     }
 
@@ -265,8 +254,6 @@ public class EventViewModel : ViewModelBase, IComparable
         Colour = Brushes.Black;
 
         _children = new();
-        _childrenView = new ListCollectionView(_children);
-        (_childrenView as ListCollectionView).CustomSort = new EventSorter();
     }
 
     public string Serialize()
@@ -307,6 +294,8 @@ public class EventViewModel : ViewModelBase, IComparable
     public void AddChild(EventViewModel child)
     {
         _children.Add(child);
+        // TODO - dont sort after each add (i.e. sort after reading all childs)
+        _children.Sort();
     }
 
     public void RemoveChild(EventViewModel child)
