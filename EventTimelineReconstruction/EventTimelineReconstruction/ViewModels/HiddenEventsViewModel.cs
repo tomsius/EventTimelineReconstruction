@@ -50,12 +50,9 @@ public class HiddenEventsViewModel : ViewModelBase
 
     public ICommand UnhideCommand { get; }
 
-    private readonly static object _lock = new();
-
     public HiddenEventsViewModel(EventsStore eventsStore, EventTreeViewModel eventTreeViewModel)
     {
         _hiddenEvents = new();
-        BindingOperations.EnableCollectionSynchronization(_hiddenEvents, _lock);
         _hiddenEventsView = new ListCollectionView(_hiddenEvents);
         (_hiddenEventsView as ListCollectionView).CustomSort = new EventSorter();
 
