@@ -258,8 +258,6 @@ public class EventViewModel : ViewModelBase, IComparable
         }
     }
 
-    private readonly static object _lock = new();
-
     public EventViewModel(EventModel eventModel)
     {
         _eventModel = eventModel;
@@ -267,7 +265,6 @@ public class EventViewModel : ViewModelBase, IComparable
         Colour = Brushes.Black;
 
         _children = new();
-        BindingOperations.EnableCollectionSynchronization(_children, _lock);
         _childrenView = new ListCollectionView(_children);
         (_childrenView as ListCollectionView).CustomSort = new EventSorter();
     }
@@ -326,6 +323,13 @@ public class EventViewModel : ViewModelBase, IComparable
     {
         EventViewModel other = obj as EventViewModel;
 
-        return DisplayName.CompareTo(other.DisplayName);
+        int cmp = FullDate.CompareTo(other.FullDate);
+
+        if (cmp == 0)
+        {
+            return Filename.CompareTo(other.Filename);
+        }
+
+        return cmp;
     }
 }
