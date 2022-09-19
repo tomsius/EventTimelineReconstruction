@@ -66,4 +66,10 @@
     <system:String x:Key="Details_Notes">Notes</system:String>
     <system:String x:Key="Details_Format">Format</system:String>
     <system:String x:Key="Details_Extra">Extra</system:String>
+
+    <!--HiddenEventsView-->
+    <system:String x:Key="Hidden_Title">Hidden Events</system:String>
+    <system:String x:Key="Hidden_Date">Date</system:String>
+    <system:String x:Key="Hidden_Filename">Filename</system:String>
+    <system:String x:Key="Hidden_Show">Show again</system:String>
 </ResourceDictionary>

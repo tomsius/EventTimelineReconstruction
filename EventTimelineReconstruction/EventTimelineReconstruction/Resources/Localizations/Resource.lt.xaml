@@ -66,4 +66,10 @@
     <system:String x:Key="Details_Notes">Pastabos</system:String>
     <system:String x:Key="Details_Format">Formatas</system:String>
     <system:String x:Key="Details_Extra">Papildoma informacija</system:String>
+
+    <!--HiddenEventsView-->
+    <system:String x:Key="Hidden_Title">Paslėpti įvykiai</system:String>
+    <system:String x:Key="Hidden_Date">Data</system:String>
+    <system:String x:Key="Hidden_Filename">Failo vardas</system:String>
+    <system:String x:Key="Hidden_Show">Vėl rodyti</system:String>
 </ResourceDictionary>
