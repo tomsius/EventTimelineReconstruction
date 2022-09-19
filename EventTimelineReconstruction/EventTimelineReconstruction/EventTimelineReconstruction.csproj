@@ -62,4 +62,15 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Resources\Localizations\Resource.en.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Update="Resources\Localizations\Resource.lt.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+  </ItemGroup>
+
 </Project>
