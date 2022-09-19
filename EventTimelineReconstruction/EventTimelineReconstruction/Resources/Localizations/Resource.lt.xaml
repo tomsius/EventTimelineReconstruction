@@ -116,4 +116,15 @@
     <system:String x:Key="Colour_Title">Įvykių paryškinimas</system:String>
     <system:String x:Key="Colour_Colour">Paryškinti</system:String>
     <system:String x:Key="Colour_Apply">Taikyti parinktis</system:String>
+
+    <!--IntegrityView-->
+    <system:String x:Key="Integrity_Window_Title">Patikrinti vientisumą...</system:String>
+    <system:String x:Key="Integrity_Title">Įvykių vientisumo patikrinimas</system:String>
+    <system:String x:Key="Integrity_Hash">Maišos reikšmė</system:String>
+    <system:String x:Key="Integrity_File_OK">Failo vientisumas nepažeistas.</system:String>
+    <system:String x:Key="Integrity_File_Unknown">Failo vientisumo nebuvo galima patikrinti.</system:String>
+    <system:String x:Key="Integrity_File_Compromised">Failo vientisumas pažeistas.</system:String>
+    <system:String x:Key="Integrity_Events_OK">Įvykių vientisumas nepažeistas.</system:String>
+    <system:String x:Key="Integrity_Events_Compromised">Įvykių vientisumas pažeistas.</system:String>
+    <system:String x:Key="Integrity_Check">Tikrinti</system:String>
 </ResourceDictionary>

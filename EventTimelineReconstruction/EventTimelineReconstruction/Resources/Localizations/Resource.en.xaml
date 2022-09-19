@@ -116,4 +116,15 @@
     <system:String x:Key="Colour_Title">Event Colouring</system:String>
     <system:String x:Key="Colour_Colour">Colour events</system:String>
     <system:String x:Key="Colour_Apply">Apply options</system:String>
+
+    <!--IntegrityView-->
+    <system:String x:Key="Integrity_Window_Title">Integrity checkup...</system:String>
+    <system:String x:Key="Integrity_Title">Events' integrity checkup</system:String>
+    <system:String x:Key="Integrity_Hash">Hash value</system:String>
+    <system:String x:Key="Integrity_File_OK">File's integrity is OK.</system:String>
+    <system:String x:Key="Integrity_File_Unknown">File's integrity is unknown.</system:String>
+    <system:String x:Key="Integrity_File_Compromised">File's integrity is compromised.</system:String>
+    <system:String x:Key="Integrity_Events_OK">Events' integrity is OK.</system:String>
+    <system:String x:Key="Integrity_Events_Compromised">Events' integrity is compromised.</system:String>
+    <system:String x:Key="Integrity_Check">Check</system:String>
 </ResourceDictionary>
