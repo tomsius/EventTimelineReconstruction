@@ -130,126 +130,126 @@
                         </i:Interaction.Triggers>
                     </CheckBox>
                     <StackPanel Orientation="Vertical" Margin="30 0 0 0">
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Analytics_Creation_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Analytics_Creation_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Analytics_Previous_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Analytics_Previous_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Content_Deletion_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Content_Deletion_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource FilterContent_Modification_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Content_Modification_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Creation_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Creation_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Expiration_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Expiration_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_File_Last_Modification_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_File_Last_Modification_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Installation_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Installation_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Access_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Access_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Checked_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Checked_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Connection_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Connection_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Login_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Login_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Password_Reset}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Password_Reset}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Shutdown_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Shutdown_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Time_Executed}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Time_Executed}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Visited_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Last_Visited_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Metadata_Modification_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Metadata_Modification_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="{DynamicResource Filter_Not_a_Time}">
+                        <CheckBox Width="170" Content="{DynamicResource General_Not_a_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
