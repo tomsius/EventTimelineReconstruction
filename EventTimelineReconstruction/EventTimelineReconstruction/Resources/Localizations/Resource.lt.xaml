@@ -35,4 +35,10 @@
     <system:String x:Key="Import_Title">Įvykių importavimas</system:String>
     <system:String x:Key="Import_Description">Pasirinkite failą, iš kurio importuoti įvykius. Taip pat galite nurodyti laiko intervalą.</system:String>
     <system:String x:Key="Import_Import">Importuoti</system:String>
+
+    <!--SaveWorkView-->
+    <system:String x:Key="Save_Window_Title">Išsaugoti darbą...</system:String>
+    <system:String x:Key="Save_Title">Išsaugoti darbą</system:String>
+    <system:String x:Key="Save_Description">Pasirinkite, kur išsaugoti darbą.</system:String>
+    <system:String x:Key="Save_Save">Išsaugoti</system:String>
 </ResourceDictionary>

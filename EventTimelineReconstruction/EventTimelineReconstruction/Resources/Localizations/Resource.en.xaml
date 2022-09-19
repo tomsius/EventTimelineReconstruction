@@ -35,4 +35,10 @@
     <system:String x:Key="Import_Title">Importation of Events</system:String>
     <system:String x:Key="Import_Description">Choose a file from which events are going to be imported. You can also select a date range.</system:String>
     <system:String x:Key="Import_Import">Import</system:String>
+    
+    <!--SaveWorkView-->
+    <system:String x:Key="Save_Window_Title">Save work...</system:String>
+    <system:String x:Key="Save_Title">Save Work</system:String>
+    <system:String x:Key="Save_Description">Choose a directory and file name to save your work.</system:String>
+    <system:String x:Key="Save_Save">Save</system:String>
 </ResourceDictionary>
