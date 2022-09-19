@@ -104,4 +104,10 @@
     <system:String x:Key="Filter_Keyword">Keyword</system:String>
     <system:String x:Key="Filter_Date">Date</system:String>
     <system:String x:Key="Filter_Apply">Apply options</system:String>
+
+    <!--ChangeColourView-->
+    <system:String x:Key="ChangeColour_Window_Title">Change event colour...</system:String>
+    <system:String x:Key="ChangeColour_Title">Change event colour</system:String>
+    <system:String x:Key="ChangeColour_Selected">Selected colour:</system:String>
+    <system:String x:Key="ChangeColour_Apply">Apply</system:String>
 </ResourceDictionary>

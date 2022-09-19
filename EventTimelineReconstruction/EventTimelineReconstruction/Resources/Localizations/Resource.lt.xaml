@@ -104,4 +104,10 @@
     <system:String x:Key="Filter_Keyword">Raktažodis</system:String>
     <system:String x:Key="Filter_Date">Data</system:String>
     <system:String x:Key="Filter_Apply">Taikyti parinktis</system:String>
+
+    <!--ChangeColourView-->
+    <system:String x:Key="ChangeColour_Window_Title">Keisti įvykio paryškinimą...</system:String>
+    <system:String x:Key="ChangeColour_Title">Įvykio paryškinimas</system:String>
+    <system:String x:Key="ChangeColour_Selected">Pasirinkta spalva:</system:String>
+    <system:String x:Key="ChangeColour_Apply">Taikyti</system:String>
 </ResourceDictionary>
