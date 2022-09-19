@@ -110,4 +110,10 @@
     <system:String x:Key="ChangeColour_Title">Change event colour</system:String>
     <system:String x:Key="ChangeColour_Selected">Selected colour:</system:String>
     <system:String x:Key="ChangeColour_Apply">Apply</system:String>
+
+    <!--ColourView-->
+    <system:String x:Key="Colour_Window_Title">Colour options...</system:String>
+    <system:String x:Key="Colour_Title">Event Colouring</system:String>
+    <system:String x:Key="Colour_Colour">Colour events</system:String>
+    <system:String x:Key="Colour_Apply">Apply options</system:String>
 </ResourceDictionary>

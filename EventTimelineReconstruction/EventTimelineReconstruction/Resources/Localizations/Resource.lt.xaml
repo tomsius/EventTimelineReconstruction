@@ -110,4 +110,10 @@
     <system:String x:Key="ChangeColour_Title">Įvykio paryškinimas</system:String>
     <system:String x:Key="ChangeColour_Selected">Pasirinkta spalva:</system:String>
     <system:String x:Key="ChangeColour_Apply">Taikyti</system:String>
+
+    <!--ColourView-->
+    <system:String x:Key="Colour_Window_Title">Paryškinimo parinktys...</system:String>
+    <system:String x:Key="Colour_Title">Įvykių paryškinimas</system:String>
+    <system:String x:Key="Colour_Colour">Paryškinti</system:String>
+    <system:String x:Key="Colour_Apply">Taikyti parinktis</system:String>
 </ResourceDictionary>
