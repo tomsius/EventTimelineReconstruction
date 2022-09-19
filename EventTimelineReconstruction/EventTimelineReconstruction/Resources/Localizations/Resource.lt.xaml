@@ -47,4 +47,23 @@
     <system:String x:Key="Load_Title">Įkelti darbą</system:String>
     <system:String x:Key="Load_Description">Pasirinkite failą, iš kurio įkelti išsaugotą darbą.</system:String>
     <system:String x:Key="Load_Load">Įkelti</system:String>
+
+    <!--EventDetailsView-->
+    <system:String x:Key="Details_Date">Data</system:String>
+    <system:String x:Key="Details_Time">Laikas</system:String>
+    <system:String x:Key="Details_Timezone">Laiko zona</system:String>
+    <system:String x:Key="Details_MACB">MACB</system:String>
+    <system:String x:Key="Details_Source">Šaltinis</system:String>
+    <system:String x:Key="Details_Source_Type">Šaltinio tipas</system:String>
+    <system:String x:Key="Details_Type">Tipas</system:String>
+    <system:String x:Key="Details_User">Naudotojas</system:String>
+    <system:String x:Key="Details_Host">Savininkas</system:String>
+    <system:String x:Key="Details_Short_Description">Trumpas aprašymas</system:String>
+    <system:String x:Key="Details_Description">Aprašymas</system:String>
+    <system:String x:Key="Details_Version">Versija</system:String>
+    <system:String x:Key="Details_Filename">Failo vardas</system:String>
+    <system:String x:Key="Details_Inode">iNode</system:String>
+    <system:String x:Key="Details_Notes">Pastabos</system:String>
+    <system:String x:Key="Details_Format">Formatas</system:String>
+    <system:String x:Key="Details_Extra">Papildoma informacija</system:String>
 </ResourceDictionary>

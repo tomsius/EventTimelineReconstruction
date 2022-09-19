@@ -47,4 +47,23 @@
     <system:String x:Key="Load_Title">Load Work</system:String>
     <system:String x:Key="Load_Description">Choose a file to load your saved work from.</system:String>
     <system:String x:Key="Load_Load">Load</system:String>
+
+    <!--EventDetailsView-->
+    <system:String x:Key="Details_Date">Date</system:String>
+    <system:String x:Key="Details_Time">Time</system:String>
+    <system:String x:Key="Details_Timezone">Timezone</system:String>
+    <system:String x:Key="Details_MACB">MACB</system:String>
+    <system:String x:Key="Details_Source">Source</system:String>
+    <system:String x:Key="Details_Source_Type">Source type</system:String>
+    <system:String x:Key="Details_Type">Type</system:String>
+    <system:String x:Key="Details_User">User</system:String>
+    <system:String x:Key="Details_Host">Host</system:String>
+    <system:String x:Key="Details_Short_Description">Short description</system:String>
+    <system:String x:Key="Details_Description">Description</system:String>
+    <system:String x:Key="Details_Version">Version</system:String>
+    <system:String x:Key="Details_Filename">Filename</system:String>
+    <system:String x:Key="Details_Inode">iNode</system:String>
+    <system:String x:Key="Details_Notes">Notes</system:String>
+    <system:String x:Key="Details_Format">Format</system:String>
+    <system:String x:Key="Details_Extra">Extra</system:String>
 </ResourceDictionary>
