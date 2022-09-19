@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Load work..." 
+        Title="{DynamicResource Load_Window_Title}" 
         Height="300" 
         Width="600"
         Icon="/Resources/magnifying-glass.ico"
@@ -13,14 +13,14 @@
         <TextBlock
             FontSize="24"
             FontWeight="Bold"
-            Text="Load Work"
+            Text="{DynamicResource Load_Title}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Margin="0, 20, 0, 5" />
         <TextBlock
             FontSize="14"
             TextWrapping="Wrap"
-            Text="Choose a file to load your saved work from."
+            Text="{DynamicResource Load_Description}"
             TextAlignment="Center"
             Width="500"
             Margin="0, 0, 0, 40" />
@@ -33,7 +33,7 @@
                          Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
                          Padding="6,3,6,3" 
                          Margin="0, 0, 10, 0" />
-                <TextBlock IsHitTestVisible="False" Text="File path" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                <TextBlock IsHitTestVisible="False" Text="{DynamicResource General_File_Path}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -48,7 +48,7 @@
             </Grid>
             <Button
                 Style="{StaticResource BorderlessButton}"
-                Content="Choose file..."
+                Content="{DynamicResource General_Choose_File}"
                 VerticalAlignment="Center"
                 Command="{Binding ChooseFileCommand}"/>
         </StackPanel>
@@ -60,7 +60,7 @@
                 Padding="0, 0, 0, 2"
                 Command="{Binding LoadCommand}">
                 <TextBlock
-                    Text="Load"
+                    Text="{DynamicResource Load_Load}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
@@ -72,7 +72,7 @@
                 Margin="10, 0, 0, 0"
                 Click="CloseButton_Click">
                 <TextBlock
-                    Text="Close"
+                    Text="{DynamicResource General_Close}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>

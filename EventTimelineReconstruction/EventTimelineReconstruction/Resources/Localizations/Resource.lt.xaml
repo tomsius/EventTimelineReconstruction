@@ -41,4 +41,10 @@
     <system:String x:Key="Save_Title">Išsaugoti darbą</system:String>
     <system:String x:Key="Save_Description">Pasirinkite, kur išsaugoti darbą.</system:String>
     <system:String x:Key="Save_Save">Išsaugoti</system:String>
+
+    <!--LoadWorkView-->
+    <system:String x:Key="Load_Window_Title">Įkelti darbą...</system:String>
+    <system:String x:Key="Load_Title">Įkelti darbą</system:String>
+    <system:String x:Key="Load_Description">Pasirinkite failą, iš kurio įkelti išsaugotą darbą.</system:String>
+    <system:String x:Key="Load_Load">Įkelti</system:String>
 </ResourceDictionary>

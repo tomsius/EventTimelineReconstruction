@@ -41,4 +41,10 @@
     <system:String x:Key="Save_Title">Save Work</system:String>
     <system:String x:Key="Save_Description">Choose a directory and file name to save your work.</system:String>
     <system:String x:Key="Save_Save">Save</system:String>
+
+    <!--LoadWorkView-->
+    <system:String x:Key="Load_Window_Title">Load work...</system:String>
+    <system:String x:Key="Load_Title">Load Work</system:String>
+    <system:String x:Key="Load_Description">Choose a file to load your saved work from.</system:String>
+    <system:String x:Key="Load_Load">Load</system:String>
 </ResourceDictionary>
