@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 using EventTimelineReconstruction.Views;
 
 namespace EventTimelineReconstruction;
@@ -33,6 +38,8 @@ public partial class MainWindow : Window
         _changeColourView = changeColourView;
         _colourView = colourView;
         _integrityView = integrityView;
+
+        ChangeLanguage("en");
     }
 
     private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -73,5 +80,50 @@ public partial class MainWindow : Window
     private void CheckIntegrityButton_Click(object sender, RoutedEventArgs e)
     {
         _integrityView.Show();
+    }
+
+    private void MenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        MenuItem clickedMenuItem = (MenuItem)sender;
+        string language = (string)clickedMenuItem.Tag;
+
+        foreach (MenuItem item in Languages.Items)
+        {
+            item.IsChecked = false;
+        }
+
+        clickedMenuItem.IsChecked = true;
+
+        ChangeLanguage(language);
+    }
+
+    private static void ChangeLanguage(string language)
+    {
+        ResourceDictionary dictionary = new();
+        string dictionaryPath = $@"/Resources/Localizations/Resource.{language}.xaml";
+        Uri uri = new(dictionaryPath, UriKind.Relative);
+        dictionary.Source = uri;
+        App.Current.Resources.MergedDictionaries.Add(dictionary);
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        string folder = $@"Resources/Localizations";
+        string fullPath = @$"{Directory.GetCurrentDirectory()}/../../../{folder}";
+        string filter = "*.xaml";
+
+        string[] paths = Directory.GetFiles(fullPath, filter);
+
+        foreach (string path in paths)
+        {
+            string fileName = Path.GetFileName(path);
+            string[] parts = fileName.Split('.');
+            string locale = parts[1];
+            string localeName = CultureInfo.GetCultureInfo(locale).NativeName;
+
+            MenuItem menuItem = new MenuItem() { Header = localeName, Tag = locale, IsChecked = locale == "en" ? true : false };
+            menuItem.Click += this.MenuItem_Click;
+            Languages.Items.Add(menuItem);
+        }
     }
 }
