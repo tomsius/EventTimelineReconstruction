@@ -38,13 +38,13 @@
 
     <!--SaveWorkView-->
     <system:String x:Key="Save_Window_Title">Išsaugoti darbą...</system:String>
-    <system:String x:Key="Save_Title">Išsaugoti darbą</system:String>
+    <system:String x:Key="Save_Title">Darbo išsaugojimas</system:String>
     <system:String x:Key="Save_Description">Pasirinkite, kur išsaugoti darbą.</system:String>
     <system:String x:Key="Save_Save">Išsaugoti</system:String>
 
     <!--LoadWorkView-->
     <system:String x:Key="Load_Window_Title">Įkelti darbą...</system:String>
-    <system:String x:Key="Load_Title">Įkelti darbą</system:String>
+    <system:String x:Key="Load_Title">Darbo įkėlimas</system:String>
     <system:String x:Key="Load_Description">Pasirinkite failą, iš kurio įkelti išsaugotą darbą.</system:String>
     <system:String x:Key="Load_Load">Įkelti</system:String>
 
@@ -72,4 +72,36 @@
     <system:String x:Key="Hidden_Date">Data</system:String>
     <system:String x:Key="Hidden_Filename">Failo vardas</system:String>
     <system:String x:Key="Hidden_Show">Vėl rodyti</system:String>
+
+    <!--FilterView-->
+    <system:String x:Key="Filter_Window_Title">Filtravimo parinktys...</system:String>
+    <system:String x:Key="Filter_Title">Įvykių filtravimas</system:String>
+    <system:String x:Key="Filter_Enable">Įjungti</system:String>
+    <system:String x:Key="Filter_Disable">Išjungti</system:String>
+    <system:String x:Key="Filter_Filtering_Type">Filtravimo tipas</system:String>
+    <system:String x:Key="Filter_At_Least_One">Rodyti įvykius, atitinkančius bent vieną parinktį</system:String>
+    <system:String x:Key="Filter_All">Rodyti įvykius, atitinkančius visas parinktis</system:String>
+    <system:String x:Key="Filter_Event_Types">Įvykių tipai</system:String>
+    <system:String x:Key="Filter_Select_All">Pasirinkti viską</system:String>
+    <system:String x:Key="Filter_Analytics_Creation_Time">Analitikos sukūrimo laikas</system:String>
+    <system:String x:Key="Filter_Analytics_Previous_Time">Analitikos ankstesnis laikas</system:String>
+    <system:String x:Key="Filter_Content_Deletion_Time">Turinio ištrynimo laikas</system:String>
+    <system:String x:Key="FilterContent_Modification_Time">Turinio modifikacijos laikas</system:String>
+    <system:String x:Key="Filter_Creation_Time">Sukūrimo laikas</system:String>
+    <system:String x:Key="Filter_Expiration_Time">Galiojimo pabaigos laikas</system:String>
+    <system:String x:Key="Filter_File_Last_Modification_Time">Paskutinis failo modifikavimo laikas</system:String>
+    <system:String x:Key="Filter_Installation_Time">Įdiegimo laikas</system:String>
+    <system:String x:Key="Filter_Last_Access_Time">Paskutinės prieigos laikas</system:String>
+    <system:String x:Key="Filter_Last_Checked_Time">Paskutinis patikrinimo laikas</system:String>
+    <system:String x:Key="Filter_Last_Connection_Time">Paskutinis ryšio laikas</system:String>
+    <system:String x:Key="Filter_Last_Login_Time">Paskutinis prisijungimo laikas</system:String>
+    <system:String x:Key="Filter_Last_Password_Reset">Paskutinis slaptažožio nustatymas iš naujo</system:String>
+    <system:String x:Key="Filter_Last_Shutdown_Time">Paskutinis išjungimo laikas</system:String>
+    <system:String x:Key="Filter_Last_Time_Executed">Paskutinis vykdymo laikas</system:String>
+    <system:String x:Key="Filter_Last_Visited_Time">Paskutinis apsilankymo laikas</system:String>
+    <system:String x:Key="Filter_Metadata_Modification_Time">Metaduomenų modifikacijos laikas</system:String>
+    <system:String x:Key="Filter_Not_a_Time">Ne laikas</system:String>
+    <system:String x:Key="Filter_Keyword">Raktažodis</system:String>
+    <system:String x:Key="Filter_Date">Data</system:String>
+    <system:String x:Key="Filter_Apply">Taikyti parinktis</system:String>
 </ResourceDictionary>

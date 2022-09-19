@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:customInvokers="clr-namespace:EventTimelineReconstruction.CustomInvokers"
-        xmlns:converters="clr-namespace:EventTimelineReconstruction.Converters"
+        xmlns:converters="clr-namespace:EventTimelineReconstruction.Converters" 
+        xmlns:utils="clr-namespace:EventTimelineReconstruction.Utils"
         mc:Ignorable="d"
-        Title="Filter options..."
+        Title="{DynamicResource Filter_Window_Title}"
         Height="720"
-        Width="400"
+        Width="460"
         MinHeight="720"
-        MinWidth="400"
+        MinWidth="460"
         Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
     <Window.Resources>
@@ -21,7 +22,7 @@
         <TextBlock
             FontSize="24"
             FontWeight="Bold"
-            Text="Event filtering"
+            Text="{DynamicResource Filter_Title}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Margin="0 0 0 20"
@@ -34,7 +35,7 @@
                 Height="30"
                 Padding="26 5 26 0"
                 Margin="0 0 0 0"
-                Content="Enable"
+                Content="{DynamicResource Filter_Enable}"
                 FontWeight="Bold"
                 IsEnabled="True"
                 Style="{StaticResource ToggleSwitchEnable}"
@@ -52,7 +53,7 @@
                 Height="30"
                 Padding="23 5 23 0"
                 Margin="0 0 0 0"
-                Content="Disable"
+                Content="{DynamicResource Filter_Disable}"
                 FontWeight="Bold"
                 IsEnabled="False"
                 Style="{StaticResource ToggleSwitchDisable}"
@@ -74,7 +75,7 @@
                 Padding="0, 0, 0, 2"
                 Command="{Binding ApplyCommand}">
                 <TextBlock
-                    Text="Apply options"
+                    Text="{DynamicResource Filter_Apply}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
@@ -86,7 +87,7 @@
                 Margin="10, 0, 0, 0"
                 Click="CloseButton_Click">
                 <TextBlock
-                    Text="Close"
+                    Text="{DynamicResource General_Close}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
@@ -96,11 +97,11 @@
             <DockPanel LastChildFill="False">
                 <TextBlock
                     FontSize="14"
-                    Text="Filtering type"
+                    Text="{DynamicResource Filter_Filtering_Type}"
                     DockPanel.Dock="Left"/>
-                <ComboBox DockPanel.Dock="Right" Width="250">
-                    <ComboBoxItem IsSelected="True" Content="Show events matching at least one filter" />
-                    <ComboBoxItem Content="Show events matching all filters" />
+                <ComboBox DockPanel.Dock="Right" Width="280">
+                    <ComboBoxItem IsSelected="True" Content="{DynamicResource Filter_At_Least_One}" />
+                    <ComboBoxItem Content="{DynamicResource Filter_All}" />
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
@@ -115,10 +116,10 @@
             <DockPanel LastChildFill="False">
                 <TextBlock
                 FontSize="14"
-                Text="Event types"
+                Text="{DynamicResource Filter_Event_Types}"
                 DockPanel.Dock="Left"/>
-                <StackPanel DockPanel.Dock="Right" Margin="0 0 67 0">
-                    <CheckBox Width="170" Margin="0 0 0 5" Content="Select all" IsThreeState="True">
+                <StackPanel DockPanel.Dock="Right" Margin="0 0 95 0">
+                    <CheckBox Width="170" Margin="0 0 0 5" Content="{DynamicResource Filter_Select_All}" IsThreeState="True">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
@@ -129,126 +130,126 @@
                         </i:Interaction.Triggers>
                     </CheckBox>
                     <StackPanel Orientation="Vertical" Margin="30 0 0 0">
-                        <CheckBox Width="170" Content="Analytics Creation Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Analytics_Creation_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Analytics Previous Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Analytics_Previous_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Content Deletion Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Content_Deletion_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Content Modification Time">
+                        <CheckBox Width="170" Content="{DynamicResource FilterContent_Modification_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Creation Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Creation_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Expiration Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Expiration_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="File Last Modification Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_File_Last_Modification_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Installation Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Installation_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Access Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Access_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Checked Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Checked_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Connection Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Connection_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Login Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Login_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Password Reset">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Password_Reset}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Shutdown Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Shutdown_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Time Executed">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Time_Executed}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Last Visited Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Last_Visited_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Metadata Modification Time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Metadata_Modification_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </CheckBox>
-                        <CheckBox Width="170" Content="Not a time">
+                        <CheckBox Width="170" Content="{DynamicResource Filter_Not_a_Time}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <customInvokers:CustomCommandInvoker Command="{Binding FilterCheckedCommand}" />
@@ -264,11 +265,11 @@
             <DockPanel LastChildFill="False">
                 <TextBlock
                 FontSize="14"
-                Text="Keyword"
+                Text="{DynamicResource Filter_Keyword}"
                 DockPanel.Dock="Left"/>
                 <TextBox 
                 DockPanel.Dock="Right"
-                Width="250" 
+                Width="280" 
                 Text="{Binding Keyword, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
@@ -277,7 +278,7 @@
             <DockPanel LastChildFill="False">
                 <TextBlock
                 FontSize="14"
-                Text="Date"
+                Text="{DynamicResource Filter_Date}"
                 DockPanel.Dock="Left"/>
                 <Grid DockPanel.Dock="Right" Height="auto" Width="250">
                     <Grid.RowDefinitions>
@@ -293,24 +294,26 @@
 
                     <TextBlock
                     FontSize="14"
-                    Text="From"
+                    Text="{DynamicResource General_From}"
                     Grid.Row="0"
                     Grid.Column="0"
                     HorizontalAlignment="Center"
                     Margin="0 0 0 5" />
                     <TextBlock
                     FontSize="14"
-                    Text="To"
+                    Text="{DynamicResource General_To}"
                     Grid.Row="0"
                     Grid.Column="2"
                     HorizontalAlignment="Center"
                     Margin="0 0 0 5" />
-                    <DatePicker
+                    <utils:CustomDatePicker
+                    PlaceholderText="dd/mm/yyyy"
                     Grid.Row="1"
                     Grid.Column="0"
                     SelectedDate="{Binding FromDate}"
                     Margin="0 0 0 5" />
-                    <DatePicker
+                    <utils:CustomDatePicker
+                    PlaceholderText="dd/mm/yyyy"
                     Grid.Row="1"
                     Grid.Column="2"
                     SelectedDate="{Binding ToDate}" 

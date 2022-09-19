@@ -72,4 +72,36 @@
     <system:String x:Key="Hidden_Date">Date</system:String>
     <system:String x:Key="Hidden_Filename">Filename</system:String>
     <system:String x:Key="Hidden_Show">Show again</system:String>
+
+    <!--FilterView-->
+    <system:String x:Key="Filter_Window_Title">Filter options...</system:String>
+    <system:String x:Key="Filter_Title">Event Filtering</system:String>
+    <system:String x:Key="Filter_Enable">Enable</system:String>
+    <system:String x:Key="Filter_Disable">Disable</system:String>
+    <system:String x:Key="Filter_Filtering_Type">Filtering type</system:String>
+    <system:String x:Key="Filter_At_Least_One">Show events matching at least one filter</system:String>
+    <system:String x:Key="Filter_All">Show events matching all filters</system:String>
+    <system:String x:Key="Filter_Event_Types">Event types</system:String>
+    <system:String x:Key="Filter_Select_All">Select all</system:String>
+    <system:String x:Key="Filter_Analytics_Creation_Time">Analytics Creation Time</system:String>
+    <system:String x:Key="Filter_Analytics_Previous_Time">Analytics Previous Time</system:String>
+    <system:String x:Key="Filter_Content_Deletion_Time">Content Deletion Time</system:String>
+    <system:String x:Key="FilterContent_Modification_Time">Content Modification Time</system:String>
+    <system:String x:Key="Filter_Creation_Time">Creation Time</system:String>
+    <system:String x:Key="Filter_Expiration_Time">Expiration Time</system:String>
+    <system:String x:Key="Filter_File_Last_Modification_Time">File Last Modification Time</system:String>
+    <system:String x:Key="Filter_Installation_Time">Installation Time</system:String>
+    <system:String x:Key="Filter_Last_Access_Time">Last Access Time</system:String>
+    <system:String x:Key="Filter_Last_Checked_Time">Last Checked Time</system:String>
+    <system:String x:Key="Filter_Last_Connection_Time">Last Connection Time</system:String>
+    <system:String x:Key="Filter_Last_Login_Time">Last Login Time</system:String>
+    <system:String x:Key="Filter_Last_Password_Reset">Last Password Reset</system:String>
+    <system:String x:Key="Filter_Last_Shutdown_Time">Last Shutdown Time</system:String>
+    <system:String x:Key="Filter_Last_Time_Executed">Last Time Executed</system:String>
+    <system:String x:Key="Filter_Last_Visited_Time">Last Visited Time</system:String>
+    <system:String x:Key="Filter_Metadata_Modification_Time">Metadata Modification Time</system:String>
+    <system:String x:Key="Filter_Not_a_Time">Not a time</system:String>
+    <system:String x:Key="Filter_Keyword">Keyword</system:String>
+    <system:String x:Key="Filter_Date">Date</system:String>
+    <system:String x:Key="Filter_Apply">Apply options</system:String>
 </ResourceDictionary>
