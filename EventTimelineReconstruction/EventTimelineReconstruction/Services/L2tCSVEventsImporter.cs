@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using EventTimelineReconstruction.Models;
 
@@ -11,8 +10,8 @@ public class L2tCSVEventsImporter : IEventsImporter
 {
     public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
     {
-        IEnumerable<string> rows = File.ReadLines(path);
-        List<EventModel> events = new(rows.Count());
+        string[] rows = File.ReadAllLines(path);
+        List<EventModel> events = new(rows.Length);
         object lockObj = new();
 
         Parallel.ForEach(rows, (line, _, lineNumber) =>

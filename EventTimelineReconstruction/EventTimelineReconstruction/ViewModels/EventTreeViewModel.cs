@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using EventTimelineReconstruction.Commands;
-using EventTimelineReconstruction.Extensions;
+using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 
@@ -14,7 +16,7 @@ namespace EventTimelineReconstruction.ViewModels;
 
 public class EventTreeViewModel : ViewModelBase
 {
-    private readonly ObservableCollection<EventViewModel> _events;
+    private readonly RangeEnabledObservableCollection<EventViewModel> _events;
     private readonly FilteringStore _filteringStore;
 
     public IEnumerable<EventViewModel> Events
@@ -24,6 +26,17 @@ public class EventTreeViewModel : ViewModelBase
             return _events;
         }
     }
+
+    private readonly ICollectionView _eventsView;
+
+    public ICollectionView EventsView
+    {
+        get
+        {
+            return _eventsView;
+        }
+    }
+
 
     public PInPoint pointRef;
 
@@ -41,6 +54,9 @@ public class EventTreeViewModel : ViewModelBase
     public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore, ChangeColourViewModel changeColourViewModel)
     {
         _events = new();
+        _eventsView = new ListCollectionView(_events);
+        (_eventsView as ListCollectionView).CustomSort = new EventSorter();
+
         pointRef = new PInPoint();
         _filteringStore = filteringStore;
 
@@ -51,16 +67,12 @@ public class EventTreeViewModel : ViewModelBase
         GiveFeedbackCommand = new GiveEventFeedbackCommand(this);
     }
 
-    public void LoadEvents(IEnumerable<EventViewModel> events)
+    public void LoadEvents(List<EventViewModel> events)
     {
         _events.Clear();
-
-        foreach (EventViewModel entity in events) {
-            _events.Add(entity);
-        }
+        _events.AddRange(events);
 
         this.ApplyFilters();
-
         this.OnPropertyChanged(nameof(Events));
     }
 
@@ -74,19 +86,17 @@ public class EventTreeViewModel : ViewModelBase
         _events.Remove(eventViewModel);
     }
 
-    public void UpdateOrdering()
-    {
-        _events.Sort();
-    }
-
     public void ApplyFilters()
     {
-        ICollectionView eventsDataSourceView = CollectionViewSource.GetDefaultView(Events);
-
-        eventsDataSourceView.Filter = eventModel =>
+        _eventsView.Filter = eventModel =>
         {
             ICollectionView childrenDataSourceView;
             Queue<EventViewModel> queue = new();
+
+            if (eventModel is null)
+            {
+                return false;
+            }
 
             foreach (EventViewModel child in ((EventViewModel)eventModel).Children)
             {
@@ -96,7 +106,6 @@ public class EventTreeViewModel : ViewModelBase
             while (queue.Count > 0)
             {
                 EventViewModel eventViewModel = queue.Dequeue();
-
                 foreach (EventViewModel child in eventViewModel.Children)
                 {
                     queue.Enqueue(child);

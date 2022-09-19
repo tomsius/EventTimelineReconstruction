@@ -3,7 +3,6 @@ using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EventTimelineReconstruction.Commands;

@@ -4,13 +4,14 @@ using System.Windows.Media;
 using EventTimelineReconstruction.Models;
 using System.Text;
 using System.Collections.ObjectModel;
+using EventTimelineReconstruction.Extensions;
 
 namespace EventTimelineReconstruction.ViewModels;
 
 public class EventViewModel : ViewModelBase, IComparable
 {
     private readonly EventModel _eventModel;
-    private readonly ObservableCollection<EventViewModel> _children;
+    private ObservableCollection<EventViewModel> _children;
 
     public ObservableCollection<EventViewModel> Children
     {
@@ -249,9 +250,10 @@ public class EventViewModel : ViewModelBase, IComparable
     public EventViewModel(EventModel eventModel)
     {
         _eventModel = eventModel;
-        _children = new();
         IsVisible = true;
         Colour = Brushes.Black;
+
+        _children = new();
     }
 
     public string Serialize()
@@ -292,6 +294,8 @@ public class EventViewModel : ViewModelBase, IComparable
     public void AddChild(EventViewModel child)
     {
         _children.Add(child);
+        // TODO - dont sort after each add (i.e. sort after reading all childs)
+        _children.Sort();
     }
 
     public void RemoveChild(EventViewModel child)
@@ -308,6 +312,13 @@ public class EventViewModel : ViewModelBase, IComparable
     {
         EventViewModel other = obj as EventViewModel;
 
-        return DisplayName.CompareTo(other.DisplayName);
+        int cmp = FullDate.CompareTo(other.FullDate);
+
+        if (cmp == 0)
+        {
+            return Filename.CompareTo(other.Filename);
+        }
+
+        return cmp;
     }
 }

@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <ListView Margin="0 0 0 25" Grid.Row="0" 
-                  ItemsSource="{Binding HiddenEvents}" 
+                  ItemsSource="{Binding HiddenEventsView}" 
                   VerticalContentAlignment="Top" 
                   ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                   ScrollViewer.CanContentScroll="False"

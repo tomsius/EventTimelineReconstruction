@@ -13,7 +13,7 @@ public class EventsStore
     private List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
 
-    public IEnumerable<EventViewModel> Events
+    public List<EventViewModel> Events
     {
         get
         {

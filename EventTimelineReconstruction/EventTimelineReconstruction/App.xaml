@@ -129,5 +129,19 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="{x:Type TreeView}" TargetType="{x:Type TreeView}">
+            <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+            <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+            <Setter Property="VirtualizingPanel.ScrollUnit" Value="Item"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
+        <Style x:Key="{x:Type TreeViewItem}" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+            <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+            <Setter Property="VirtualizingPanel.ScrollUnit" Value="Item"/>
+            <Setter Property="IsExpanded" Value="True" />
+        </Style>
     </Application.Resources>
 </Application>

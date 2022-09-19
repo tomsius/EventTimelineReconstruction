@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using EventTimelineReconstruction.ViewModels;
-using EventTimelineReconstruction.Extensions;
 using System.Linq;
 using System.ComponentModel;
 
@@ -35,7 +34,6 @@ public class MoveEventUpCommand : CommandBase
                 _treeViewModel.AddEvent(_eventDetailsViewModel.SelectedEvent);
                 item.RemoveChild(_eventDetailsViewModel.SelectedEvent);
 
-                _treeViewModel.UpdateOrdering();
                 _eventDetailsViewModel.SelectedEvent = null;
                 return;
             }
@@ -53,7 +51,6 @@ public class MoveEventUpCommand : CommandBase
                     grandParent.AddChild(_eventDetailsViewModel.SelectedEvent);
                     parent.RemoveChild(_eventDetailsViewModel.SelectedEvent);
 
-                    grandParent.Children.Sort();
                     _eventDetailsViewModel.SelectedEvent = null;
                     return;
                 }

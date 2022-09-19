@@ -43,9 +43,8 @@ public class ApplyColoursCommand : CommandBase
                 queue.Enqueue(child);
             }
 
-            string eventType = current.Type;
-            Brush colour = _colouringStore.ColoursByType[eventType];
-
+            string[] eventTypes = current.Type.Split("; ");
+            Brush colour = _colouringStore.ColoursByType[eventTypes[^1]];
             current.Colour = colour;
         }
     }
