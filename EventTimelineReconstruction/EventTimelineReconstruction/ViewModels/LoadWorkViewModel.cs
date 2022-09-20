@@ -22,6 +22,21 @@ public class LoadWorkViewModel : ViewModelBase, IFileSelectable
         }
     }
 
+    private bool _isLoading;
+
+    public bool IsLoading
+    {
+        get
+        {
+            return _isLoading;
+        }
+        set
+        {
+            _isLoading = value;
+            this.OnPropertyChanged(nameof(IsLoading));
+        }
+    }
+
     public ICommand ChooseFileCommand { get; }
     public ICommand LoadCommand { get; }
 
