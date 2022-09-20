@@ -21,6 +21,21 @@ public class SaveWorkViewModel : ViewModelBase, IFileSelectable
         }
     }
 
+    private bool _isSaving;
+
+    public bool IsSaving
+    {
+        get
+        {
+            return _isSaving;
+        }
+        set
+        {
+            _isSaving = value;
+            this.OnPropertyChanged(nameof(IsSaving));
+        }
+    }
+
     public ICommand ChooseFileCommand { get; }
     public ICommand SaveCommand { get; }
 

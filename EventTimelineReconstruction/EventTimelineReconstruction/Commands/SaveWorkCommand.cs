@@ -26,7 +26,11 @@ public class SaveWorkCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
+        _saveWorkViewModel.IsSaving = true;
+
         await Task.Run(() => _workSaver.SaveWork(_saveWorkViewModel.FileName, _eventTreeViewModel.Events));
+
+        _saveWorkViewModel.IsSaving = false;
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
