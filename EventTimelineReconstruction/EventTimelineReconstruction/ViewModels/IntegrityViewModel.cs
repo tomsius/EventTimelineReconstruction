@@ -145,6 +145,21 @@ public class IntegrityViewModel : ViewModelBase, IFileSelectable
         }
     }
 
+    private bool _isChecking;
+
+    public bool IsChecking
+    {
+        get
+        {
+            return _isChecking;
+        }
+        set
+        {
+            _isChecking = value;
+            this.OnPropertyChanged(nameof(IsChecking));
+        }
+    }
+
     public ICommand ChooseFileCommand { get; }
     public ICommand CheckCommand { get; }
 

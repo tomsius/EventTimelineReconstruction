@@ -6,19 +6,22 @@
         xmlns:local="clr-namespace:EventTimelineReconstruction.Views"
         xmlns:converters="clr-namespace:EventTimelineReconstruction.Converters" 
         xmlns:utils="clr-namespace:EventTimelineReconstruction.Utils"
+        xmlns:fa="http://schemas.fontawesome.com/icons/svg"
         mc:Ignorable="d"
         Title="{DynamicResource Integrity_Window_Title}" 
-        Height="520" 
+        Height="540" 
         Width="700"
-        MinHeight="520"
+        MinHeight="540"
         MinWidth="700"
         Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
     <Window.Resources>
         <converters:IntegrityResultsConverter x:Key="ButtonConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     <Grid Margin="20" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -218,7 +221,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Margin="0 0 0 50">
+        <StackPanel Grid.Row="2" Margin="0 0 0 20">
             <TextBlock x:Name="FileOKTextBlock" Text="{DynamicResource Integrity_File_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
             <TextBlock x:Name="FileUnknownTextBlock" Text="{DynamicResource Integrity_File_Unknown}" FontSize="14" Foreground="Orange" HorizontalAlignment="Center" Visibility="Collapsed" />
             <TextBlock x:Name="FileCompromisedTextBlock" Text="{DynamicResource Integrity_File_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
@@ -226,7 +229,15 @@
             <TextBlock x:Name="EventsCompromisedTextBlock" Text="{DynamicResource Integrity_Events_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+        <fa:ImageAwesome 
+            Grid.Row="3" 
+            Icon="Solid_Spinner" 
+            Spin="True"
+            Height="48" 
+            Width="48" 
+            Visibility="{Binding IsChecking, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
             <Button 
                 Style="{StaticResource ConfirmationButton}"
                 Width="100"
