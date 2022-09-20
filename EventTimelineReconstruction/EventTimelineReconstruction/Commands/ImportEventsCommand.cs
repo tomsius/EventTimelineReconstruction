@@ -26,8 +26,12 @@ public class ImportEventsCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
+        _importViewModel.IsImporting = true;
+
         await _store.Import(_importViewModel.FileName, _importViewModel.FromDate, _importViewModel.ToDate);
         _eventTreeViewModel.LoadEvents(_store.Events);
+
+        _importViewModel.IsImporting = false;
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

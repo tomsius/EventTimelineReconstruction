@@ -128,6 +128,21 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         }
     }
 
+    private bool _isImporting;
+
+    public bool IsImporting
+    {
+        get
+        {
+            return _isImporting;
+        }
+        set
+        {
+            _isImporting = value;
+            this.OnPropertyChanged(nameof(IsImporting));
+        }
+    }
+
     public ICommand ChooseFileCommand { get; }
     public ICommand ImportCommand { get; }
 
