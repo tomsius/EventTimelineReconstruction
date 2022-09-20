@@ -36,7 +36,6 @@
     <system:String x:Key="Menu_Filter">F_iltering options</system:String>
     <system:String x:Key="Menu_Colour">_Colouring options</system:String>
     <system:String x:Key="Menu_Language">_Language</system:String>
-    
     <system:String x:Key="ToolBar_Import">Import events from file</system:String>
     <system:String x:Key="ToolBar_Save">Save work to file</system:String>
     <system:String x:Key="ToolBar_Load">Load work from file</system:String>
@@ -127,4 +126,10 @@
     <system:String x:Key="Integrity_Events_OK">Events' integrity is OK.</system:String>
     <system:String x:Key="Integrity_Events_Compromised">Events' integrity is compromised.</system:String>
     <system:String x:Key="Integrity_Check">Check</system:String>
+
+    <!--DragDropUtils-->
+    <system:String x:Key="DragDrop_Question">Would you like to move</system:String>
+    <system:String x:Key="DragDrop_Into">into</system:String>
+    <system:String x:Key="DragDrop_First_Level">first level</system:String>
+    <system:String x:Key="DragDrop_Confirmation">Confirmation</system:String>
 </ResourceDictionary>

@@ -3,6 +3,7 @@ using System.Windows.Media;
 using System.Windows;
 using EventTimelineReconstruction.ViewModels;
 using System.Collections.Generic;
+using System.Text;
 
 namespace EventTimelineReconstruction.Utils;
 
@@ -43,10 +44,25 @@ public static class DragDropUtils
 
     public static void CopyItem(EventViewModel sourceItem, EventViewModel targetItem, TreeViewItem draggedItemElement, EventTreeViewModel vm)
     {
-        string targetName = targetItem != null ? targetItem.DisplayDate : "first level";
+        string question = (string)App.Current.Resources["DragDrop_Question"];
+        string into = (string)App.Current.Resources["DragDrop_Into"];
+        string targetName = targetItem != null ? targetItem.DisplayName : (string)App.Current.Resources["DragDrop_First_Level"];
+        string confirmation = (string)App.Current.Resources["DragDrop_Confirmation"];
+
+        StringBuilder message = new();
+        message
+            .Append(question)
+            .Append(' ')
+            .Append(sourceItem.DisplayName)
+            .Append(' ')
+            .Append(into)
+            .Append(' ')
+            .Append(targetName)
+            .Append('?');
 
         //Asking user wether he want to drop the dragged TreeViewItem here or not
-        if (MessageBox.Show("Would you like to move " + sourceItem.DisplayName + " into " + targetName + "?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+        // TODO - custom message box
+        if (MessageBox.Show(message.ToString(), confirmation, MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
             //adding dragged TreeViewItem in target TreeViewItem
             MoveChild(sourceItem, targetItem, draggedItemElement, vm);
         }

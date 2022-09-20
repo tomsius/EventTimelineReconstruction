@@ -36,7 +36,6 @@
     <system:String x:Key="Menu_Filter">_Filtravimo parinktys</system:String>
     <system:String x:Key="Menu_Colour">_Paryškinimo parinktys</system:String>
     <system:String x:Key="Menu_Language">_Kalba</system:String>
-
     <system:String x:Key="ToolBar_Import">Importuoti įvykius iš failo</system:String>
     <system:String x:Key="ToolBar_Save">Išsaugoti darbą</system:String>
     <system:String x:Key="ToolBar_Load">Įkelti darbą</system:String>
@@ -127,4 +126,10 @@
     <system:String x:Key="Integrity_Events_OK">Įvykių vientisumas nepažeistas.</system:String>
     <system:String x:Key="Integrity_Events_Compromised">Įvykių vientisumas pažeistas.</system:String>
     <system:String x:Key="Integrity_Check">Tikrinti</system:String>
+
+    <!--DragDropUtils-->
+    <system:String x:Key="DragDrop_Question">Ar norite perkelti</system:String>
+    <system:String x:Key="DragDrop_Into">į</system:String>
+    <system:String x:Key="DragDrop_First_Level">pirmą lygį</system:String>
+    <system:String x:Key="DragDrop_Confirmation">Patvirtinimas</system:String>
 </ResourceDictionary>
