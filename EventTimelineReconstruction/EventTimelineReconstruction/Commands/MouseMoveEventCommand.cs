@@ -40,7 +40,6 @@ public class MouseMoveEventCommand : CommandBase
                         DragDropUtils.CopyItem(_eventTreeViewModel.DraggedItem, _eventTreeViewModel.Target, _eventTreeViewModel.DraggedItemElement, _eventTreeViewModel);
                         _eventTreeViewModel.Target = null;
                         _eventTreeViewModel.DraggedItem = null;
-                        _eventDetailsViewModel.SelectedEvent = null;
                     }
                 }
             }

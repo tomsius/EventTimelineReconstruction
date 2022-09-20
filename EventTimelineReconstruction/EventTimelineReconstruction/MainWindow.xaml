@@ -5,75 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:EventTimelineReconstruction.Views"
         mc:Ignorable="d"
-        Title="Event Timeline Reconstruction" 
+        Title="{DynamicResource Project_Title}"
         Height="750" 
         MinHeight="300"
         Width="1250"
         MinWidth="600"
-        Icon="/Resources/magnifying-glass.ico">
+        Icon="/Resources/magnifying-glass.ico"
+        Loaded="Window_Loaded">
     <DockPanel MinWidth="600">
         <Menu DockPanel.Dock="Top" >
-            <MenuItem Header="_File">
-                <MenuItem Header="_Import" Click="ImportButton_Click">
+            <MenuItem Header="{DynamicResource Menu_File}">
+                <MenuItem Header="{DynamicResource Menu_Import}" Click="ImportButton_Click">
                     <MenuItem.Icon>
                         <Image Source="/Resources/import.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Save" Click="SaveButton_Click">
+                <MenuItem Header="{DynamicResource Menu_Save}" Click="SaveButton_Click">
                     <MenuItem.Icon>
                         <Image Source="/Resources/save.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Load" Click="LoadButton_Click">
+                <MenuItem Header="{DynamicResource Menu_Load}" Click="LoadButton_Click">
                     <MenuItem.Icon>
                         <Image Source="/Resources/load.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Options">
-                <MenuItem Header="F_iltering options" Click="FilterButton_Click">
+            <MenuItem Header="{DynamicResource Menu_Options}">
+                <MenuItem Header="{DynamicResource Menu_Filter}" Click="FilterButton_Click">
                     <MenuItem.Icon>
                         <Image Source="/Resources/filter.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Colouring options" Click="ChangeColourByTypeButton_Click">
+                <MenuItem Header="{DynamicResource Menu_Colour}" Click="ChangeColourByTypeButton_Click">
                     <MenuItem.Icon>
                         <Image Source="/Resources/fillcolour.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="{DynamicResource Menu_Language}" x:Name="Languages"/>
         </Menu>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button ToolTip="Import events from file" Click="ImportButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Import}" Click="ImportButton_Click">
                     <Image Width="32" Source="/Resources/import.png" />
                 </Button>
-                <Button ToolTip="Save work to file" Click="SaveButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Save}" Click="SaveButton_Click">
                     <Image Width="32" Source="/Resources/save.png" />
                 </Button>
-                <Button ToolTip="Load work from file" Click="LoadButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Load}" Click="LoadButton_Click">
                     <Image Width="32" Source="/Resources/load.png" />
                 </Button>
                 <Separator />
-                <Button ToolTip="Move event one level up" Command="{Binding MoveEventCommand}">
+                <Button ToolTip="{DynamicResource ToolBar_Move}" Command="{Binding MoveEventCommand}">
                     <Image Width="32" Source="/Resources/moveup.png" />
                 </Button>
-                <Button ToolTip="Hide selected event" Command="{Binding HideCommand}">
+                <Button ToolTip="{DynamicResource ToolBar_Hide}" Command="{Binding HideCommand}">
                     <Image Width="32" Source="/Resources/hide.png" />
                 </Button>
-                <Button ToolTip="Show all hidden events" Click="HiddenEventsButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Hidden}" Click="HiddenEventsButton_Click">
                     <Image Width="32" Source="/Resources/hidden.png" />
                 </Button>
-                <Button ToolTip="Filter events" Click="FilterButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Filter}" Click="FilterButton_Click">
                     <Image Width="32" Source="/Resources/filter.png" />
                 </Button>
-                <Button ToolTip="Change event's colour" Click="ChangeEventColourButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Change_Colour}" Click="ChangeEventColourButton_Click">
                     <Image Width="32" Source="/Resources/marker.png" />
                 </Button>
-                <Button ToolTip="Change colouring of each event type" Click="ChangeColourByTypeButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Colour}" Click="ChangeColourByTypeButton_Click">
                     <Image Width="32" Source="/Resources/fillcolour.png" />
                 </Button>
-                <Button ToolTip="Check events' integrity" Click="CheckIntegrityButton_Click">
+                <Button ToolTip="{DynamicResource ToolBar_Integrity}" Click="CheckIntegrityButton_Click">
                     <Image Width="32" Source="/Resources/lock.png" />
                 </Button>
             </ToolBar>

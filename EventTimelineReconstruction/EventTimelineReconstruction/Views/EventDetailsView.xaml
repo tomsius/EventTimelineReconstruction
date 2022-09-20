@@ -31,55 +31,55 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Border Grid.Row="0" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Date" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Date}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="1" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Time" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Time}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="2" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Timezone" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Timezone}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="3" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="MACB" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_MACB}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="4" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Source" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Source}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="5" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Source type" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Source_Type}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="6" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Type" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Type}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="7" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="User" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_User}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="8" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Host" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Host}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="9" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Short description" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Short_Description}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="10" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Description" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Description}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="11" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Version" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Version}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="12" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Filename" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Filename}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="13" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="iNode" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Inode}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="14" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Notes" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Notes}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="15" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 1">
-                <TextBlock Text="Format" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Format}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="16" Grid.Column="0" BorderBrush="Silver" BorderThickness="0 0 1 0">
-                <TextBlock Text="Extra" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBlock Text="{DynamicResource Details_Extra}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
 
             <Border Grid.Row="0" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">

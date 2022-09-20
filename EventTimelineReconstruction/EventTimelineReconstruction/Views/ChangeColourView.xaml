@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EventTimelineReconstruction.Views"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Change event colour..." 
+        Title="{DynamicResource ChangeColour_Window_Title}" 
         Height="250" 
         Width="500"
         MinHeight="250"
@@ -17,14 +17,14 @@
         <TextBlock
             FontSize="24"
             FontWeight="Bold"
-            Text="Change event colour"
+            Text="{DynamicResource ChangeColour_Title}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Margin="0 0 0 20"/>
         <StackPanel Margin="0 0 0 50" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock
                 FontSize="14"
-                Text="Selected colour:"
+                Text="{DynamicResource ChangeColour_Selected}"
                 Margin="0 0 10 0"/>
             <xctk:ColorPicker SelectedColor="{Binding SelectedColour}" Width="100" />
         </StackPanel>
@@ -36,7 +36,7 @@
                 Padding="0, 0, 0, 2"
                 Command="{Binding ApplyCommand}">
                 <TextBlock
-                    Text="Apply"
+                    Text="{DynamicResource ChangeColour_Apply}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
@@ -48,7 +48,7 @@
                 Margin="10, 0, 0, 0"
                 Click="CloseButton_Click">
                 <TextBlock
-                    Text="Close"
+                    Text="{DynamicResource General_Close}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>

@@ -2,9 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:utils="clr-namespace:EventTimelineReconstruction.Utils"
         mc:Ignorable="d"
-        Title="Import events..." 
+        Title="{DynamicResource Import_Window_Title}" 
         Height="450" 
         Width="600"
         ResizeMode="NoResize"
@@ -14,14 +15,14 @@
         <TextBlock
             FontSize="24"
             FontWeight="Bold"
-            Text="Importation of Events"
+            Text="{DynamicResource Import_Title}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Margin="0, 20, 0, 5" />
         <TextBlock
             FontSize="14"
             TextWrapping="Wrap"
-            Text="Choose a file from which events are going to be imported. You can also select a date range."
+            Text="{DynamicResource Import_Description}"
             TextAlignment="Center"
             Width="500"
             Margin="0, 0, 0, 40" />
@@ -34,7 +35,7 @@
                          Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
                          Padding="6,3,6,3" 
                          Margin="0, 0, 10, 0" />
-                <TextBlock IsHitTestVisible="False" Text="File path" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                <TextBlock IsHitTestVisible="False" Text="{DynamicResource General_File_Path}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -49,7 +50,7 @@
             </Grid>
             <Button
                 Style="{StaticResource BorderlessButton}"
-                Content="Choose file..."
+                Content="{DynamicResource General_Choose_File}"
                 VerticalAlignment="Center"
                 Command="{Binding ChooseFileCommand}"/>
         </StackPanel>
@@ -61,12 +62,13 @@
 
             <StackPanel Width="150" Grid.Column="0">
                 <TextBlock 
-                Text="From"
+                Text="{DynamicResource General_From}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0, 0, 0, 10"
                 FontSize="14" />
-                <DatePicker 
+                <utils:CustomDatePicker 
+                    PlaceholderText="mm/dd/yyyy"
                     Width="150" 
                     Margin="0, 0, 0, 5" 
                     SelectedDate="{Binding FromDate}" />
@@ -131,12 +133,13 @@
 
             <StackPanel Width="150" Grid.Column="2">
                 <TextBlock 
-                Text="To"
+                Text="{DynamicResource General_To}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0, 0, 0, 10"
                 FontSize="14" />
-                <DatePicker 
+                <utils:CustomDatePicker
+                    PlaceholderText="mm/dd/yyyy"
                     Width="150" 
                     Margin="0, 0, 0, 5"
                     SelectedDate="{Binding ToDate}" />
@@ -208,7 +211,7 @@
                 Padding="0, 0, 0, 2"
                 Command="{Binding ImportCommand}">
                 <TextBlock
-                    Text="Import"
+                    Text="{DynamicResource Import_Import}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
@@ -220,7 +223,7 @@
                 Margin="10, 0, 0, 0"
                 Click="CloseButton_Click">
                 <TextBlock
-                    Text="Close"
+                    Text="{DynamicResource General_Close}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Hidden Events"
+        Title="{DynamicResource Hidden_Title}"
         Height="450"
         Width="850"
         Icon="/Resources/magnifying-glass.ico"
@@ -24,8 +24,8 @@
                   SelectedItem="{Binding SelectedHiddenEvent}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="140" Header="Date" DisplayMemberBinding="{Binding FullDate}" />
-                    <GridViewColumn Width="600" Header="Filename" DisplayMemberBinding="{Binding Filename}" />
+                    <GridViewColumn Width="140" Header="{DynamicResource Hidden_Date}" DisplayMemberBinding="{Binding FullDate}" />
+                    <GridViewColumn Width="600" Header="{DynamicResource Hidden_Filename}" DisplayMemberBinding="{Binding Filename}" />
                 </GridView>
             </ListView.View>
         </ListView>
@@ -37,7 +37,7 @@
                 Padding="0, 0, 0, 2"
                 Command="{Binding UnhideCommand}">
                 <TextBlock
-                    Text="Show again"
+                    Text="{DynamicResource Hidden_Show}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
@@ -49,7 +49,7 @@
                 Margin="10, 0, 0, 0"
                 Click="CloseButton_Click">
                 <TextBlock
-                    Text="Close"
+                    Text="{DynamicResource General_Close}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
             </Button>
