@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using EventTimelineReconstruction.ViewModels;
 using EventTimelineReconstruction.Views;
 
 namespace EventTimelineReconstruction;
@@ -82,10 +83,15 @@ public partial class MainWindow : Window
         _integrityView.Show();
     }
 
+    // TODO - move to command
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
         MenuItem clickedMenuItem = (MenuItem)sender;
-        string language = (string)clickedMenuItem.Tag;
+        string newLanguage = (string)clickedMenuItem.Tag;
+        Uri resourceSource = App.Current.Resources.MergedDictionaries[0].Source;
+        string[] segments = resourceSource.ToString().Split('/');
+        string[] parts = segments[^1].Split('.');
+        string oldLanguage = parts[1];
 
         foreach (MenuItem item in Languages.Items)
         {
@@ -94,7 +100,16 @@ public partial class MainWindow : Window
 
         clickedMenuItem.IsChecked = true;
 
-        ChangeLanguage(language);
+        ChangeLanguage(newLanguage);
+
+        ImportViewModel importViewModel = _importView.DataContext as ImportViewModel;
+        importViewModel.ErrorsViewModel.UpdateErrorsLanguage(oldLanguage);
+
+        FilterViewModel filterViewModel = _filterView.DataContext as FilterViewModel;
+        filterViewModel.ErrorsViewModel.UpdateErrorsLanguage(oldLanguage);
+
+        IntegrityViewModel integrityViewModel = _integrityView.DataContext as IntegrityViewModel;
+        integrityViewModel.ErrorsViewModel.UpdateErrorsLanguage(oldLanguage);
     }
 
     private static void ChangeLanguage(string language)
@@ -103,6 +118,7 @@ public partial class MainWindow : Window
         string dictionaryPath = $@"/Resources/Localizations/Resource.{language}.xaml";
         Uri uri = new(dictionaryPath, UriKind.Relative);
         dictionary.Source = uri;
+        App.Current.Resources.MergedDictionaries.Clear();
         App.Current.Resources.MergedDictionaries.Add(dictionary);
     }
 
@@ -121,7 +137,7 @@ public partial class MainWindow : Window
             string locale = parts[1];
             string localeName = CultureInfo.GetCultureInfo(locale).NativeName;
 
-            MenuItem menuItem = new MenuItem() { Header = localeName, Tag = locale, IsChecked = locale == "en" ? true : false };
+            MenuItem menuItem = new() { Header = localeName, Tag = locale, IsChecked = locale == "en" };
             menuItem.Click += this.MenuItem_Click;
             Languages.Items.Add(menuItem);
         }
