@@ -1,4 +1,5 @@
-﻿using EventTimelineReconstruction.Stores;
+﻿using System.ComponentModel;
+using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
@@ -14,6 +15,12 @@ public class ApplyFilterOptionsCommand : CommandBase
         _filterViewModel = filterViewModel;
         _filteringStore = filteringStore;
         _eventTreeViewModel = eventTreeViewModel;
+        _filterViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
+    }
+
+    public override bool CanExecute(object parameter)
+    {
+        return !_filterViewModel.HasErrors && base.CanExecute(parameter);
     }
 
     public override void Execute(object parameter)
@@ -25,5 +32,13 @@ public class ApplyFilterOptionsCommand : CommandBase
         _filteringStore.SetEventTypes(_filterViewModel.ChosenEventTypes);
 
         _eventTreeViewModel.ApplyFilters();
+    }
+
+    private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(FilterViewModel.HasErrors))
+        {
+            this.OnCanExecuteChanged();
+        }
     }
 }

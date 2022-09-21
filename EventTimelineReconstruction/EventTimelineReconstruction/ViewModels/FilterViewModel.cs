@@ -1,13 +1,27 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Validators;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class FilterViewModel : ViewModelBase
+public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
 {
+    private readonly ITimeValidator _validator;
+    private readonly ErrorsViewModel _errorsViewModel;
+
+    public ErrorsViewModel ErrorsViewModel
+    {
+        get
+        {
+            return _errorsViewModel;
+        }
+    }
+
     private bool _areAllFiltersApplied;
 
     public bool AreAllFiltersApplied
@@ -48,7 +62,7 @@ public class FilterViewModel : ViewModelBase
         }
     }
 
-    private DateTime _fromDate = DateTime.Now;
+    private DateTime _fromDate = DateTime.Now.Date;
 
     public DateTime FromDate
     {
@@ -60,12 +74,14 @@ public class FilterViewModel : ViewModelBase
         {
             _fromDate = value;
             this.OnPropertyChanged(nameof(FromDate));
+
+            this.ValidateDate();
         }
     }
 
-    private int? _fromHours;
+    private int _fromHours;
 
-    public int? FromHours
+    public int FromHours
     {
         get
         {
@@ -75,12 +91,15 @@ public class FilterViewModel : ViewModelBase
         {
             _fromHours = value;
             this.OnPropertyChanged(nameof(FromHours));
+
+            this.ValidateHours(nameof(FromHours), _fromHours, "Error_From_Hours");
+            this.ValidateDate();
         }
     }
 
-    private int? _fromMinutes;
+    private int _fromMinutes;
 
-    public int? FromMinutes
+    public int FromMinutes
     {
         get
         {
@@ -90,6 +109,9 @@ public class FilterViewModel : ViewModelBase
         {
             _fromMinutes = value;
             this.OnPropertyChanged(nameof(FromMinutes));
+
+            this.ValidateMinutes(nameof(FromMinutes), _fromMinutes, "Error_From_Minutes");
+            this.ValidateDate();
         }
     }
 
@@ -97,11 +119,11 @@ public class FilterViewModel : ViewModelBase
     {
         get
         {
-            return new DateTime(FromDate.Year, FromDate.Month, FromDate.Day, FromHours ?? 0, FromMinutes ?? 0, 0);
+            return new DateTime(FromDate.Year, FromDate.Month, FromDate.Day, FromHours, FromMinutes, 0);
         }
     }
 
-    private DateTime _toDate = DateTime.Now;
+    private DateTime _toDate = DateTime.Now.Date;
 
     public DateTime ToDate
     {
@@ -113,12 +135,14 @@ public class FilterViewModel : ViewModelBase
         {
             _toDate = value;
             this.OnPropertyChanged(nameof(ToDate));
+
+            this.ValidateDate();
         }
     }
 
-    private int? _toHours;
+    private int _toHours;
 
-    public int? ToHours
+    public int ToHours
     {
         get
         {
@@ -128,12 +152,15 @@ public class FilterViewModel : ViewModelBase
         {
             _toHours = value;
             this.OnPropertyChanged(nameof(ToHours));
+
+            this.ValidateHours(nameof(ToHours), _toHours, "Error_To_Hours");
+            this.ValidateDate();
         }
     }
 
-    private int? _toMinutes;
+    private int _toMinutes;
 
-    public int? ToMinutes
+    public int ToMinutes
     {
         get
         {
@@ -143,6 +170,9 @@ public class FilterViewModel : ViewModelBase
         {
             _toMinutes = value;
             this.OnPropertyChanged(nameof(ToMinutes));
+
+            this.ValidateMinutes(nameof(ToMinutes), _toMinutes, "Error_To_Minutes");
+            this.ValidateDate();
         }
     }
 
@@ -150,7 +180,15 @@ public class FilterViewModel : ViewModelBase
     {
         get
         {
-            return new DateTime(ToDate.Year, ToDate.Month, ToDate.Day, ToHours ?? 0, ToMinutes ?? 0, 0);
+            return new DateTime(ToDate.Year, ToDate.Month, ToDate.Day, ToHours, ToMinutes, 0);
+        }
+    }
+
+    public bool HasErrors
+    {
+        get
+        {
+            return _errorsViewModel.HasErrors;
         }
     }
 
@@ -160,11 +198,16 @@ public class FilterViewModel : ViewModelBase
     public ICommand ApplyCommand { get; }
     public ICommand FilterCommand { get; }
 
-    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel)
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel, ITimeValidator validator)
     {
         _areAllFiltersApplied = false;
         _keyword = string.Empty;
         _chosenEventTypes = new();
+        _errorsViewModel = new();
+        _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
+        _validator = validator;
 
         InitializeCommand = new InitializeEventTypesCommand(this);
         FilterChangedCommand = new FilterTypeChangedCommand(this);
@@ -185,5 +228,52 @@ public class FilterViewModel : ViewModelBase
         }
 
         this.OnPropertyChanged(nameof(ChosenEventTypes));
+    }
+
+    private void ErrorsViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+    {
+        ErrorsChanged?.Invoke(this, e);
+        this.OnPropertyChanged(nameof(HasErrors));
+    }
+
+    public IEnumerable GetErrors(string propertyName)
+    {
+        return _errorsViewModel.GetErrors(propertyName);
+    }
+
+    private void ValidateDate()
+    {
+        _errorsViewModel.ClearErrors(nameof(FromDate));
+        _errorsViewModel.ClearErrors(nameof(ToDate));
+
+        try
+        {
+            if (!_validator.AreDatesValid(FullFromDate, FullToDate))
+            {
+                _errorsViewModel.AddError(nameof(FromDate), (string)App.Current.Resources["Error_From_After_To"]);
+                _errorsViewModel.AddError(nameof(ToDate), (string)App.Current.Resources["Error_To_Before_From"]);
+            }
+        }
+        catch (Exception) { }
+    }
+
+    private void ValidateHours(string propertyName, int hours, string resourceKey)
+    {
+        _errorsViewModel.ClearErrors(propertyName);
+
+        if (!_validator.AreHoursValid(hours))
+        {
+            _errorsViewModel.AddError(propertyName, (string)App.Current.Resources[resourceKey]);
+        }
+    }
+
+    private void ValidateMinutes(string propertyName, int minutes, string resourceKey)
+    {
+        _errorsViewModel.ClearErrors(propertyName);
+
+        if (!_validator.AreMinutesValid(minutes))
+        {
+            _errorsViewModel.AddError(propertyName, (string)App.Current.Resources[resourceKey]);
+        }
     }
 }
