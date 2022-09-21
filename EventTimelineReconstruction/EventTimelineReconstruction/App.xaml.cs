@@ -1,5 +1,6 @@
 ﻿using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Validators;
 using EventTimelineReconstruction.ViewModels;
 using EventTimelineReconstruction.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,8 @@ public partial class App : Application
                 services.AddSingleton<IWorkLoader, FileWorkLoader>();
                 services.AddSingleton<IHashCalculator, SHA256Calculator>();
 
+                services.AddSingleton<ITimeValidator, TimeValidator>();
+
                 services.AddSingleton<EventsStore>();
                 services.AddSingleton<FilteringStore>();
                 services.AddSingleton<ColouringStore>();
@@ -28,11 +31,11 @@ public partial class App : Application
                 services.AddSingleton<IntegrityViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();
                 services.AddSingleton<EventTreeViewModel>();
-                services.AddSingleton(s => new ImportViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventsStore>()));
+                services.AddSingleton<ImportViewModel>();
                 services.AddSingleton<SaveWorkViewModel>();
                 services.AddSingleton<LoadWorkViewModel>();
-                services.AddSingleton(s => new HiddenEventsViewModel(s.GetRequiredService<EventsStore>(), s.GetRequiredService<EventTreeViewModel>()));
-                services.AddSingleton(s => new MainWindowViewModel(s.GetRequiredService<EventTreeViewModel>(), s.GetRequiredService<EventDetailsViewModel>(), s.GetRequiredService<HiddenEventsViewModel>()));
+                services.AddSingleton<HiddenEventsViewModel>();
+                services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<FilterViewModel>();
                 services.AddSingleton<ChangeColourViewModel>();
                 services.AddSingleton<ColourViewModel>();
