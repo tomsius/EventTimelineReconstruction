@@ -7,7 +7,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/svg"
         mc:Ignorable="d"
         Title="{DynamicResource Import_Window_Title}" 
-        Height="480" 
+        Height="530" 
         Width="600"
         ResizeMode="NoResize"
         Icon="/Resources/magnifying-glass.ico"
@@ -15,209 +15,233 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
-    <StackPanel Margin="20">
-        <TextBlock
+    <DockPanel 
+        Margin="20"
+        LastChildFill="False">
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock
             FontSize="24"
             FontWeight="Bold"
             Text="{DynamicResource Import_Title}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Margin="0, 20, 0, 5" />
-        <TextBlock
+            <TextBlock
             FontSize="14"
             TextWrapping="Wrap"
             Text="{DynamicResource Import_Description}"
             TextAlignment="Center"
             Width="500"
             Margin="0, 0, 0, 40" />
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 0, 0, 30">
-            <Grid>
-                <TextBox Width="400" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 0, 0, 30">
+                <Grid>
+                    <TextBox Width="400" 
                          VerticalAlignment="Center" 
                          HorizontalAlignment="Left" 
                          x:Name="FileNameTextBox" 
                          Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
                          Padding="6,3,6,3" 
                          Margin="0, 0, 10, 0" />
-                <TextBlock IsHitTestVisible="False" Text="{DynamicResource General_File_Path}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text, ElementName=FileNameTextBox}" Value="">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
-            <Button
+                    <TextBlock IsHitTestVisible="False" Text="{DynamicResource General_File_Path}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=FileNameTextBox}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <Button
                 Style="{StaticResource BorderlessButton}"
                 Content="{DynamicResource General_Choose_File}"
                 VerticalAlignment="Center"
                 Command="{Binding ChooseFileCommand}"/>
-        </StackPanel>
-        <Grid Width="500" Margin="0, 0, 0, 20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+            </StackPanel>
+            <Grid Width="500" Margin="0, 0, 0, 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
 
-            <StackPanel Width="150" Grid.Column="0">
-                <TextBlock 
+                <StackPanel Width="150" Grid.Column="0">
+                    <TextBlock 
                 Text="{DynamicResource General_From}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0, 0, 0, 10"
                 FontSize="14" />
-                <utils:CustomDatePicker 
+                    <utils:CustomDatePicker 
                     PlaceholderText="mm/dd/yyyy"
                     Width="150" 
                     Margin="0, 0, 0, 5" 
                     SelectedDate="{Binding FromDate}" />
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.45*" />
-                        <ColumnDefinition Width="0.1*" />
-                        <ColumnDefinition Width="0.45*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.45*" />
+                            <ColumnDefinition Width="0.1*" />
+                            <ColumnDefinition Width="0.45*" />
+                        </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0" HorizontalAlignment="Right">
-                        <TextBox 
+                        <Grid Grid.Column="0" HorizontalAlignment="Right">
+                            <TextBox 
                             Width="40" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Left" 
                             x:Name="FromHoursTextBox" 
                             Text="{Binding FromHours, UpdateSourceTrigger=PropertyChanged}"
                             Padding="6,3,6,3" />
-                        <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=FromHoursTextBox}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                    <TextBlock 
+                            <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=FromHoursTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <TextBlock 
                     Text=":" 
                     FontSize="14"
                     FontWeight="Bold"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Grid.Column="1" />
-                    <Grid Grid.Column="2" HorizontalAlignment="Left">
-                        <TextBox 
+                        <Grid Grid.Column="2" HorizontalAlignment="Left">
+                            <TextBox 
                             Width="40" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Left" 
                             x:Name="FromMinutesTextBox" 
                             Text="{Binding FromMinutes, UpdateSourceTrigger=PropertyChanged}"
                             Padding="6,3,6,3"/>
-                        <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=FromMinutesTextBox}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                            <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=FromMinutesTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel Width="150" Grid.Column="2">
-                <TextBlock 
+                <StackPanel Width="150" Grid.Column="2">
+                    <TextBlock 
                 Text="{DynamicResource General_To}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0, 0, 0, 10"
                 FontSize="14" />
-                <utils:CustomDatePicker
+                    <utils:CustomDatePicker
                     PlaceholderText="mm/dd/yyyy"
                     Width="150" 
                     Margin="0, 0, 0, 5"
                     SelectedDate="{Binding ToDate}" />
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.45*" />
-                        <ColumnDefinition Width="0.1*" />
-                        <ColumnDefinition Width="0.45*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.45*" />
+                            <ColumnDefinition Width="0.1*" />
+                            <ColumnDefinition Width="0.45*" />
+                        </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0" HorizontalAlignment="Right">
-                        <TextBox 
+                        <Grid Grid.Column="0" HorizontalAlignment="Right">
+                            <TextBox 
                             Width="40" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Left" 
                             x:Name="ToHoursTextBox" 
                             Text="{Binding ToHours, UpdateSourceTrigger=PropertyChanged}"
                             Padding="6,3,6,3" />
-                        <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=ToHoursTextBox}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                    <TextBlock 
+                            <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=ToHoursTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <TextBlock 
                     Text=":" 
                     FontSize="14"
                     FontWeight="Bold"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Grid.Column="1" />
-                    <Grid Grid.Column="2" HorizontalAlignment="Left">
-                        <TextBox 
+                        <Grid Grid.Column="2" HorizontalAlignment="Left">
+                            <TextBox 
                             Width="40" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Left" 
                             x:Name="ToMinutesTextBox" 
                             Text="{Binding ToMinutes, UpdateSourceTrigger=PropertyChanged}"
                             Padding="6,3,6,3" />
-                        <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=ToMinutesTextBox}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                            <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=ToMinutesTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </StackPanel>
-        </Grid>
+                </StackPanel>
+            </Grid>
 
-        <fa:ImageAwesome 
+            <fa:ImageAwesome 
             Icon="Solid_Spinner" 
             Spin="True"
             Height="48" 
             Width="48" 
             Visibility="{Binding IsImporting, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        
+
+            <ListView 
+            Width="500"
+            MaxHeight="100"
+            BorderThickness="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ItemsSource="{Binding ErrorsViewModel.Errors}" 
+            Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Foreground" Value="Red" />
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                        <Setter Property="FontSize" Value="12" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </StackPanel>
+
         <StackPanel 
+            DockPanel.Dock="Bottom"
             Orientation="Horizontal" 
             HorizontalAlignment="Center"
-            Margin="0 20 0 0">
+            Margin="0 20 0 10">
             <Button 
                 Style="{StaticResource ConfirmationButton}"
                 Width="100"
@@ -242,5 +266,5 @@
                     VerticalAlignment="Center"/>
             </Button>
         </StackPanel>
-    </StackPanel>
+    </DockPanel>
 </Window>

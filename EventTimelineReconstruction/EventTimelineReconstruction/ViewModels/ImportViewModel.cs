@@ -1,12 +1,26 @@
 ﻿using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Validators;
 using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class ImportViewModel : ViewModelBase, IFileSelectable
+public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelectable
 {
+    private readonly ITimeValidator _validator;
+    private readonly ErrorsViewModel _errorsViewModel;
+
+    public ErrorsViewModel ErrorsViewModel
+    {
+        get
+        {
+            return _errorsViewModel;
+        }
+    }
+
     private string _fileName;
 
     public string FileName
@@ -19,10 +33,17 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         { 
             _fileName = value;
             this.OnPropertyChanged(nameof(FileName));
+
+            _errorsViewModel.ClearErrors(nameof(FileName));
+
+            if (string.IsNullOrEmpty(_fileName))
+            {
+                _errorsViewModel.AddError(nameof(FileName), (string)App.Current.Resources["Error_Filename"]);
+            }
         }
     }
 
-    private DateTime _fromDate = DateTime.Now;
+    private DateTime _fromDate = DateTime.Now.Date;
 
     public DateTime FromDate
     {
@@ -34,9 +55,12 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         {
             _fromDate = value;
             this.OnPropertyChanged(nameof(FromDate));
+
+            this.ValidateDate();
         }
     }
 
+    // TODO - try making nullable and not show error if null
     private int _fromHours;
 
     public int FromHours
@@ -49,6 +73,9 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         {
             _fromHours = value;
             this.OnPropertyChanged(nameof(FromHours));
+            
+            this.ValidateHours(nameof(FromHours), _fromHours, "Error_From_Hours");
+            this.ValidateDate();
         }
     }
 
@@ -64,6 +91,9 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         {
             _fromMinutes = value;
             this.OnPropertyChanged(nameof(FromMinutes));
+
+            this.ValidateMinutes(nameof(FromMinutes), _fromMinutes, "Error_From_Minutes");
+            this.ValidateDate();
         }
     }
 
@@ -75,7 +105,7 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         }
     }
 
-    private DateTime _toDate = DateTime.Now;
+    private DateTime _toDate = DateTime.Now.Date;
 
     public DateTime ToDate
     {
@@ -87,6 +117,8 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         {
             _toDate = value;
             this.OnPropertyChanged(nameof(ToDate));
+
+            this.ValidateDate();
         }
     }
 
@@ -102,6 +134,9 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         {
             _toHours = value;
             this.OnPropertyChanged(nameof(ToHours));
+
+            this.ValidateHours(nameof(ToHours), _toHours, "Error_To_Hours");
+            this.ValidateDate();
         }
     }
 
@@ -117,6 +152,9 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         {
             _toMinutes = value;
             this.OnPropertyChanged(nameof(ToMinutes));
+
+            this.ValidateMinutes(nameof(ToMinutes), _toMinutes, "Error_To_Minutes");
+            this.ValidateDate();
         }
     }
 
@@ -143,12 +181,73 @@ public class ImportViewModel : ViewModelBase, IFileSelectable
         }
     }
 
+    public bool HasErrors
+    {
+        get
+        {
+            return _errorsViewModel.HasErrors;
+        }
+    }
+
     public ICommand ChooseFileCommand { get; }
     public ICommand ImportCommand { get; }
 
-    public ImportViewModel(EventTreeViewModel viewModel, EventsStore store)
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+    public ImportViewModel(EventTreeViewModel viewModel, EventsStore store, ITimeValidator validator)
     {
+        _errorsViewModel = new();
+        _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
+        _validator = validator;
+
         ChooseFileCommand = new ChooseLoadFileCommand(this);
         ImportCommand = new ImportEventsCommand(this, store, viewModel);
+    }
+
+    private void ErrorsViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+    {
+        ErrorsChanged?.Invoke(this, e);
+        this.OnPropertyChanged(nameof(HasErrors));
+    }
+
+    public IEnumerable GetErrors(string propertyName)
+    {
+        return _errorsViewModel.GetErrors(propertyName);
+    }
+
+    private void ValidateDate()
+    {
+        _errorsViewModel.ClearErrors(nameof(FromDate));
+        _errorsViewModel.ClearErrors(nameof(ToDate));
+
+        try
+        {
+            if (!_validator.AreDatesValid(FullFromDate, FullToDate))
+            {
+                _errorsViewModel.AddError(nameof(FromDate), (string)App.Current.Resources["Error_From_After_To"]);
+                _errorsViewModel.AddError(nameof(ToDate), (string)App.Current.Resources["Error_To_Before_From"]);
+            }
+        }
+        catch (Exception) { }
+    }
+
+    private void ValidateHours(string propertyName, int hours, string resourceKey)
+    {
+        _errorsViewModel.ClearErrors(propertyName);
+
+        if (!_validator.AreHoursValid(hours))
+        {
+            _errorsViewModel.AddError(propertyName, (string)App.Current.Resources[resourceKey]);
+        }
+    }
+
+    private void ValidateMinutes(string propertyName, int minutes, string resourceKey)
+    {
+        _errorsViewModel.ClearErrors(propertyName);
+
+        if (!_validator.AreMinutesValid(minutes))
+        {
+            _errorsViewModel.AddError(propertyName, (string)App.Current.Resources[resourceKey]);
+        }
     }
 }

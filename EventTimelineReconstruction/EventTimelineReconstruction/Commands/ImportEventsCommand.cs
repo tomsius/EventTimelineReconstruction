@@ -21,7 +21,7 @@ public class ImportEventsCommand : AsyncCommandBase
 
     public override bool CanExecute(object parameter)
     {
-        return !string.IsNullOrEmpty(_importViewModel.FileName) && base.CanExecute(parameter);
+        return !string.IsNullOrEmpty(_importViewModel.FileName) && !_importViewModel.HasErrors && base.CanExecute(parameter);
     }
 
     public override async Task ExecuteAsync(object parameter)
@@ -36,7 +36,7 @@ public class ImportEventsCommand : AsyncCommandBase
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(ImportViewModel.FileName))
+        if (e.PropertyName == nameof(ImportViewModel.FileName) || e.PropertyName == nameof(ImportViewModel.HasErrors))
         {
             this.OnCanExecuteChanged();
         }
