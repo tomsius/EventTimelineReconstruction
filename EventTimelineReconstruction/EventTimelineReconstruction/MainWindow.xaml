@@ -4,14 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:EventTimelineReconstruction.Views"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        xmlns:customInvokers="clr-namespace:EventTimelineReconstruction.CustomInvokers"
         mc:Ignorable="d"
         Title="{DynamicResource Project_Title}"
         Height="750" 
         MinHeight="300"
         Width="1250"
         MinWidth="600"
-        Icon="/Resources/magnifying-glass.ico"
-        Loaded="Window_Loaded">
+        Icon="/Resources/magnifying-glass.ico">
     <DockPanel MinWidth="600">
         <Menu DockPanel.Dock="Top" >
             <MenuItem Header="{DynamicResource Menu_File}">
@@ -43,7 +44,13 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{DynamicResource Menu_Language}" x:Name="Languages"/>
+            <MenuItem Header="{DynamicResource Menu_Language}" x:Name="Languages">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <customInvokers:CustomCommandInvoker Command="{Binding InitializeCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </MenuItem>
         </Menu>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>

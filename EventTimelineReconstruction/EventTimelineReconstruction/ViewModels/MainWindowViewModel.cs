@@ -25,15 +25,23 @@ public class MainWindowViewModel
         }
     }
 
+    public ICommand InitializeCommand { get; }
     public ICommand MoveEventCommand { get; }
     public ICommand HideCommand { get; }
 
-    public MainWindowViewModel(EventTreeViewModel eventTreeViewModel, EventDetailsViewModel eventDetailsViewModel, HiddenEventsViewModel hiddenEventsViewModel)
+    public MainWindowViewModel(
+        EventTreeViewModel eventTreeViewModel, 
+        EventDetailsViewModel eventDetailsViewModel, 
+        HiddenEventsViewModel hiddenEventsViewModel,
+        ImportViewModel importViewModel,
+        FilterViewModel filterViewModel,
+        IntegrityViewModel integrityViewModel)
     {
         _eventTreeViewModel = eventTreeViewModel;
         _eventDetailsViewModel = eventDetailsViewModel;
 
         MoveEventCommand = new MoveEventUpCommand(eventTreeViewModel, eventDetailsViewModel);
         HideCommand = new HideEventCommand(eventTreeViewModel, eventDetailsViewModel, hiddenEventsViewModel);
+        InitializeCommand = new InitializeLanguagesCommand(importViewModel, filterViewModel, integrityViewModel);
     }
 }
