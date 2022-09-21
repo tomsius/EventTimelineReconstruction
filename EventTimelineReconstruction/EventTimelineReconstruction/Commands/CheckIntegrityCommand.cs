@@ -32,7 +32,7 @@ public class CheckIntegrityCommand : CommandBase
 
     public override bool CanExecute(object parameter)
     {
-        return !string.IsNullOrEmpty(_integrityViewModel.FileName) && base.CanExecute(parameter);
+        return !string.IsNullOrEmpty(_integrityViewModel.FileName) && !_integrityViewModel.HasErrors && base.CanExecute(parameter);
     }
 
     public override async void Execute(object parameter)
@@ -145,7 +145,7 @@ public class CheckIntegrityCommand : CommandBase
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(IntegrityViewModel.FileName))
+        if (e.PropertyName == nameof(IntegrityViewModel.FileName) || e.PropertyName == nameof(IntegrityViewModel.HasErrors))
         {
             this.OnCanExecuteChanged();
         }
