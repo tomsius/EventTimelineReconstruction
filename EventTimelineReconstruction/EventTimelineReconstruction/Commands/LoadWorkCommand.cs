@@ -30,6 +30,7 @@ public class LoadWorkCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
+        _loadWorkViewModel.IsLoading = true;
         List<EventViewModel> loadedEvents = new();
 
         await Task.Run(() => {
@@ -38,6 +39,8 @@ public class LoadWorkCommand : AsyncCommandBase
         });
 
         _eventTreeViewModel.LoadEvents(loadedEvents);
+
+        _loadWorkViewModel.IsLoading = false;
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

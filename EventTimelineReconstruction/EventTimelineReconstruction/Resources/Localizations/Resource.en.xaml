@@ -132,4 +132,13 @@
     <system:String x:Key="DragDrop_Into">into</system:String>
     <system:String x:Key="DragDrop_First_Level">first level</system:String>
     <system:String x:Key="DragDrop_Confirmation">Confirmation</system:String>
+
+    <!--Errors-->
+    <system:String x:Key="Error_To_Before_From">The "To" date can not be before the "From" date.</system:String>
+    <system:String x:Key="Error_From_After_To">The "From" date can not be after the "To" date.</system:String>
+    <system:String x:Key="Error_From_Hours">Hours in "From" date have to be from interval [0; 24).</system:String>
+    <system:String x:Key="Error_From_Minutes">Minutes in "From" date have to be from interval [0; 60).</system:String>
+    <system:String x:Key="Error_To_Hours">Hours in "To" date have to be from interval [0; 24).</system:String>
+    <system:String x:Key="Error_To_Minutes">Minutes in "To" date have to be from interval [0; 60).</system:String>
+    <system:String x:Key="Error_Filename">File is not selected.</system:String>
 </ResourceDictionary>

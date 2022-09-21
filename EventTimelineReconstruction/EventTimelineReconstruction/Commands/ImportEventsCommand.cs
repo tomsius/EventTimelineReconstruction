@@ -21,18 +21,22 @@ public class ImportEventsCommand : AsyncCommandBase
 
     public override bool CanExecute(object parameter)
     {
-        return !string.IsNullOrEmpty(_importViewModel.FileName) && base.CanExecute(parameter);
+        return !string.IsNullOrEmpty(_importViewModel.FileName) && !_importViewModel.HasErrors && base.CanExecute(parameter);
     }
 
     public override async Task ExecuteAsync(object parameter)
     {
+        _importViewModel.IsImporting = true;
+
         await _store.Import(_importViewModel.FileName, _importViewModel.FromDate, _importViewModel.ToDate);
         _eventTreeViewModel.LoadEvents(_store.Events);
+
+        _importViewModel.IsImporting = false;
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(ImportViewModel.FileName))
+        if (e.PropertyName == nameof(ImportViewModel.FileName) || e.PropertyName == nameof(ImportViewModel.HasErrors))
         {
             this.OnCanExecuteChanged();
         }

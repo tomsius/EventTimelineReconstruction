@@ -9,7 +9,7 @@
         xmlns:utils="clr-namespace:EventTimelineReconstruction.Utils"
         mc:Ignorable="d"
         Title="{DynamicResource Filter_Window_Title}"
-        Height="720"
+        Height="825"
         Width="460"
         MinHeight="720"
         MinWidth="460"
@@ -17,6 +17,7 @@
         Closing="Window_Closing">
     <Window.Resources>
         <converters:FilterButtonsConverter x:Key="ButtonConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     <DockPanel Margin="20" LastChildFill="True">
         <TextBlock
@@ -67,7 +68,11 @@
             </Button>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
+        <StackPanel 
+            Margin="0 20 0 10"
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            DockPanel.Dock="Bottom">
             <Button 
                 Style="{StaticResource ConfirmationButton}"
                 Width="120"
@@ -275,7 +280,9 @@
 
             <Separator Margin="0 5 0 5" />
 
-            <DockPanel LastChildFill="False">
+            <DockPanel 
+                Margin="0 0 0 20"
+                LastChildFill="False">
                 <TextBlock
                 FontSize="14"
                 Text="{DynamicResource Filter_Date}"
@@ -425,6 +432,23 @@
                     </DockPanel>
                 </Grid>
             </DockPanel>
+            <ListView
+                MaxHeight="100"
+                BorderThickness="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ItemsSource="{Binding ErrorsViewModel.Errors}" 
+                Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Foreground" Value="Red" />
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                        <Setter Property="FontSize" Value="12" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </StackPanel>
     </DockPanel>
 </Window>

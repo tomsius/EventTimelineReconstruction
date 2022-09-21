@@ -6,233 +6,263 @@
         xmlns:local="clr-namespace:EventTimelineReconstruction.Views"
         xmlns:converters="clr-namespace:EventTimelineReconstruction.Converters" 
         xmlns:utils="clr-namespace:EventTimelineReconstruction.Utils"
+        xmlns:fa="http://schemas.fontawesome.com/icons/svg"
         mc:Ignorable="d"
         Title="{DynamicResource Integrity_Window_Title}" 
-        Height="520" 
+        Height="600" 
         Width="700"
-        MinHeight="520"
+        MinHeight="540"
         MinWidth="700"
         Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
     <Window.Resources>
         <converters:IntegrityResultsConverter x:Key="ButtonConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
-    <Grid Margin="20" HorizontalAlignment="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+    <DockPanel 
+        Margin="20" 
+        HorizontalAlignment="Center"
+        LastChildFill="False">
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock
+                Grid.Row="0"
+                FontSize="24"
+                FontWeight="Bold"
+                Text="{DynamicResource Integrity_Title}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0 0 0 50"/>
 
-        <TextBlock
-            Grid.Row="0"
-            FontSize="24"
-            FontWeight="Bold"
-            Text="{DynamicResource Integrity_Title}"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Margin="0 0 0 50"/>
+            <StackPanel Grid.Row="1" Margin="0 0 0 50" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
+                    <Grid>
+                        <TextBox Width="420" 
+                             VerticalAlignment="Center" 
+                             HorizontalAlignment="Left" 
+                             x:Name="FileNameTextBox" 
+                             Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
+                             Padding="6,3,6,3" 
+                             Margin="0, 0, 10, 0" />
+                        <TextBlock IsHitTestVisible="False" Text="{DynamicResource General_File_Path}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=FileNameTextBox}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Button
+                    Style="{StaticResource BorderlessButton}"
+                    Content="{DynamicResource General_Choose_File}"
+                    VerticalAlignment="Center"
+                    Command="{Binding ChooseFileCommand}"/>
+                </StackPanel>
+                <Grid Width="500">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="1" Margin="0 0 0 50" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
-                <Grid>
-                    <TextBox Width="420" 
-                         VerticalAlignment="Center" 
-                         HorizontalAlignment="Left" 
-                         x:Name="FileNameTextBox" 
-                         Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
-                         Padding="6,3,6,3" 
-                         Margin="0, 0, 10, 0" />
-                    <TextBlock IsHitTestVisible="False" Text="{DynamicResource General_File_Path}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=FileNameTextBox}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <StackPanel Width="150" Grid.Column="0">
+                        <TextBlock 
+                    Text="{DynamicResource General_From}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0, 0, 0, 10"
+                    FontSize="14" />
+                        <utils:CustomDatePicker 
+                        PlaceholderText="dd/mm/yyyy"
+                        Width="150" 
+                        Margin="0, 0, 0, 5" 
+                        SelectedDate="{Binding FromDate}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.45*" />
+                                <ColumnDefinition Width="0.1*" />
+                                <ColumnDefinition Width="0.45*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0" HorizontalAlignment="Right">
+                                <TextBox 
+                                Width="40" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Left" 
+                                x:Name="FromHoursTextBox" 
+                                Text="{Binding FromHours, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="6,3,6,3" />
+                                <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=FromHoursTextBox}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <TextBlock 
+                        Text=":" 
+                        FontSize="14"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Grid.Column="1" />
+                            <Grid Grid.Column="2" HorizontalAlignment="Left">
+                                <TextBox 
+                                Width="40" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Left" 
+                                x:Name="FromMinutesTextBox" 
+                                Text="{Binding FromMinutes, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="6,3,6,3"/>
+                                <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=FromMinutesTextBox}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Width="150" Grid.Column="2">
+                        <TextBlock 
+                    Text="{DynamicResource General_To}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0, 0, 0, 10"
+                    FontSize="14" />
+                        <utils:CustomDatePicker 
+                        PlaceholderText="dd/mm/yyyy" 
+                        Width="150" 
+                        Margin="0, 0, 0, 5"
+                        SelectedDate="{Binding ToDate}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.45*" />
+                                <ColumnDefinition Width="0.1*" />
+                                <ColumnDefinition Width="0.45*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0" HorizontalAlignment="Right">
+                                <TextBox 
+                                Width="40" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Left" 
+                                x:Name="ToHoursTextBox" 
+                                Text="{Binding ToHours, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="6,3,6,3" />
+                                <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=ToHoursTextBox}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <TextBlock 
+                        Text=":" 
+                        FontSize="14"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Grid.Column="1" />
+                            <Grid Grid.Column="2" HorizontalAlignment="Left">
+                                <TextBox 
+                                Width="40" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Left" 
+                                x:Name="ToMinutesTextBox" 
+                                Text="{Binding ToMinutes, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="6,3,6,3" />
+                                <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=ToMinutesTextBox}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
-                <Button
-                Style="{StaticResource BorderlessButton}"
-                Content="{DynamicResource General_Choose_File}"
-                VerticalAlignment="Center"
-                Command="{Binding ChooseFileCommand}"/>
-            </StackPanel>
-            <Grid Width="500">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
 
-                <StackPanel Width="150" Grid.Column="0">
-                    <TextBlock 
-                Text="{DynamicResource General_From}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0, 0, 0, 10"
-                FontSize="14" />
-                    <utils:CustomDatePicker 
-                    PlaceholderText="dd/mm/yyyy"
-                    Width="150" 
-                    Margin="0, 0, 0, 5" 
-                    SelectedDate="{Binding FromDate}" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.45*" />
-                            <ColumnDefinition Width="0.1*" />
-                            <ColumnDefinition Width="0.45*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid Grid.Column="0" HorizontalAlignment="Right">
-                            <TextBox 
-                            Width="40" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Left" 
-                            x:Name="FromHoursTextBox" 
-                            Text="{Binding FromHours, UpdateSourceTrigger=PropertyChanged}"
-                            Padding="6,3,6,3" />
-                            <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=FromHoursTextBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <TextBlock 
-                    Text=":" 
-                    FontSize="14"
-                    FontWeight="Bold"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Grid.Column="1" />
-                        <Grid Grid.Column="2" HorizontalAlignment="Left">
-                            <TextBox 
-                            Width="40" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Left" 
-                            x:Name="FromMinutesTextBox" 
-                            Text="{Binding FromMinutes, UpdateSourceTrigger=PropertyChanged}"
-                            Padding="6,3,6,3"/>
-                            <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=FromMinutesTextBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+                    <TextBlock Text="{DynamicResource Integrity_Hash}" FontSize="14" Margin="0 0 20 0" />
+                    <TextBox MinWidth="420" MaxWidth="550" Text="{Binding HashValue, UpdateSourceTrigger=PropertyChanged}" FontSize="14" />
                 </StackPanel>
-
-                <StackPanel Width="150" Grid.Column="2">
-                    <TextBlock 
-                Text="{DynamicResource General_To}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0, 0, 0, 10"
-                FontSize="14" />
-                    <utils:CustomDatePicker 
-                    PlaceholderText="dd/mm/yyyy" 
-                    Width="150" 
-                    Margin="0, 0, 0, 5"
-                    SelectedDate="{Binding ToDate}" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.45*" />
-                            <ColumnDefinition Width="0.1*" />
-                            <ColumnDefinition Width="0.45*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid Grid.Column="0" HorizontalAlignment="Right">
-                            <TextBox 
-                            Width="40" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Left" 
-                            x:Name="ToHoursTextBox" 
-                            Text="{Binding ToHours, UpdateSourceTrigger=PropertyChanged}"
-                            Padding="6,3,6,3" />
-                            <TextBlock IsHitTestVisible="False" Text="HH" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=ToHoursTextBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <TextBlock 
-                    Text=":" 
-                    FontSize="14"
-                    FontWeight="Bold"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Grid.Column="1" />
-                        <Grid Grid.Column="2" HorizontalAlignment="Left">
-                            <TextBox 
-                            Width="40" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Left" 
-                            x:Name="ToMinutesTextBox" 
-                            Text="{Binding ToMinutes, UpdateSourceTrigger=PropertyChanged}"
-                            Padding="6,3,6,3" />
-                            <TextBlock IsHitTestVisible="False" Text="mm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Foreground="DarkGray">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=ToMinutesTextBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </Grid>
-                </StackPanel>
-            </Grid>
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
-                <TextBlock Text="{DynamicResource Integrity_Hash}" FontSize="14" Margin="0 0 20 0" />
-                <TextBox MinWidth="420" MaxWidth="550" Text="{Binding HashValue, UpdateSourceTrigger=PropertyChanged}" FontSize="14" />
             </StackPanel>
-        </StackPanel>
 
-        <StackPanel Grid.Row="2" Margin="0 0 0 50">
-            <TextBlock x:Name="FileOKTextBlock" Text="{DynamicResource Integrity_File_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="FileUnknownTextBlock" Text="{DynamicResource Integrity_File_Unknown}" FontSize="14" Foreground="Orange" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="FileCompromisedTextBlock" Text="{DynamicResource Integrity_File_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="EventsOKTextBlock" Text="{DynamicResource Integrity_Events_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <TextBlock x:Name="EventsCompromisedTextBlock" Text="{DynamicResource Integrity_Events_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
-        </StackPanel>
+            <ListView
+                Width="500"
+                MaxHeight="100"
+                BorderThickness="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ItemsSource="{Binding ErrorsViewModel.Errors}" 
+                Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Foreground" Value="Red" />
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                        <Setter Property="FontSize" Value="12" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="2" Margin="0 0 0 20">
+                <TextBlock x:Name="FileOKTextBlock" Text="{DynamicResource Integrity_File_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
+                <TextBlock x:Name="FileUnknownTextBlock" Text="{DynamicResource Integrity_File_Unknown}" FontSize="14" Foreground="Orange" HorizontalAlignment="Center" Visibility="Collapsed" />
+                <TextBlock x:Name="FileCompromisedTextBlock" Text="{DynamicResource Integrity_File_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
+                <TextBlock x:Name="EventsOKTextBlock" Text="{DynamicResource Integrity_Events_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
+                <TextBlock x:Name="EventsCompromisedTextBlock" Text="{DynamicResource Integrity_Events_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
+            </StackPanel>
+
+            <fa:ImageAwesome 
+                Grid.Row="3" 
+                Icon="Solid_Spinner" 
+                Spin="True"
+                Height="48" 
+                Width="48" 
+                Visibility="{Binding IsChecking, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </StackPanel>
+        <StackPanel
+                DockPanel.Dock="Bottom"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0 20 0 10">
             <Button 
-                Style="{StaticResource ConfirmationButton}"
-                Width="100"
-                Height="30"
-                Padding="0, 0, 0, 2"
-                Command="{Binding CheckCommand}">
+                    Style="{StaticResource ConfirmationButton}"
+                    Width="100"
+                    Height="30"
+                    Padding="0, 0, 0, 2"
+                    Command="{Binding CheckCommand}">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource ButtonConverter}">
                         <Binding ElementName="FileOKTextBlock" />
@@ -243,22 +273,22 @@
                     </MultiBinding>
                 </Button.CommandParameter>
                 <TextBlock
-                    Text="{DynamicResource Integrity_Check}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
+                        Text="{DynamicResource Integrity_Check}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
             </Button>
             <Button
-                Style="{StaticResource CancelButton}"
-                Width="100"
-                Height="30"
-                Padding="0, 0, 0, 2"
-                Margin="10, 0, 0, 0"
-                Click="CloseButton_Click">
+                    Style="{StaticResource CancelButton}"
+                    Width="100"
+                    Height="30"
+                    Padding="0, 0, 0, 2"
+                    Margin="10, 0, 0, 0"
+                    Click="CloseButton_Click">
                 <TextBlock
-                    Text="{DynamicResource General_Close}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
+                        Text="{DynamicResource General_Close}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
             </Button>
         </StackPanel>
-    </Grid>
+    </DockPanel>
 </Window>

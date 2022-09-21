@@ -3,12 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:fa="http://schemas.fontawesome.com/icons/svg"
         mc:Ignorable="d"
         Title="{DynamicResource Load_Window_Title}" 
-        Height="300" 
+        Height="340" 
         Width="600"
+        ResizeMode="NoResize"
         Icon="/Resources/magnifying-glass.ico"
         Closing="Window_Closing">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <StackPanel Margin="20">
         <TextBlock
             FontSize="24"
@@ -24,7 +29,7 @@
             TextAlignment="Center"
             Width="500"
             Margin="0, 0, 0, 40" />
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 0, 0, 50">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 0, 0, 20">
             <Grid>
                 <TextBox Width="400" 
                          VerticalAlignment="Center" 
@@ -52,7 +57,18 @@
                 VerticalAlignment="Center"
                 Command="{Binding ChooseFileCommand}"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+        <fa:ImageAwesome 
+            Icon="Solid_Spinner" 
+            Spin="True"
+            Height="48" 
+            Width="48" 
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <StackPanel 
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            Margin="0 20 0 0">
             <Button 
                 Style="{StaticResource ConfirmationButton}"
                 Width="100"

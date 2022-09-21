@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
@@ -29,65 +32,90 @@ public class CheckIntegrityCommand : CommandBase
 
     public override bool CanExecute(object parameter)
     {
-        return !string.IsNullOrEmpty(_integrityViewModel.FileName) && base.CanExecute(parameter);
+        return !string.IsNullOrEmpty(_integrityViewModel.FileName) && !_integrityViewModel.HasErrors && base.CanExecute(parameter);
     }
 
-    public override void Execute(object parameter)
+    public override async void Execute(object parameter)
     {
-        object[] textBlocks = parameter as object[];
-        foreach (TextBlock textBlock in textBlocks.Cast<TextBlock>())
+        _integrityViewModel.IsChecking = true;
+
+        await Task.Run(() =>
         {
-            textBlock.Visibility = Visibility.Collapsed;
-        }
-
-        TextBlock fileOKTextBlock = (TextBlock)textBlocks[0];
-        TextBlock fileUnknownTextBlock = (TextBlock)textBlocks[1];
-        TextBlock fileCompromisedTextBlock = (TextBlock)textBlocks[2];
-        TextBlock eventsOKTextBlock = (TextBlock)textBlocks[3];
-        TextBlock eventsCompromisedTextBlock = (TextBlock)textBlocks[4];
-
-        byte[] calculatedHashValueBytes = _hashCalculator.Calculate(_integrityViewModel.FileName);
-        string calculatedHashHexadecimalValue = Convert.ToHexString(calculatedHashValueBytes);
-
-        if (!string.IsNullOrEmpty(_integrityViewModel.HashValue))
-        {
-            if (AreHashValuesEqual(_integrityViewModel.HashValue, calculatedHashHexadecimalValue))
+            object[] textBlocks = parameter as object[];
+            foreach (TextBlock textBlock in textBlocks.Cast<TextBlock>())
             {
-                fileOKTextBlock.Visibility = Visibility.Visible;
+                textBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                {
+                    textBlock.Visibility = Visibility.Collapsed;
+                }));
+            }
+
+            TextBlock fileOKTextBlock = (TextBlock)textBlocks[0];
+            TextBlock fileUnknownTextBlock = (TextBlock)textBlocks[1];
+            TextBlock fileCompromisedTextBlock = (TextBlock)textBlocks[2];
+            TextBlock eventsOKTextBlock = (TextBlock)textBlocks[3];
+            TextBlock eventsCompromisedTextBlock = (TextBlock)textBlocks[4];
+
+            byte[] calculatedHashValueBytes = _hashCalculator.Calculate(_integrityViewModel.FileName);
+            string calculatedHashHexadecimalValue = Convert.ToHexString(calculatedHashValueBytes);
+
+            if (!string.IsNullOrEmpty(_integrityViewModel.HashValue))
+            {
+                if (AreHashValuesEqual(_integrityViewModel.HashValue, calculatedHashHexadecimalValue))
+                {
+                    fileOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                    {
+                        fileOKTextBlock.Visibility = Visibility.Visible;
+                    }));
+                }
+                else
+                {
+                    fileCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                    {
+                        fileCompromisedTextBlock.Visibility = Visibility.Visible;
+                    }));
+                }
             }
             else
             {
-                fileCompromisedTextBlock.Visibility = Visibility.Visible;
+                fileUnknownTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                {
+                    fileUnknownTextBlock.Visibility = Visibility.Visible;
+                }));
             }
-        }
-        else
-        {
-            fileUnknownTextBlock.Visibility = Visibility.Visible;
-        }
 
-        if (_eventsStore.Events.Any())
-        {
-            List<EventModel> fileEvents = _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate)
-                .OrderBy(e => e.Date)
-                .ThenBy(e => e.Time)
-                .ThenBy(e => e.Filename)
-                .ToList();
-
-            List<EventModel> storedEvents = _eventsStore.GetStoredEventModels()
-                .OrderBy(e => e.Date)
-                .ThenBy(e => e.Time)
-                .ThenBy(e => e.Filename)
-                .ToList();
-
-            if (AreEventsEqual(fileEvents, storedEvents))
+            if (_eventsStore.Events.Any())
             {
-                eventsOKTextBlock.Visibility = Visibility.Visible;
+                List<EventModel> fileEvents = _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate)
+                    .OrderBy(e => e.Date)
+                    .ThenBy(e => e.Time)
+                    .ThenBy(e => e.Filename)
+                    .ToList();
+
+                List<EventModel> storedEvents = _eventsStore.GetStoredEventModels()
+                    .OrderBy(e => e.Date)
+                    .ThenBy(e => e.Time)
+                    .ThenBy(e => e.Filename)
+                    .ToList();
+
+                if (AreEventsEqual(fileEvents, storedEvents))
+                {
+                    eventsOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                    {
+                        eventsOKTextBlock.Visibility = Visibility.Visible;
+                    }));
+                }
+                else
+                {
+                    eventsCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                    {
+                        eventsCompromisedTextBlock.Visibility = Visibility.Visible;
+                    }));
+                }
             }
-            else
-            {
-                eventsCompromisedTextBlock.Visibility = Visibility.Visible;
-            }
-        }
+        });
+
+        _integrityViewModel.IsChecking = false;
     }
 
     private static bool AreHashValuesEqual(string hashValue, string calculatedHashHexadecimalValue)
@@ -117,7 +145,7 @@ public class CheckIntegrityCommand : CommandBase
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(IntegrityViewModel.FileName))
+        if (e.PropertyName == nameof(IntegrityViewModel.FileName) || e.PropertyName == nameof(IntegrityViewModel.HasErrors))
         {
             this.OnCanExecuteChanged();
         }

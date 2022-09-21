@@ -132,4 +132,13 @@
     <system:String x:Key="DragDrop_Into">į</system:String>
     <system:String x:Key="DragDrop_First_Level">pirmą lygį</system:String>
     <system:String x:Key="DragDrop_Confirmation">Patvirtinimas</system:String>
+
+    <!--Errors-->
+    <system:String x:Key="Error_To_Before_From">Data „Iki“ negali būti ankstesnė nei „Nuo“.</system:String>
+    <system:String x:Key="Error_From_After_To">Data „Nuo“ negali būti vėlesnė nei „Iki“.</system:String>
+    <system:String x:Key="Error_From_Hours">Valandos „Nuo“ datoje turi būti iš intervalo [0; 24).</system:String>
+    <system:String x:Key="Error_From_Minutes">Minutės „Nuo“ datoje turi būti iš intervalo [0; 60).</system:String>
+    <system:String x:Key="Error_To_Hours">Valandos „Iki“ datoje turi būti iš intervalo [0; 24).</system:String>
+    <system:String x:Key="Error_To_Minutes">Minutės „Iki“ datoje turi būti iš intervalo [0; 60).</system:String>
+    <system:String x:Key="Error_Filename">Nepasirinktas joks failas.</system:String>
 </ResourceDictionary>
