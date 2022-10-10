@@ -11,7 +11,7 @@ namespace EventTimelineReconstruction.ViewModels;
 public class EventViewModel : ViewModelBase, IComparable
 {
     private readonly EventModel _eventModel;
-    private ObservableCollection<EventViewModel> _children;
+    private readonly ObservableCollection<EventViewModel> _children;
 
     public ObservableCollection<EventViewModel> Children
     {

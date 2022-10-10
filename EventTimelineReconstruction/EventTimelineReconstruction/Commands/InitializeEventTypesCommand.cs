@@ -8,7 +8,7 @@ namespace EventTimelineReconstruction.Commands;
 
 public class InitializeEventTypesCommand : CommandBase
 {
-    private FilterViewModel _filterViewModel;
+    private readonly FilterViewModel _filterViewModel;
 
     public InitializeEventTypesCommand(FilterViewModel filterViewModel)
     {
