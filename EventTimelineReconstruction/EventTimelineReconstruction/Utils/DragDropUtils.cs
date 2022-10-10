@@ -7,14 +7,15 @@ using System.Text;
 
 namespace EventTimelineReconstruction.Utils;
 
-public static class DragDropUtils
+public class DragDropUtils : IDragDropUtils
 {
-    public static TreeViewItem GetNearestContainer(UIElement element)
+    public TreeViewItem GetNearestContainer(UIElement element)
     {
         // Walk up the element tree to the nearest tree view item.
         TreeViewItem container = element as TreeViewItem;
 
-        while (container == null && element != null) {
+        while (container == null && element != null)
+        {
             element = VisualTreeHelper.GetParent(element) as UIElement;
             container = element as TreeViewItem;
         }
@@ -22,16 +23,19 @@ public static class DragDropUtils
         return container;
     }
 
-    public static bool CheckDropTarget(EventViewModel sourceItem, EventViewModel targetItem)
+    public bool CheckDropTarget(EventViewModel sourceItem, EventViewModel targetItem)
     {
         //Check whether the target item is meeting condition
         Queue<EventViewModel> queue = new();
         queue.Enqueue(sourceItem);
 
-        while (queue.Count > 0) {
+        while (queue.Count > 0)
+        {
             EventViewModel eventViewModel = queue.Dequeue();
-            foreach (EventViewModel child in eventViewModel.Children) {
-                if (child == targetItem) {
+            foreach (EventViewModel child in eventViewModel.Children)
+            {
+                if (child == targetItem)
+                {
                     return false;
                 }
 
@@ -42,7 +46,7 @@ public static class DragDropUtils
         return sourceItem != targetItem;
     }
 
-    public static void CopyItem(EventViewModel sourceItem, EventViewModel targetItem, TreeViewItem draggedItemElement, EventTreeViewModel vm)
+    public void CopyItem(EventViewModel sourceItem, EventViewModel targetItem, TreeViewItem draggedItemElement, EventTreeViewModel vm)
     {
         string question = (string)App.Current.Resources["DragDrop_Question"];
         string into = (string)App.Current.Resources["DragDrop_Into"];
@@ -62,7 +66,8 @@ public static class DragDropUtils
 
         //Asking user wether he want to drop the dragged TreeViewItem here or not
         // TODO - custom message box
-        if (MessageBox.Show(message.ToString(), confirmation, MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+        if (MessageBox.Show(message.ToString(), confirmation, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+        {
             //adding dragged TreeViewItem in target TreeViewItem
             MoveChild(sourceItem, targetItem, draggedItemElement, vm);
         }
@@ -72,18 +77,22 @@ public static class DragDropUtils
     {
         TreeViewItem parentItem = FindParent(draggedItemElement);
 
-        if (parentItem == null) {
+        if (parentItem == null)
+        {
             vm.RemoveEvent(sourceItem);
         }
-        else {
+        else
+        {
             EventViewModel parentViewModel = parentItem.Header as EventViewModel;
             parentViewModel.RemoveChild(sourceItem);
         }
 
-        if (targetItem == null) {
+        if (targetItem == null)
+        {
             vm.AddEvent(sourceItem);
         }
-        else {
+        else
+        {
             targetItem.AddChild(sourceItem);
         }
     }
@@ -91,7 +100,8 @@ public static class DragDropUtils
     private static TreeViewItem FindParent(TreeViewItem draggedItemElement)
     {
         DependencyObject parent = VisualTreeHelper.GetParent(draggedItemElement);
-        while (!(parent is TreeViewItem || parent is TreeView)) {
+        while (!(parent is TreeViewItem || parent is TreeView))
+        {
             parent = VisualTreeHelper.GetParent(parent);
         }
 

@@ -10,11 +10,13 @@ public class MouseMoveEventCommand : CommandBase
 {
     private readonly EventTreeViewModel _eventTreeViewModel;
     private readonly EventDetailsViewModel _eventDetailsViewModel;
+    private readonly IDragDropUtils _dragDropUtils;
 
-    public MouseMoveEventCommand(EventTreeViewModel eventTreeViewModel, EventDetailsViewModel eventDetailsViewModel)
+    public MouseMoveEventCommand(EventTreeViewModel eventTreeViewModel, EventDetailsViewModel eventDetailsViewModel, IDragDropUtils dragDropUtils)
     {
         _eventTreeViewModel = eventTreeViewModel;
         _eventDetailsViewModel = eventDetailsViewModel;
+        _dragDropUtils = dragDropUtils;
     }
 
     public override void Execute(object parameter)
@@ -23,7 +25,7 @@ public class MouseMoveEventCommand : CommandBase
 
         if (e.LeftButton == MouseButtonState.Pressed) {
             _eventTreeViewModel.DraggedItem = _eventDetailsViewModel.SelectedEvent;
-            _eventTreeViewModel.DraggedItemElement = DragDropUtils.GetNearestContainer(e.OriginalSource as UIElement);
+            _eventTreeViewModel.DraggedItemElement = _dragDropUtils.GetNearestContainer(e.OriginalSource as UIElement);
 
             if (_eventTreeViewModel.DraggedItem != null && _eventTreeViewModel.DraggedItemElement != null) {
                 _eventTreeViewModel.MyAdornment = new DraggableAdorner(_eventTreeViewModel.DraggedItemElement, e.Source as TreeView);
@@ -37,7 +39,7 @@ public class MouseMoveEventCommand : CommandBase
                 if (finalDropEffect == DragDropEffects.Move) {
                     // A Move drop was accepted
                     if (_eventTreeViewModel.DraggedItem != _eventTreeViewModel.Target) {
-                        DragDropUtils.CopyItem(_eventTreeViewModel.DraggedItem, _eventTreeViewModel.Target, _eventTreeViewModel.DraggedItemElement, _eventTreeViewModel);
+                        _dragDropUtils.CopyItem(_eventTreeViewModel.DraggedItem, _eventTreeViewModel.Target, _eventTreeViewModel.DraggedItemElement, _eventTreeViewModel);
                         _eventTreeViewModel.Target = null;
                         _eventTreeViewModel.DraggedItem = null;
                     }

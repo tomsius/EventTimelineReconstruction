@@ -51,7 +51,7 @@ public class EventTreeViewModel : ViewModelBase
     public ICommand MouseMoveCommand { get; }
     public ICommand GiveFeedbackCommand { get; }
 
-    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore, ChangeColourViewModel changeColourViewModel)
+    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore, ChangeColourViewModel changeColourViewModel, IDragDropUtils dragDropUtils)
     {
         _events = new();
         _eventsView = new ListCollectionView(_events);
@@ -61,9 +61,9 @@ public class EventTreeViewModel : ViewModelBase
         _filteringStore = filteringStore;
 
         ShowDetailsCommand = new ShowEventDetailsCommand(eventDetailsViewModel, changeColourViewModel);
-        DragOverCommand = new DragOverEventCommand(this);
-        DropCommand = new DropEventCommand(this);
-        MouseMoveCommand = new MouseMoveEventCommand(this, eventDetailsViewModel);
+        DragOverCommand = new DragOverEventCommand(this, dragDropUtils);
+        DropCommand = new DropEventCommand(this, dragDropUtils);
+        MouseMoveCommand = new MouseMoveEventCommand(this, eventDetailsViewModel, dragDropUtils);
         GiveFeedbackCommand = new GiveEventFeedbackCommand(this);
     }
 
