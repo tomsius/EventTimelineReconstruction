@@ -72,7 +72,7 @@ public class ErrorsViewModel : INotifyDataErrorInfo
         this.OnErrorsChanged(propertyName);
     }
 
-    public void OnErrorsChanged(string propertyName)
+    private void OnErrorsChanged(string propertyName)
     {
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }

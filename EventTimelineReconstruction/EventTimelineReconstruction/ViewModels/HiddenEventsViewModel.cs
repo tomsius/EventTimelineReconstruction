@@ -63,7 +63,7 @@ public class HiddenEventsViewModel : ViewModelBase
         eventTreeViewModel.PropertyChanged += this.Initialize;
     }
 
-    public void Initialize(object sender, PropertyChangedEventArgs e)
+    private void Initialize(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(EventTreeViewModel.Events))
         {
