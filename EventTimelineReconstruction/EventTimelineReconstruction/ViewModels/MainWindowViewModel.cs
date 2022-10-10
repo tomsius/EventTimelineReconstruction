@@ -37,13 +37,14 @@ public class MainWindowViewModel
         ImportViewModel importViewModel,
         FilterViewModel filterViewModel,
         IntegrityViewModel integrityViewModel,
-        IFileUtils fileUtils)
+        IFileUtils fileUtils,
+        IResourcesUtils resourcesUtils)
     {
         _eventTreeViewModel = eventTreeViewModel;
         _eventDetailsViewModel = eventDetailsViewModel;
 
         MoveEventCommand = new MoveEventUpCommand(eventTreeViewModel, eventDetailsViewModel);
         HideCommand = new HideEventCommand(eventTreeViewModel, eventDetailsViewModel, hiddenEventsViewModel);
-        InitializeCommand = new InitializeLanguagesCommand(importViewModel, filterViewModel, integrityViewModel, fileUtils);
+        InitializeCommand = new InitializeLanguagesCommand(importViewModel, filterViewModel, integrityViewModel, fileUtils, resourcesUtils);
     }
 }

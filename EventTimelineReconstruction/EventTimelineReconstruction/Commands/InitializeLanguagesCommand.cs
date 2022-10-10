@@ -11,13 +11,15 @@ public class InitializeLanguagesCommand : CommandBase
     private readonly FilterViewModel _filterViewModel;
     private readonly IntegrityViewModel _integrityViewModel;
     private readonly IFileUtils _fileUtils;
+    private readonly IResourcesUtils _resourcesUtils;
 
-    public InitializeLanguagesCommand(ImportViewModel importViewModel, FilterViewModel filterViewModel, IntegrityViewModel integrityViewModel, IFileUtils fileUtils)
+    public InitializeLanguagesCommand(ImportViewModel importViewModel, FilterViewModel filterViewModel, IntegrityViewModel integrityViewModel, IFileUtils fileUtils, IResourcesUtils resourcesUtils)
     {
         _importViewModel = importViewModel;
         _filterViewModel = filterViewModel;
         _integrityViewModel = integrityViewModel;
         _fileUtils = fileUtils;
+        _resourcesUtils = resourcesUtils;
     }
 
     public override void Execute(object parameter)
@@ -35,7 +37,7 @@ public class InitializeLanguagesCommand : CommandBase
             languages.Items.Add(menuItem);
         }
 
-        ResourcesUtils.ChangeLanguage("en");
+        _resourcesUtils.ChangeLanguage("en");
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -44,7 +46,7 @@ public class InitializeLanguagesCommand : CommandBase
         MenuItem languages = clickedMenuItem.Parent as MenuItem;
 
         string newLanguage = (string)clickedMenuItem.Tag;
-        string oldLanguage = ResourcesUtils.GetCurrentLanguage();
+        string oldLanguage = _resourcesUtils.GetCurrentLanguage();
 
         foreach (MenuItem item in languages.Items)
         {
@@ -52,7 +54,7 @@ public class InitializeLanguagesCommand : CommandBase
         }
 
         clickedMenuItem.IsChecked = true;
-        ResourcesUtils.ChangeLanguage(newLanguage);
+        _resourcesUtils.ChangeLanguage(newLanguage);
 
         _importViewModel.ErrorsViewModel.UpdateErrorsLanguage(oldLanguage);
         _filterViewModel.ErrorsViewModel.UpdateErrorsLanguage(oldLanguage);

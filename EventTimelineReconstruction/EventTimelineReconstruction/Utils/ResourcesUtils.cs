@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace EventTimelineReconstruction.Utils;
 
-public static class ResourcesUtils
+public class ResourcesUtils : IResourcesUtils
 {
-    public static string GetCurrentLanguage()
+    public string GetCurrentLanguage()
     {
         Uri resourceSource = App.Current.Resources.MergedDictionaries[0].Source;
         string[] segments = resourceSource.ToString().Split('/');
@@ -15,7 +15,7 @@ public static class ResourcesUtils
         return language;
     }
 
-    internal static void ChangeLanguage(string language)
+    public void ChangeLanguage(string language)
     {
         ResourceDictionary dictionary = new();
         string dictionaryPath = $@"/Resources/Localizations/Resource.{language}.xaml";
