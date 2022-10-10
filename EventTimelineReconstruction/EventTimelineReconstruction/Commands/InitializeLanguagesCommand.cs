@@ -10,23 +10,25 @@ public class InitializeLanguagesCommand : CommandBase
     private readonly ImportViewModel _importViewModel;
     private readonly FilterViewModel _filterViewModel;
     private readonly IntegrityViewModel _integrityViewModel;
+    private readonly IFileUtils _fileUtils;
 
-    public InitializeLanguagesCommand(ImportViewModel importViewModel, FilterViewModel filterViewModel, IntegrityViewModel integrityViewModel)
+    public InitializeLanguagesCommand(ImportViewModel importViewModel, FilterViewModel filterViewModel, IntegrityViewModel integrityViewModel, IFileUtils fileUtils)
     {
         _importViewModel = importViewModel;
         _filterViewModel = filterViewModel;
         _integrityViewModel = integrityViewModel;
+        _fileUtils = fileUtils;
     }
 
     public override void Execute(object parameter)
     {
         RoutedEventArgs e = parameter as RoutedEventArgs;
         MenuItem languages = e.Source as MenuItem;
-        string[] paths = FileUtils.GetResourcesPaths();
+        string[] paths = _fileUtils.GetResourcesPaths();
 
         foreach (string path in paths)
         {
-            (string code, string name) locale = FileUtils.GetLocale(path);
+            (string code, string name) locale = _fileUtils.GetLocale(path);
 
             MenuItem menuItem = new() { Header = locale.name, Tag = locale.code, IsChecked = locale.code == "en" };
             menuItem.Click += this.MenuItem_Click;

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -35,13 +36,14 @@ public class MainWindowViewModel
         HiddenEventsViewModel hiddenEventsViewModel,
         ImportViewModel importViewModel,
         FilterViewModel filterViewModel,
-        IntegrityViewModel integrityViewModel)
+        IntegrityViewModel integrityViewModel,
+        IFileUtils fileUtils)
     {
         _eventTreeViewModel = eventTreeViewModel;
         _eventDetailsViewModel = eventDetailsViewModel;
 
         MoveEventCommand = new MoveEventUpCommand(eventTreeViewModel, eventDetailsViewModel);
         HideCommand = new HideEventCommand(eventTreeViewModel, eventDetailsViewModel, hiddenEventsViewModel);
-        InitializeCommand = new InitializeLanguagesCommand(importViewModel, filterViewModel, integrityViewModel);
+        InitializeCommand = new InitializeLanguagesCommand(importViewModel, filterViewModel, integrityViewModel, fileUtils);
     }
 }
