@@ -9,16 +9,18 @@ namespace EventTimelineReconstruction.Commands;
 public class InitializeEventTypesCommand : CommandBase
 {
     private readonly FilterViewModel _filterViewModel;
+    private readonly IFilteringUtils _filteringUtils;
 
-    public InitializeEventTypesCommand(FilterViewModel filterViewModel)
+    public InitializeEventTypesCommand(FilterViewModel filterViewModel, IFilteringUtils filteringUtils)
     {
         _filterViewModel = filterViewModel;
+        _filteringUtils = filteringUtils;
     }
 
     public override void Execute(object parameter)
     {
         RoutedEventArgs e = parameter as RoutedEventArgs;
-        List<CheckBox> children = FilteringUtils.GetChildrenCheckBoxes(e.OriginalSource as CheckBox);
+        List<CheckBox> children = _filteringUtils.GetChildrenCheckBoxes(e.OriginalSource as CheckBox);
 
         foreach (CheckBox checkBox in children)
         {

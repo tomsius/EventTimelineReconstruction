@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace EventTimelineReconstruction.Utils;
 
-public static class FilteringUtils
+public class FilteringUtils : IFilteringUtils
 {
-    public static CheckBox GetRootCheckBox(CheckBox item)
+    public CheckBox GetRootCheckBox(CheckBox item)
     {
         DependencyObject parent = VisualTreeHelper.GetParent(item);
         parent = VisualTreeHelper.GetParent(parent);
@@ -17,7 +17,7 @@ public static class FilteringUtils
         return child as CheckBox;
     }
 
-    public static List<CheckBox> GetChildrenCheckBoxes(CheckBox rootCheckBox)
+    public List<CheckBox> GetChildrenCheckBoxes(CheckBox rootCheckBox)
     {
         DependencyObject parent = VisualTreeHelper.GetParent(rootCheckBox);
         DependencyObject rootObject = VisualTreeHelper.GetChild(parent, 1);
@@ -33,7 +33,7 @@ public static class FilteringUtils
         return children;
     }
 
-    public static bool AreAllChildrenChecked(List<CheckBox> children)
+    public bool AreAllChildrenChecked(List<CheckBox> children)
     {
         bool areAllChecked = true;
 
@@ -49,7 +49,7 @@ public static class FilteringUtils
         return areAllChecked;
     }
 
-    public static bool AreAllChildrenUnchecked(List<CheckBox> children)
+    public bool AreAllChildrenUnchecked(List<CheckBox> children)
     {
         bool areAllUnchecked = true;
 

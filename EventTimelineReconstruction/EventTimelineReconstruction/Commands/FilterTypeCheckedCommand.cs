@@ -9,17 +9,19 @@ namespace EventTimelineReconstruction.Commands;
 public class FilterTypeCheckedCommand : CommandBase
 {
     private readonly FilterViewModel _filterViewModel;
+    private readonly IFilteringUtils _filteringUtils;
 
-    public FilterTypeCheckedCommand(FilterViewModel filterViewModel)
+    public FilterTypeCheckedCommand(FilterViewModel filterViewModel, IFilteringUtils filteringUtils)
     {
         _filterViewModel = filterViewModel;
+        _filteringUtils = filteringUtils;
     }
 
     public override void Execute(object parameter)
     {
         bool isRootCheckBox = false;
         RoutedEventArgs e = parameter as RoutedEventArgs;
-        CheckBox rootCheckBox = FilteringUtils.GetRootCheckBox(e.OriginalSource as CheckBox);
+        CheckBox rootCheckBox = _filteringUtils.GetRootCheckBox(e.OriginalSource as CheckBox);
 
         if (rootCheckBox == null)
         {
@@ -27,13 +29,13 @@ public class FilterTypeCheckedCommand : CommandBase
             isRootCheckBox = true;
         }
 
-        List<CheckBox> children = FilteringUtils.GetChildrenCheckBoxes(rootCheckBox);
+        List<CheckBox> children = _filteringUtils.GetChildrenCheckBoxes(rootCheckBox);
 
         UpdateCheckBoxes(isRootCheckBox, rootCheckBox, children);
         this.SaveChosenEventTypes(children);
     }
 
-    private static void UpdateCheckBoxes(bool isRootCheckBox, CheckBox rootCheckBox, List<CheckBox> children)
+    private void UpdateCheckBoxes(bool isRootCheckBox, CheckBox rootCheckBox, List<CheckBox> children)
     {
         if (isRootCheckBox)
         {
@@ -41,7 +43,7 @@ public class FilterTypeCheckedCommand : CommandBase
         }
         else
         {
-            UpdateRootCheckBox(rootCheckBox, children);
+            this.UpdateRootCheckBox(rootCheckBox, children);
         }
     }
 
@@ -55,16 +57,16 @@ public class FilterTypeCheckedCommand : CommandBase
         }
     }
 
-    private static void UpdateRootCheckBox(CheckBox rootCheckBox, List<CheckBox> children)
+    private void UpdateRootCheckBox(CheckBox rootCheckBox, List<CheckBox> children)
     {
         rootCheckBox.IsChecked = null;
 
-        if (FilteringUtils.AreAllChildrenChecked(children))
+        if (_filteringUtils.AreAllChildrenChecked(children))
         {
             rootCheckBox.IsChecked = true;
         }
 
-        if (FilteringUtils.AreAllChildrenUnchecked(children))
+        if (_filteringUtils.AreAllChildrenUnchecked(children))
         {
             rootCheckBox.IsChecked = false;
         }
