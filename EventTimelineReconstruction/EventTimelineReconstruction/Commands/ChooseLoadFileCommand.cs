@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using EventTimelineReconstruction.ViewModels;
+﻿using EventTimelineReconstruction.ViewModels;
 using Microsoft.Win32;
 
 namespace EventTimelineReconstruction.Commands;
@@ -23,14 +22,8 @@ public class ChooseLoadFileCommand : CommandBase
         }
         else if (_viewModel is LoadWorkViewModel)
         {
-
             openFileDialog.Filter = "Event Timeline Reconstruction files (*.etr*)|*.etr";
         }
-
-        //OpenFileDialog openFileDialog = new()
-        //{
-        //    Filter = "CSV files (*.csv)|*.csv|Event Timeline Reconstruction files (*.etr*)|*.etr"
-        //};
 
         if (openFileDialog.ShowDialog() == true)
         {
