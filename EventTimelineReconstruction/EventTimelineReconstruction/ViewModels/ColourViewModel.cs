@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -23,13 +24,13 @@ public class ColourViewModel : ViewModelBase
     public ICommand ColourChangedCommand { get; }
     public ICommand ColourCommand { get; }
 
-    public ColourViewModel(ColouringStore colouringStore, EventTreeViewModel eventTreeViewModel)
+    public ColourViewModel(ColouringStore colouringStore, EventTreeViewModel eventTreeViewModel, IColouringUtils colouringUtils)
     {
         _coloursByType = new();
 
-        InitializeCommand = new InitializeColoursByTypeCommand(this);
+        InitializeCommand = new InitializeColoursByTypeCommand(this, colouringUtils);
         ApplyCommand = new ApplyColourOptionsCommand(this, colouringStore);
-        ColourChangedCommand = new SelectedColourChangedCommand(this);
+        ColourChangedCommand = new SelectedColourChangedCommand(this, colouringUtils);
         ColourCommand = new ApplyColoursCommand(colouringStore, eventTreeViewModel);
     }
 
