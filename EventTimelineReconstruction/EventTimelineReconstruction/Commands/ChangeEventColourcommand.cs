@@ -6,8 +6,8 @@ namespace EventTimelineReconstruction.Commands;
 
 public class ChangeEventColourCommand : CommandBase
 {
-    private ChangeColourViewModel _changeColourViewModel;
-    private EventDetailsViewModel _eventDetailsViewModel;
+    private readonly ChangeColourViewModel _changeColourViewModel;
+    private readonly EventDetailsViewModel _eventDetailsViewModel;
 
     public ChangeEventColourCommand(ChangeColourViewModel changeColourViewModel, EventDetailsViewModel eventDetailsViewModel)
     {

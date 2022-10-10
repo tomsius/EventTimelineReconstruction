@@ -22,7 +22,7 @@ public class ApplyColoursCommand : CommandBase
 
     public override bool CanExecute(object parameter)
     {
-        return _eventTreeViewModel.Events.Count() > 0 && base.CanExecute(parameter);
+        return _eventTreeViewModel.Events.Any() && base.CanExecute(parameter);
     }
 
     public override void Execute(object parameter)

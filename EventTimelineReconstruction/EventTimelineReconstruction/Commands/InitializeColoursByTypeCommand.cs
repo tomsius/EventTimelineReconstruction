@@ -11,16 +11,18 @@ namespace EventTimelineReconstruction.Commands;
 public class InitializeColoursByTypeCommand : CommandBase
 {
     private readonly ColourViewModel _colourViewModel;
+    private readonly IColouringUtils _colouringUtils;
 
-    public InitializeColoursByTypeCommand(ColourViewModel colourViewModel)
+    public InitializeColoursByTypeCommand(ColourViewModel colourViewModel, IColouringUtils colouringUtils)
     {
         _colourViewModel = colourViewModel;
+        _colouringUtils = colouringUtils;
     }
 
     public override void Execute(object parameter)
     {
         RoutedEventArgs e = parameter as RoutedEventArgs;
-        Dictionary<TextBlock, ColorPicker> children = ColouringUtils.GetChildrenElements(e.OriginalSource as StackPanel);
+        Dictionary<TextBlock, ColorPicker> children = _colouringUtils.GetChildrenElements(e.OriginalSource as StackPanel);
 
         foreach (KeyValuePair<TextBlock, ColorPicker> pair in children)
         {

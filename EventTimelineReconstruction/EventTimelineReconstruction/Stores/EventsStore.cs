@@ -73,7 +73,7 @@ public class EventsStore
 
     public List<EventModel> GetStoredEventModels()
     {
-        List<EventModel> eventModels = new();
+        List<EventModel> eventModels = new(_events.Count);
         Queue<EventViewModel> queue = new(_events.Count);
 
         foreach (EventViewModel eventViewModel in _events)

@@ -8,10 +8,12 @@ namespace EventTimelineReconstruction.Commands;
 public class DropEventCommand : CommandBase
 {
     private readonly EventTreeViewModel _eventTreeViewModel;
+    private readonly IDragDropUtils _dragDropUtils;
 
-    public DropEventCommand(EventTreeViewModel eventTreeViewModel)
+    public DropEventCommand(EventTreeViewModel eventTreeViewModel, IDragDropUtils dragDropUtils)
     {
         _eventTreeViewModel = eventTreeViewModel;
+        _dragDropUtils = dragDropUtils;
     }
 
     public override void Execute(object parameter)
@@ -21,7 +23,7 @@ public class DropEventCommand : CommandBase
         e.Handled = true;
 
         // Verify that this is a valid drop and then store the drop target
-        TreeViewItem targetItem = DragDropUtils.GetNearestContainer(e.OriginalSource as UIElement);
+        TreeViewItem targetItem = _dragDropUtils.GetNearestContainer(e.OriginalSource as UIElement);
 
         if (_eventTreeViewModel.DraggedItem != null) {
             _eventTreeViewModel.Target = targetItem?.Header as EventViewModel;

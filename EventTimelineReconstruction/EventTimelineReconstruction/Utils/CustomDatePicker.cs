@@ -10,11 +10,11 @@ public class CustomDatePicker : DatePicker
     {
         get
         {
-            return (string)GetValue(WatermarkTextProperty);
+            return (string)this.GetValue(WatermarkTextProperty);
         }
         set
         {
-            SetValue(WatermarkTextProperty, value);
+            this.SetValue(WatermarkTextProperty, value);
         }
     }
 

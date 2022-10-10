@@ -6,7 +6,7 @@ namespace EventTimelineReconstruction.Commands;
 
 public class ApplyFilterOptionsCommand : CommandBase
 {
-    private FilterViewModel _filterViewModel;
+    private readonly FilterViewModel _filterViewModel;
     private readonly FilteringStore _filteringStore;
     private readonly EventTreeViewModel _eventTreeViewModel;
 

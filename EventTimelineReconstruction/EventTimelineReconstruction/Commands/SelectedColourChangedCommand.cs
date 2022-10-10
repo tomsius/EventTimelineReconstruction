@@ -10,17 +10,19 @@ namespace EventTimelineReconstruction.Commands;
 public class SelectedColourChangedCommand : CommandBase
 {
     private readonly ColourViewModel _colourViewModel;
+    private readonly IColouringUtils _colouringUtils;
 
-    public SelectedColourChangedCommand(ColourViewModel colourViewModel)
+    public SelectedColourChangedCommand(ColourViewModel colourViewModel, IColouringUtils colouringUtils)
     {
         _colourViewModel = colourViewModel;
+        _colouringUtils = colouringUtils;
     }
 
     public override void Execute(object parameter)
     {
         RoutedEventArgs e = parameter as RoutedEventArgs;
         ColorPicker colorPicker = e.OriginalSource as ColorPicker;
-        TextBlock textBlock = ColouringUtils.GetSiblingTextBlock(colorPicker);
+        TextBlock textBlock = _colouringUtils.GetSiblingTextBlock(colorPicker);
 
         string key = textBlock.Text;
         Brush value = new SolidColorBrush(colorPicker.SelectedColor ?? Colors.Black);

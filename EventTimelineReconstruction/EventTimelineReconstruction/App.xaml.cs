@@ -1,5 +1,6 @@
 ﻿using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.Validators;
 using EventTimelineReconstruction.ViewModels;
 using EventTimelineReconstruction.Views;
@@ -17,6 +18,12 @@ public partial class App : Application
     {
         _host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => {
+                services.AddTransient<IColouringUtils, ColouringUtils>();
+                services.AddTransient<IDragDropUtils, DragDropUtils>();
+                services.AddTransient<IFileUtils, FileUtils>();
+                services.AddTransient<IFilteringUtils, FilteringUtils>();
+                services.AddTransient<IResourcesUtils, ResourcesUtils>();
+
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
                 services.AddSingleton<IWorkSaver, FileWorkSaver>();
                 services.AddSingleton<IWorkLoader, FileWorkLoader>();

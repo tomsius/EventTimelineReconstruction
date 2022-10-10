@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.Validators;
 
 namespace EventTimelineReconstruction.ViewModels;
@@ -200,7 +201,7 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel, ITimeValidator validator)
+    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel, ITimeValidator validator, IFilteringUtils filteringUtils)
     {
         _areAllFiltersApplied = false;
         _keyword = string.Empty;
@@ -209,9 +210,9 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
 
-        InitializeCommand = new InitializeEventTypesCommand(this);
+        InitializeCommand = new InitializeEventTypesCommand(this, filteringUtils);
         FilterChangedCommand = new FilterTypeChangedCommand(this);
-        FilterCheckedCommand = new FilterTypeCheckedCommand(this);
+        FilterCheckedCommand = new FilterTypeCheckedCommand(this, filteringUtils);
         ApplyCommand = new ApplyFilterOptionsCommand(this, filteringStore, eventTreeViewModel);
         FilterCommand = new ApplyFiltersCommand(filteringStore, eventTreeViewModel);
     }
