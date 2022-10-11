@@ -14,7 +14,7 @@ public class ChangeColourViewModel : ViewModelBase
         {
             return _selectedColour;
         }
-        set
+        private set
         {
             _selectedColour = value;
             this.OnPropertyChanged(nameof(SelectedColour));
