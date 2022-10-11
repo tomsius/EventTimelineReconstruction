@@ -294,11 +294,6 @@ public class EventsStoreTests
 
             Assert.AreEqual(expectedEvents[i].IsVisible, eventsStore.Events[i].IsVisible);
             Assert.AreEqual(expectedEvents[i].Colour, eventsStore.Events[i].Colour);
-            Assert.AreEqual(expectedEvents[i].DisplayName, eventsStore.Events[i].DisplayName);
-            Assert.AreEqual(expectedEvents[i].DisplayDate, eventsStore.Events[i].DisplayDate);
-            Assert.AreEqual(expectedEvents[i].DisplayTime, eventsStore.Events[i].DisplayTime);
-            Assert.AreEqual(expectedEvents[i].DisplayDescription, eventsStore.Events[i].DisplayDescription);
-            Assert.AreEqual(expectedEvents[i].DisplayExtra, eventsStore.Events[i].DisplayExtra);
         }
     }
 
@@ -348,11 +343,6 @@ public class EventsStoreTests
 
             Assert.AreEqual(expectedEvents[i].IsVisible, eventsStore.Events[i].IsVisible);
             Assert.AreEqual(expectedEvents[i].Colour, eventsStore.Events[i].Colour);
-            Assert.AreEqual(expectedEvents[i].DisplayName, eventsStore.Events[i].DisplayName);
-            Assert.AreEqual(expectedEvents[i].DisplayDate, eventsStore.Events[i].DisplayDate);
-            Assert.AreEqual(expectedEvents[i].DisplayTime, eventsStore.Events[i].DisplayTime);
-            Assert.AreEqual(expectedEvents[i].DisplayDescription, eventsStore.Events[i].DisplayDescription);
-            Assert.AreEqual(expectedEvents[i].DisplayExtra, eventsStore.Events[i].DisplayExtra);
         }
     }
 
@@ -403,11 +393,6 @@ public class EventsStoreTests
 
             Assert.AreEqual(expectedEvents[i].IsVisible, actualEvents[i].IsVisible);
             Assert.AreEqual(expectedEvents[i].Colour, actualEvents[i].Colour);
-            Assert.AreEqual(expectedEvents[i].DisplayName, actualEvents[i].DisplayName);
-            Assert.AreEqual(expectedEvents[i].DisplayDate, actualEvents[i].DisplayDate);
-            Assert.AreEqual(expectedEvents[i].DisplayTime, actualEvents[i].DisplayTime);
-            Assert.AreEqual(expectedEvents[i].DisplayDescription, actualEvents[i].DisplayDescription);
-            Assert.AreEqual(expectedEvents[i].DisplayExtra, actualEvents[i].DisplayExtra);
         }
     }
 
