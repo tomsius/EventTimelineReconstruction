@@ -210,7 +210,7 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public IntegrityViewModel(EventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter, ITimeValidator validator)
+    public IntegrityViewModel(IEventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter, ITimeValidator validator)
     {
         _errorsViewModel = new();
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;

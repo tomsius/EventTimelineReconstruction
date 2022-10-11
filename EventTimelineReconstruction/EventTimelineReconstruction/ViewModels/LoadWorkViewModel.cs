@@ -40,7 +40,7 @@ public class LoadWorkViewModel : ViewModelBase, IFileSelectable
     public ICommand ChooseFileCommand { get; }
     public ICommand LoadCommand { get; }
 
-    public LoadWorkViewModel(EventTreeViewModel eventTreeViewModel, EventsStore store, IWorkLoader fileLoader)
+    public LoadWorkViewModel(EventTreeViewModel eventTreeViewModel, IEventsStore store, IWorkLoader fileLoader)
     {
         ChooseFileCommand = new ChooseLoadFileCommand(this);
         LoadCommand = new LoadWorkCommand(this, eventTreeViewModel, store, fileLoader);

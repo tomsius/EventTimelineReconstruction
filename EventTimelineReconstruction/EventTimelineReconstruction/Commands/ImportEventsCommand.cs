@@ -8,10 +8,10 @@ namespace EventTimelineReconstruction.Commands;
 public class ImportEventsCommand : AsyncCommandBase
 {
     private readonly ImportViewModel _importViewModel;
-    private readonly EventsStore _store;
+    private readonly IEventsStore _store;
     private readonly EventTreeViewModel _eventTreeViewModel;
 
-    public ImportEventsCommand(ImportViewModel importViewModel, EventsStore store, EventTreeViewModel eventTreeViewModel)
+    public ImportEventsCommand(ImportViewModel importViewModel, IEventsStore store, EventTreeViewModel eventTreeViewModel)
     {
         _importViewModel = importViewModel;
         _store = store;

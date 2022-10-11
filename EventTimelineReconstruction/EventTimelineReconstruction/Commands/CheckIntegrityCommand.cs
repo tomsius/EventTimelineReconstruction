@@ -17,11 +17,11 @@ namespace EventTimelineReconstruction.Commands;
 public class CheckIntegrityCommand : CommandBase
 {
     private readonly IntegrityViewModel _integrityViewModel;
-    private readonly EventsStore _eventsStore;
+    private readonly IEventsStore _eventsStore;
     private readonly IHashCalculator _hashCalculator;
     private readonly IEventsImporter _eventsImporter;
 
-    public CheckIntegrityCommand(IntegrityViewModel integrityViewModel, EventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter)
+    public CheckIntegrityCommand(IntegrityViewModel integrityViewModel, IEventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter)
     {
         _integrityViewModel = integrityViewModel;
         _eventsStore = eventsStore;
@@ -35,6 +35,7 @@ public class CheckIntegrityCommand : CommandBase
         return !string.IsNullOrEmpty(_integrityViewModel.FileName) && !_integrityViewModel.HasErrors && base.CanExecute(parameter);
     }
 
+    // TODO - convert to AsyncCommandBase
     public override async void Execute(object parameter)
     {
         _integrityViewModel.IsChecking = true;

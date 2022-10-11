@@ -60,7 +60,6 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
         }
     }
 
-    // TODO - try making nullable and not show error if null
     private int _fromHours;
 
     public int FromHours
@@ -194,7 +193,7 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public ImportViewModel(EventTreeViewModel viewModel, EventsStore store, ITimeValidator validator)
+    public ImportViewModel(EventTreeViewModel viewModel, IEventsStore store, ITimeValidator validator)
     {
         _errorsViewModel = new();
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
