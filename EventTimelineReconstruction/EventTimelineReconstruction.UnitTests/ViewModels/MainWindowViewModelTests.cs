@@ -18,11 +18,10 @@ public class MainWindowViewModelTests
 
     public MainWindowViewModelTests()
     {
-        Mock<EventDetailsViewModel> eventDetailsViewModelMock = new();
         Mock<FilteringStore> filteringStoreMock = new();
-        Mock<ChangeColourViewModel> changeColourViewModelMock = new(eventDetailsViewModelMock.Object);
-        Mock<IDragDropUtils> iDragDropUtilsMock = new();
         _eventDetailsViewModelMock = new();
+        Mock<ChangeColourViewModel> changeColourViewModelMock = new(_eventDetailsViewModelMock.Object);
+        Mock<IDragDropUtils> iDragDropUtilsMock = new();
         _eventTreeViewModelMock = new(_eventDetailsViewModelMock.Object, filteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
         Mock<IEventsImporter> iEventsImporterMock = new();
         Mock<EventsStore> eventsStoreMock = new(iEventsImporterMock.Object);
