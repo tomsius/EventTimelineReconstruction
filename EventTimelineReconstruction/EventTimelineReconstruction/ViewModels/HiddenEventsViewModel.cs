@@ -40,7 +40,6 @@ public class HiddenEventsViewModel : ViewModelBase
         {
             return _selectedHiddenEvent;
         }
-
         set
         {
             _selectedHiddenEvent = value;
