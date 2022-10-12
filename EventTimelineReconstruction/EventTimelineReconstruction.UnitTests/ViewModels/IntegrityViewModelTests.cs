@@ -88,7 +88,16 @@ public class IntegrityViewModelTests
     public void Setup()
     {
         _hasFileNameEventFired = false;
-    }
+        _hasFileNameEventFired = false;
+        _hasFromDateEventFired = false;
+        _hasToDateEventFired = false;
+        _hasFromHoursEventFired = false;
+        _hasFromMinutesEventFired = false;
+        _hasToHoursEventFired = false;
+        _hasToMinutesEventFired = false;
+        _hasHashValueEventFired = false;
+        _hasIsCheckingEventFired = false;
+}
 
     [TestMethod]
     public void ErrorsViewModel_ShouldReturnObject_WhenObjectIsInitialized()
