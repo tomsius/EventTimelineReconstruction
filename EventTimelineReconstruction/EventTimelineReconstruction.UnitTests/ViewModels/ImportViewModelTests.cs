@@ -13,6 +13,8 @@ namespace EventTimelineReconstruction.UnitTests.ViewModels;
 [TestClass]
 public class ImportViewModelTests
 {
+    private static Application _app;
+
     private readonly Mock<EventTreeViewModel> _eventTreeViewModel;
     private readonly Mock<IEventsStore> _iEventsStoreMock;
     private readonly Mock<ITimeValidator> _iTimeValidatorMock;
@@ -78,7 +80,16 @@ public class ImportViewModelTests
     [ClassInitialize]
     public static void Initialize(TestContext context)
     {
-        var app = new Application();
+        if (App.Current == null)
+        {
+            _app = new Application();
+        }
+    }
+
+    [ClassCleanup]
+    public static void ClassCleanup()
+    {
+        _app.Shutdown();
     }
 
     [TestInitialize]
