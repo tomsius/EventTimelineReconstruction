@@ -12,9 +12,9 @@ namespace EventTimelineReconstruction.ViewModels;
 public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelectable
 {
     private readonly ITimeValidator _validator;
-    private readonly ErrorsViewModel _errorsViewModel;
+    private readonly IErrorsViewModel _errorsViewModel;
 
-    public ErrorsViewModel ErrorsViewModel
+    public IErrorsViewModel ErrorsViewModel
     {
         get
         {
@@ -209,9 +209,9 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public IntegrityViewModel(IEventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter, ITimeValidator validator)
+    public IntegrityViewModel(IEventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter, ITimeValidator validator, IErrorsViewModel errorsViewModel)
     {
-        _errorsViewModel = new();
+        _errorsViewModel = errorsViewModel;
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
 

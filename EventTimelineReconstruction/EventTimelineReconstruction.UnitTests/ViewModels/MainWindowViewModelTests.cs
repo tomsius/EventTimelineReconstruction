@@ -18,6 +18,7 @@ public class MainWindowViewModelTests
 
     public MainWindowViewModelTests()
     {
+        Mock<IErrorsViewModel> _errorsViewModelMock = new();
         Mock<FilteringStore> filteringStoreMock = new();
         _eventDetailsViewModelMock = new();
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(_eventDetailsViewModelMock.Object);
@@ -31,7 +32,7 @@ public class MainWindowViewModelTests
         Mock<IFilteringUtils> iFilteringUtilsMock = new();
         Mock<FilterViewModel> filterViewModelMock = new(filteringStoreMock.Object, _eventTreeViewModelMock.Object, iTimeValidatorMock.Object, iFilteringUtilsMock.Object);
         Mock<IHashCalculator> iHashCalculatorMock = new();
-        Mock<IntegrityViewModel> integrityViewModelMock = new(eventsStoreMock.Object, iHashCalculatorMock.Object, iEventsImporterMock.Object, iTimeValidatorMock.Object);
+        Mock<IntegrityViewModel> integrityViewModelMock = new(eventsStoreMock.Object, iHashCalculatorMock.Object, iEventsImporterMock.Object, iTimeValidatorMock.Object, _errorsViewModelMock.Object);
         Mock<IFileUtils> fileUtilsMock = new();
         Mock<IResourcesUtils> resourcesUtilsMock = new();
         _mainWindowViewModel = new(

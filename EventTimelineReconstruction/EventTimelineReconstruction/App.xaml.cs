@@ -24,6 +24,8 @@ public partial class App : Application
                 services.AddTransient<IFilteringUtils, FilteringUtils>();
                 services.AddTransient<IResourcesUtils, ResourcesUtils>();
 
+                services.AddTransient<IErrorsViewModel, ErrorsViewModel>();
+
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
                 services.AddSingleton<IWorkSaver, FileWorkSaver>();
                 services.AddSingleton<IWorkLoader, FileWorkLoader>();

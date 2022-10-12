@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class ErrorsViewModel : INotifyDataErrorInfo
+public class ErrorsViewModel : IErrorsViewModel
 {
     private readonly ObservableCollection<string> _errors;
 
