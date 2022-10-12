@@ -797,4 +797,42 @@ public class IntegrityViewModelTests
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);
     }
+
+    [TestMethod]
+    public void FullFromDate_ShouldReturnDateWithTime_WhenPropertyIsCalled()
+    {
+        // Arrange
+        DateTime expected = new(2022, 10, 12, 12, 15, 0);
+        _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
+        IntegrityViewModel integrityViewModel = new(_iEventsStoreMock.Object, _iHashCalculatorMock.Object, _iEventsImporterMock.Object, _iTimeValidatorMock.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object)
+        {
+            FromHours = 12,
+            FromMinutes = 15
+        };
+
+        // Act
+        DateTime actual = integrityViewModel.FullFromDate;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public void FullToDate_ShouldReturnDateWithTime_WhenPropertyIsCalled()
+    {
+        // Arrange
+        DateTime expected = new(2022, 10, 12, 12, 15, 0);
+        _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
+        IntegrityViewModel integrityViewModel = new(_iEventsStoreMock.Object, _iHashCalculatorMock.Object, _iEventsImporterMock.Object, _iTimeValidatorMock.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object)
+        {
+            ToHours = 12,
+            ToMinutes = 15
+        };
+
+        // Act
+        DateTime actual = integrityViewModel.FullToDate;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
 }
