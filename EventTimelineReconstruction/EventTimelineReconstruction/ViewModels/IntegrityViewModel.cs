@@ -30,7 +30,6 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
         {
             return _fileName;
         }
-
         set
         {
             _fileName = value;
