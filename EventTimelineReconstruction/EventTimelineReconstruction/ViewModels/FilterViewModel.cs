@@ -14,7 +14,6 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
 {
     private readonly ITimeValidator _validator;
     private readonly IErrorsViewModel _errorsViewModel;
-    private readonly IDateTimeProvider _dateTimeProvider;
 
     public IErrorsViewModel ErrorsViewModel
     {
@@ -208,12 +207,11 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
         _keyword = string.Empty;
         _chosenEventTypes = new();
         _errorsViewModel = errorsViewModel;
-        _dateTimeProvider = dateTimeProvider;
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
 
-        _fromDate = _dateTimeProvider.Now;
-        _toDate = _dateTimeProvider.Now;
+        _fromDate = dateTimeProvider.Now;
+        _toDate = dateTimeProvider.Now;
 
         InitializeCommand = new InitializeEventTypesCommand(this, filteringUtils);
         FilterChangedCommand = new FilterTypeChangedCommand(this);

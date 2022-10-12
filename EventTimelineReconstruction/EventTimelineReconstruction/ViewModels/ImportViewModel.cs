@@ -13,7 +13,6 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
 {
     private readonly ITimeValidator _validator;
     private readonly IErrorsViewModel _errorsViewModel;
-    private readonly IDateTimeProvider _dateTimeProvider;
 
     public IErrorsViewModel ErrorsViewModel
     {
@@ -198,12 +197,11 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
     public ImportViewModel(EventTreeViewModel viewModel, IEventsStore store, ITimeValidator validator, IErrorsViewModel errorsViewModel, IDateTimeProvider dateTimeProvider)
     {
         _errorsViewModel = errorsViewModel;
-        _dateTimeProvider = dateTimeProvider;
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
 
-        _fromDate = _dateTimeProvider.Now;
-        _toDate = _dateTimeProvider.Now;
+        _fromDate = dateTimeProvider.Now;
+        _toDate = dateTimeProvider.Now;
 
         ChooseFileCommand = new ChooseLoadFileCommand(this);
         ImportCommand = new ImportEventsCommand(this, store, viewModel);

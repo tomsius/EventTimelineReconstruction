@@ -14,7 +14,6 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
 {
     private readonly ITimeValidator _validator;
     private readonly IErrorsViewModel _errorsViewModel;
-    private readonly IDateTimeProvider _dateTimeProvider;
 
     public IErrorsViewModel ErrorsViewModel
     {
@@ -214,12 +213,11 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
     public IntegrityViewModel(IEventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter, ITimeValidator validator, IErrorsViewModel errorsViewModel, IDateTimeProvider dateTimeProvider)
     {
         _errorsViewModel = errorsViewModel;
-        _dateTimeProvider = dateTimeProvider;
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
 
-        _fromDate = _dateTimeProvider.Now;
-        _toDate = _dateTimeProvider.Now;
+        _fromDate = dateTimeProvider.Now;
+        _toDate = dateTimeProvider.Now;
 
         ChooseFileCommand = new ChooseLoadFileCommand(this);
         CheckCommand = new CheckIntegrityCommand(this, eventsStore, hashCalculator, eventsImporter);
