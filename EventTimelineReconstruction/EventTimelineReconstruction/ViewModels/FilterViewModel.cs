@@ -13,9 +13,10 @@ namespace EventTimelineReconstruction.ViewModels;
 public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
 {
     private readonly ITimeValidator _validator;
-    private readonly ErrorsViewModel _errorsViewModel;
+    private readonly IErrorsViewModel _errorsViewModel;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public ErrorsViewModel ErrorsViewModel
+    public IErrorsViewModel ErrorsViewModel
     {
         get
         {
@@ -63,7 +64,7 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
         }
     }
 
-    private DateTime _fromDate = DateTime.Now.Date;
+    private DateTime _fromDate;
 
     public DateTime FromDate
     {
@@ -124,7 +125,7 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
         }
     }
 
-    private DateTime _toDate = DateTime.Now.Date;
+    private DateTime _toDate;
 
     public DateTime ToDate
     {
@@ -201,14 +202,18 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel, ITimeValidator validator, IFilteringUtils filteringUtils)
+    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel, ITimeValidator validator, IFilteringUtils filteringUtils, IErrorsViewModel errorsViewModel, IDateTimeProvider dateTimeProvider)
     {
         _areAllFiltersApplied = false;
         _keyword = string.Empty;
         _chosenEventTypes = new();
-        _errorsViewModel = new();
+        _errorsViewModel = errorsViewModel;
+        _dateTimeProvider = dateTimeProvider;
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
+
+        _fromDate = _dateTimeProvider.Now;
+        _toDate = _dateTimeProvider.Now;
 
         InitializeCommand = new InitializeEventTypesCommand(this, filteringUtils);
         FilterChangedCommand = new FilterTypeChangedCommand(this);

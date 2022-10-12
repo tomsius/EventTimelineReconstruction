@@ -23,6 +23,7 @@ public partial class App : Application
                 services.AddTransient<IFileUtils, FileUtils>();
                 services.AddTransient<IFilteringUtils, FilteringUtils>();
                 services.AddTransient<IResourcesUtils, ResourcesUtils>();
+                services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
                 services.AddTransient<IErrorsViewModel, ErrorsViewModel>();
 
