@@ -26,7 +26,7 @@ public class ApplyFilterOptionsCommand : CommandBase
     public override void Execute(object parameter)
     {
         _filteringStore.AreAllFiltersApplied = _filterViewModel.AreAllFiltersApplied;
-        _filteringStore.Keyword = _filterViewModel.Keyword;
+        _filteringStore.Keyword = _filterViewModel.Keyword.ToLower();
         _filteringStore.FromDate = _filterViewModel.FullFromDate;
         _filteringStore.ToDate = _filterViewModel.FullToDate;
         _filteringStore.SetEventTypes(_filterViewModel.ChosenEventTypes);
