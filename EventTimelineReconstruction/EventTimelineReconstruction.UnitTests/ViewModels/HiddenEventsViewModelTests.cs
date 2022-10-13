@@ -20,10 +20,10 @@ public class HiddenEventsViewModelTests
     public HiddenEventsViewModelTests()
     {
         Mock<EventDetailsViewModel> eventDetailsViewModelMock = new();
-        Mock<FilteringStore> filteringStoreMock = new();
+        Mock<IFilteringStore> iFilteringStoreMock = new();
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(eventDetailsViewModelMock.Object);
         Mock<IDragDropUtils> iDragDropUtilsMock = new();
-        _eventTreeViewModelMock = new(eventDetailsViewModelMock.Object, filteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
+        _eventTreeViewModelMock = new(eventDetailsViewModelMock.Object, iFilteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
         _eventsStoreMock = new();
         _hiddenEventsViewModel = new(_eventsStoreMock.Object, _eventTreeViewModelMock.Object);
     }

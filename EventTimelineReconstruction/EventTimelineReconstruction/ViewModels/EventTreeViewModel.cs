@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 using EventTimelineReconstruction.Commands;
-using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 
@@ -17,7 +13,7 @@ namespace EventTimelineReconstruction.ViewModels;
 public class EventTreeViewModel : ViewModelBase
 {
     private readonly RangeEnabledObservableCollection<EventViewModel> _events;
-    private readonly FilteringStore _filteringStore;
+    private readonly IFilteringStore _filteringStore;
 
     public IEnumerable<EventViewModel> Events
     {
@@ -37,7 +33,6 @@ public class EventTreeViewModel : ViewModelBase
         }
     }
 
-
     public PInPoint pointRef;
 
     public EventViewModel DraggedItem{ get; set; }
@@ -51,7 +46,7 @@ public class EventTreeViewModel : ViewModelBase
     public ICommand MouseMoveCommand { get; }
     public ICommand GiveFeedbackCommand { get; }
 
-    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, FilteringStore filteringStore, ChangeColourViewModel changeColourViewModel, IDragDropUtils dragDropUtils)
+    public EventTreeViewModel(EventDetailsViewModel eventDetailsViewModel, IFilteringStore filteringStore, ChangeColourViewModel changeColourViewModel, IDragDropUtils dragDropUtils)
     {
         _events = new();
         _eventsView = new ListCollectionView(_events);

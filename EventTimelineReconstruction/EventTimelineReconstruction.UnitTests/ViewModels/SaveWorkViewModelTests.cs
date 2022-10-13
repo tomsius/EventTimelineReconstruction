@@ -16,10 +16,10 @@ public class SaveWorkViewModelTests
     public SaveWorkViewModelTests()
     {
         Mock<EventDetailsViewModel> eventDetailsViewModelMock = new();
-        Mock<FilteringStore> filteringStoreMock = new();
+        Mock<IFilteringStore> iFilteringStoreMock = new();
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(eventDetailsViewModelMock.Object);
         Mock<IDragDropUtils> iDragDropUtilsMock = new();
-        Mock<EventTreeViewModel> eventTreeViewModelMock = new(eventDetailsViewModelMock.Object, filteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
+        Mock<EventTreeViewModel> eventTreeViewModelMock = new(eventDetailsViewModelMock.Object, iFilteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
         Mock<IWorkSaver> iWorkSaver = new();
         _saveWorkViewModel = new(eventTreeViewModelMock.Object, iWorkSaver.Object);
     }

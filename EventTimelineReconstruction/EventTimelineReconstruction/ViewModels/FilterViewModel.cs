@@ -201,7 +201,7 @@ public class FilterViewModel : ViewModelBase, INotifyDataErrorInfo
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public FilterViewModel(FilteringStore filteringStore, EventTreeViewModel eventTreeViewModel, ITimeValidator validator, IFilteringUtils filteringUtils, IErrorsViewModel errorsViewModel, IDateTimeProvider dateTimeProvider)
+    public FilterViewModel(IFilteringStore filteringStore, EventTreeViewModel eventTreeViewModel, ITimeValidator validator, IFilteringUtils filteringUtils, IErrorsViewModel errorsViewModel, IDateTimeProvider dateTimeProvider)
     {
         _areAllFiltersApplied = false;
         _keyword = string.Empty;

@@ -35,7 +35,7 @@ public partial class App : Application
                 services.AddSingleton<ITimeValidator, TimeValidator>();
 
                 services.AddSingleton<IEventsStore, EventsStore>();
-                services.AddSingleton<FilteringStore>();
+                services.AddSingleton<IFilteringStore, FilteringStore>();
                 services.AddSingleton<ColouringStore>();
 
                 services.AddSingleton<IntegrityViewModel>();

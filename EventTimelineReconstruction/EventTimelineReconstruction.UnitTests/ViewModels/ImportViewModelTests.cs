@@ -25,10 +25,10 @@ public class ImportViewModelTests
     public ImportViewModelTests()
     {
         Mock<EventDetailsViewModel> eventDetailsViewModelMock = new();
-        Mock<FilteringStore> filteringStoreMock = new();
+        Mock<IFilteringStore> iFilteringStoreMock = new();
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(eventDetailsViewModelMock.Object);
         Mock<IDragDropUtils> iDragDropUtilsMock = new();
-        _eventTreeViewModel = new(eventDetailsViewModelMock.Object, filteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
+        _eventTreeViewModel = new(eventDetailsViewModelMock.Object, iFilteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
         _iEventsStoreMock = new();
         _iTimeValidatorMock = new();
         _iErrorsViewModelMock = new();

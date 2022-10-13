@@ -20,18 +20,18 @@ public class MainWindowViewModelTests
     {
         Mock<IErrorsViewModel> errorsViewModelMock = new();
         Mock<IDateTimeProvider> dateTimeProviderMock = new();
-        Mock<FilteringStore> filteringStoreMock = new();
+        Mock<IFilteringStore> iFilteringStoreMock = new();
         _eventDetailsViewModelMock = new();
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(_eventDetailsViewModelMock.Object);
         Mock<IDragDropUtils> iDragDropUtilsMock = new();
-        _eventTreeViewModelMock = new(_eventDetailsViewModelMock.Object, filteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
+        _eventTreeViewModelMock = new(_eventDetailsViewModelMock.Object, iFilteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
         Mock<IEventsImporter> iEventsImporterMock = new();
         Mock<IEventsStore> iEventsStoreMock = new();
         Mock<HiddenEventsViewModel> hiddenEventsViewModelMock = new(iEventsStoreMock.Object, _eventTreeViewModelMock.Object);
         Mock<ITimeValidator> iTimeValidatorMock = new();
         Mock<ImportViewModel> importViewModelMock = new(_eventTreeViewModelMock.Object, iEventsStoreMock.Object, iTimeValidatorMock.Object, errorsViewModelMock.Object, dateTimeProviderMock.Object);
         Mock<IFilteringUtils> iFilteringUtilsMock = new();
-        Mock<FilterViewModel> filterViewModelMock = new(filteringStoreMock.Object, _eventTreeViewModelMock.Object, iTimeValidatorMock.Object, iFilteringUtilsMock.Object, errorsViewModelMock.Object, dateTimeProviderMock.Object);
+        Mock<FilterViewModel> filterViewModelMock = new(iFilteringStoreMock.Object, _eventTreeViewModelMock.Object, iTimeValidatorMock.Object, iFilteringUtilsMock.Object, errorsViewModelMock.Object, dateTimeProviderMock.Object);
         Mock<IHashCalculator> iHashCalculatorMock = new();
         Mock<IntegrityViewModel> integrityViewModelMock = new(iEventsStoreMock.Object, iHashCalculatorMock.Object, iEventsImporterMock.Object, iTimeValidatorMock.Object, errorsViewModelMock.Object, dateTimeProviderMock.Object);
         Mock<IFileUtils> fileUtilsMock = new();

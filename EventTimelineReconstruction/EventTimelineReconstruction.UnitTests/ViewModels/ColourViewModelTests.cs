@@ -17,10 +17,10 @@ public class ColourViewModelTests
     {
         Mock<ColouringStore> colouringStoreMock = new();
         Mock<EventDetailsViewModel> eventDetailsViewModelMock = new();
-        Mock<FilteringStore> filteringStoreMock = new();
+        Mock<IFilteringStore> iFilteringStoreMock = new();
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(eventDetailsViewModelMock.Object);
         Mock<IDragDropUtils> iDragDropUtilsMock = new();
-        Mock<EventTreeViewModel> eventTreeViewModelMock = new(eventDetailsViewModelMock.Object, filteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
+        Mock<EventTreeViewModel> eventTreeViewModelMock = new(eventDetailsViewModelMock.Object, iFilteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
         Mock<IColouringUtils> iColouringUtilsMock = new();
         _colourViewModel = new(colouringStoreMock.Object, eventTreeViewModelMock.Object, iColouringUtilsMock.Object);
     }

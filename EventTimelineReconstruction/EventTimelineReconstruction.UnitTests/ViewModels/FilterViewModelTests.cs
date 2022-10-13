@@ -16,7 +16,7 @@ public class FilterViewModelTests
 {
     private static Application _app;
 
-    private readonly Mock<FilteringStore> _filteringStoreMock;
+    private readonly Mock<IFilteringStore> _iFilteringStoreMock;
     private readonly Mock<EventTreeViewModel> _eventTreeViewModel;
     private readonly Mock<ITimeValidator> _iTimeValidatorMock;
     private readonly Mock<IFilteringUtils> _iFilteringUtils;
@@ -26,16 +26,16 @@ public class FilterViewModelTests
 
     public FilterViewModelTests()
     {
-        _filteringStoreMock = new();
+        _iFilteringStoreMock = new();
         Mock<EventDetailsViewModel> eventDetailsViewModelMock = new();
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(eventDetailsViewModelMock.Object);
         Mock<IDragDropUtils> iDragDropUtilsMock = new();
-        _eventTreeViewModel = new(eventDetailsViewModelMock.Object, _filteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
+        _eventTreeViewModel = new(eventDetailsViewModelMock.Object, _iFilteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
         _iTimeValidatorMock = new();
         _iFilteringUtils = new();
         _iErrorsViewModelMock = new();
         _iDateTimeProvider = new();
-        _filterViewModel = new(_filteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
+        _filterViewModel = new(_iFilteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
         _filterViewModel.PropertyChanged += this.ChangeEventFlag;
     }
 
@@ -211,7 +211,7 @@ public class FilterViewModelTests
         // Arrange
         DateTime expected = new(2022, 10, 12);
         _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
-        FilterViewModel filterViewModel = new(_filteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
+        FilterViewModel filterViewModel = new(_iFilteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
 
         // Act
         DateTime actual = filterViewModel.FromDate;
@@ -226,7 +226,7 @@ public class FilterViewModelTests
         // Arrange
         DateTime expected = new(2022, 10, 12);
         _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
-        FilterViewModel filterViewModel = new(_filteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
+        FilterViewModel filterViewModel = new(_iFilteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
         filterViewModel.PropertyChanged += this.ChangeEventFlag;
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.FromDate))).Verifiable();
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.ToDate))).Verifiable();
@@ -253,7 +253,7 @@ public class FilterViewModelTests
         // Arrange
         DateTime expected = new(2022, 10, 12);
         _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
-        FilterViewModel filterViewModel = new(_filteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
+        FilterViewModel filterViewModel = new(_iFilteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
         filterViewModel.PropertyChanged += this.ChangeEventFlag;
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.FromDate))).Verifiable();
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.ToDate))).Verifiable();
@@ -446,7 +446,7 @@ public class FilterViewModelTests
         // Arrange
         DateTime expected = new(2022, 10, 12);
         _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
-        FilterViewModel filterViewModel = new(_filteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
+        FilterViewModel filterViewModel = new(_iFilteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
         // Act
         DateTime actual = filterViewModel.ToDate;
 
@@ -460,7 +460,7 @@ public class FilterViewModelTests
         // Arrange
         DateTime expected = new(2022, 10, 12);
         _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
-        FilterViewModel filterViewModel = new(_filteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
+        FilterViewModel filterViewModel = new(_iFilteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
         filterViewModel.PropertyChanged += this.ChangeEventFlag;
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.FromDate))).Verifiable();
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.ToDate))).Verifiable();
@@ -487,7 +487,7 @@ public class FilterViewModelTests
         // Arrange
         DateTime expected = new(2022, 10, 12);
         _iDateTimeProvider.SetupGet(mock => mock.Now).Returns(expected);
-        FilterViewModel filterViewModel = new(_filteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
+        FilterViewModel filterViewModel = new(_iFilteringStoreMock.Object, _eventTreeViewModel.Object, _iTimeValidatorMock.Object, _iFilteringUtils.Object, _iErrorsViewModelMock.Object, _iDateTimeProvider.Object);
         filterViewModel.PropertyChanged += this.ChangeEventFlag;
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.FromDate))).Verifiable();
         _iErrorsViewModelMock.Setup(mock => mock.ClearErrors(nameof(FilterViewModel.ToDate))).Verifiable();
