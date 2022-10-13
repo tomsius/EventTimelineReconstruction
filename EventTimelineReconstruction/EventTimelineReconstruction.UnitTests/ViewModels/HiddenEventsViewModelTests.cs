@@ -156,7 +156,7 @@ public class HiddenEventsViewModelTests
         {
             new EventViewModel(
                 new EventModel(
-                        new DateOnly(2022, 10, 14),
+                        new DateOnly(2018, 10, 14),
                         new TimeOnly(10, 52),
                         TimeZoneInfo.Local,
                         "MACB",
@@ -176,7 +176,7 @@ public class HiddenEventsViewModelTests
                 ),
             new EventViewModel(
                 new EventModel(
-                        new DateOnly(2018, 3, 4),
+                        new DateOnly(2022, 3, 4),
                         new TimeOnly(22, 11),
                         TimeZoneInfo.Local,
                         "MACB2",
@@ -204,8 +204,42 @@ public class HiddenEventsViewModelTests
         int actualCount = actualValue.Count;
 
         // Assert
-        Assert.AreEqual(expectedCount, actualValue.Count);
+        List<EventViewModel> actual = actualValue.Cast<EventViewModel>().ToList();
         Assert.IsNotNull(actualValue);
+        Assert.AreEqual(expectedCount, actualValue.Count);
+
+        for (int i = 0; i < expected.Count; i++)
+        {
+            Assert.AreEqual(expected[i].Children.Count, actual[i].Children.Count);
+            Assert.AreEqual(expected[i].FullDate, actual[i].FullDate);
+            Assert.AreEqual(expected[i].Timezone, actual[i].Timezone);
+            Assert.AreEqual(expected[i].MACB, actual[i].MACB);
+            Assert.AreEqual(expected[i].Source, actual[i].Source);
+            Assert.AreEqual(expected[i].SourceType, actual[i].SourceType);
+            Assert.AreEqual(expected[i].Type, actual[i].Type);
+            Assert.AreEqual(expected[i].User, actual[i].User);
+            Assert.AreEqual(expected[i].Host, actual[i].Host);
+            Assert.AreEqual(expected[i].Short, actual[i].Short);
+            Assert.AreEqual(expected[i].Description, actual[i].Description);
+            Assert.AreEqual(expected[i].Version, actual[i].Version);
+            Assert.AreEqual(expected[i].Filename, actual[i].Filename);
+            Assert.AreEqual(expected[i].INode, actual[i].INode);
+            Assert.AreEqual(expected[i].Notes, actual[i].Notes);
+            Assert.AreEqual(expected[i].Format, actual[i].Format);
+            Assert.AreEqual(expected[i].Extra.Count, actual[i].Extra.Count);
+
+            foreach (KeyValuePair<string, string> kvp in expected[i].Extra)
+            {
+                string expectedKey = kvp.Key;
+                string expectedValue = kvp.Value;
+
+                Assert.IsTrue(actual[i].Extra.ContainsKey(expectedKey));
+                Assert.AreEqual(expectedValue, actual[i].Extra[expectedKey]);
+            }
+
+            Assert.AreEqual(expected[i].IsVisible, actual[i].IsVisible);
+            Assert.AreEqual(expected[i].Colour, actual[i].Colour);
+        }
     }
 
     [TestMethod]
