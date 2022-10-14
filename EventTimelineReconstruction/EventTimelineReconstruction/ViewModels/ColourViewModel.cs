@@ -24,7 +24,7 @@ public class ColourViewModel : ViewModelBase
     public ICommand ColourChangedCommand { get; }
     public ICommand ColourCommand { get; }
 
-    public ColourViewModel(ColouringStore colouringStore, EventTreeViewModel eventTreeViewModel, IColouringUtils colouringUtils)
+    public ColourViewModel(IColouringStore colouringStore, EventTreeViewModel eventTreeViewModel, IColouringUtils colouringUtils)
     {
         _coloursByType = new();
 

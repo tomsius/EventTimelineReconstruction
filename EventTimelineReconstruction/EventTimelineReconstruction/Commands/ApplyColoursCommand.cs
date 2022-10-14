@@ -9,10 +9,10 @@ namespace EventTimelineReconstruction.Commands;
 
 public class ApplyColoursCommand : CommandBase
 {
-    private readonly ColouringStore _colouringStore;
+    private readonly IColouringStore _colouringStore;
     private readonly EventTreeViewModel _eventTreeViewModel;
 
-    public ApplyColoursCommand(ColouringStore colouringStore, EventTreeViewModel eventTreeViewModel)
+    public ApplyColoursCommand(IColouringStore colouringStore, EventTreeViewModel eventTreeViewModel)
     {
         _colouringStore = colouringStore;
         _eventTreeViewModel = eventTreeViewModel;

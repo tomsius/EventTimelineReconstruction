@@ -36,7 +36,7 @@ public partial class App : Application
 
                 services.AddSingleton<IEventsStore, EventsStore>();
                 services.AddSingleton<IFilteringStore, FilteringStore>();
-                services.AddSingleton<ColouringStore>();
+                services.AddSingleton<IColouringStore, ColouringStore>();
 
                 services.AddSingleton<IntegrityViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();
