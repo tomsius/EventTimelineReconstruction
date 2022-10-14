@@ -20,4 +20,8 @@
     <ProjectReference Include="..\EventTimelineReconstruction\EventTimelineReconstruction.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
 </Project>
