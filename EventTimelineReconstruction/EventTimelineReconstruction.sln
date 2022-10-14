@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventTimelineReconstruction.UnitTests", "EventTimelineReconstruction.UnitTests\EventTimelineReconstruction.UnitTests.csproj", "{09EF8250-AD86-42ED-A750-F775E484127A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventTimelineReconstruction.Tests", "EventTimelineReconstruction.Tests\EventTimelineReconstruction.Tests.csproj", "{09EF8250-AD86-42ED-A750-F775E484127A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
