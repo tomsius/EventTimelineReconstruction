@@ -569,6 +569,7 @@ public class EventTreeViewModelTests
         };
         _eventTreeViewModel.AddEvent(expected);
         _eventTreeViewModel.AddEvent(hiddenEventViewModel);
+        _eventTreeViewModel.AddEvent(null);
         _iFilteringStore.Setup(mock => mock.IsEnabled).Returns(false);
         int expectedCount = 1;
 
@@ -719,6 +720,7 @@ public class EventTreeViewModelTests
         firstEventViewModel.Children.Add(hiddenEventViewModel);
         _eventTreeViewModel.AddEvent(firstEventViewModel);
         _eventTreeViewModel.AddEvent(expected);
+        _eventTreeViewModel.AddEvent(null);
         _iFilteringStore.Setup(mock => mock.IsEnabled).Returns(true);
         _iFilteringStore.Setup(mock => mock.AreAllFiltersApplied).Returns(true);
         _iFilteringStore.Setup(mock => mock.ChosenEventTypes).Returns(new Dictionary<string, bool>() { { "Type", false }, { "Type2", true }, { "Type3", true } });
