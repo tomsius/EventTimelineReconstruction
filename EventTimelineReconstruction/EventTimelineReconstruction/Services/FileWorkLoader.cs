@@ -50,12 +50,14 @@ public class FileWorkLoader : IWorkLoader
             }
             else if (depth < currentDepth)
             {
-                while (depth <= currentDepth) {
+                while (depth <= currentDepth)
+                {
                     stack.Pop();
                     currentDepth--;
                 }
-                
-                EventViewModel current = stack.Pop();
+
+                currentDepth++;
+                EventViewModel current = stack.Peek();
                 current.AddChild(eventViewModel);
             }
 
