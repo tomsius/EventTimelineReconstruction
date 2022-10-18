@@ -100,7 +100,7 @@ public class L2tCSVEventsImporter : IEventsImporter
         Dictionary<string, string> extra = new(extraParts.Length);
 
         foreach (string part in extraParts) {
-            string[] pair = part.Split(": ");
+            string[] pair = part.Trim().Split(": ");
             string key = pair[0];
             string value = pair[1];
 
