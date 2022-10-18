@@ -9,33 +9,34 @@ namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 [TestClass]
 public class ApplyColourOptionsCommandTests
 {
-    private readonly EventTreeViewModel _eventTreeViewModel;
-    private readonly IColouringUtils _colouringUtils;
+    private readonly IColouringStore _colouringStore;
+    private readonly ColourViewModel _colourViewModel;
+    private readonly ApplyColourOptionsCommand _command;
 
     public ApplyColourOptionsCommandTests()
     {
         IFilteringStore filteringStore = new FilteringStore();
+        IDragDropUtils dragDropUtils = new DragDropUtils();
+        IColouringUtils colouringUtils = new ColouringUtils();
+        _colouringStore = new ColouringStore();
         EventDetailsViewModel eventDetailsViewModel = new();
         ChangeColourViewModel changeColourViewModel = new(eventDetailsViewModel);
-        IDragDropUtils dragDropUtils = new DragDropUtils();
+        EventTreeViewModel eventTreeViewModel = new(eventDetailsViewModel, filteringStore, changeColourViewModel, dragDropUtils);
+        _colourViewModel = new(_colouringStore, eventTreeViewModel, colouringUtils);
 
-        _colouringUtils = new ColouringUtils();
-        _eventTreeViewModel = new(eventDetailsViewModel, filteringStore, changeColourViewModel, dragDropUtils);
+        _command = new(_colourViewModel, _colouringStore);
     }
 
     [TestMethod]
     public void CanExecute_ShouldReturnFalse_WhenTransparentColourIsSelected()
     {
         // Arrange
-        IColouringStore colouringStore = new ColouringStore();
-        ColourViewModel colourViewModel = new(colouringStore, _eventTreeViewModel, _colouringUtils);
-        ApplyColourOptionsCommand command = new(colourViewModel, colouringStore);
-        colourViewModel.UpdateColourByType("CanExecuteTest1", Brushes.Transparent);
-        colourViewModel.UpdateColourByType("CanExecuteTest2", Brushes.Red);
+        _colourViewModel.UpdateColourByType("CanExecuteTest1", Brushes.Transparent);
+        _colourViewModel.UpdateColourByType("CanExecuteTest2", Brushes.Red);
         bool expected = false;
 
         // Act
-        bool actual = command.CanExecute(null);
+        bool actual = _command.CanExecute(null);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -46,15 +47,12 @@ public class ApplyColourOptionsCommandTests
     public void CanExecute_ShouldReturnTrue_WhenNoTransparentColourIsSelected()
     {
         // Arrange
-        IColouringStore colouringStore = new ColouringStore();
-        ColourViewModel colourViewModel = new(colouringStore, _eventTreeViewModel, _colouringUtils);
-        ApplyColourOptionsCommand command = new(colourViewModel, colouringStore);
-        colourViewModel.UpdateColourByType("CanExecuteTest1", Brushes.Red);
-        colourViewModel.UpdateColourByType("CanExecuteTest2", Brushes.Blue);
+        _colourViewModel.UpdateColourByType("CanExecuteTest1", Brushes.Red);
+        _colourViewModel.UpdateColourByType("CanExecuteTest2", Brushes.Blue);
         bool expected = true;
 
         // Act
-        bool actual = command.CanExecute(null);
+        bool actual = _command.CanExecute(null);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -65,25 +63,22 @@ public class ApplyColourOptionsCommandTests
     public void Execute_ShouldSetColoursByTypeInStore_WhenCommandIsExecuted()
     {
         // Arrange
-        IColouringStore colouringStore = new ColouringStore();
-        ColourViewModel colourViewModel = new(colouringStore, _eventTreeViewModel, _colouringUtils);
-        ApplyColourOptionsCommand command = new(colourViewModel, colouringStore);
         Dictionary<string, Brush> expectedColoursByType = new() { { "CanExecuteTest1", Brushes.Red }, {"CanExecuteTest2", Brushes.Blue }};
         foreach (KeyValuePair<string, Brush> expectedItem in expectedColoursByType)
         {
-            colourViewModel.UpdateColourByType(expectedItem.Key, expectedItem.Value);
+            _colourViewModel.UpdateColourByType(expectedItem.Key, expectedItem.Value);
         }
 
         // Act
-        command.Execute(null);
+        _command.Execute(null);
 
         // Assert
-        Assert.AreEqual(expectedColoursByType.Count, colouringStore.ColoursByType.Count);
+        Assert.AreEqual(expectedColoursByType.Count, _colouringStore.ColoursByType.Count);
 
         foreach (KeyValuePair<string, Brush> expectedItem in expectedColoursByType)
         {
-            Assert.IsTrue(colouringStore.ColoursByType.ContainsKey(expectedItem.Key));
-            Assert.AreEqual(expectedItem.Value, colouringStore.ColoursByType[expectedItem.Key]);
+            Assert.IsTrue(_colouringStore.ColoursByType.ContainsKey(expectedItem.Key));
+            Assert.AreEqual(expectedItem.Value, _colouringStore.ColoursByType[expectedItem.Key]);
         }
     }
 }
