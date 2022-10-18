@@ -534,7 +534,7 @@ public class EventViewModelTests
         Assert.AreEqual(childEventViewModel.Format, actualValue.Format);
         Assert.AreEqual(childEventViewModel.Extra.Count, actualValue.Extra.Count);
 
-        foreach (KeyValuePair<string, string> kvp in actualValue.Extra)
+        foreach (KeyValuePair<string, string> kvp in childEventViewModel.Extra)
         {
             string expectedKey = kvp.Key;
             string expectedValue = kvp.Value;

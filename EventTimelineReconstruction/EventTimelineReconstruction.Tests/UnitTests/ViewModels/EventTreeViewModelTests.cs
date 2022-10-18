@@ -414,7 +414,7 @@ public class EventTreeViewModelTests
         Assert.AreEqual(expected.Format, actualValue[0].Format);
         Assert.AreEqual(expected.Extra.Count, actualValue[0].Extra.Count);
 
-        foreach (KeyValuePair<string, string> kvp in actualValue[0].Extra)
+        foreach (KeyValuePair<string, string> kvp in expected.Extra)
         {
             string expectedKey = kvp.Key;
             string expectedValue = kvp.Value;
@@ -599,7 +599,7 @@ public class EventTreeViewModelTests
         Assert.AreEqual(expected.Format, actualValue[0].Format);
         Assert.AreEqual(expected.Extra.Count, actualValue[0].Extra.Count);
 
-        foreach (KeyValuePair<string, string> kvp in actualValue[0].Extra)
+        foreach (KeyValuePair<string, string> kvp in expected.Extra)
         {
             string expectedKey = kvp.Key;
             string expectedValue = kvp.Value;
@@ -756,7 +756,7 @@ public class EventTreeViewModelTests
         Assert.AreEqual(expected.Format, actualValue[0].Format);
         Assert.AreEqual(expected.Extra.Count, actualValue[0].Extra.Count);
 
-        foreach (KeyValuePair<string, string> kvp in actualValue[0].Extra)
+        foreach (KeyValuePair<string, string> kvp in expected.Extra)
         {
             string expectedKey = kvp.Key;
             string expectedValue = kvp.Value;
@@ -810,7 +810,7 @@ public class EventTreeViewModelTests
         Assert.AreEqual(expected.Format, actualValue[0].Format);
         Assert.AreEqual(expected.Extra.Count, actualValue[0].Extra.Count);
 
-        foreach (KeyValuePair<string, string> kvp in actualValue[0].Extra)
+        foreach (KeyValuePair<string, string> kvp in expected.Extra)
         {
             string expectedKey = kvp.Key;
             string expectedValue = kvp.Value;

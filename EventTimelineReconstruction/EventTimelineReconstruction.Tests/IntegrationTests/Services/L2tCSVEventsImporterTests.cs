@@ -121,7 +121,7 @@ public class L2tCSVEventsImporterTests
                 Assert.AreEqual(expected[i].Format, actual[i].Format);
                 Assert.AreEqual(expected[i].Extra.Count, actual[i].Extra.Count);
 
-                foreach (KeyValuePair<string, string> kvp in actual[i].Extra)
+                foreach (KeyValuePair<string, string> kvp in expected[i].Extra)
                 {
                     string expectedKey = kvp.Key;
                     string expectedValue = kvp.Value;

@@ -197,7 +197,7 @@ public class FileWorkLoaderTests
             Assert.AreEqual(currentExpected.Format, currentActual.Format);
             Assert.AreEqual(currentExpected.Extra.Count, currentActual.Extra.Count);
 
-            foreach (KeyValuePair<string, string> kvp in currentActual.Extra)
+            foreach (KeyValuePair<string, string> kvp in currentExpected.Extra)
             {
                 string expectedKey = kvp.Key;
                 string expectedValue = kvp.Value;

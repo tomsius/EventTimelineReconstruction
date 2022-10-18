@@ -306,7 +306,7 @@ public class ObservableCollectionExtensionsTests
             Assert.AreEqual(expected[i].Format, collection[i].Format);
             Assert.AreEqual(expected[i].Extra.Count, collection[i].Extra.Count);
 
-            foreach (KeyValuePair<string, string> kvp in collection[i].Extra)
+            foreach (KeyValuePair<string, string> kvp in expected[i].Extra)
             {
                 string expectedKey = kvp.Key;
                 string expectedValue = kvp.Value;
