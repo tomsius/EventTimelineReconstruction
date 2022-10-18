@@ -1,10 +1,8 @@
-﻿
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.ViewModels;
-using Moq;
 
 namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 
