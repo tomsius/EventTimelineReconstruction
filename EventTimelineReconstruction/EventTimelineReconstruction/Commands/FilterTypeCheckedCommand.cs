@@ -31,7 +31,7 @@ public class FilterTypeCheckedCommand : CommandBase
 
         List<CheckBox> children = _filteringUtils.GetChildrenCheckBoxes(rootCheckBox);
 
-        UpdateCheckBoxes(isRootCheckBox, rootCheckBox, children);
+        this.UpdateCheckBoxes(isRootCheckBox, rootCheckBox, children);
         this.SaveChosenEventTypes(children);
     }
 
