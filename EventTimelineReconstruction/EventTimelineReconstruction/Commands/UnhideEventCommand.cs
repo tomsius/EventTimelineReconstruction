@@ -24,6 +24,7 @@ public class UnhideEventCommand : CommandBase
     {
         _hiddenEventsViewModel.SelectedHiddenEvent.IsVisible = true;
         _hiddenEventsViewModel.RemoveHiddenEvent(_hiddenEventsViewModel.SelectedHiddenEvent);
+        _hiddenEventsViewModel.SelectedHiddenEvent = null;
         _eventTreeViewModel.ApplyFilters();
     }
 
