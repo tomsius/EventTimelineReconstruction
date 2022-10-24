@@ -62,8 +62,9 @@ public class ApplyColoursCommandTests
         // Arrange
         EventViewModel parent = new(new EventModel(new DateOnly(2022, 10, 18), new TimeOnly(13, 10, 0), TimeZoneInfo.Utc, "MACB1", "Source1", "Source Type1", "Created", "User1", "Host1", "Short Description1", "Description1", 1, "Filename1", "iNode1", "Notes1", "Format1", new Dictionary<string, string>()));
         EventViewModel child = new(new EventModel(new DateOnly(2022, 10, 18), new TimeOnly(13, 12, 0), TimeZoneInfo.Utc, "MACB2", "Source2", "Source Type2", "Modified", "User2", "Host2", "Short Description2", "Description2", 2, "Filename2", "iNode2", "Notes2", "Format2", new Dictionary<string, string>()));
+        List<EventViewModel> events = new() { parent };
         parent.AddChild(child);
-        _eventTreeViewModel.AddEvent(parent);
+        _eventTreeViewModel.LoadEvents(events);
         Dictionary<string, Brush> coloursByType = new() { { "Created", Brushes.Red }, { "Deleted", Brushes.Blue }, { "Modified", Brushes.Green } };
         _colouringStore.SetColoursByType(coloursByType);
 
