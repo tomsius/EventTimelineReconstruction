@@ -45,9 +45,9 @@ public class SaveWorkCommandTests
     [ClassCleanup]
     public static void ClassCleanup()
     {
-        _app.Shutdown();
-
         File.Delete(@"Save.csv");
+
+        _app.Shutdown();
     }
 
     [TestMethod]

@@ -76,9 +76,9 @@ public class InitializeLanguagesCommandTests
     [ClassCleanup]
     public static void ClassCleanup()
     {
-        _app.Shutdown();
-
         Directory.Delete(_directoryPath, true);
+
+        _app.Shutdown();
     }
 
     [STATestMethod]

@@ -57,9 +57,9 @@ public class ImportEventsCommandTests
     [ClassCleanup]
     public static void ClassCleanup()
     {
-        _app.Shutdown();
-
         File.Delete(@"Import.csv");
+
+        _app.Shutdown();
     }
 
     [TestMethod]

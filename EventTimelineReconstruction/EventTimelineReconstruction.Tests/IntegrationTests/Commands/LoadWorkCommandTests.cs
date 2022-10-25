@@ -53,9 +53,9 @@ public class LoadWorkCommandTests
     [ClassCleanup]
     public static void ClassCleanup()
     {
-        _app.Shutdown();
-
         File.Delete(@"Load.csv");
+
+        _app.Shutdown();
     }
 
     [TestMethod]

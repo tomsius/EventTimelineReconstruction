@@ -54,9 +54,9 @@ public class CheckIntegrityCommandTests
     [ClassCleanup]
     public static void ClassCleanup()
     {
-        _app.Shutdown();
-
         File.Delete(@"Integrity.csv");
+
+        _app.Shutdown();
     }
 
     [TestMethod]
