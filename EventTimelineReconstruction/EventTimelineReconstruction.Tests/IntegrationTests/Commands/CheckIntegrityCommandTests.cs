@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Models;
@@ -8,7 +7,6 @@ using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.Validators;
 using EventTimelineReconstruction.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 
