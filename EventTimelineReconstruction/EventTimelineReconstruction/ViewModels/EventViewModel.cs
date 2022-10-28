@@ -5,6 +5,7 @@ using EventTimelineReconstruction.Models;
 using System.Text;
 using System.Collections.ObjectModel;
 using EventTimelineReconstruction.Extensions;
+using System.Globalization;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -280,7 +281,7 @@ public class EventViewModel : ViewModelBase, IComparable
             _eventModel.Host, 
             _eventModel.Short, 
             _eventModel.Description,
-            _eventModel.Version,
+            _eventModel.Version.ToString(CultureInfo.InvariantCulture),
             _eventModel.Filename,
             _eventModel.INode,
             _eventModel.Notes,
