@@ -309,9 +309,11 @@ public class EventViewModelTests
     public void DisplayName_ShouldReturnFormattedName_WhenPropertyIsCalled()
     {
         // Arrange
+        DateTime date = new(2022, 10, 14, 10, 52, 0);
+        string file = "Filename";
         EventModel eventModel = new(
-            new DateOnly(2022, 10, 14),
-            new TimeOnly(10, 52),
+            new DateOnly(date.Year, date.Month, date.Day),
+            new TimeOnly(date.Hour, date.Minute),
             TimeZoneInfo.Local,
             "MACB",
             "Source",
@@ -322,13 +324,13 @@ public class EventViewModelTests
             "Short Description",
             "Full Description",
             2.5,
-            "Filename",
+            file,
             "iNode number",
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } });
         EventViewModel eventViewModel = new(eventModel);
-        string expected = "14/10/2022 10:52:00 Filename";
+        string expected = string.Format("{0, 10} {1}", date, file);
 
         // Act
         string actual = eventViewModel.DisplayName;
@@ -341,9 +343,10 @@ public class EventViewModelTests
     public void DisplayDate_ShouldReturnFormattedDate_WhenPropertyIsCalled()
     {
         // Arrange
+        DateTime date = new(2022, 10, 14, 10, 52, 0);
         EventModel eventModel = new(
-            new DateOnly(2022, 10, 14),
-            new TimeOnly(10, 52),
+           new DateOnly(date.Year, date.Month, date.Day),
+            new TimeOnly(date.Hour, date.Minute),
             TimeZoneInfo.Local,
             "MACB",
             "Source",
@@ -360,7 +363,7 @@ public class EventViewModelTests
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } });
         EventViewModel eventViewModel = new(eventModel);
-        string expected = "14/10/2022";
+        string expected = date.ToString("dd/MM/yyyy");
 
         // Act
         string actual = eventViewModel.DisplayDate;
