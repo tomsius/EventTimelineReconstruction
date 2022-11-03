@@ -43,13 +43,13 @@ public  class SHA256CalculatorTests
 
     [DynamicData(nameof(Files))]
     [TestMethod]
-    public void Calculate_ReturnByteArray_WhenMethodIsCalled(string path, byte[] expected)
+    public async Task Calculate_ReturnByteArray_WhenMethodIsCalled(string path, byte[] expected)
     {
         // Arrange
         SHA256Calculator calculator = new();
 
         // Act 
-        byte[] actual = calculator.Calculate(path);
+        byte[] actual = await calculator.Calculate(path);
 
         // Assert
         Assert.AreEqual(expected.Length, actual.Length);

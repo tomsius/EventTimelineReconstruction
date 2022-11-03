@@ -1,6 +1,8 @@
-﻿namespace EventTimelineReconstruction.Services;
+﻿using System.Threading.Tasks;
+
+namespace EventTimelineReconstruction.Services;
 
 public interface IHashCalculator
 {
-    public byte[] Calculate(string filePath);
+    public Task<byte[]> Calculate(string filePath);
 }
