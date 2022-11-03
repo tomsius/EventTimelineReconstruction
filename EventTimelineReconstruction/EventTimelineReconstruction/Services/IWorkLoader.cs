@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Services;
 
 public interface IWorkLoader
 {
-    public List<EventViewModel> LoadWork(string path);
+    public Task<List<EventViewModel>> LoadWork(string path);
 }

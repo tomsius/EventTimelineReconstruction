@@ -5,16 +5,17 @@ using System;
 using System.IO;
 using System.Windows.Media;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace EventTimelineReconstruction.Services;
 
 public class FileWorkLoader : IWorkLoader
 {
-    public List<EventViewModel> LoadWork(string path)
+    public async Task<List<EventViewModel>> LoadWork(string path)
     {
         List<EventViewModel> events = new();
         using StreamReader inputStream = new(path);
-        string row = inputStream.ReadLine();
+        string row = await inputStream.ReadLineAsync();
         int currentDepth = 0;
         Stack<EventViewModel> stack = new();
 
@@ -63,7 +64,7 @@ public class FileWorkLoader : IWorkLoader
             }
 
             stack.Push(eventViewModel);
-            row = inputStream.ReadLine();
+            row = await inputStream.ReadLineAsync();
         }
 
         return events;
