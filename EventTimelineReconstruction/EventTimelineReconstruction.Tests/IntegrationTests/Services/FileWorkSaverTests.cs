@@ -16,7 +16,7 @@ public class FileWorkSaverTests
     }
 
     [TestMethod]
-    public void SaveWork_ShouldWriteEventsToFile_WhenMethodIsCalled()
+    public async Task SaveWork_ShouldWriteEventsToFile_WhenMethodIsCalled()
     {
         // Arrange
         List<EventViewModel> events = new()
@@ -92,7 +92,7 @@ public class FileWorkSaverTests
         FileWorkSaver saver = new();
 
         // Act
-        saver.SaveWork(_file, events);
+        await saver.SaveWork(_file, events);
         string[] actual = File.ReadAllLines(_file);
 
         // Assert
