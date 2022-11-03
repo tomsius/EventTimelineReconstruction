@@ -237,11 +237,11 @@
             </ListView>
 
             <StackPanel Grid.Row="2" Margin="0 0 0 20">
-                <TextBlock x:Name="FileOKTextBlock" Text="{DynamicResource Integrity_File_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
-                <TextBlock x:Name="FileUnknownTextBlock" Text="{DynamicResource Integrity_File_Unknown}" FontSize="14" Foreground="Orange" HorizontalAlignment="Center" Visibility="Collapsed" />
-                <TextBlock x:Name="FileCompromisedTextBlock" Text="{DynamicResource Integrity_File_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
-                <TextBlock x:Name="EventsOKTextBlock" Text="{DynamicResource Integrity_Events_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="Collapsed" />
-                <TextBlock x:Name="EventsCompromisedTextBlock" Text="{DynamicResource Integrity_Events_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" />
+                <TextBlock x:Name="FileOKTextBlock" Text="{DynamicResource Integrity_File_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="{Binding FileOKVisibility}" />
+                <TextBlock x:Name="FileUnknownTextBlock" Text="{DynamicResource Integrity_File_Unknown}" FontSize="14" Foreground="Orange" HorizontalAlignment="Center" Visibility="{Binding FileUnknownVisibility}" />
+                <TextBlock x:Name="FileCompromisedTextBlock" Text="{DynamicResource Integrity_File_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="{Binding FileCompromisedVisibility}" />
+                <TextBlock x:Name="EventsOKTextBlock" Text="{DynamicResource Integrity_Events_OK}" FontSize="14" Foreground="Green" HorizontalAlignment="Center" Visibility="{Binding EventsOKVisibility}" />
+                <TextBlock x:Name="EventsCompromisedTextBlock" Text="{DynamicResource Integrity_Events_Compromised}" FontSize="14" Foreground="Red" HorizontalAlignment="Center" Visibility="{Binding EventsCompromisedVisibility}" />
             </StackPanel>
 
             <fa:ImageAwesome 
@@ -263,15 +263,6 @@
                     Height="30"
                     Padding="0, 0, 0, 2"
                     Command="{Binding CheckCommand}">
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource ButtonConverter}">
-                        <Binding ElementName="FileOKTextBlock" />
-                        <Binding ElementName="FileUnknownTextBlock" />
-                        <Binding ElementName="FileCompromisedTextBlock" />
-                        <Binding ElementName="EventsOKTextBlock" />
-                        <Binding ElementName="EventsCompromisedTextBlock" />
-                    </MultiBinding>
-                </Button.CommandParameter>
                 <TextBlock
                         Text="{DynamicResource Integrity_Check}"
                         HorizontalAlignment="Center"

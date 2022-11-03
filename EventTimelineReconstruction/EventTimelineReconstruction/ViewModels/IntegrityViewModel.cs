@@ -7,6 +7,8 @@ using System.ComponentModel;
 using EventTimelineReconstruction.Validators;
 using System.Collections;
 using EventTimelineReconstruction.Utils;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -197,6 +199,81 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
         }
     }
 
+    private Visibility _fileOKVisibility;
+
+    public Visibility FileOKVisibility
+    {
+        get
+        {
+            return _fileOKVisibility;
+        }
+        set
+        {
+            _fileOKVisibility = value;
+            this.OnPropertyChanged(nameof(FileOKVisibility));
+        }
+    }
+
+    private Visibility _fileUnknownVisibility;
+
+    public Visibility FileUnknownVisibility
+    {
+        get
+        {
+            return _fileUnknownVisibility;
+        }
+        set
+        {
+            _fileUnknownVisibility = value;
+            this.OnPropertyChanged(nameof(FileUnknownVisibility));
+        }
+    }
+
+    private Visibility _fileCompromisedVisibility;
+
+    public Visibility FileCompromisedVisibility
+    {
+        get
+        {
+            return _fileCompromisedVisibility;
+        }
+        set
+        {
+            _fileCompromisedVisibility = value;
+            this.OnPropertyChanged(nameof(FileCompromisedVisibility));
+        }
+    }
+
+    private Visibility _eventsOKVisibility;
+
+    public Visibility EventsOKVisibility
+    {
+        get
+        {
+            return _eventsOKVisibility;
+        }
+        set
+        {
+            _eventsOKVisibility = value;
+            this.OnPropertyChanged(nameof(EventsOKVisibility));
+        }
+    }
+
+    private Visibility _eventsCompromisedVisibility;
+
+    public Visibility EventsCompromisedVisibility
+    {
+        get
+        {
+            return _eventsCompromisedVisibility;
+        }
+        set
+        {
+            _eventsCompromisedVisibility = value;
+            this.OnPropertyChanged(nameof(EventsCompromisedVisibility));
+        }
+    }
+
     public bool HasErrors
     {
         get
@@ -218,6 +295,11 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
 
         _fromDate = dateTimeProvider.Now;
         _toDate = dateTimeProvider.Now;
+        _fileOKVisibility = Visibility.Collapsed;
+        _fileUnknownVisibility = Visibility.Collapsed;
+        _fileCompromisedVisibility = Visibility.Collapsed;
+        _eventsOKVisibility = Visibility.Collapsed;
+        _eventsCompromisedVisibility = Visibility.Collapsed;
 
         ChooseFileCommand = new ChooseLoadFileCommand(this);
         CheckCommand = new CheckIntegrityCommand(this, eventsStore, hashCalculator, eventsImporter);
@@ -249,7 +331,7 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
         }
         catch (Exception)
         {
-            // TODO = add error message for incorrect date format
+            // TODO - add error message for incorrect date format
         }
     }
 

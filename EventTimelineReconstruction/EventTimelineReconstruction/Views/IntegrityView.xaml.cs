@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Views;
 
@@ -15,21 +16,23 @@ public partial class IntegrityView : Window
         e.Cancel = true;
         Visibility = Visibility.Hidden;
 
-        FileOKTextBlock.Visibility = Visibility.Collapsed;
-        FileUnknownTextBlock.Visibility = Visibility.Collapsed;
-        FileCompromisedTextBlock.Visibility = Visibility.Collapsed;
-        EventsOKTextBlock.Visibility = Visibility.Collapsed;
-        EventsCompromisedTextBlock.Visibility = Visibility.Collapsed;
+        IntegrityViewModel viewModel = (IntegrityViewModel)DataContext;
+        viewModel.FileOKVisibility = Visibility.Collapsed;
+        viewModel.FileUnknownVisibility = Visibility.Collapsed;
+        viewModel.FileCompromisedVisibility = Visibility.Collapsed;
+        viewModel.EventsOKVisibility = Visibility.Collapsed;
+        viewModel.EventsCompromisedVisibility = Visibility.Collapsed;
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         Visibility = Visibility.Hidden;
 
-        FileOKTextBlock.Visibility = Visibility.Collapsed;
-        FileUnknownTextBlock.Visibility = Visibility.Collapsed;
-        FileCompromisedTextBlock.Visibility = Visibility.Collapsed;
-        EventsOKTextBlock.Visibility = Visibility.Collapsed;
-        EventsCompromisedTextBlock.Visibility = Visibility.Collapsed;
+        IntegrityViewModel viewModel = (IntegrityViewModel)DataContext;
+        viewModel.FileOKVisibility = Visibility.Collapsed;
+        viewModel.FileUnknownVisibility = Visibility.Collapsed;
+        viewModel.FileCompromisedVisibility = Visibility.Collapsed;
+        viewModel.EventsOKVisibility = Visibility.Collapsed;
+        viewModel.EventsCompromisedVisibility = Visibility.Collapsed;
     }
 }
