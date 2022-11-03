@@ -6,15 +6,16 @@ using EventTimelineReconstruction.Services;
 using System.ComponentModel;
 using EventTimelineReconstruction.Validators;
 using System.Collections;
+using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
 
 public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelectable
 {
     private readonly ITimeValidator _validator;
-    private readonly ErrorsViewModel _errorsViewModel;
+    private readonly IErrorsViewModel _errorsViewModel;
 
-    public ErrorsViewModel ErrorsViewModel
+    public IErrorsViewModel ErrorsViewModel
     {
         get
         {
@@ -30,7 +31,6 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
         {
             return _fileName;
         }
-
         set
         {
             _fileName = value;
@@ -45,7 +45,7 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
         }
     }
 
-    private DateTime _fromDate = DateTime.Now.Date;
+    private DateTime _fromDate;
 
     public DateTime FromDate
     {
@@ -106,7 +106,7 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
         }
     }
 
-    private DateTime _toDate = DateTime.Now.Date;
+    private DateTime _toDate;
 
     public DateTime ToDate
     {
@@ -210,11 +210,14 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public IntegrityViewModel(EventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter, ITimeValidator validator)
+    public IntegrityViewModel(IEventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter, ITimeValidator validator, IErrorsViewModel errorsViewModel, IDateTimeProvider dateTimeProvider)
     {
-        _errorsViewModel = new();
+        _errorsViewModel = errorsViewModel;
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
+
+        _fromDate = dateTimeProvider.Now;
+        _toDate = dateTimeProvider.Now;
 
         ChooseFileCommand = new ChooseLoadFileCommand(this);
         CheckCommand = new CheckIntegrityCommand(this, eventsStore, hashCalculator, eventsImporter);
@@ -244,7 +247,10 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
                 _errorsViewModel.AddError(nameof(ToDate), (string)App.Current.Resources["Error_To_Before_From"]);
             }
         }
-        catch (Exception) { }
+        catch (Exception)
+        {
+            // TODO = add error message for incorrect date format
+        }
     }
 
     private void ValidateHours(string propertyName, int hours, string resourceKey)

@@ -14,14 +14,14 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class CheckIntegrityCommand : CommandBase
+public class CheckIntegrityCommand : AsyncCommandBase
 {
     private readonly IntegrityViewModel _integrityViewModel;
-    private readonly EventsStore _eventsStore;
+    private readonly IEventsStore _eventsStore;
     private readonly IHashCalculator _hashCalculator;
     private readonly IEventsImporter _eventsImporter;
 
-    public CheckIntegrityCommand(IntegrityViewModel integrityViewModel, EventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter)
+    public CheckIntegrityCommand(IntegrityViewModel integrityViewModel, IEventsStore eventsStore, IHashCalculator hashCalculator, IEventsImporter eventsImporter)
     {
         _integrityViewModel = integrityViewModel;
         _eventsStore = eventsStore;
@@ -35,85 +35,86 @@ public class CheckIntegrityCommand : CommandBase
         return !string.IsNullOrEmpty(_integrityViewModel.FileName) && !_integrityViewModel.HasErrors && base.CanExecute(parameter);
     }
 
-    public override async void Execute(object parameter)
+    // TODO - convert to AsyncCommandBase
+    public override async Task ExecuteAsync(object parameter)
     {
         _integrityViewModel.IsChecking = true;
 
-        await Task.Run(() =>
+        // await Task.Run(() => {});
+        object[] textBlocks = parameter as object[];
+        foreach (TextBlock textBlock in textBlocks.Cast<TextBlock>())
         {
-            object[] textBlocks = parameter as object[];
-            foreach (TextBlock textBlock in textBlocks.Cast<TextBlock>())
+            textBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
             {
-                textBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                textBlock.Visibility = Visibility.Collapsed;
+            }));
+        }
+
+        TextBlock fileOKTextBlock = (TextBlock)textBlocks[0];
+        TextBlock fileUnknownTextBlock = (TextBlock)textBlocks[1];
+        TextBlock fileCompromisedTextBlock = (TextBlock)textBlocks[2];
+        TextBlock eventsOKTextBlock = (TextBlock)textBlocks[3];
+        TextBlock eventsCompromisedTextBlock = (TextBlock)textBlocks[4];
+
+        byte[] calculatedHashValueBytes = _hashCalculator.Calculate(_integrityViewModel.FileName);
+        string calculatedHashHexadecimalValue = Convert.ToHexString(calculatedHashValueBytes);
+
+        if (!string.IsNullOrEmpty(_integrityViewModel.HashValue))
+        {
+            if (AreHashValuesEqual(_integrityViewModel.HashValue, calculatedHashHexadecimalValue))
+            {
+                fileOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                 {
-                    textBlock.Visibility = Visibility.Collapsed;
+                    fileOKTextBlock.Visibility = Visibility.Visible;
                 }));
-            }
-
-            TextBlock fileOKTextBlock = (TextBlock)textBlocks[0];
-            TextBlock fileUnknownTextBlock = (TextBlock)textBlocks[1];
-            TextBlock fileCompromisedTextBlock = (TextBlock)textBlocks[2];
-            TextBlock eventsOKTextBlock = (TextBlock)textBlocks[3];
-            TextBlock eventsCompromisedTextBlock = (TextBlock)textBlocks[4];
-
-            byte[] calculatedHashValueBytes = _hashCalculator.Calculate(_integrityViewModel.FileName);
-            string calculatedHashHexadecimalValue = Convert.ToHexString(calculatedHashValueBytes);
-
-            if (!string.IsNullOrEmpty(_integrityViewModel.HashValue))
-            {
-                if (AreHashValuesEqual(_integrityViewModel.HashValue, calculatedHashHexadecimalValue))
-                {
-                    fileOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                    {
-                        fileOKTextBlock.Visibility = Visibility.Visible;
-                    }));
-                }
-                else
-                {
-                    fileCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                    {
-                        fileCompromisedTextBlock.Visibility = Visibility.Visible;
-                    }));
-                }
             }
             else
             {
-                fileUnknownTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                fileCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                 {
-                    fileUnknownTextBlock.Visibility = Visibility.Visible;
+                    fileCompromisedTextBlock.Visibility = Visibility.Visible;
                 }));
             }
-
-            if (_eventsStore.Events.Any())
+        }
+        else
+        {
+            fileUnknownTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
             {
-                List<EventModel> fileEvents = _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate)
-                    .OrderBy(e => e.Date)
-                    .ThenBy(e => e.Time)
-                    .ThenBy(e => e.Filename)
-                    .ToList();
+                fileUnknownTextBlock.Visibility = Visibility.Visible;
+            }));
+        }
 
-                List<EventModel> storedEvents = _eventsStore.GetStoredEventModels()
-                    .OrderBy(e => e.Date)
-                    .ThenBy(e => e.Time)
-                    .ThenBy(e => e.Filename)
-                    .ToList();
+        if (_eventsStore.Events.Any())
+        {
+            // TODO - convert Import to async
+            List<EventModel> fileEvents = _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate)
+                .OrderBy(e => e.Date)
+                .ThenBy(e => e.Time)
+                .ThenBy(e => e.Filename)
+                .ToList();
 
-                if (AreEventsEqual(fileEvents, storedEvents))
+            // TODO - check if sorting is needed here
+            List<EventModel> storedEvents = _eventsStore.GetStoredEventModels()
+                .OrderBy(e => e.Date)
+                .ThenBy(e => e.Time)
+                .ThenBy(e => e.Filename)
+                .ToList();
+
+            if (AreEventsEqual(fileEvents, storedEvents))
+            {
+                eventsOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                 {
-                    eventsOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                    {
-                        eventsOKTextBlock.Visibility = Visibility.Visible;
-                    }));
-                }
-                else
-                {
-                    eventsCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                    {
-                        eventsCompromisedTextBlock.Visibility = Visibility.Visible;
-                    }));
-                }
+                    eventsOKTextBlock.Visibility = Visibility.Visible;
+                }));
             }
-        });
+            else
+            {
+                eventsCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                {
+                    eventsCompromisedTextBlock.Visibility = Visibility.Visible;
+                }));
+            }
+        }
 
         _integrityViewModel.IsChecking = false;
     }

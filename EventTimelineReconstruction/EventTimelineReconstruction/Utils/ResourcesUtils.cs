@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 
 namespace EventTimelineReconstruction.Utils;
@@ -18,8 +19,8 @@ public class ResourcesUtils : IResourcesUtils
     public void ChangeLanguage(string language)
     {
         ResourceDictionary dictionary = new();
-        string dictionaryPath = $@"/Resources/Localizations/Resource.{language}.xaml";
-        Uri uri = new(dictionaryPath, UriKind.Relative);
+        string dictionaryPath = $@"{Directory.GetCurrentDirectory()}/../../../Resources/Localizations/Resource.{language}.xaml";
+        Uri uri = new(dictionaryPath, UriKind.Absolute);
         dictionary.Source = uri;
 
         App.Current.Resources.MergedDictionaries.Clear();

@@ -5,6 +5,7 @@ using EventTimelineReconstruction.Models;
 using System.Text;
 using System.Collections.ObjectModel;
 using EventTimelineReconstruction.Extensions;
+using System.Globalization;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -209,7 +210,7 @@ public class EventViewModel : ViewModelBase, IComparable
         {
             StringBuilder sb = new();
 
-            for (int i = 0; i < Description.Length - 1; i++) 
+            for (int i = 0; i < Description.Length; i++) 
             {
                 if (Description[i] == ' ' && char.IsUpper(Description[i + 1]))
                 {
@@ -241,7 +242,7 @@ public class EventViewModel : ViewModelBase, IComparable
                 sb.Append(Environment.NewLine);
             }
 
-            sb.Remove(sb.Length - 1, 1);
+            sb.Remove(sb.Length - 2, 2);
 
             return sb.ToString();
         }
@@ -280,7 +281,7 @@ public class EventViewModel : ViewModelBase, IComparable
             _eventModel.Host, 
             _eventModel.Short, 
             _eventModel.Description,
-            _eventModel.Version,
+            _eventModel.Version.ToString(CultureInfo.InvariantCulture),
             _eventModel.Filename,
             _eventModel.INode,
             _eventModel.Notes,
@@ -310,6 +311,11 @@ public class EventViewModel : ViewModelBase, IComparable
 
     public int CompareTo(object obj)
     {
+        if (obj is null)
+        {
+            return 1;
+        }
+
         EventViewModel other = obj as EventViewModel;
 
         int cmp = FullDate.CompareTo(other.FullDate);

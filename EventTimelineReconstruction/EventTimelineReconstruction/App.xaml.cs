@@ -23,6 +23,9 @@ public partial class App : Application
                 services.AddTransient<IFileUtils, FileUtils>();
                 services.AddTransient<IFilteringUtils, FilteringUtils>();
                 services.AddTransient<IResourcesUtils, ResourcesUtils>();
+                services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+
+                services.AddTransient<IErrorsViewModel, ErrorsViewModel>();
 
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
                 services.AddSingleton<IWorkSaver, FileWorkSaver>();
@@ -31,9 +34,9 @@ public partial class App : Application
 
                 services.AddSingleton<ITimeValidator, TimeValidator>();
 
-                services.AddSingleton<EventsStore>();
-                services.AddSingleton<FilteringStore>();
-                services.AddSingleton<ColouringStore>();
+                services.AddSingleton<IEventsStore, EventsStore>();
+                services.AddSingleton<IFilteringStore, FilteringStore>();
+                services.AddSingleton<IColouringStore, ColouringStore>();
 
                 services.AddSingleton<IntegrityViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();

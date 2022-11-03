@@ -4,6 +4,7 @@ using EventTimelineReconstruction.ViewModels;
 using System;
 using System.IO;
 using System.Windows.Media;
+using System.Globalization;
 
 namespace EventTimelineReconstruction.Services;
 
@@ -50,12 +51,14 @@ public class FileWorkLoader : IWorkLoader
             }
             else if (depth < currentDepth)
             {
-                while (depth <= currentDepth) {
+                while (depth <= currentDepth)
+                {
                     stack.Pop();
                     currentDepth--;
                 }
-                
-                EventViewModel current = stack.Pop();
+
+                currentDepth++;
+                EventViewModel current = stack.Peek();
                 current.AddChild(eventViewModel);
             }
 
@@ -90,7 +93,7 @@ public class FileWorkLoader : IWorkLoader
         string host = columns[12];
         string shortDescription = columns[13];
         string description = columns[14];
-        double version = double.Parse(columns[15]);
+        double version = double.Parse(columns[15], CultureInfo.InvariantCulture);
         string filename = columns[16];
         string iNode = columns[17];
         string notes = columns[18];

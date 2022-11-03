@@ -11,10 +11,10 @@ public class LoadWorkCommand : AsyncCommandBase
 {
     private readonly LoadWorkViewModel _loadWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;
-    private readonly EventsStore _store;
+    private readonly IEventsStore _store;
     private readonly IWorkLoader _workLoader;
 
-    public LoadWorkCommand(LoadWorkViewModel loadWorkViewModel, EventTreeViewModel eventTreeViewModel, EventsStore store, IWorkLoader workLoader)
+    public LoadWorkCommand(LoadWorkViewModel loadWorkViewModel, EventTreeViewModel eventTreeViewModel, IEventsStore store, IWorkLoader workLoader)
     {
         _loadWorkViewModel = loadWorkViewModel;
         _eventTreeViewModel = eventTreeViewModel;

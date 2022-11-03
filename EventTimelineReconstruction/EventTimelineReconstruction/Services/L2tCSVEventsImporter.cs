@@ -8,25 +8,40 @@ namespace EventTimelineReconstruction.Services;
 
 public class L2tCSVEventsImporter : IEventsImporter
 {
+    private const int _colCount = 17;
+
     public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
     {
         string[] rows = File.ReadAllLines(path);
-        List<EventModel> events = new(rows.Length);
+        List<EventModel> events = new(rows.Length); // TODO - try using CollectionsMarshal.AsSpan
         object lockObj = new();
 
         Parallel.ForEach(rows, (line, _, lineNumber) =>
         {
             if (lineNumber != 0) {
                 string[] columns = line.Split(',');
-                EventModel eventModel = ConvertRowToModel(columns);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                if (DateTime.Compare(eventDate, fromDate) < 0 || DateTime.Compare(eventDate, toDate) > 0) {
+                if (columns.Length != _colCount)
+                {
                     return;
                 }
 
-                lock (lockObj) {
-                    events.Add(eventModel);
+                try
+                {
+                    EventModel eventModel = ConvertRowToModel(columns);
+                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                    if (DateTime.Compare(eventDate, fromDate) < 0 || DateTime.Compare(eventDate, toDate) > 0) {
+                        return;
+                    }
+
+                    lock (lockObj) {
+                        events.Add(eventModel);
+                    }
+                }
+                catch (Exception)
+                {
+                    return;
                 }
             }
         });
@@ -85,7 +100,7 @@ public class L2tCSVEventsImporter : IEventsImporter
         Dictionary<string, string> extra = new(extraParts.Length);
 
         foreach (string part in extraParts) {
-            string[] pair = part.Split(": ");
+            string[] pair = part.Trim().Split(": ");
             string key = pair[0];
             string value = pair[1];
 

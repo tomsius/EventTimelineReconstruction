@@ -1,5 +1,6 @@
 ﻿using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Stores;
+using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.Validators;
 using System;
 using System.Collections;
@@ -11,9 +12,9 @@ namespace EventTimelineReconstruction.ViewModels;
 public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelectable
 {
     private readonly ITimeValidator _validator;
-    private readonly ErrorsViewModel _errorsViewModel;
+    private readonly IErrorsViewModel _errorsViewModel;
 
-    public ErrorsViewModel ErrorsViewModel
+    public IErrorsViewModel ErrorsViewModel
     {
         get
         {
@@ -43,7 +44,7 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
         }
     }
 
-    private DateTime _fromDate = DateTime.Now.Date;
+    private DateTime _fromDate;
 
     public DateTime FromDate
     {
@@ -60,7 +61,6 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
         }
     }
 
-    // TODO - try making nullable and not show error if null
     private int _fromHours;
 
     public int FromHours
@@ -105,7 +105,7 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
         }
     }
 
-    private DateTime _toDate = DateTime.Now.Date;
+    private DateTime _toDate;
 
     public DateTime ToDate
     {
@@ -194,11 +194,14 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    public ImportViewModel(EventTreeViewModel viewModel, EventsStore store, ITimeValidator validator)
+    public ImportViewModel(EventTreeViewModel viewModel, IEventsStore store, ITimeValidator validator, IErrorsViewModel errorsViewModel, IDateTimeProvider dateTimeProvider)
     {
-        _errorsViewModel = new();
+        _errorsViewModel = errorsViewModel;
         _errorsViewModel.ErrorsChanged += this.ErrorsViewModel_ErrorsChanged;
         _validator = validator;
+
+        _fromDate = dateTimeProvider.Now;
+        _toDate = dateTimeProvider.Now;
 
         ChooseFileCommand = new ChooseLoadFileCommand(this);
         ImportCommand = new ImportEventsCommand(this, store, viewModel);

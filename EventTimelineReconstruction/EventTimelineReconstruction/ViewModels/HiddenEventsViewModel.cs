@@ -12,7 +12,7 @@ namespace EventTimelineReconstruction.ViewModels;
 public class HiddenEventsViewModel : ViewModelBase
 {
     private readonly ObservableCollection<EventViewModel> _hiddenEvents;
-    private readonly EventsStore _eventsStore;
+    private readonly IEventsStore _eventsStore;
 
     public IEnumerable<EventViewModel> HiddenEvents
     {
@@ -40,7 +40,6 @@ public class HiddenEventsViewModel : ViewModelBase
         {
             return _selectedHiddenEvent;
         }
-
         set
         {
             _selectedHiddenEvent = value;
@@ -50,7 +49,7 @@ public class HiddenEventsViewModel : ViewModelBase
 
     public ICommand UnhideCommand { get; }
 
-    public HiddenEventsViewModel(EventsStore eventsStore, EventTreeViewModel eventTreeViewModel)
+    public HiddenEventsViewModel(IEventsStore eventsStore, EventTreeViewModel eventTreeViewModel)
     {
         _hiddenEvents = new();
         _hiddenEventsView = new ListCollectionView(_hiddenEvents);
@@ -63,7 +62,7 @@ public class HiddenEventsViewModel : ViewModelBase
         eventTreeViewModel.PropertyChanged += this.Initialize;
     }
 
-    private void Initialize(object sender, PropertyChangedEventArgs e)
+    public void Initialize(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(EventTreeViewModel.Events))
         {

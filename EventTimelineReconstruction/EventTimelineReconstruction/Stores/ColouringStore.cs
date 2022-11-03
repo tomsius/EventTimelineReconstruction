@@ -3,9 +3,12 @@ using System.Windows.Media;
 
 namespace EventTimelineReconstruction.Stores;
 
-public class ColouringStore
+public class ColouringStore : IColouringStore
 {
-    public Dictionary<string, Brush> ColoursByType { get; }
+    public Dictionary<string, Brush> ColoursByType
+    {
+        get;
+    }
 
     public ColouringStore()
     {

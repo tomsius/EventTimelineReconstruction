@@ -126,6 +126,6 @@ public class EventModel
         hashCode.Add(Format);
         hashCode.Add(Extra);
 
-        return hashCode.GetHashCode();
+        return hashCode.ToHashCode();
     }
 }

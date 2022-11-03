@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class ErrorsViewModel : INotifyDataErrorInfo
+public class ErrorsViewModel : IErrorsViewModel
 {
     private readonly ObservableCollection<string> _errors;
 
@@ -79,9 +80,9 @@ public class ErrorsViewModel : INotifyDataErrorInfo
 
     public void UpdateErrorsLanguage(string oldLanguage)
     {
-        string dictionaryPath = $@"/Resources/Localizations/Resource.{oldLanguage}.xaml";
+        string dictionaryPath = $@"{Directory.GetCurrentDirectory()}/../../../Resources/Localizations/Resource.{oldLanguage}.xaml";
         ResourceDictionary dictionary = new();
-        Uri uri = new(dictionaryPath, UriKind.Relative);
+        Uri uri = new(dictionaryPath, UriKind.Absolute);
         dictionary.Source = uri;
 
         foreach (string item in dictionary.Keys)

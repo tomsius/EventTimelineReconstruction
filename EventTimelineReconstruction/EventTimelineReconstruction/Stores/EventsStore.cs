@@ -8,7 +8,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Stores;
 
-public class EventsStore
+public class EventsStore : IEventsStore
 {
     private List<EventViewModel> _events;
     private readonly IEventsImporter _eventsImporter;
@@ -29,7 +29,8 @@ public class EventsStore
 
     public async Task Import(string path, DateTime fromDate, DateTime toDate)
     {
-        await Task.Run(() => {
+        await Task.Run(() =>
+        {
             List<EventModel> importedEvents = _eventsImporter.Import(path, fromDate, toDate);
 
             _events.Clear();
