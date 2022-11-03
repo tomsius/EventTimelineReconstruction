@@ -10,9 +10,9 @@ public class L2tCSVEventsImporter : IEventsImporter
 {
     private const int _colCount = 17;
 
-    public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
+    public async Task<List<EventModel>> Import(string path, DateTime fromDate, DateTime toDate)
     {
-        string[] rows = File.ReadAllLines(path);
+        string[] rows = await File.ReadAllLinesAsync(path);
         List<EventModel> events = new(rows.Length); // TODO - try using CollectionsMarshal.AsSpan
         object lockObj = new();
 
