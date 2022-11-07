@@ -31,15 +31,21 @@ public class L2tCSVEventsImporter : IEventsImporter
                     EventModel eventModel = ConvertRowToModel(columns);
                     DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                    if (DateTime.Compare(eventDate, fromDate) < 0 || DateTime.Compare(eventDate, toDate) > 0) {
+                    if (DateTime.Compare(eventDate, fromDate) < 0 || DateTime.Compare(eventDate, toDate) > 0)
+                    {
                         return;
                     }
 
-                    lock (lockObj) {
+                    lock (lockObj)
+                    {
                         events.Add(eventModel);
                     }
                 }
                 catch (FormatException)
+                {
+                    return;
+                }
+                catch (IndexOutOfRangeException)
                 {
                     return;
                 }
@@ -100,18 +106,9 @@ public class L2tCSVEventsImporter : IEventsImporter
         Dictionary<string, string> extra = new(extraParts.Length);
 
         foreach (string part in extraParts) {
-            string[] pair = part.Trim().Split(": ");
-            string key = pair[0];
-            string value;
-
-            if (pair.Length != 2)
-            {
-                value = "";
-            }
-            else 
-            {
-                value = pair[1];
-            }
+            string[] pair = part.Split(":");
+            string key = pair[0].Trim();
+            string value = pair[1].Trim();
 
             extra.Add(key, value);
         }
