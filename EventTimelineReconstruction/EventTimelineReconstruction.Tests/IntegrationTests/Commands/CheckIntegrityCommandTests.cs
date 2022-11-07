@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
@@ -13,8 +12,6 @@ namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 [TestClass]
 public class CheckIntegrityCommandTests
 {
-    private static Application _app;
-
     private readonly IErrorsViewModel _errorsViewModel;
     private readonly IHashCalculator _hashCalculator;
     private readonly IEventsImporter _eventsImporter;
@@ -39,11 +36,6 @@ public class CheckIntegrityCommandTests
     [ClassInitialize]
     public static void Initialize(TestContext context)
     {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-
         using StreamWriter integrityStream = File.CreateText(@"Integrity.csv");
         integrityStream.WriteLine(@"date,time,timezone,MACB,source,sourcetype,type,user,host,short,desc,version,filename,inode,notes,format,extra");
         integrityStream.WriteLine(@"01/01/1970,00:00:00,UTC,....,WEBHIST,MSIE Cache File URL record,Expiration Time,-,PC1-5DFC89FB1E0,Location: Visited: PC1@about:Home,Location: Visited: PC1@about:Home Number of hits: 2 Cached file size: 0,2,TSK:/Documents and Settings/PC1/Local Settings/History/History.IE5/index.dat,10536,-,msiecf,cache_directory_index: -2; recovered: False; sha256_hash: 243645de118fab85ae3e5f4f820ee50717ddf478f17f7a678c88aa5d437a7e70");
@@ -55,8 +47,6 @@ public class CheckIntegrityCommandTests
     public static void ClassCleanup()
     {
         File.Delete(@"Integrity.csv");
-
-        _app.Shutdown();
     }
 
     [TestMethod]

@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using EventTimelineReconstruction.Commands;
+﻿using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
@@ -12,8 +11,6 @@ namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 [TestClass]
 public class ImportEventsCommandTests
 {
-    private static Application _app;
-
     private readonly IErrorsViewModel _errorsViewModel;
     private readonly IEventsStore _eventsStore;
     private readonly ImportViewModel _importViewModel;
@@ -38,14 +35,8 @@ public class ImportEventsCommandTests
     }
 
     [ClassInitialize]
-    // TODO - try to move app into assemblyinitialize
     public static void Initialize(TestContext context)
     {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-
         using StreamWriter writeStream = File.CreateText(@"Import.csv");
         writeStream.WriteLine(@"date,time,timezone,MACB,source,sourcetype,type,user,host,short,desc,version,filename,inode,notes,format,extra");
         writeStream.WriteLine(@"01/01/1970,00:00:00,UTC,....,WEBHIST,MSIE Cache File URL record,Expiration Time,-,PC1-5DFC89FB1E0,Location: Visited: PC1@about:Home,Location: Visited: PC1@about:Home Number of hits: 2 Cached file size: 0,2,TSK:/Documents and Settings/PC1/Local Settings/History/History.IE5/index.dat,10536,-,msiecf,cache_directory_index: -2; recovered: False; sha256_hash: 243645de118fab85ae3e5f4f820ee50717ddf478f17f7a678c88aa5d437a7e70");
@@ -59,8 +50,6 @@ public class ImportEventsCommandTests
     public static void ClassCleanup()
     {
         File.Delete(@"Import.csv");
-
-        _app.Shutdown();
     }
 
     [TestMethod]
@@ -127,7 +116,7 @@ public class ImportEventsCommandTests
     //[TestMethod]
     //public async Task Execute_ShouldImportEventsWithinDateRange_WhneCommandIsExecuted()
     //{
-    //    Arrange
+    //    //Arrange
     //    List<EventViewModel> expected = new()
     //    {
     //        new EventViewModel(new EventModel(
@@ -170,12 +159,12 @@ public class ImportEventsCommandTests
     //    _importViewModel.FileName = @"Import.csv";
     //    _importViewModel.FromDate = new DateTime(2000, 1, 1);
     //    _importViewModel.ToDate = DateTime.MaxValue;
-
-    //    Act
-    //   await _command.ExecuteAsync(null);
+        
+    //    //Act
+    //    await _command.ExecuteAsync(null);
     //    List<EventViewModel> actual = _eventTreeViewModel.Events.ToList();
 
-    //    Assert
+    //    //Assert
     //    Assert.AreEqual(expected.Count, _eventsStore.Events.Count);
     //    Assert.AreEqual(expected.Count, actual.Count);
 

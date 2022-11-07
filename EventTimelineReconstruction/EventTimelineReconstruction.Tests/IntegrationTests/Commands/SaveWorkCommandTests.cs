@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
@@ -13,8 +11,6 @@ namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 [TestClass]
 public class SaveWorkCommandTests
 {
-    private static Application _app;
-
     private readonly SaveWorkViewModel _saveWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;
     private readonly IWorkSaver _workSaver;
@@ -33,21 +29,10 @@ public class SaveWorkCommandTests
         _command = new(_saveWorkViewModel, _eventTreeViewModel, _workSaver);
     }
 
-    [ClassInitialize]
-    public static void Initialize(TestContext context)
-    {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-    }
-
     [ClassCleanup]
     public static void ClassCleanup()
     {
         File.Delete(@"Save.csv");
-
-        _app.Shutdown();
     }
 
     [TestMethod]

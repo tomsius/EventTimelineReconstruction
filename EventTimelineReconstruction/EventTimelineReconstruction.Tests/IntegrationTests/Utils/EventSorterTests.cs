@@ -14,13 +14,13 @@ public class EventSorterTests
         _eventSorter = new();
     }
 
-    private static IEnumerable<object[]> DifferentObjects
+    private static IEnumerable<object?[]> DifferentObjects
     {
         get
         {
             return new[]
             {
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -66,7 +66,7 @@ public class EventSorterTests
                     ),
                     1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -112,7 +112,7 @@ public class EventSorterTests
                     ),
                     -1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -158,7 +158,7 @@ public class EventSorterTests
                     ),
                     0
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -204,7 +204,7 @@ public class EventSorterTests
                     ),
                     -1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -250,7 +250,7 @@ public class EventSorterTests
                     ),
                     1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(

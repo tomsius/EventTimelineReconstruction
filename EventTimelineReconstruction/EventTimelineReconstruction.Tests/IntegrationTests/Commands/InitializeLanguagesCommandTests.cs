@@ -12,8 +12,7 @@ namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 [TestClass]
 public class InitializeLanguagesCommandTests
 {
-    private static Application _app;
-    private static string _directoryPath = @$"{Directory.GetCurrentDirectory()}/../../../Resources";
+    private readonly static string _directoryPath = @$"{Directory.GetCurrentDirectory()}/../../../Resources";
 
     private readonly IFileUtils _fileUtils;
     private readonly IResourcesUtils _resourcesUtils;
@@ -53,11 +52,6 @@ public class InitializeLanguagesCommandTests
     [ClassInitialize]
     public static void Initialize(TestContext context)
     {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-
         Directory.CreateDirectory($@"{_directoryPath}/Localizations");
 
         using StreamWriter enStream = File.CreateText($@"{_directoryPath}/Localizations/Resource.en.xaml");
@@ -77,8 +71,6 @@ public class InitializeLanguagesCommandTests
     public static void ClassCleanup()
     {
         Directory.Delete(_directoryPath, true);
-
-        _app.Shutdown();
     }
 
     [STATestMethod]

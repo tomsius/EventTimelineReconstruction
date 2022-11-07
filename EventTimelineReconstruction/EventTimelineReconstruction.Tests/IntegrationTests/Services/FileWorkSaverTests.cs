@@ -62,7 +62,7 @@ public class FileWorkSaverTests
                     new Dictionary<string, string>() { { "Key21", "Value21" }, { "Key22", "Value22" } }
                 ))
         };
-        EventViewModel child = new EventViewModel(
+        EventViewModel child = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
                     new TimeOnly(17, 53),
