@@ -65,7 +65,6 @@ public class DragDropUtils : IDragDropUtils
             .Append('?');
 
         //Asking user wether he want to drop the dragged TreeViewItem here or not
-        // TODO - custom message box
         if (MessageBox.Show(message.ToString(), confirmation, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
         {
             //adding dragged TreeViewItem in target TreeViewItem
