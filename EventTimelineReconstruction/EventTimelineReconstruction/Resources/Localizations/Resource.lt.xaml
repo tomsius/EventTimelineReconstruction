@@ -141,4 +141,6 @@
     <system:String x:Key="Error_To_Hours">Valandos „Iki“ datoje turi būti iš intervalo [0; 24).</system:String>
     <system:String x:Key="Error_To_Minutes">Minutės „Iki“ datoje turi būti iš intervalo [0; 60).</system:String>
     <system:String x:Key="Error_Filename">Nepasirinktas joks failas.</system:String>
+    <system:String x:Key="FileNotFound_Caption">Failas nerastas</system:String>
+    <system:String x:Key="FileNotFound_Message">Klaida bandant nuskaityti failą:</system:String>
 </ResourceDictionary>
