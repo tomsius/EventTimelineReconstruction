@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Windows.Input;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Tests.UnitTests.ViewModels;
