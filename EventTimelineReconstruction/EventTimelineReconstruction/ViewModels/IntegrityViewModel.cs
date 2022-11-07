@@ -8,7 +8,6 @@ using EventTimelineReconstruction.Validators;
 using System.Collections;
 using EventTimelineReconstruction.Utils;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace EventTimelineReconstruction.ViewModels;
 
@@ -329,10 +328,7 @@ public class IntegrityViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSele
                 _errorsViewModel.AddError(nameof(ToDate), (string)App.Current.Resources["Error_To_Before_From"]);
             }
         }
-        catch (Exception)
-        {
-            // TODO - add error message for incorrect date format
-        }
+        catch (ArgumentOutOfRangeException){}
     }
 
     private void ValidateHours(string propertyName, int hours, string resourceKey)
