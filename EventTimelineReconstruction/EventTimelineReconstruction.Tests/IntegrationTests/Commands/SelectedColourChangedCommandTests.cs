@@ -37,7 +37,7 @@ public class SelectedColourChangedCommandTests
         Color expectedColour = Colors.Green;
         DockPanel dockPanel = new();
         TextBlock textBlock = new() { Text = expectedType };
-        ColorPicker colorPicker = new ColorPicker() { SelectedColor = expectedColour };
+        ColorPicker colorPicker = new() { SelectedColor = expectedColour };
         dockPanel.Children.Add(textBlock);
         dockPanel.Children.Add(colorPicker);
         RoutedEventArgs e = new(ColorPicker.SelectedColorChangedEvent, colorPicker);
@@ -59,7 +59,7 @@ public class SelectedColourChangedCommandTests
         Color expectedColour = Colors.Black;
         DockPanel dockPanel = new();
         TextBlock textBlock = new() { Text = expectedType };
-        ColorPicker colorPicker = new ColorPicker() { SelectedColor = null };
+        ColorPicker colorPicker = new() { SelectedColor = null };
         dockPanel.Children.Add(textBlock);
         dockPanel.Children.Add(colorPicker);
         RoutedEventArgs e = new(ColorPicker.SelectedColorChangedEvent, colorPicker);

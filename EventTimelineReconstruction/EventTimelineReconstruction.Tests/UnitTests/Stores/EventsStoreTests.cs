@@ -220,8 +220,7 @@ public class EventsStoreTests
             "Notes5",
             "Format1",
             new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } });
-        EventViewModel childEventViewModel = new(eventModel);
-        childEventViewModel.IsVisible = false;
+        EventViewModel childEventViewModel = new(eventModel) { IsVisible = false };
 
         eventViewModels[^1].AddChild(childEventViewModel);
 
