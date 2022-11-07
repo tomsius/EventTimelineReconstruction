@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Windows;
 using EventTimelineReconstruction.Commands;
 using System.Windows.Input;
 using EventTimelineReconstruction.Stores;
@@ -13,8 +12,6 @@ namespace EventTimelineReconstruction.Tests.UnitTests.ViewModels;
 [TestClass]
 public class FilterViewModelTests
 {
-    private static Application _app;
-
     private readonly Mock<IFilteringStore> _iFilteringStoreMock;
     private readonly Mock<EventTreeViewModel> _eventTreeViewModel;
     private readonly Mock<ITimeValidator> _iTimeValidatorMock;
@@ -80,21 +77,6 @@ public class FilterViewModelTests
                 _hasKeywordEventFired = true;
                 break;
         }
-    }
-
-    [ClassInitialize]
-    public static void Initialize(TestContext context)
-    {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-    }
-
-    [ClassCleanup]
-    public static void ClassCleanup()
-    {
-        _app.Shutdown();
     }
 
     [TestInitialize]

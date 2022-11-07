@@ -14,8 +14,6 @@ namespace EventTimelineReconstruction.Tests.UnitTests.ViewModels;
 [TestClass]
 public class IntegrityViewModelTests
 {
-    private static Application _app;
-
     private readonly Mock<IEventsStore> _iEventsStoreMock;
     private readonly Mock<IHashCalculator> _iHashCalculatorMock;
     private readonly Mock<IEventsImporter> _iEventsImporterMock;
@@ -98,21 +96,6 @@ public class IntegrityViewModelTests
                 _hasEventsCompromisedVisibilityEventFired = true;
                 break;
         }
-    }
-
-    [ClassInitialize]
-    public static void Initialize(TestContext context)
-    {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-    }
-
-    [ClassCleanup]
-    public static void ClassCleanup()
-    {
-        _app.Shutdown();
     }
 
     [TestInitialize]

@@ -1,20 +1,14 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using EventTimelineReconstruction.Commands;
-using EventTimelineReconstruction.Models;
+﻿using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EventTimelineReconstruction.Tests.IntegrationTests.Commands;
 
 [TestClass]
 public class LoadWorkCommandTests
 {
-    private static Application _app;
-
     private readonly LoadWorkViewModel _loadWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;
     private readonly IEventsStore _eventsStore;
@@ -39,11 +33,6 @@ public class LoadWorkCommandTests
     [ClassInitialize]
     public static void Initialize(TestContext context)
     {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-
         using StreamWriter writeStream = File.CreateText(@"Load.csv");
         writeStream.WriteLine(@"2022,5,28,8,33,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,....,WEBHIST,MSIE Cache File URL record,Expiration Time,-,PC1-5DFC89FB1E0,Location: Visited: PC1@http://www.google.com,Location: Visited: PC1@http://www.google.com Number of hits: 1 Cached file size: 0,2,TSK:/Documents and Settings/PC1/Local Settings/History/History.IE5/index.dat,10536,-,msiecf,cache_directory_index:-2; recovered:False; sha256_hash:243645de118fab85ae3e5f4f820ee50717ddf478f17f7a678c88aa5d437a7e70,True,#FFFF0000");
         writeStream.WriteLine(@"2022,5,28,8,33,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,....,WEBHIST,MSIE Cache File URL record,Expiration Time,-,PC1-5DFC89FB1E0,Location: :2022050220220503: PC1@http://www.google.com,Location: :2022050220220503: PC1@http://www.google.com Number of hits: 1 Cached file size: 0,2,TSK:/Documents and Settings/PC1/Local Settings/History/History.IE5/MSHist012022050220220503/index.dat,10762,-,msiecf,cache_directory_index:-2; recovered:False; sha256_hash:228b35c5c30b9314ab588e2d8a147c24c93c53fd2ae392808456e850d7e83ae3,True,#FFFF0000");
@@ -54,8 +43,6 @@ public class LoadWorkCommandTests
     public static void ClassCleanup()
     {
         File.Delete(@"Load.csv");
-
-        _app.Shutdown();
     }
 
     [TestMethod]

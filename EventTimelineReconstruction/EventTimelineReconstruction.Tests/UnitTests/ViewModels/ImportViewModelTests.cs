@@ -6,15 +6,12 @@ using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.Validators;
 using EventTimelineReconstruction.ViewModels;
 using Moq;
-using System.Windows;
 
 namespace EventTimelineReconstruction.Tests.UnitTests.ViewModels;
 
 [TestClass]
 public class ImportViewModelTests
 {
-    private static Application _app;
-
     private readonly Mock<EventTreeViewModel> _eventTreeViewModel;
     private readonly Mock<IEventsStore> _iEventsStoreMock;
     private readonly Mock<ITimeValidator> _iTimeValidatorMock;
@@ -75,21 +72,6 @@ public class ImportViewModelTests
                 _hasIsImportingEventFired = true;
                 break;
         }
-    }
-
-    [ClassInitialize]
-    public static void Initialize(TestContext context)
-    {
-        if (Application.Current == null)
-        {
-            _app = new Application();
-        }
-    }
-
-    [ClassCleanup]
-    public static void ClassCleanup()
-    {
-        _app.Shutdown();
     }
 
     [TestInitialize]
