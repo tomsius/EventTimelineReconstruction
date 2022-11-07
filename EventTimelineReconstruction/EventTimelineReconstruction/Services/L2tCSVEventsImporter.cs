@@ -39,7 +39,7 @@ public class L2tCSVEventsImporter : IEventsImporter
                         events.Add(eventModel);
                     }
                 }
-                catch (Exception)
+                catch (FormatException)
                 {
                     return;
                 }
@@ -102,7 +102,16 @@ public class L2tCSVEventsImporter : IEventsImporter
         foreach (string part in extraParts) {
             string[] pair = part.Trim().Split(": ");
             string key = pair[0];
-            string value = pair[1];
+            string value;
+
+            if (pair.Length != 2)
+            {
+                value = "";
+            }
+            else 
+            {
+                value = pair[1];
+            }
 
             extra.Add(key, value);
         }
