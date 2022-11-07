@@ -1,5 +1,4 @@
-﻿using System.Text;
-using EventTimelineReconstruction.Models;
+﻿using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Tests.UnitTests.ViewModels;
@@ -7,13 +6,13 @@ namespace EventTimelineReconstruction.Tests.UnitTests.ViewModels;
 [TestClass]
 public class EventViewModelTests
 {
-    private static IEnumerable<object[]> DifferentObjects
+    private static IEnumerable<object?[]> DifferentObjects
     {
         get
         {
             return new[]
             {
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -59,7 +58,7 @@ public class EventViewModelTests
                     ),
                     1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -105,7 +104,7 @@ public class EventViewModelTests
                     ),
                     -1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -151,7 +150,7 @@ public class EventViewModelTests
                     ),
                     0
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -197,7 +196,7 @@ public class EventViewModelTests
                     ),
                     -1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
@@ -243,7 +242,7 @@ public class EventViewModelTests
                     ),
                     1
                 },
-                new object[]
+                new object?[]
                 {
                     new EventViewModel(
                         new EventModel(
