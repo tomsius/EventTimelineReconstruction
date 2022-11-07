@@ -161,7 +161,7 @@ public class FileWorkLoaderTests
         FileWorkLoader loader = new();
 
         // Act
-        List<EventViewModel> actual = loader.LoadWork(_file);
+        List<EventViewModel> actual = loader.LoadWork(_file).Result;
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);

@@ -45,6 +45,11 @@ public class IntegrityViewModelTests
     private bool _hasToMinutesEventFired;
     private bool _hasHashValueEventFired;
     private bool _hasIsCheckingEventFired;
+    private bool _hasFileOKVisibilityEventFired;
+    private bool _hasFileUnknownVisibilityEventFired;
+    private bool _hasFileCompromisedVisibilityEventFired;
+    private bool _hasEventsOKVisibilityEventFired;
+    private bool _hasEventsCompromisedVisibilityEventFired;
 
     private void ChangeEventFlag(object? sender, PropertyChangedEventArgs e)
     {
@@ -76,6 +81,21 @@ public class IntegrityViewModelTests
                 break;
             case nameof(IntegrityViewModel.IsChecking):
                 _hasIsCheckingEventFired = true;
+                break;
+            case nameof(IntegrityViewModel.FileOKVisibility):
+                _hasFileOKVisibilityEventFired = true;
+                break;
+            case nameof(IntegrityViewModel.FileUnknownVisibility):
+                _hasFileUnknownVisibilityEventFired = true;
+                break;
+            case nameof(IntegrityViewModel.FileCompromisedVisibility):
+                _hasFileCompromisedVisibilityEventFired = true;
+                break;
+            case nameof(IntegrityViewModel.EventsOKVisibility):
+                _hasEventsOKVisibilityEventFired = true;
+                break;
+            case nameof(IntegrityViewModel.EventsCompromisedVisibility):
+                _hasEventsCompromisedVisibilityEventFired = true;
                 break;
         }
     }
@@ -853,5 +873,145 @@ public class IntegrityViewModelTests
 
         // Assert
         Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public void FileOKVisibility_ShouldReturnCollapsedVisibility_WhenObjectIsInitialized()
+    {
+        // Arrange
+        Visibility expected = Visibility.Collapsed;
+
+        // Act
+        Visibility actual = _integrityViewModel.FileOKVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [DataTestMethod]
+    [DataRow(Visibility.Collapsed)]
+    [DataRow(Visibility.Hidden)]
+    [DataRow(Visibility.Visible)]
+    public void FileOKVisibility_ShouldReturnSetVisibility_WhenPropertyIsCalled(Visibility expected)
+    {
+        // Act
+        _integrityViewModel.FileOKVisibility = expected;
+        Visibility actual = _integrityViewModel.FileOKVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+        Assert.IsTrue(_hasFileOKVisibilityEventFired);
+    }
+
+    [TestMethod]
+    public void FileUnknownVisibility_ShouldReturnCollapsedVisibility_WhenObjectIsInitialized()
+    {
+        // Arrange
+        Visibility expected = Visibility.Collapsed;
+
+        // Act
+        Visibility actual = _integrityViewModel.FileUnknownVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [DataTestMethod]
+    [DataRow(Visibility.Collapsed)]
+    [DataRow(Visibility.Hidden)]
+    [DataRow(Visibility.Visible)]
+    public void FileUnknownVisibility_ShouldReturnSetVisibility_WhenPropertyIsCalled(Visibility expected)
+    {
+        // Act
+        _integrityViewModel.FileUnknownVisibility = expected;
+        Visibility actual = _integrityViewModel.FileUnknownVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+        Assert.IsTrue(_hasFileUnknownVisibilityEventFired);
+    }
+
+    [TestMethod]
+    public void FileCompromisedVisibility_ShouldReturnCollapsedVisibility_WhenObjectIsInitialized()
+    {
+        // Arrange
+        Visibility expected = Visibility.Collapsed;
+
+        // Act
+        Visibility actual = _integrityViewModel.FileCompromisedVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [DataTestMethod]
+    [DataRow(Visibility.Collapsed)]
+    [DataRow(Visibility.Hidden)]
+    [DataRow(Visibility.Visible)]
+    public void FileCompromisedVisibility_ShouldReturnSetVisibility_WhenPropertyIsCalled(Visibility expected)
+    {
+        // Act
+        _integrityViewModel.FileCompromisedVisibility = expected;
+        Visibility actual = _integrityViewModel.FileCompromisedVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+        Assert.IsTrue(_hasFileCompromisedVisibilityEventFired);
+    }
+
+    [TestMethod]
+    public void EventsOKVisibility_ShouldReturnCollapsedVisibility_WhenObjectIsInitialized()
+    {
+        // Arrange
+        Visibility expected = Visibility.Collapsed;
+
+        // Act
+        Visibility actual = _integrityViewModel.EventsOKVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [DataTestMethod]
+    [DataRow(Visibility.Collapsed)]
+    [DataRow(Visibility.Hidden)]
+    [DataRow(Visibility.Visible)]
+    public void EventsOKVisibility_ShouldReturnSetVisibility_WhenPropertyIsCalled(Visibility expected)
+    {
+        // Act
+        _integrityViewModel.EventsOKVisibility = expected;
+        Visibility actual = _integrityViewModel.EventsOKVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+        Assert.IsTrue(_hasEventsOKVisibilityEventFired);
+    }
+
+    [TestMethod]
+    public void EventsCompromisedVisibility_ShouldReturnCollapsedVisibility_WhenObjectIsInitialized()
+    {
+        // Arrange
+        Visibility expected = Visibility.Collapsed;
+
+        // Act
+        Visibility actual = _integrityViewModel.EventsCompromisedVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [DataTestMethod]
+    [DataRow(Visibility.Collapsed)]
+    [DataRow(Visibility.Hidden)]
+    [DataRow(Visibility.Visible)]
+    public void EventsCompromisedVisibility_ShouldReturnSetVisibility_WhenPropertyIsCalled(Visibility expected)
+    {
+        // Act
+        _integrityViewModel.EventsCompromisedVisibility = expected;
+        Visibility actual = _integrityViewModel.EventsCompromisedVisibility;
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+        Assert.IsTrue(_hasEventsCompromisedVisibilityEventFired);
     }
 }

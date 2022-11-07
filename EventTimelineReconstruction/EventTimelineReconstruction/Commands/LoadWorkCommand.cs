@@ -31,13 +31,9 @@ public class LoadWorkCommand : AsyncCommandBase
     public override async Task ExecuteAsync(object parameter)
     {
         _loadWorkViewModel.IsLoading = true;
-        List<EventViewModel> loadedEvents = new();
 
-        await Task.Run(() => {
-            loadedEvents = _workLoader.LoadWork(_loadWorkViewModel.FileName);
-            _store.LoadEvents(loadedEvents);
-        });
-
+        List<EventViewModel> loadedEvents = await _workLoader.LoadWork(_loadWorkViewModel.FileName);
+        _store.LoadEvents(loadedEvents);
         _eventTreeViewModel.LoadEvents(loadedEvents);
 
         _loadWorkViewModel.IsLoading = false;

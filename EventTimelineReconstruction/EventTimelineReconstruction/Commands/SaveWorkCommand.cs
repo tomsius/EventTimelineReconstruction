@@ -28,7 +28,7 @@ public class SaveWorkCommand : AsyncCommandBase
     {
         _saveWorkViewModel.IsSaving = true;
 
-        await Task.Run(() => _workSaver.SaveWork(_saveWorkViewModel.FileName, _eventTreeViewModel.Events));
+        await _workSaver.SaveWork(_saveWorkViewModel.FileName, _eventTreeViewModel.Events);
 
         _saveWorkViewModel.IsSaving = false;
     }

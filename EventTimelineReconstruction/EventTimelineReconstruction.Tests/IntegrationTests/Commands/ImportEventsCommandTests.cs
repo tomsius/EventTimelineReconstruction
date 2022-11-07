@@ -38,6 +38,7 @@ public class ImportEventsCommandTests
     }
 
     [ClassInitialize]
+    // TODO - try to move app into assemblyinitialize
     public static void Initialize(TestContext context)
     {
         if (Application.Current == null)
@@ -126,7 +127,7 @@ public class ImportEventsCommandTests
     //[TestMethod]
     //public async Task Execute_ShouldImportEventsWithinDateRange_WhneCommandIsExecuted()
     //{
-    //    // Arrange
+    //    Arrange
     //    List<EventViewModel> expected = new()
     //    {
     //        new EventViewModel(new EventModel(
@@ -170,11 +171,11 @@ public class ImportEventsCommandTests
     //    _importViewModel.FromDate = new DateTime(2000, 1, 1);
     //    _importViewModel.ToDate = DateTime.MaxValue;
 
-    //    // Act
-    //    await _command.ExecuteAsync(null);
+    //    Act
+    //   await _command.ExecuteAsync(null);
     //    List<EventViewModel> actual = _eventTreeViewModel.Events.ToList();
 
-    //    // Assert
+    //    Assert
     //    Assert.AreEqual(expected.Count, _eventsStore.Events.Count);
     //    Assert.AreEqual(expected.Count, actual.Count);
 

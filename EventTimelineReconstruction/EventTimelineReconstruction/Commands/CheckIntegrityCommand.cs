@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,65 +34,41 @@ public class CheckIntegrityCommand : AsyncCommandBase
         return !string.IsNullOrEmpty(_integrityViewModel.FileName) && !_integrityViewModel.HasErrors && base.CanExecute(parameter);
     }
 
-    // TODO - convert to AsyncCommandBase
     public override async Task ExecuteAsync(object parameter)
     {
         _integrityViewModel.IsChecking = true;
 
-        // await Task.Run(() => {});
-        object[] textBlocks = parameter as object[];
-        foreach (TextBlock textBlock in textBlocks.Cast<TextBlock>())
-        {
-            textBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-            {
-                textBlock.Visibility = Visibility.Collapsed;
-            }));
-        }
+        _integrityViewModel.FileOKVisibility = Visibility.Collapsed;
+        _integrityViewModel.FileUnknownVisibility = Visibility.Collapsed;
+        _integrityViewModel.FileCompromisedVisibility = Visibility.Collapsed;
+        _integrityViewModel.EventsOKVisibility = Visibility.Collapsed;
+        _integrityViewModel.EventsCompromisedVisibility = Visibility.Collapsed;
 
-        TextBlock fileOKTextBlock = (TextBlock)textBlocks[0];
-        TextBlock fileUnknownTextBlock = (TextBlock)textBlocks[1];
-        TextBlock fileCompromisedTextBlock = (TextBlock)textBlocks[2];
-        TextBlock eventsOKTextBlock = (TextBlock)textBlocks[3];
-        TextBlock eventsCompromisedTextBlock = (TextBlock)textBlocks[4];
-
-        byte[] calculatedHashValueBytes = _hashCalculator.Calculate(_integrityViewModel.FileName);
+        byte[] calculatedHashValueBytes = await _hashCalculator.Calculate(_integrityViewModel.FileName);
         string calculatedHashHexadecimalValue = Convert.ToHexString(calculatedHashValueBytes);
 
         if (!string.IsNullOrEmpty(_integrityViewModel.HashValue))
         {
             if (AreHashValuesEqual(_integrityViewModel.HashValue, calculatedHashHexadecimalValue))
             {
-                fileOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                {
-                    fileOKTextBlock.Visibility = Visibility.Visible;
-                }));
+                _integrityViewModel.FileOKVisibility = Visibility.Visible;
             }
             else
             {
-                fileCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                {
-                    fileCompromisedTextBlock.Visibility = Visibility.Visible;
-                }));
+                _integrityViewModel.FileCompromisedVisibility = Visibility.Visible;
             }
         }
         else
         {
-            fileUnknownTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-            {
-                fileUnknownTextBlock.Visibility = Visibility.Visible;
-            }));
+            _integrityViewModel.FileUnknownVisibility = Visibility.Visible;
         }
 
         if (_eventsStore.Events.Any())
         {
-            // TODO - convert Import to async
-            List<EventModel> fileEvents = _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate)
-                .OrderBy(e => e.Date)
-                .ThenBy(e => e.Time)
-                .ThenBy(e => e.Filename)
-                .ToList();
+            List<EventModel> fileEvents = await _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate);
+            fileEvents = fileEvents.OrderBy(e => e.Date).ThenBy(e => e.Time).ThenBy(e => e.Filename).ToList();
 
-            // TODO - check if sorting is needed here
+            // TODO - doesnt work if more than 1 level
             List<EventModel> storedEvents = _eventsStore.GetStoredEventModels()
                 .OrderBy(e => e.Date)
                 .ThenBy(e => e.Time)
@@ -102,17 +77,11 @@ public class CheckIntegrityCommand : AsyncCommandBase
 
             if (AreEventsEqual(fileEvents, storedEvents))
             {
-                eventsOKTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                {
-                    eventsOKTextBlock.Visibility = Visibility.Visible;
-                }));
+                _integrityViewModel.EventsOKVisibility = Visibility.Visible;
             }
             else
             {
-                eventsCompromisedTextBlock.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
-                {
-                    eventsCompromisedTextBlock.Visibility = Visibility.Visible;
-                }));
+                _integrityViewModel.EventsCompromisedVisibility = Visibility.Visible;
             }
         }
 

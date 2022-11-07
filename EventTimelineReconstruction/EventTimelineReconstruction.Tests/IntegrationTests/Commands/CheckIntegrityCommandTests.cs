@@ -124,112 +124,60 @@ public class CheckIntegrityCommandTests
     public async Task Execute_ShouldShowOnlyFileOKTextBlock_WhenHashValuesAreTheSameAndThereAreNoEventsInStore()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = "3868294A8EB4A3BB5584B9628960DD362013F1F8F6C6F837691E4EABF4558AFF";
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Visible, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowOnlyFileUnknownTextBlock_WhenHashValueIsNotGivenAndThereAreNoEventsInStore()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = string.Empty;
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Collapsed, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowOnlyFileCompromisedTextBlock_WhenHashValuesAreDifferentAndThereAreNoEventsInStore()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = "ABC";
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Collapsed, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowFileOKAndEventsOKTextBlocks_WhenHashValuesAndEventsInStoreAreTheSame()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = "3868294A8EB4A3BB5584B9628960DD362013F1F8F6C6F837691E4EABF4558AFF";
         _integrityViewModel.FromDate = new DateTime(1970, 1, 1);
@@ -248,33 +196,20 @@ public class CheckIntegrityCommandTests
         _eventsStore.LoadEvents(events);
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Visible, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowFileUnknownAndEventsOKTextBlocks_WhenHashValueIsNotGivenAndEventsInStoreAreTheSame()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = string.Empty;
         _integrityViewModel.FromDate = new DateTime(1970, 1, 1);
@@ -293,33 +228,20 @@ public class CheckIntegrityCommandTests
         _eventsStore.LoadEvents(events);
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Collapsed, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowFileCompromisedAndEventsOKTextBlocks_WhenHashValuesAreDifferentAndEventsInStoreAreTheSame()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = "ABC";
         _integrityViewModel.FromDate = new DateTime(1970, 1, 1);
@@ -338,33 +260,20 @@ public class CheckIntegrityCommandTests
         _eventsStore.LoadEvents(events);
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Collapsed, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowFileOKAndEventsCompromisedTextBlocks_WhenHashValuesAreTheSameAndEventsInStoreAreDifferent()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = "3868294A8EB4A3BB5584B9628960DD362013F1F8F6C6F837691E4EABF4558AFF";
         _integrityViewModel.FromDate = new DateTime(1970, 1, 1);
@@ -382,33 +291,20 @@ public class CheckIntegrityCommandTests
         _eventsStore.LoadEvents(events);
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Visible, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowFileUnknownAndEventsCompromisedTextBlocks_WhenHashValueIsNotGivenAndEventsInStoreAreDifferent()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = string.Empty;
         _integrityViewModel.FromDate = new DateTime(1970, 1, 1);
@@ -426,33 +322,20 @@ public class CheckIntegrityCommandTests
         _eventsStore.LoadEvents(events);
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Collapsed, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.EventsCompromisedVisibility);
     }
 
     [STATestMethod]
     public async Task Execute_ShouldShowFileCompromisedAndEventsCompromisedTextBlocks_WhenHashValuesAndEventsInStoreAreDifferent()
     {
         // Arrange
-        TextBlock fileOKTextBlock = new();
-        TextBlock fileUnknownTextBlock = new();
-        TextBlock fileCompromisedTextBlock = new();
-        TextBlock eventsOKTextBlock = new();
-        TextBlock eventsCompromisedTextBlock = new();
-        object parameter = new[]
-        {
-            (object)fileOKTextBlock,
-            (object)fileUnknownTextBlock,
-            (object)fileCompromisedTextBlock,
-            (object)eventsOKTextBlock,
-            (object)eventsCompromisedTextBlock
-        };
         _integrityViewModel.FileName = @"Integrity.csv";
         _integrityViewModel.HashValue = "ABC";
         _integrityViewModel.FromDate = new DateTime(1970, 1, 1);
@@ -471,13 +354,13 @@ public class CheckIntegrityCommandTests
         _eventsStore.LoadEvents(events);
 
         // Act
-        await _command.ExecuteAsync(parameter);
+        await _command.ExecuteAsync(null);
 
         // Assert
-        Assert.AreEqual(Visibility.Collapsed, fileOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, fileUnknownTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, fileCompromisedTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Collapsed, eventsOKTextBlock.Visibility);
-        Assert.AreEqual(Visibility.Visible, eventsCompromisedTextBlock.Visibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileOKVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.FileUnknownVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.FileCompromisedVisibility);
+        Assert.AreEqual(Visibility.Collapsed, _integrityViewModel.EventsOKVisibility);
+        Assert.AreEqual(Visibility.Visible, _integrityViewModel.EventsCompromisedVisibility);
     }
 }
