@@ -143,4 +143,6 @@
     <system:String x:Key="Error_Filename">File is not selected.</system:String>
     <system:String x:Key="FileNotFound_Caption">File not found</system:String>
     <system:String x:Key="FileNotFound_Message">Error while trying to read file:</system:String>
+    <system:String x:Key="LoadingError_Caption">Work cannot be imported</system:String>
+    <system:String x:Key="LoadingError_Message">Error while trying to import work. Make sure correct file is selected.</system:String>
 </ResourceDictionary>

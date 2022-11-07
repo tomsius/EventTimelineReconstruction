@@ -143,4 +143,6 @@
     <system:String x:Key="Error_Filename">Nepasirinktas joks failas.</system:String>
     <system:String x:Key="FileNotFound_Caption">Failas nerastas</system:String>
     <system:String x:Key="FileNotFound_Message">Klaida bandant nuskaityti failą:</system:String>
+    <system:String x:Key="LoadingError_Caption">Darbas negali būti įkeltas</system:String>
+    <system:String x:Key="LoadingError_Message">Klaida bandant įkelti darbą. Įsitikinkite, kad nurodėte teisingą failą.</system:String>
 </ResourceDictionary>
