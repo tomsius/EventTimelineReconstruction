@@ -78,7 +78,6 @@ public class CheckIntegrityCommand : AsyncCommandBase
             List<EventModel> fileEvents = await _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate);
             fileEvents = fileEvents.OrderBy(e => e.Date).ThenBy(e => e.Time).ThenBy(e => e.Filename).ToList();
 
-            // TODO - doesnt work if more than 1 level
             List<EventModel> storedEvents = _eventsStore.GetStoredEventModels()
                 .OrderBy(e => e.Date)
                 .ThenBy(e => e.Time)
