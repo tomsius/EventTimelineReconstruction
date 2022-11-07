@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,6 +37,15 @@ public class CheckIntegrityCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
+        if (!File.Exists(_integrityViewModel.FileName))
+        {
+            string message = $"{(string)App.Current.Resources["FileNotFound_Message"]} {_integrityViewModel.FileName}";
+            string caption = (string)App.Current.Resources["FileNotFound_Caption"];
+
+            MessageBox.Show(message, caption, MessageBoxButton.OK);
+            return;
+        }
+
         _integrityViewModel.IsChecking = true;
 
         _integrityViewModel.FileOKVisibility = Visibility.Collapsed;

@@ -1,7 +1,9 @@
 ﻿using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EventTimelineReconstruction.Commands;
 
@@ -26,6 +28,15 @@ public class ImportEventsCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
+        if (!File.Exists(_importViewModel.FileName))
+        {
+            string message = $"{(string)App.Current.Resources["FileNotFound_Message"]} {_importViewModel.FileName}";
+            string caption = (string)App.Current.Resources["FileNotFound_Caption"];
+
+            MessageBox.Show(message, caption, MessageBoxButton.OK);
+            return;
+        }
+
         _importViewModel.IsImporting = true;
 
         await _store.Import(_importViewModel.FileName, _importViewModel.FromDate, _importViewModel.ToDate);

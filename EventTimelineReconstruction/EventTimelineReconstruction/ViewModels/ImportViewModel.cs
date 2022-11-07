@@ -231,7 +231,7 @@ public class ImportViewModel : ViewModelBase, INotifyDataErrorInfo, IFileSelecta
                 _errorsViewModel.AddError(nameof(ToDate), (string)App.Current.Resources["Error_To_Before_From"]);
             }
         }
-        catch (Exception) { }
+        catch (ArgumentOutOfRangeException) { }
     }
 
     private void ValidateHours(string propertyName, int hours, string resourceKey)

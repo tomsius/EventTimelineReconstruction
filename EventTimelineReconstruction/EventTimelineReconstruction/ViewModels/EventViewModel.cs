@@ -295,7 +295,6 @@ public class EventViewModel : ViewModelBase, IComparable
     public void AddChild(EventViewModel child)
     {
         _children.Add(child);
-        // TODO - dont sort after each add (i.e. sort after reading all childs)
         _children.Sort();
     }
 
