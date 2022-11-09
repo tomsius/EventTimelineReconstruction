@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventTimelineReconstruction.Tests", "EventTimelineReconstruction.Tests\EventTimelineReconstruction.Tests.csproj", "{09EF8250-AD86-42ED-A750-F775E484127A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTimelineReconstruction.Benchmarks", "EventTimelineReconstruction.Benchmarks\EventTimelineReconstruction.Benchmarks.csproj", "{9F37826A-9234-4656-9807-2FDCEDF798AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{09EF8250-AD86-42ED-A750-F775E484127A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09EF8250-AD86-42ED-A750-F775E484127A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09EF8250-AD86-42ED-A750-F775E484127A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F37826A-9234-4656-9807-2FDCEDF798AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F37826A-9234-4656-9807-2FDCEDF798AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F37826A-9234-4656-9807-2FDCEDF798AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F37826A-9234-4656-9807-2FDCEDF798AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
