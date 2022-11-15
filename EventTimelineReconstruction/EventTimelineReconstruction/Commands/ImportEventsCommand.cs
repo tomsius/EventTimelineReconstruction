@@ -39,8 +39,18 @@ public class ImportEventsCommand : AsyncCommandBase
 
         _importViewModel.IsImporting = true;
 
-        await _store.Import(_importViewModel.FileName, _importViewModel.FromDate, _importViewModel.ToDate);
-        _eventTreeViewModel.LoadEvents(_store.Events);
+        try
+        {
+            await _store.Import(_importViewModel.FileName, _importViewModel.FromDate, _importViewModel.ToDate);
+            _eventTreeViewModel.LoadEvents(_store.Events);
+        }
+        catch (IOException)
+        {
+            string message = $"{(string)App.Current.Resources["FileInUse_Message"]} {_importViewModel.FileName}";
+            string caption = (string)App.Current.Resources["FileInUse_Caption"];
+
+            MessageBox.Show(message, caption, MessageBoxButton.OK);
+        }
 
         _importViewModel.IsImporting = false;
     }
