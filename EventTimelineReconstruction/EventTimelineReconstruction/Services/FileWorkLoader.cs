@@ -100,8 +100,9 @@ public class FileWorkLoader : IWorkLoader
         string notes = columns[18];
         string format = columns[19];
         Dictionary<string, string> extra = ConvertColumnToExtra(columns[20]);
+        string sourceLine = columns[21];
 
-        EventModel newEvent = new(date, time, timezone, mACB, source, sourceType, type, user, host, shortDescription, description, version, filename, iNode, notes, format, extra);
+        EventModel newEvent = new(date, time, timezone, mACB, source, sourceType, type, user, host, shortDescription, description, version, filename, iNode, notes, format, extra, sourceLine);
         return newEvent;
     }
 
@@ -143,8 +144,8 @@ public class FileWorkLoader : IWorkLoader
     private static EventViewModel ConvertToViewModel(EventModel eventModel, string[] columns)
     {
         EventViewModel eventViewModel = new(eventModel);
-        eventViewModel.IsVisible = bool.Parse(columns[21]);
-        Brush brush = (Brush)new BrushConverter().ConvertFromString(columns[22]);
+        eventViewModel.IsVisible = bool.Parse(columns[22]);
+        Brush brush = (Brush)new BrushConverter().ConvertFromString(columns[23]);
         brush.Freeze();
         eventViewModel.Colour = brush;
 

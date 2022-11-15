@@ -40,7 +40,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
                         )
                     ),
                     new EventViewModel(
@@ -61,7 +62,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "2"
                         )
                     ),
                     1
@@ -86,7 +88,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
                         )
                     ),
                     new EventViewModel(
@@ -107,7 +110,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "2"
                         )
                     ),
                     -1
@@ -132,7 +136,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
                         )
                     ),
                     new EventViewModel(
@@ -153,7 +158,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "2"
                         )
                     ),
                     0
@@ -178,7 +184,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
                         )
                     ),
                     new EventViewModel(
@@ -199,7 +206,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "2"
                         )
                     ),
                     -1
@@ -224,7 +232,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
                         )
                     ),
                     new EventViewModel(
@@ -245,7 +254,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "2"
                         )
                     ),
                     1
@@ -270,7 +280,8 @@ public class EventSorterTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
                         )
                     ),
                     null,

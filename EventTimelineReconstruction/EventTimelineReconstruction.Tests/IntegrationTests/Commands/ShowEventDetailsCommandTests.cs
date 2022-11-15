@@ -24,7 +24,7 @@ public class ShowEventDetailsCommandTests
     public void Execute_ShouldSetSelectedEventAndSelectedColour_WhenCommandIsExecuted()
     {
         // Arrange
-        EventViewModel expected = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>())) { Colour = Brushes.Green };
+        EventViewModel expected = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")) { Colour = Brushes.Green };
         RoutedPropertyChangedEventArgs<object?> e = new(null, expected);
         object parameter = (object)e;
 
@@ -41,7 +41,7 @@ public class ShowEventDetailsCommandTests
     {
         // Arrange
         Color expectedColour = new() { A = 0, B = 0, G = 0, R = 0 };
-        EventModel newValue = new(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>());
+        EventModel newValue = new(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1");
         RoutedPropertyChangedEventArgs<object?> e = new(null, newValue);
         object parameter = (object)e;
 

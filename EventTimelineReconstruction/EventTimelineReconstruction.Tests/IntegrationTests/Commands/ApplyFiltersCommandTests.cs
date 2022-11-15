@@ -56,7 +56,8 @@ public class ApplyFiltersCommandTests
                 "iNode number",
                 "Notes",
                 "Format",
-                new Dictionary<string, string>()));
+                new Dictionary<string, string>(),
+                "1"));
         EventViewModel otherEvent = new(new EventModel(
                 new DateOnly(2018, 1, 5),
                 new TimeOnly(15, 14),
@@ -74,7 +75,8 @@ public class ApplyFiltersCommandTests
                 "iNode number2",
                 "Notes2",
                 "Format2",
-                new Dictionary<string, string>()));
+                new Dictionary<string, string>(),
+                "2"));
         _eventTreeViewModel.AddEvent(expected);
         _eventTreeViewModel.AddEvent(otherEvent);
 
@@ -118,7 +120,8 @@ public class ApplyFiltersCommandTests
         }
 
         Assert.AreEqual(expected.IsVisible, actual.IsVisible);
-        Assert.AreEqual(expected.Colour, actual.Colour);
+        Assert.AreEqual(expected.Colour.ToString(), actual.Colour.ToString());
+        Assert.AreEqual(expected.SourceLine, actual.SourceLine);
     }
 
     [STATestMethod]
@@ -151,7 +154,8 @@ public class ApplyFiltersCommandTests
                 "iNode number",
                 "Notes",
                 "Format",
-                new Dictionary<string, string>()));
+                new Dictionary<string, string>(),
+                "1"));
         EventViewModel secondEvent = new(new EventModel(
                 new DateOnly(2018, 1, 5),
                 new TimeOnly(15, 14),
@@ -169,7 +173,8 @@ public class ApplyFiltersCommandTests
                 "iNode number2",
                 "Notes2",
                 "Format2",
-                new Dictionary<string, string>()));
+                new Dictionary<string, string>(),
+                "2"));
         List<EventViewModel> expected = new() { firstEvent, secondEvent };
         expected = expected.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
         _eventTreeViewModel.AddEvent(firstEvent);
@@ -215,7 +220,8 @@ public class ApplyFiltersCommandTests
             }
 
             Assert.AreEqual(expected[i].IsVisible, actual[i].IsVisible);
-            Assert.AreEqual(expected[i].Colour, actual[i].Colour); 
+            Assert.AreEqual(expected[i].Colour.ToString(), actual[i].Colour.ToString());
+            Assert.AreEqual(expected[i].SourceLine, actual[i].SourceLine);
         }
     }
 }

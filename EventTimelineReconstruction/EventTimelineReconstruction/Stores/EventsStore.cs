@@ -107,7 +107,8 @@ public class EventsStore : IEventsStore
                 current.INode,
                 current.Notes,
                 current.Format,
-                current.Extra
+                current.Extra,
+                current.SourceLine
                 );
             eventModels.Add(eventModel);
         }

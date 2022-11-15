@@ -24,7 +24,7 @@ public class ChangeEventColourCommandTests
     public void CanExecute_ShouldReturnFalse_WhenTransparentColourIsSelected()
     {
         // Arrange
-        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>()));
+        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1"));
         _changeColourViewModel.SelectedColour = Colors.Transparent;
         bool expected = false;
 
@@ -56,7 +56,7 @@ public class ChangeEventColourCommandTests
     public void CanExecute_ShouldReturnTrue_WhenEventIsSelectedAndSelectedColourIsNotTransparent()
     {
         // Arrange
-        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>()));
+        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1"));
         _changeColourViewModel.SelectedColour = Colors.Red;
         bool expected = true;
 
@@ -73,7 +73,7 @@ public class ChangeEventColourCommandTests
     {
         // Arrange
         Color expected = Colors.Green;
-        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>()));
+        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1"));
         _changeColourViewModel.SelectedColour = expected;
 
         // Act

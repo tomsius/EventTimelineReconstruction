@@ -67,7 +67,8 @@ public class HiddenEventsViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 ),
             new EventViewModel(
                 new EventModel(
@@ -87,7 +88,8 @@ public class HiddenEventsViewModelTests
                         "iNode number4",
                         "Notes1",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key25", "Value25" } }))
+                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key25", "Value25" } },
+                        "2"))
 
         };
         _eventsStoreMock.Setup(store => store.GetAllHiddenEvents()).Returns(expected);
@@ -129,7 +131,8 @@ public class HiddenEventsViewModelTests
             }
 
             Assert.AreEqual(expected[i].IsVisible, actual[i].IsVisible);
-            Assert.AreEqual(expected[i].Colour, actual[i].Colour);
+            Assert.AreEqual(expected[i].Colour.ToString(), actual[i].Colour.ToString());
+            Assert.AreEqual(expected[i].SourceLine, actual[i].SourceLine);
         }
     }
 
@@ -172,7 +175,8 @@ public class HiddenEventsViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 ),
             new EventViewModel(
                 new EventModel(
@@ -192,7 +196,8 @@ public class HiddenEventsViewModelTests
                         "iNode number4",
                         "Notes1",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key25", "Value25" } }))
+                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key25", "Value25" } },
+                        "2"))
 
         };
         _eventsStoreMock.Setup(store => store.GetAllHiddenEvents()).Returns(expected);
@@ -238,7 +243,8 @@ public class HiddenEventsViewModelTests
             }
 
             Assert.AreEqual(expected[i].IsVisible, actual[i].IsVisible);
-            Assert.AreEqual(expected[i].Colour, actual[i].Colour);
+            Assert.AreEqual(expected[i].Colour.ToString(), actual[i].Colour.ToString());
+            Assert.AreEqual(expected[i].SourceLine, actual[i].SourceLine);
         }
     }
 
@@ -277,7 +283,8 @@ public class HiddenEventsViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 );
 
         // Act
@@ -325,7 +332,8 @@ public class HiddenEventsViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 );
         int expectedCount = 1;
 
@@ -365,7 +373,8 @@ public class HiddenEventsViewModelTests
         }
 
         Assert.AreEqual(expected.IsVisible, actualValue[0].IsVisible);
-        Assert.AreEqual(expected.Colour, actualValue[0].Colour);
+        Assert.AreEqual(expected.Colour.ToString(), actualValue[0].Colour.ToString());
+        Assert.AreEqual(expected.SourceLine, actualValue[0].SourceLine);
     }
 
     [TestMethod]
@@ -390,7 +399,8 @@ public class HiddenEventsViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 );
         _hiddenEventsViewModel.AddHiddenEvent(eventViewModel);
         int expected = 0;
@@ -425,7 +435,8 @@ public class HiddenEventsViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 );
         EventViewModel otherViewModel = new(
                 new EventModel(
@@ -445,7 +456,8 @@ public class HiddenEventsViewModelTests
                         "iNode number2",
                         "Notes2",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } })
+                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
+                        "2")
                 );
         _hiddenEventsViewModel.AddHiddenEvent(originalViewModel);
         int expected = 1;

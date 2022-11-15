@@ -70,7 +70,8 @@ public class L2tCSVEventsImporterTests
                 "10536",
                 "-",
                 "msiecf",
-                new Dictionary<string, string>() { { "cache_directory_index", "-2" }, { "recovered", "False" }, { "sha256_hash", "" } }
+                new Dictionary<string, string>() { { "cache_directory_index", "-2" }, { "recovered", "False" }, { "sha256_hash", "" } },
+                "3"
                 ),
             new EventModel(
                 new DateOnly(2020, 1, 1),
@@ -89,7 +90,8 @@ public class L2tCSVEventsImporterTests
                 "13932",
                 "-",
                 "winreg/appcompatcache",
-                new Dictionary<string, string>() { { "sha256_hash", "c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38" } }
+                new Dictionary<string, string>() { { "sha256_hash", "c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38" } },
+                "4"
                 )
         };
 
@@ -130,6 +132,8 @@ public class L2tCSVEventsImporterTests
                     Assert.IsTrue(actual[i].Extra.ContainsKey(expectedKey));
                     Assert.AreEqual(expectedValue, actual[i].Extra[expectedKey]);
                 }
+
+                Assert.AreEqual(expected[i].SourceLine, actual[i].SourceLine);
             } 
         }
     }

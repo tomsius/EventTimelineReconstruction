@@ -21,84 +21,88 @@ public class ObservableCollectionExtensionsTests
                         {
                             new EventViewModel(
                                 new EventModel(
-                                new DateOnly(2000, 1, 1),
-                                new TimeOnly(0, 0),
-                                TimeZoneInfo.Local,
-                                "MACB",
-                                "Source",
-                                "Source Type",
-                                "Type",
-                                "Username",
-                                "Hostname",
-                                "Short Description",
-                                "Full Description",
-                                2.5,
-                                "Filename",
-                                "iNode number",
-                                "Notes",
-                                "Format",
-                                new Dictionary<string, string>())
+                                    new DateOnly(2000, 1, 1),
+                                    new TimeOnly(0, 0),
+                                    TimeZoneInfo.Local,
+                                    "MACB",
+                                    "Source",
+                                    "Source Type",
+                                    "Type",
+                                    "Username",
+                                    "Hostname",
+                                    "Short Description",
+                                    "Full Description",
+                                    2.5,
+                                    "Filename",
+                                    "iNode number",
+                                    "Notes",
+                                    "Format",
+                                    new Dictionary<string, string>(),
+                                    "1")
                             ),
-                        new EventViewModel(
-                            new EventModel(
-                                new DateOnly(2010, 1, 1),
-                                new TimeOnly(0, 0),
-                                TimeZoneInfo.Local,
-                                "MACB",
-                                "Source",
-                                "Source Type",
-                                "Type",
-                                "Username",
-                                "Hostname",
-                                "Short Description",
-                                "Full Description",
-                                2.5,
-                                "Filename2",
-                                "iNode number",
-                                "Notes",
-                                "Format",
-                                new Dictionary<string, string>())
+                            new EventViewModel(
+                                new EventModel(
+                                    new DateOnly(2010, 1, 1),
+                                    new TimeOnly(0, 0),
+                                    TimeZoneInfo.Local,
+                                    "MACB",
+                                    "Source",
+                                    "Source Type",
+                                    "Type",
+                                    "Username",
+                                    "Hostname",
+                                    "Short Description",
+                                    "Full Description",
+                                    2.5,
+                                    "Filename2",
+                                    "iNode number",
+                                    "Notes",
+                                    "Format",
+                                    new Dictionary<string, string>(),
+                                    "2")
                             ),
-                        new EventViewModel(
-                            new EventModel(
-                                new DateOnly(2010, 1, 1),
-                                new TimeOnly(0, 0),
-                                TimeZoneInfo.Local,
-                                "MACB",
-                                "Source",
-                                "Source Type",
-                                "Type",
-                                "Username",
-                                "Hostname",
-                                "Short Description",
-                                "Full Description",
-                                2.5,
-                                "Filename3",
-                                "iNode number",
-                                "Notes",
-                                "Format",
-                                new Dictionary<string, string>())
-                            ),
-                        new EventViewModel(
-                            new EventModel(
-                                new DateOnly(2010, 1, 1),
-                                new TimeOnly(12, 0),
-                                TimeZoneInfo.Local,
-                                "MACB",
-                                "Source",
-                                "Source Type",
-                                "Type",
-                                "Username",
-                                "Hostname",
-                                "Short Description",
-                                "Full Description",
-                                2.5,
-                                "Filename4",
-                                "iNode number",
-                                "Notes",
-                                "Format",
-                                new Dictionary<string, string>())
-                            )
+                            new EventViewModel(
+                                new EventModel(
+                                    new DateOnly(2010, 1, 1),
+                                    new TimeOnly(0, 0),
+                                    TimeZoneInfo.Local,
+                                    "MACB",
+                                    "Source",
+                                    "Source Type",
+                                    "Type",
+                                    "Username",
+                                    "Hostname",
+                                    "Short Description",
+                                    "Full Description",
+                                    2.5,
+                                    "Filename3",
+                                    "iNode number",
+                                    "Notes",
+                                    "Format",
+                                    new Dictionary<string, string>(),
+                                    "3")
+                                ),
+                            new EventViewModel(
+                                new EventModel(
+                                    new DateOnly(2010, 1, 1),
+                                    new TimeOnly(12, 0),
+                                    TimeZoneInfo.Local,
+                                    "MACB",
+                                    "Source",
+                                    "Source Type",
+                                    "Type",
+                                    "Username",
+                                    "Hostname",
+                                    "Short Description",
+                                    "Full Description",
+                                    2.5,
+                                    "Filename4",
+                                    "iNode number",
+                                    "Notes",
+                                    "Format",
+                                    new Dictionary<string, string>(),
+                                    "4")
+                                )
                         })
                 },
                 new object[]
@@ -124,7 +128,8 @@ public class ObservableCollectionExtensionsTests
                                     "iNode number",
                                     "Notes",
                                     "Format",
-                                    new Dictionary<string, string>())
+                                    new Dictionary<string, string>(),
+                                    "4")
                                 ),
                                 new EventViewModel(
                                 new EventModel(
@@ -144,7 +149,8 @@ public class ObservableCollectionExtensionsTests
                                     "iNode number",
                                     "Notes",
                                     "Format",
-                                    new Dictionary<string, string>())
+                                    new Dictionary<string, string>(),
+                                    "3")
                                 ),
                                 new EventViewModel(
                                 new EventModel(
@@ -164,7 +170,8 @@ public class ObservableCollectionExtensionsTests
                                     "iNode number",
                                     "Notes",
                                     "Format",
-                                    new Dictionary<string, string>())
+                                    new Dictionary<string, string>(),
+                                    "2")
                                 ),
                                 new EventViewModel(
                                     new EventModel(
@@ -184,7 +191,8 @@ public class ObservableCollectionExtensionsTests
                                     "iNode number",
                                     "Notes",
                                     "Format",
-                                    new Dictionary<string, string>())
+                                    new Dictionary<string, string>(),
+                                    "1")
                                     )
                         })
                 }
@@ -218,7 +226,8 @@ public class ObservableCollectionExtensionsTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>())
+                    new Dictionary<string, string>(),
+                    "1")
                 ),
             new EventViewModel(
                 new EventModel(
@@ -238,7 +247,8 @@ public class ObservableCollectionExtensionsTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>())
+                    new Dictionary<string, string>(),
+                    "2")
                 ),
             new EventViewModel(
                 new EventModel(
@@ -258,7 +268,8 @@ public class ObservableCollectionExtensionsTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>())
+                    new Dictionary<string, string>(),
+                    "3")
                 ),
             new EventViewModel(
                 new EventModel(
@@ -278,7 +289,8 @@ public class ObservableCollectionExtensionsTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>())
+                    new Dictionary<string, string>(),
+                    "4")
                 )
             });
 
@@ -316,7 +328,8 @@ public class ObservableCollectionExtensionsTests
             }
 
             Assert.AreEqual(expected[i].IsVisible, collection[i].IsVisible);
-            Assert.AreEqual(expected[i].Colour, collection[i].Colour);
+            Assert.AreEqual(expected[i].Colour.ToString(), collection[i].Colour.ToString());
+            Assert.AreEqual(expected[i].SourceLine, collection[i].SourceLine);
         }
     }
 }

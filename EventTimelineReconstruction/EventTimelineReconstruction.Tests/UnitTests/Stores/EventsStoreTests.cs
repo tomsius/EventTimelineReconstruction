@@ -30,7 +30,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"),
             new EventModel(
                         new DateOnly(2021, 10, 14),
                         new TimeOnly(10, 52),
@@ -48,7 +49,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "2"),
             new EventModel(
                         new DateOnly(2022, 11, 14),
                         new TimeOnly(10, 52),
@@ -66,7 +68,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "3"),
             new EventModel(
                         new DateOnly(2022, 10, 15),
                         new TimeOnly(10, 52),
@@ -84,7 +87,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "4"),
             new EventModel(
                         new DateOnly(2022, 10, 14),
                         new TimeOnly(20, 52),
@@ -102,7 +106,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "5"),
             new EventModel(
                         new DateOnly(2022, 10, 14),
                         new TimeOnly(10, 15),
@@ -120,7 +125,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "6"),
             new EventModel(
                         new DateOnly(2022, 12, 14),
                         new TimeOnly(10, 52),
@@ -138,7 +144,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "7"),
             new EventModel(
                         new DateOnly(2022, 9, 16),
                         new TimeOnly(10, 52),
@@ -156,7 +163,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "8"),
             new EventModel(
                         new DateOnly(2020, 2, 1),
                         new TimeOnly(10, 52),
@@ -174,7 +182,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "9"),
             new EventModel(
                         new DateOnly(2020, 2, 1),
                         new TimeOnly(10, 52),
@@ -192,7 +201,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "10")
         };
 
         return events;
@@ -219,7 +229,8 @@ public class EventsStoreTests
             "iNode number8",
             "Notes5",
             "Format1",
-            new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } });
+            new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } },
+            "3");
         EventViewModel childEventViewModel = new(eventModel) { IsVisible = false };
 
         eventViewModels[^1].AddChild(childEventViewModel);
@@ -264,7 +275,8 @@ public class EventsStoreTests
                 "iNode number8",
                 "Notes5",
                 "Format1",
-                new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } })) { IsVisible = false },
+                new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } },
+                "3")) { IsVisible = false },
             new EventViewModel(new EventModel(
                     new DateOnly(2020, 2, 1),
                     new TimeOnly(10, 52),
@@ -282,7 +294,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })),
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "9")),
             new EventViewModel(new EventModel(
                     new DateOnly(2020, 2, 1),
                     new TimeOnly(10, 52),
@@ -300,7 +313,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })),
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "10")),
             new EventViewModel(new EventModel(
                 new DateOnly(2021, 10, 14),
                     new TimeOnly(10, 52),
@@ -318,7 +332,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })) { IsVisible = false },
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "2")) { IsVisible = false },
             new EventViewModel(new EventModel(
                     new DateOnly(2022, 9, 16),
                     new TimeOnly(10, 52),
@@ -336,7 +351,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })),
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "8")),
             new EventViewModel(new EventModel(
                     new DateOnly(2022, 10, 14),
                     new TimeOnly(10, 15),
@@ -354,7 +370,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })),
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "6")),
             new EventViewModel(new EventModel(
                 new DateOnly(2022, 10, 14),
                     new TimeOnly(10, 52),
@@ -372,7 +389,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })) { IsVisible = false },
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "1")) { IsVisible = false },
             new EventViewModel(new EventModel(
                     new DateOnly(2022, 10, 14),
                     new TimeOnly(20, 52),
@@ -390,7 +408,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })),
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "5")),
             new EventViewModel(new EventModel(
                     new DateOnly(2022, 10, 15),
                     new TimeOnly(10, 52),
@@ -408,7 +427,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })),
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "4")),
             new EventViewModel(new EventModel(
                     new DateOnly(2022, 11, 14),
                     new TimeOnly(10, 52),
@@ -426,7 +446,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })),
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "3")),
             new EventViewModel(new EventModel(
                     new DateOnly(2022, 12, 14),
                     new TimeOnly(10, 52),
@@ -444,7 +465,8 @@ public class EventsStoreTests
                     "iNode number",
                     "Notes",
                     "Format",
-                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }))
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "7"))
         };
 
         return eventViewModels;
@@ -499,7 +521,8 @@ public class EventsStoreTests
             }
 
             Assert.AreEqual(expectedEvents[i].IsVisible, eventsStore.Events[i].IsVisible);
-            Assert.AreEqual(expectedEvents[i].Colour, eventsStore.Events[i].Colour);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), eventsStore.Events[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, eventsStore.Events[i].SourceLine);
         }
     }
 
@@ -548,7 +571,8 @@ public class EventsStoreTests
             }
 
             Assert.AreEqual(expectedEvents[i].IsVisible, eventsStore.Events[i].IsVisible);
-            Assert.AreEqual(expectedEvents[i].Colour, eventsStore.Events[i].Colour);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), eventsStore.Events[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, eventsStore.Events[i].SourceLine);
         }
     }
 
@@ -598,7 +622,8 @@ public class EventsStoreTests
             }
 
             Assert.AreEqual(expectedEvents[i].IsVisible, actualEvents[i].IsVisible);
-            Assert.AreEqual(expectedEvents[i].Colour, actualEvents[i].Colour);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), actualEvents[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, eventsStore.Events[i].SourceLine);
         }
     }
 
@@ -632,7 +657,8 @@ public class EventsStoreTests
                 childEvent.INode,
                 childEvent.Notes,
                 childEvent.Format,
-                childEvent.Extra
+                childEvent.Extra,
+                childEvent.SourceLine
                 );
         expectedEvents.Add(childEventModel);
 
@@ -670,6 +696,8 @@ public class EventsStoreTests
                 Assert.IsTrue(actualEvents[i].Extra.ContainsKey(expectedKey));
                 Assert.AreEqual(expectedValue, actualEvents[i].Extra[expectedKey]);
             }
+
+            Assert.AreEqual(expectedEvents[i].SourceLine, actualEvents[i].SourceLine);
         }
     }
 
@@ -718,7 +746,8 @@ public class EventsStoreTests
             }
 
             Assert.AreEqual(expectedEvents[i].IsVisible, actualEvents[i].IsVisible);
-            Assert.AreEqual(expectedEvents[i].Colour, actualEvents[i].Colour);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), actualEvents[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, actualEvents[i].SourceLine);
         }
     }
 }

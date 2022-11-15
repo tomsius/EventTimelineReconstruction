@@ -150,6 +150,14 @@ public class EventViewModel : ViewModelBase, IComparable
         }
     }
 
+    public string SourceLine
+    {
+        get
+        {
+            return _eventModel.SourceLine;
+        }
+    }
+
     private bool _isVisible;
 
     public bool IsVisible
@@ -270,7 +278,7 @@ public class EventViewModel : ViewModelBase, IComparable
 
         serializedExtra.Remove(serializedExtra.Length - 1, 1);
 
-        return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22}", 
+        return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23}", 
             _eventModel.Date.Year, _eventModel.Date.Month, _eventModel.Date.Day, _eventModel.Time.Hour, _eventModel.Time.Minute, _eventModel.Time.Second,
             _eventModel.Timezone.ToSerializedString(), 
             _eventModel.MACB, 
@@ -287,6 +295,7 @@ public class EventViewModel : ViewModelBase, IComparable
             _eventModel.Notes,
             _eventModel.Format,
             serializedExtra.ToString(),
+            _eventModel.SourceLine,
             _isVisible,
             _colour.ToString()
             );

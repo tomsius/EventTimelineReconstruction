@@ -22,6 +22,7 @@ public class EventModel
     public string Notes { get; }
     public string Format { get; }
     public Dictionary<string, string> Extra { get; }
+    public string SourceLine { get; }
 
     public EventModel(
         DateOnly date, 
@@ -40,7 +41,8 @@ public class EventModel
         string iNode, 
         string notes, 
         string format, 
-        Dictionary<string, string> extra)
+        Dictionary<string, string> extra,
+        string sourceLine)
     {
         Date = date;
         Time = time;
@@ -59,6 +61,7 @@ public class EventModel
         Notes = notes;
         Format = format;
         Extra = extra;
+        SourceLine = sourceLine;
     }
 
     public override bool Equals(object obj)
@@ -81,7 +84,8 @@ public class EventModel
                 INode != other.INode ||
                 Notes != other.Notes ||
                 Format != other.Format ||
-                Extra.Count != other.Extra.Count)
+                Extra.Count != other.Extra.Count ||
+                SourceLine != other.SourceLine)
             {
                 return false;
             }
@@ -125,6 +129,7 @@ public class EventModel
         hashCode.Add(Notes);
         hashCode.Add(Format);
         hashCode.Add(Extra);
+        hashCode.Add(SourceLine);
 
         return hashCode.ToHashCode();
     }

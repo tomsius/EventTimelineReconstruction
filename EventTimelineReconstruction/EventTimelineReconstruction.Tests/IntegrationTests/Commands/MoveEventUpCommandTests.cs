@@ -28,11 +28,11 @@ public class MoveEventUpCommandTests
     {
         get
         {
-            EventModel parent = new(new DateOnly(2012, 5, 4), new TimeOnly(15, 21), TimeZoneInfo.Local, "MACB1", "Source1", "Source Type1", "Type1", "Username1", "Hostname1", "Short Description1", "Full Description1", 2.5, "Filename1", "iNode number1", "Notes1", "Format1", new Dictionary<string, string>() { { "Key1", "Value1" } });
-            EventModel child1 = new(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB2", "Source2", "Source Type2", "Type2", "Username2", "Hostname2", "Short Description2", "Full Description2", 2.5, "Filename2", "iNode number2", "Notes2", "Format2", new Dictionary<string, string>() { { "Key2", "Value2" } });
-            EventModel child2 = new(new DateOnly(2022, 12, 22), new TimeOnly(21, 3), TimeZoneInfo.Local, "MACB3", "Source3", "Source Type3", "Type3", "Username3", "Hostname3", "Short Description3", "Full Description3", 2.5, "Filename3", "iNode number3", "Notes3", "Format3", new Dictionary<string, string>() { { "Key3", "Value3" } });
-            EventModel child3 = new(new DateOnly(2022, 12, 25), new TimeOnly(21, 3), TimeZoneInfo.Local, "MACB4", "Source4", "Source Type4", "Type3", "Username4", "Hostname4", "Short Description4", "Full Description4", 2.5, "Filename4", "iNode number4", "Notes4", "Format4", new Dictionary<string, string>() { { "Key4", "Value4" } });
-            EventModel child4 = new(new DateOnly(2022, 12, 30), new TimeOnly(23, 13), TimeZoneInfo.Local, "MACB5", "Source5", "Source Type5", "Type5", "Username5", "Hostname5", "Short Description5", "Full Description5", 2.5, "Filename5", "iNode number5", "Notes5", "Format5", new Dictionary<string, string>() { { "Key5", "Value5" } });
+            EventModel parent = new(new DateOnly(2012, 5, 4), new TimeOnly(15, 21), TimeZoneInfo.Local, "MACB1", "Source1", "Source Type1", "Type1", "Username1", "Hostname1", "Short Description1", "Full Description1", 2.5, "Filename1", "iNode number1", "Notes1", "Format1", new Dictionary<string, string>() { { "Key1", "Value1" } }, "1");
+            EventModel child1 = new(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB2", "Source2", "Source Type2", "Type2", "Username2", "Hostname2", "Short Description2", "Full Description2", 2.5, "Filename2", "iNode number2", "Notes2", "Format2", new Dictionary<string, string>() { { "Key2", "Value2" } }, "2");
+            EventModel child2 = new(new DateOnly(2022, 12, 22), new TimeOnly(21, 3), TimeZoneInfo.Local, "MACB3", "Source3", "Source Type3", "Type3", "Username3", "Hostname3", "Short Description3", "Full Description3", 2.5, "Filename3", "iNode number3", "Notes3", "Format3", new Dictionary<string, string>() { { "Key3", "Value3" } }, "3");
+            EventModel child3 = new(new DateOnly(2022, 12, 25), new TimeOnly(21, 3), TimeZoneInfo.Local, "MACB4", "Source4", "Source Type4", "Type3", "Username4", "Hostname4", "Short Description4", "Full Description4", 2.5, "Filename4", "iNode number4", "Notes4", "Format4", new Dictionary<string, string>() { { "Key4", "Value4" } }, "4");
+            EventModel child4 = new(new DateOnly(2022, 12, 30), new TimeOnly(23, 13), TimeZoneInfo.Local, "MACB5", "Source5", "Source Type5", "Type5", "Username5", "Hostname5", "Short Description5", "Full Description5", 2.5, "Filename5", "iNode number5", "Notes5", "Format5", new Dictionary<string, string>() { { "Key5", "Value5" } }, "5");
 
             EventViewModel firstParent = new(parent);
             EventViewModel firstChild1 = new(child1);
@@ -83,7 +83,7 @@ public class MoveEventUpCommandTests
     {
         // Arrange
         bool expected = false;
-        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>()));
+        _eventDetailsViewModel.SelectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1"));
 
         // Act
         bool actual = _command.CanExecute(null);
@@ -98,7 +98,7 @@ public class MoveEventUpCommandTests
     {
         // Arrange
         bool expected = false;
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>()));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1"));
         _eventTreeViewModel.AddEvent(eventViewModel);
         _eventDetailsViewModel.SelectedEvent = null;
 
@@ -115,7 +115,7 @@ public class MoveEventUpCommandTests
     {
         // Arrange
         bool expected = true;
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>()));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1"));
         _eventTreeViewModel.AddEvent(eventViewModel);
         _eventDetailsViewModel.SelectedEvent = eventViewModel;
 
