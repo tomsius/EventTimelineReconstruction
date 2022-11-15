@@ -13,7 +13,7 @@ public class L2tCSVEventsImporter : IEventsImporter
     public async Task<List<EventModel>> Import(string path, DateTime fromDate, DateTime toDate)
     {
         string[] rows = await File.ReadAllLinesAsync(path);
-        List<EventModel> events = new(rows.Length); // TODO - try using CollectionsMarshal.AsSpan
+        List<EventModel> events = new(rows.Length);
         object lockObj = new();
 
         Parallel.ForEach(rows, (line, _, lineNumber) =>
