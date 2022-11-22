@@ -8,7 +8,7 @@ namespace EventTimelineReconstruction.Abstractors;
 
 public class HighLevelEventsAbstractor
 {
-    private const int _minutesThreshold = 50;
+    private const double _minutesThreshold = 50.0;
 
     private readonly IEventsStore _store;
     private readonly IHighLevelEventsAbstractorUtils _abstractorUtils;
@@ -34,12 +34,12 @@ public class HighLevelEventsAbstractor
                         HighLevelEventViewModel logEvent = this.FormEventFromLogSource(events[i]);
                         int lastLogEventIndex = this.FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "LOG");
 
-                        if (lastLogEventIndex != -1) 
+                        if (lastLogEventIndex != -1)
                         {
                             highLevelEvents.RemoveAt(lastLogEventIndex);
                             highLevelEvents.Insert(lastLogEventIndex, logEvent);
                         }
-                        else 
+                        else
                         {
                             highLevelEvents.Add(logEvent);
                         }
@@ -73,7 +73,7 @@ public class HighLevelEventsAbstractor
                     case "OLECF":
                         HighLevelEventViewModel olecfEvent = this.FormEventFromOlecfSource(events[i]);
 
-                        if (highLevelEvents[^1].Source == olecfEvent.Source && highLevelEvents[^1].Short != olecfEvent.Short)
+                        if (IsOlecfEventValid(highLevelEvents, olecfEvent))
                         {
                             highLevelEvents.Add(olecfEvent);
                         }
@@ -132,8 +132,7 @@ public class HighLevelEventsAbstractor
         {
             DateTime highLevelEventDate = new(highLevelEvents[i].Date.Year, highLevelEvents[i].Date.Month, highLevelEvents[i].Date.Day, highLevelEvents[i].Time.Hour, highLevelEvents[i].Time.Minute, highLevelEvents[i].Time.Second);
 
-            // TODO - patikrinti, ar == 1, ar == -1
-            if (highLevelEventDate.CompareTo(newEventDate) == 1)
+            if (highLevelEventDate.CompareTo(newEventDate) == -1)
             {
                 break;
             }
@@ -193,6 +192,14 @@ public class HighLevelEventsAbstractor
         };
 
         return result;
+    }
+
+    private static bool IsOlecfEventValid(List<HighLevelEventViewModel> highLevelEvents, HighLevelEventViewModel olecfEvent)
+    {
+        bool isSameSource = highLevelEvents[^1].Source == olecfEvent.Source;
+        bool isSameShortValue = highLevelEvents[^1].Short == olecfEvent.Short;
+
+        return isSameSource == false || isSameShortValue == false;
     }
 
     private HighLevelEventViewModel FormEventFromPeSource(EventViewModel eventViewModel)
@@ -297,7 +304,7 @@ public class HighLevelEventsAbstractor
         DateTime startTime = new(startEvent.Date.Year, startEvent.Date.Month, startEvent.Date.Day, startEvent.Time.Hour, startEvent.Time.Minute, startEvent.Time.Second);
         DateTime endTime = new(webhistEvent.Date.Year, webhistEvent.Date.Month, webhistEvent.Date.Day, webhistEvent.Time.Hour, webhistEvent.Time.Minute, webhistEvent.Time.Second);
 
-        if (endTime.Subtract(startTime).TotalMinutes >= _minutesThreshold)
+        if (endTime.Subtract(startTime).TotalMinutes.CompareTo(_minutesThreshold) >= 0)
         {
             return true;
         }
