@@ -50,7 +50,7 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
 
         if (endIndex == -1)
         {
-            return data.Length - 1;
+            return data.Length;
         }
 
         return endIndex;
@@ -75,8 +75,14 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
     private string GetCountFromGoogleBrowser(string data)
     {
         string key = "type count ";
-        int startIndex = data.IndexOf(key);
-        int endIndex = data.IndexOf(' ', startIndex + key.Length);
+
+        if (!data.Contains(key))
+        {
+            return "";
+        }
+
+        int startIndex = data.IndexOf(key) + key.Length;
+        int endIndex = data.IndexOf(')', startIndex);
         int countLength = endIndex - startIndex;
 
         return data.Substring(startIndex, countLength);
@@ -85,8 +91,14 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
     private string GetCountFromFirefoxBrowser(string data)
     {
         string key = "[count: ";
-        int startIndex = data.IndexOf(key);
-        int endIndex = data.IndexOf(']', startIndex + key.Length);
+
+        if (!data.Contains(key))
+        {
+            return "";
+        }
+
+        int startIndex = data.IndexOf(key) + key.Length;
+        int endIndex = data.IndexOf(']', startIndex);
         int countLength = endIndex - startIndex;
 
         return data.Substring(startIndex, countLength);
@@ -103,15 +115,15 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
 
     public string GetMacAddress(string data)
     {
-        string[] splits = data.Split(" Origin: ");
+        string[] splits = data.Split("Origin: ");
         string[] combinations = splits[0].Split('-');
 
-        if (combinations.Length <= 0)
+        if (combinations.Length <= 1)
         {
             return "-";
         }
 
-        return combinations[^1];
+        return combinations[^1].TrimEnd();
     }
 
     public string GetMailUrl(string data)
@@ -121,25 +133,28 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
 
     public string GetOrigin(string data)
     {
-        string[] splits = data.Split(" Origin: ");
+        string[] splits = data.Split("Origin: ");
         return splits[^1];
     }
 
     public string GetShort(string data)
     {
-        if (data.Contains("empty description") || !data.EndsWith("..."))
+        if (data.ToLower().Contains("empty description") || !data.EndsWith("..."))
         {
-            int startIndex = data.IndexOf(']');
-            return data.Substring(startIndex).TrimStart();
+            int index = data.IndexOf(']') + 1;
+            return data.Substring(index).TrimStart();
         }
 
-        return data;
+        int startIndex = data.IndexOf('[') + 1;
+        int endIndex = data.IndexOf(']');
+        int length = endIndex - startIndex;
+        return data.Substring(startIndex, length);
     }
 
     public string GetUrlHost(string data)
     {
         int urlStart = data.IndexOf("http");
-        int urlEnd = data.IndexOf("/", urlStart + 8);
+        int urlEnd = data.IndexOf("/", urlStart + 8) + 1;
         int urlHostLength = urlEnd - urlStart;
 
         return data.Substring(urlStart, urlHostLength);
