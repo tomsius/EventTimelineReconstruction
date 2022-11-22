@@ -9,7 +9,7 @@ public class HighLevelEventViewModel
     public string Source { get; set; }
     public string Short { get; set; }
     public string Visit { get; set; }
-    public int Reference { get; set; }
+    public string Reference { get; set; }
 
     public HighLevelEventViewModel()
     {
