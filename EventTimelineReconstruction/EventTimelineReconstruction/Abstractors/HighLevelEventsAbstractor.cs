@@ -69,7 +69,7 @@ public class HighLevelEventsAbstractor
                     case "OLECF":
                         HighLevelEventViewModel olecfEvent = this.FormEventFromOlecfSource(events[i]);
 
-                        if (IsOlecfEventValid(highLevelEvents, olecfEvent))
+                        if (IsOlecfEventValid(highLevelEvents[^1], olecfEvent))
                         {
                             highLevelEvents.Add(olecfEvent);
                         }
@@ -190,10 +190,10 @@ public class HighLevelEventsAbstractor
         return result;
     }
 
-    private static bool IsOlecfEventValid(List<HighLevelEventViewModel> highLevelEvents, HighLevelEventViewModel olecfEvent)
+    private static bool IsOlecfEventValid(HighLevelEventViewModel lastHighLevelEvent, HighLevelEventViewModel newOlecfEvent)
     {
-        bool isSameSource = highLevelEvents[^1].Source == olecfEvent.Source;
-        bool isSameShortValue = highLevelEvents[^1].Short == olecfEvent.Short;
+        bool isSameSource = lastHighLevelEvent.Source == newOlecfEvent.Source;
+        bool isSameShortValue = lastHighLevelEvent.Short == newOlecfEvent.Short;
 
         return isSameSource == false || isSameShortValue == false;
     }
