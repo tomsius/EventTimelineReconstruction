@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.ViewModels;
 
@@ -10,18 +9,15 @@ public class HighLevelEventsAbstractor
 {
     private const double _minutesThreshold = 50.0;
 
-    private readonly IEventsStore _store;
     private readonly IHighLevelEventsAbstractorUtils _abstractorUtils;
 
-    public HighLevelEventsAbstractor(IEventsStore store, IHighLevelEventsAbstractorUtils abstractorUtils)
+    public HighLevelEventsAbstractor(IHighLevelEventsAbstractorUtils abstractorUtils)
     {
-        _store = store;
         _abstractorUtils = abstractorUtils;
     }
 
-    public List<HighLevelEventViewModel> FormHighLevelEvents()
+    public List<HighLevelEventViewModel> FormHighLevelEvents(List<EventViewModel> events)
     {
-        List<EventViewModel> events = _store.GetStoredEventViewModelsAsOneLevel();
         List<HighLevelEventViewModel> highLevelEvents = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
