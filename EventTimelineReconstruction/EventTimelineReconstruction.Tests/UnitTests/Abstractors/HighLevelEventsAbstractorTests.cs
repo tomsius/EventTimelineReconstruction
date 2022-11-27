@@ -19,6 +19,9 @@ public class HighLevelEventsAbstractorTests
 
         _events = GetStoredEvents();
 
+        utils.Setup(u => u.IsValidWebhistLine(_events[0])).Returns(true);
+        utils.Setup(u => u.IsWebhistDownloadEvent(_events[0])).Returns(false);
+        utils.Setup(u => u.IsWebhistMailEvent(_events[0])).Returns(true);
         utils.Setup(u => u.GetMacAddress("3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2015.lnk")).Returns("a0afbdac1ec0");
         utils.Setup(u => u.GetOrigin("3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2015.lnk")).Returns("2015.lnk");
         utils.Setup(u => u.GetMacAddress("3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2016.lnk")).Returns("a0afbdac1ec0");
@@ -26,44 +29,45 @@ public class HighLevelEventsAbstractorTests
         utils.Setup(u => u.GetMacAddress("3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2017.lnk")).Returns("a0afbdac1ec0");
         utils.Setup(u => u.GetOrigin("3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2017.lnk")).Returns("2017.lnk");
         utils.Setup(u => u.GetShort("[Empty description] C:\\Program Files\\Mozilla Firefox\\firefox.exe")).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
-        utils.Setup(u => u.IsValidPeEvent(_events[9])).Returns(true);
         utils.Setup(u => u.IsValidPeEvent(_events[10])).Returns(true);
-        utils.Setup(u => u.IsValidPeEvent(_events[11])).Returns(false);
-        utils.Setup(u => u.IsValidWebhistLine(_events[12])).Returns(false);
-        utils.Setup(u => u.IsValidWebhistLine(_events[13])).Returns(true);
-        utils.Setup(u => u.IsWebhistDownloadEvent(_events[13])).Returns(false);
-        utils.Setup(u => u.IsWebhistMailEvent(_events[13])).Returns(false);
-        utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[13])).Returns(false);
+        utils.Setup(u => u.IsValidPeEvent(_events[11])).Returns(true);
+        utils.Setup(u => u.IsValidPeEvent(_events[12])).Returns(false);
+        utils.Setup(u => u.IsValidWebhistLine(_events[13])).Returns(false);
         utils.Setup(u => u.IsValidWebhistLine(_events[14])).Returns(true);
-        utils.Setup(u => u.IsWebhistDownloadEvent(_events[14])).Returns(true);
+        utils.Setup(u => u.IsWebhistDownloadEvent(_events[14])).Returns(false);
         utils.Setup(u => u.IsWebhistMailEvent(_events[14])).Returns(false);
         utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[14])).Returns(false);
-        utils.Setup(u => u.GetDownloadedFileName("https://mail-attachment.googleusercontent.com/attachment/... (C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf). Received: 1116192 bytes out of: 1116192 bytes.")).Returns("C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf");
         utils.Setup(u => u.IsValidWebhistLine(_events[15])).Returns(true);
-        utils.Setup(u => u.IsWebhistDownloadEvent(_events[15])).Returns(false);
-        utils.Setup(u => u.IsWebhistMailEvent(_events[15])).Returns(true);
+        utils.Setup(u => u.IsWebhistDownloadEvent(_events[15])).Returns(true);
+        utils.Setup(u => u.IsWebhistMailEvent(_events[15])).Returns(false);
         utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[15])).Returns(false);
-        utils.Setup(u => u.GetMailUrl(It.IsAny<string>())).Returns("https://mail.google.com");
+        utils.Setup(u => u.GetDownloadedFileName("https://mail-attachment.googleusercontent.com/attachment/... (C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf). Received: 1116192 bytes out of: 1116192 bytes.")).Returns("C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf");
         utils.Setup(u => u.IsValidWebhistLine(_events[16])).Returns(true);
         utils.Setup(u => u.IsWebhistDownloadEvent(_events[16])).Returns(false);
-        utils.Setup(u => u.IsWebhistMailEvent(_events[16])).Returns(false);
-        utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[16])).Returns(true);
-        utils.Setup(u => u.GetUrlHost("https://google.com/mail/u/0/?tab=rm&ogbl (Gmail)")).Returns("https://www.google.com/");
-        utils.Setup(u => u.GenerateVisitValue("https://google.com/mail/u/0/?tab=rm&ogbl (Gmail) [count: 0] Visit from: https://google.com/mail/?tab=rm&ogbl (Gmail) Type: [LINK - User clicked a link] (URL not typed directly - no typed count)")).Returns("LINK");
+        utils.Setup(u => u.IsWebhistMailEvent(_events[16])).Returns(true);
+        utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[16])).Returns(false);
+        utils.Setup(u => u.GetMailUrl(It.IsAny<string>())).Returns("https://mail.google.com");
         utils.Setup(u => u.IsValidWebhistLine(_events[17])).Returns(true);
         utils.Setup(u => u.IsWebhistDownloadEvent(_events[17])).Returns(false);
         utils.Setup(u => u.IsWebhistMailEvent(_events[17])).Returns(false);
         utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[17])).Returns(true);
+        utils.Setup(u => u.GetUrlHost("https://google.com/mail/u/0/?tab=rm&ogbl (Gmail)")).Returns("https://www.google.com/");
+        utils.Setup(u => u.GenerateVisitValue("https://google.com/mail/u/0/?tab=rm&ogbl (Gmail) [count: 0] Visit from: https://google.com/mail/?tab=rm&ogbl (Gmail) Type: [LINK - User clicked a link] (URL not typed directly - no typed count)")).Returns("LINK");
         utils.Setup(u => u.IsValidWebhistLine(_events[18])).Returns(true);
         utils.Setup(u => u.IsWebhistDownloadEvent(_events[18])).Returns(false);
         utils.Setup(u => u.IsWebhistMailEvent(_events[18])).Returns(false);
         utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[18])).Returns(true);
+        utils.Setup(u => u.IsValidWebhistLine(_events[19])).Returns(true);
+        utils.Setup(u => u.IsWebhistDownloadEvent(_events[19])).Returns(false);
+        utils.Setup(u => u.IsWebhistMailEvent(_events[19])).Returns(false);
+        utils.Setup(u => u.IsWebhistNamingActivityEvent(_events[19])).Returns(true);
     }
 
     private List<EventViewModel> GetStoredEvents()
     {
         return new List<EventViewModel>()
         {
+            new EventViewModel(new EventModel(new DateOnly(2018, 10, 21), new TimeOnly(18, 11, 1), TimeZoneInfo.Utc, "B...", "WEBHIST", "Firefox History", "Last Visited Time", "User", "Host", "https://google.com/mail/u/0/?tab=rm&ogbl (Gmail)", "https://google.com/mail/u/0/?tab=rm&ogbl (Gmail) [count: 0] Visit from: https://google.com/mail/?tab=rm&ogbl (Gmail) Type: [LINK - User clicked a link] (URL not typed directly - no typed count)", 2, "TSK:/Documents and Settings/PC1/Local Settings/Application Data/Google/Chrome/User Data/Default/History", "13452", "-", "sqlite/chrome_27_history", new Dictionary<string, string>(), "0")),
             new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(15, 4, 25), TimeZoneInfo.Utc, "B..M", "LOG", "System", "Creation Time", "User", "Host", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2015.lnk", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2015.lnk", 2, "2016.ln", "13451", "-", "lnk", new Dictionary<string, string>(), "1")),
             new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(15, 4, 25), TimeZoneInfo.Utc, "B...", "LOG", "System", "Creation Time", "User", "Host", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2016.lnk", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2016.lnk", 2, "2016.ln", "13452", "-", "lnk", new Dictionary<string, string>(), "2")),
             new EventViewModel(new EventModel(new DateOnly(2022, 10, 15), new TimeOnly(12, 8, 11), TimeZoneInfo.Utc, "B...", "LOG", "System", "Creation Time", "User", "Host", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2017.lnk", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2017.lnk", 2, "2017.ln", "13452", "-", "lnk", new Dictionary<string, string>(), "3")),
@@ -90,6 +94,7 @@ public class HighLevelEventsAbstractorTests
     {
         return new List<HighLevelEventViewModel>()
         {
+            new HighLevelEventViewModel() { Date = new DateOnly(2018, 10, 21), Time = new TimeOnly(18, 11, 1), Source = "WEBHIST", Short = "https://mail.google.com", Reference = "0", Visit = "Mail" },
             new HighLevelEventViewModel() { Date = new DateOnly(2022, 10, 14), Time = new TimeOnly(15, 4, 25), Source = "LOG", Short = "MAC Address: a0afbdac1ec0. Origin: 2016.lnk.", Reference = "2" },
             new HighLevelEventViewModel() { Date = new DateOnly(2022, 10, 15), Time = new TimeOnly(12, 8, 11), Source = "LOG", Short = "MAC Address: a0afbdac1ec0. Origin: 2017.lnk.", Reference = "3" },
             new HighLevelEventViewModel() { Date = new DateOnly(2022, 10, 15), Time = new TimeOnly(12, 8, 11), Source = "LNK", Short = "C:\\Program Files\\Mozilla Firefox\\firefox.exe", Reference = "5" },

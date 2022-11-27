@@ -286,6 +286,11 @@ public class HighLevelEventsAbstractor
 
     private bool IsWebhistEventValid(List<HighLevelEventViewModel> highLevelEvents, HighLevelEventViewModel webhistEvent)
     {
+        if (highLevelEvents.Count < 2)
+        {
+            return true;
+        }
+
         if (highLevelEvents[^1].Source != "WEBHIST")
         {
             return true;
