@@ -186,6 +186,84 @@ public class LowLevelEventsAbstractorUtilsTests
                         )
                     ),
                     ""
+                },
+                new object[]
+                {
+                    new EventViewModel(
+                        new EventModel(
+                            new DateOnly(2022, 10, 14),
+                            new TimeOnly(10, 52),
+                            TimeZoneInfo.Local,
+                            "MACB",
+                            "FILE",
+                            "Source Type",
+                            "Type",
+                            "Username",
+                            "Hostname",
+                            "something\\temp\\testas 4.txt...",
+                            "Full Description",
+                            2.5,
+                            "Filename",
+                            "iNode number",
+                            "Notes",
+                            "Format",
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
+                        )
+                    ),
+                    "testas 4.txt..."
+                },
+                new object[]
+                {
+                    new EventViewModel(
+                        new EventModel(
+                            new DateOnly(2022, 10, 14),
+                            new TimeOnly(10, 52),
+                            TimeZoneInfo.Local,
+                            "MACB",
+                            "FILE",
+                            "Source Type",
+                            "Type",
+                            "Username",
+                            "Hostname",
+                            "Name: testas 5.txt",
+                            "Full Description",
+                            2.5,
+                            "Filename",
+                            "iNode number",
+                            "Notes",
+                            "Format",
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
+                        )
+                    ),
+                    "testas 5.txt"
+                },
+                new object[]
+                {
+                    new EventViewModel(
+                        new EventModel(
+                            new DateOnly(2022, 10, 14),
+                            new TimeOnly(10, 52),
+                            TimeZoneInfo.Local,
+                            "MACB",
+                            "FILE",
+                            "Source Type",
+                            "Type",
+                            "Username",
+                            "Hostname",
+                            "testas 6.txt",
+                            "Full Description",
+                            2.5,
+                            "Filename",
+                            "iNode number",
+                            "Notes",
+                            "Format",
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
+                        )
+                    ),
+                    "testas 6.txt"
                 }
             };
         }
@@ -460,7 +538,7 @@ public class LowLevelEventsAbstractorUtilsTests
         LowLevelEventsAbstractorUtils utils = new();
 
         // Act
-        string actual = utils.GetExtraFromFileSource(extra);
+        string actual = utils.GetExtraTillSha256(extra);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -523,12 +601,15 @@ public class LowLevelEventsAbstractorUtilsTests
         Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod]
-    public void GetSummaryFromShort_ShouldReturnFormattedShortDescription_WhenMethodIsCalled()
+    [DataTestMethod]
+    [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad.exe Cou...", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad.exe")]
+    [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad 2.exe", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad 2.exe")]
+    [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0} Cou...", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}")]
+    [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}")]
+    [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows\\Accessories\\wordpad3.exe", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows\\Accessories\\wordpad3.exe")]
+    public void GetSummaryFromShort_ShouldReturnFormattedShortDescription_WhenMethodIsCalled(string description, string expected)
     {
         // Arrange
-        string description = "UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad.exe Cou...";
-        string expected = "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad.exe Cou...";
         LowLevelEventsAbstractorUtils utils = new();
 
         // Act
