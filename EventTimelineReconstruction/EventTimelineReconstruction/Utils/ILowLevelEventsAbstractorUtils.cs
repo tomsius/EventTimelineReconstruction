@@ -6,7 +6,7 @@ namespace EventTimelineReconstruction.Utils;
 public interface ILowLevelEventsAbstractorUtils
 {
     string AddMailUser(string extraValue, string description);
-    string GetExtraFromFileSource(Dictionary<string, string> extra);
+    string GetExtraTillSha256(Dictionary<string, string> extra);
     string GetFirefoxExtraFromWebhistSource(Dictionary<string, string> extra);
     string GetFilename(EventViewModel eventViewModel);
     string GetKeywordsFromExtra(Dictionary<string, string> extra, string data);

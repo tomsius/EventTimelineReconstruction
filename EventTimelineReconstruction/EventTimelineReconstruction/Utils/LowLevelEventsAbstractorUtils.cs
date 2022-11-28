@@ -32,7 +32,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         return description.Substring(startIndex, mailUserLength);
     }
 
-    public string GetExtraFromFileSource(Dictionary<string, string> extra)
+    public string GetExtraTillSha256(Dictionary<string, string> extra)
     {
         StringBuilder sb = new();
 
@@ -205,9 +205,33 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
     private string GetFilenameFromFileSource(string data)
     {
         string startKey = "Name: ";
-        string endKey = " Origin";
-        int startIndex = data.IndexOf(startKey) + startKey.Length;
-        int endIndex = data.IndexOf(endKey);
+        char endKey = ' ';
+        char extensionKey = '.';
+        int startIndex = data.IndexOf(startKey);
+
+        if (startIndex == -1)
+        {
+            startIndex = data.LastIndexOf('\\');
+
+            if (startIndex == -1)
+            {
+                return data;
+            }
+            else
+            {
+                return data.Substring(startIndex + 1);
+            }
+        }
+
+        startIndex += startKey.Length;
+        int extensionIndex = data.IndexOf(extensionKey, startIndex);
+        int endIndex = data.IndexOf(endKey, extensionIndex);
+
+        if (endIndex == -1)
+        {
+            return data.Substring(startIndex);
+        }
+
         int filenameLength = endIndex - startIndex;
 
         return data.Substring(startIndex, filenameLength);
@@ -241,13 +265,28 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         return data.Substring(startIndex);
     }
 
-    // TODO - paziureti kaip is tikruju atrodo reikiamas LOG source Description
     public string GetSummaryFromShort(string data)
     {
-        char key = '{';
-        int startIndex = data.IndexOf(key);
+        char startKey = '{';
+        char endKey = '}';
+        char extensionKey = '.';
+        int startIndex = data.IndexOf(startKey);
+        int endIndex = data.IndexOf(endKey, startIndex);
+        int extensionIndex = data.IndexOf(extensionKey, endIndex);
 
-        return data.Substring(startIndex);
+        if (extensionIndex == -1 || data[extensionIndex + 1] == '.')
+        {
+            return data.Substring(startIndex, endIndex - startIndex + 1);
+        }
+
+        endIndex = data.LastIndexOf(' ');
+
+        if (endIndex == -1 || endIndex < extensionIndex)
+        {
+            return data.Substring(startIndex);
+        }
+
+        return data.Substring(startIndex, endIndex - startIndex);
     }
 
     public string GetUrl(string data)
