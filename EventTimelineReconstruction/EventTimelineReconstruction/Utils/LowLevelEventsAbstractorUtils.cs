@@ -248,7 +248,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
     // TODO - paziureti kaip is tikruju atrodo reikiamas LOG source Description
     private string GetFilenameFromLogSource(string data)
     {
-        string startKey = "Unpinned Path: ";
+        string startKey = " Path: ";
         int startIndex = data.IndexOf(startKey) + startKey.Length;
 
         string fullFilename = data.Substring(startIndex);
