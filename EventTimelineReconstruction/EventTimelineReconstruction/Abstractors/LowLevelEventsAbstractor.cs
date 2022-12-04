@@ -330,8 +330,13 @@ public class LowLevelEventsAbstractor
 
     private int GetValidFileEventIndex(List<EventViewModel> events, int startIndex)
     {
-        while (startIndex < events.Count && events[startIndex].Source == "FILE")
+        for (int i = startIndex; i < events.Count; i++)
         {
+            if (events[i].Source != "FILE")
+            {
+                break;
+            }
+
             if (_lowLevelAbstractorUtils.IsValidFileEvent(events[startIndex]))
             {
                 if (events[startIndex].SourceType == "File entry shell item")
@@ -343,8 +348,6 @@ public class LowLevelEventsAbstractor
                     return this.GetIndexOfLastFileEventOfSameTime(events, startIndex);
                 }
             }
-
-            startIndex++;
         }
 
         return -1;
