@@ -587,11 +587,41 @@ public class LowLevelEventsAbstractorUtilsTests
     }
 
     [TestMethod]
-    public void GetShort_ShouldReturnUnpinnedPathValue_WhenMethodIsCalled()
+    public void GetShort_ShouldReturnPathValue_IfPathKeywordExists()
     {
         // Arrange
         string description = "Entry: 36 Pin status: Unpinned Path: C:\\temp\\testas 1.txt";
         string expected = "C:\\temp\\testas 1.txt";
+        LowLevelEventsAbstractorUtils utils = new();
+
+        // Act
+        string actual = utils.GetShort(description);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public void GetShort_ShouldReturnOriginValue_IfOriginKeywordExists()
+    {
+        // Arrange
+        string description = "Soemthing something Origin: C:\\temp\\testas 1.txt";
+        string expected = "C:\\temp\\testas 1.txt";
+        LowLevelEventsAbstractorUtils utils = new();
+
+        // Act
+        string actual = utils.GetShort(description);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public void GetShort_ShouldReturnGivenValue_IfNoKeywordExists()
+    {
+        // Arrange
+        string description = "Prefetch [SPOOLSV.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME1]";
+        string expected = "Prefetch [SPOOLSV.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME1]";
         LowLevelEventsAbstractorUtils utils = new();
 
         // Act

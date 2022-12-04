@@ -259,10 +259,22 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 
     public string GetShort(string data)
     {
-        string key = "Unpinned Path: ";
-        int startIndex = data.IndexOf(key) + key.Length;
+        string key = " Path: ";
+        int startIndex = data.IndexOf(key);
 
-        return data.Substring(startIndex);
+        if (startIndex == -1)
+        {
+            key = " Origin: ";
+
+            if (!data.Contains(key))
+            {
+                return data;
+            }
+
+            startIndex = data.IndexOf(key);
+        }
+
+        return data.Substring(startIndex + key.Length);
     }
 
     public string GetSummaryFromShort(string data)
