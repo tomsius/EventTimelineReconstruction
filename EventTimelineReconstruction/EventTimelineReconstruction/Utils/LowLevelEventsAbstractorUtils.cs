@@ -245,7 +245,6 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         return data.Substring(startIndex);
     }
 
-    // TODO - paziureti kaip is tikruju atrodo reikiamas LOG source Description
     private string GetFilenameFromLogSource(string data)
     {
         string startKey = " Path: ";
