@@ -21,7 +21,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 new object[]
                 {
                     new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Something something", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, "1")),
-                    ""
+                    "Something something"
                 }
             };
         }
@@ -366,7 +366,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     [DataRow("Registry Key : Run Key", "[HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run] VBoxTray: %SystemRoot%\\system32\\VBoxTray.exe", "[HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run] VBoxTray: %SystemRoot%\\system32\\VBoxTray.exe")]
     [DataRow("UNKNOWN", "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\15.0\\Word\\Reading Locations\\Document 2] Datetime: [REG_SZ] 2017-11-07T09:41 File Path: [REG_SZ] D:\\My Documents\\Biudzet\\prof\\test.docx Position: [REG_SZ] 0 0, (Vac_lapkrgruC)", "test.docx")]
     [DataRow("UNKNOWN", "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\15.0\\Word\\Reading Locations\\Document 2] Datetime: [REG_SZ] 2017-11-07T09:41 File Path: [REG_SZ] test.docx Position: [REG_SZ] 0 0, (Vac_lapkrgruC)", "test.docx")]
-    [DataRow("UNKNOWN", "Something else", "")]
+    [DataRow("UNKNOWN", "Something else", "Something else")]
     [DataRow("Something something", "Some description", "")]
     public void GetDescriptionFromRegSource_ShouldReturnFilenameFromDescription_WhenMetodsIsCalled(string sourceType, string description, string expected)
     {

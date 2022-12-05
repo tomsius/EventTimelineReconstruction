@@ -306,7 +306,8 @@ public class HighLevelArtefactsAbstractor
             Extra = extraValue,
             Reference = eventViewModel.SourceLine,
             Macb = eventViewModel.MACB,
-            SourceType = eventViewModel.SourceType
+            SourceType = eventViewModel.SourceType,
+            Description = eventViewModel.Description
         };
 
         return result;
@@ -447,12 +448,17 @@ public class HighLevelArtefactsAbstractor
 
     private bool IsRegEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
-        if (current.SourceType == "UNKNOWN : BagMRU" && current.Description.Length == 0)
+        if (current.SourceType == "Registry Key: UserAssist" && !current.Description.Contains(".exe"))
         {
             return false;
         }
 
-        if (current.SourceType == "UNKNOWN : Run Key" || (current.SourceType == "UNKNOWN" && current.Description.Length == 0))
+        if (current.SourceType == "Registry Key : BagMRU" && current.Description.Length == 0)
+        {
+            return false;
+        }
+
+        if (current.SourceType == "Registry Key : Run Key" || (current.SourceType == "UNKNOWN" && !current.Description.Contains('.')))
         {
             for (int i = highLevelArtefacts.Count - 1; i >= 0; i--)
             {

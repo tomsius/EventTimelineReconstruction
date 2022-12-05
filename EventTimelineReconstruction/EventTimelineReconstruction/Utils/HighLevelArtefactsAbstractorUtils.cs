@@ -25,7 +25,7 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
 
         if (startIndex == -1)
         {
-            return "";
+            return description;
         }
 
         return description.Substring(startIndex + startKey.Length);
@@ -69,7 +69,6 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         return description.Substring(startIndex, valueLength);
     }
 
-    // TODO - pasitikslinti reikalavimus
     public string GetDescriptionFromRegSource(string sourceType, string description)
     {
         return sourceType switch
@@ -240,8 +239,7 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
 
         if (startIndex == -1)
         {
-            // TODO - pasitikslinti reikalavimus
-            return "";
+            return description;
         }
 
         startIndex += startKey.Length;
@@ -340,7 +338,6 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
 
     public bool IsFileDuplicateOfLnk(List<EventViewModel> events, int startIndex, EventViewModel current)
     {
-        // TODO - pasitikslinti reikalavimus
         if (!current.Filename.EndsWith(".lnk"))
         {
             return false;
@@ -360,7 +357,6 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
                 break;
             }
 
-            // TODO - pasitikslinti reikalavimus
             string lnkArtefact = this.GetArtefactName(previous.Filename);
             string fileArtefact = this.GetArtefactName(current.Filename);
 
