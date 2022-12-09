@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class HighLevelArtefactsAbstractor
+public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 {
     private const double _minutesThreshold = 15.0;
     private const int _fileArtefactsInRowCount = 36;

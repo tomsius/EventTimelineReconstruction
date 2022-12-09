@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class LowLevelEventsAbstractor
+public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
 {
     private const double _minutesThreshold = 30.0;
 
@@ -73,7 +73,7 @@ public class LowLevelEventsAbstractor
                 case "LOG":
                     if (!this.DoesNeedComposing(events, i - 1, events[i]))
                     {
-                        lowLevelEvent = this.FormEventFromLogSource(events[i]); 
+                        lowLevelEvent = this.FormEventFromLogSource(events[i]);
                     }
 
                     break;
@@ -85,7 +85,7 @@ public class LowLevelEventsAbstractor
                     {
                         lowLevelEvent = this.FormEventFromRegSource(events[i]);
                     }
-                    
+
                     break;
                 case "OLECF":
                     // Choose the last line of the same OLECF time - skip same time OLECF type events
@@ -101,7 +101,7 @@ public class LowLevelEventsAbstractor
                     {
                         lowLevelEvent = this.FormEventFromPeSource(events[i]);
                     }
-                    
+
                     break;
                 case "RECBIN":
                     lowLevelEvent = this.FormEventFromRecbinSource(events[i]);
@@ -159,7 +159,7 @@ public class LowLevelEventsAbstractor
             return;
         }
 
-        if(lastEvent.Source == "REG" && currentEvent.Source == "REG")
+        if (lastEvent.Source == "REG" && currentEvent.Source == "REG")
         {
             lowLevelEvents.RemoveAt(lowLevelEvents.Count - 1);
             return;

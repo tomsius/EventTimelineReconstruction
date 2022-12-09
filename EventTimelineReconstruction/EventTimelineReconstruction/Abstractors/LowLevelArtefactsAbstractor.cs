@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class LowLevelArtefactsAbstractor
+public class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
 {
     private readonly ILowLevelArtefactsAbstractorUtils _lowLevelArtefactsAbstractorUtils;
 
@@ -46,7 +46,7 @@ public class LowLevelArtefactsAbstractor
                     lowLevelArtefact = this.FormEvent(events[i]);
                     int needsSkipping = this.SkipFileEvents(events, i, periodInMinutes);
 
-                    if (!this.IsFileEventValid(lowLevelArtefacts, lowLevelArtefact)) 
+                    if (!this.IsFileEventValid(lowLevelArtefacts, lowLevelArtefact))
                     {
                         lowLevelArtefact = null;
                     }

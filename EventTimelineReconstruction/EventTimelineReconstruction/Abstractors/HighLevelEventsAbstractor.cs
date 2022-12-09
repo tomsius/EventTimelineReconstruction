@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class HighLevelEventsAbstractor
+public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
 {
     private const double _minutesThreshold = 50.0;
 
