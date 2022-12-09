@@ -340,7 +340,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     }
 
     [TestMethod]
-    public void GetDescriptionFromMetaSource_ShouldReturnFormatteddDescription_WhenMethodIsCalled()
+    public void GetDescriptionFromMetaSource_ShouldReturnFormattedDescription_WhenMethodIsCalled()
     {
         // Arrange
         string description = "Creating App: Microsoft Office Word App version: 16.0000 Last saved by: Anonymous Author: ssssss Revision number: 130 Template: Normal.dotm Number of words: 806 Number of characters: 4597 Number of characters with spaces: 5393 Hyperlinks changed: false Links up to date: false Scale crop: false Number of lines: 38";
