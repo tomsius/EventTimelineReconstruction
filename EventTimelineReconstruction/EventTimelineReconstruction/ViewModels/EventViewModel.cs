@@ -212,30 +212,6 @@ public class EventViewModel : ViewModelBase, IComparable
         }
     }
 
-    public string DisplayDescription
-    {
-        get
-        {
-            StringBuilder sb = new();
-
-            for (int i = 0; i < Description.Length; i++) 
-            {
-                if (Description[i] == ' ' && char.IsUpper(Description[i + 1]))
-                {
-                    sb.Append(Environment.NewLine);
-                    sb.Append(Description[i + 1]);
-                    i++;
-                }
-                else
-                {
-                    sb.Append(Description[i]);
-                }
-            }
-
-            return sb.ToString();
-        }
-    }
-
     public string DisplayExtra
     {
         get

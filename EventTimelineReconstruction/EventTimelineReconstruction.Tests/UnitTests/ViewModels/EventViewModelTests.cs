@@ -419,39 +419,6 @@ public class EventViewModelTests
     }
 
     [TestMethod]
-    public void DisplayDescription_ShouldReturnFormattedDescription_WhenPropertyIsCalled()
-    {
-        // Arrange
-        EventModel eventModel = new(
-            new DateOnly(2022, 10, 14),
-            new TimeOnly(10, 52),
-            TimeZoneInfo.Local,
-            "MACB",
-            "Source",
-            "Source Type",
-            "Type",
-            "Username",
-            "Hostname",
-            "Short Description",
-            "Full Description",
-            2.5,
-            "Filename",
-            "iNode number",
-            "Notes",
-            "Format",
-            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
-        EventViewModel eventViewModel = new(eventModel);
-        string expected = "Full\r\nDescription";
-
-        // Act
-        string actual = eventViewModel.DisplayDescription;
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod]
     public void DisplayExtra_ShouldReturnFormattedExtra_WhenPropertyIsCalled()
     {
         // Arrange
