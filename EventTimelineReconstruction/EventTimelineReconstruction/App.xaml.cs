@@ -1,4 +1,5 @@
-﻿using EventTimelineReconstruction.Services;
+﻿using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.Validators;
@@ -38,6 +39,15 @@ public partial class App : Application
                 services.AddSingleton<IFilteringStore, FilteringStore>();
                 services.AddSingleton<IColouringStore, ColouringStore>();
 
+                services.AddSingleton<IHighLevelEventsAbstractorUtils, HighLevelEventsAbstractorUtils>();
+                services.AddSingleton<IHighLevelEventsAbstractor, HighLevelEventsAbstractor>();
+                services.AddSingleton<ILowLevelEventsAbstractorUtils, LowLevelEventsAbstractorUtils>();
+                services.AddSingleton<ILowLevelEventsAbstractor, LowLevelEventsAbstractor>();
+                services.AddSingleton<IHighLevelArtefactsAbstractorUtils, HighLevelArtefactsAbstractorUtils>();
+                services.AddSingleton<IHighLevelArtefactsAbstractor, HighLevelArtefactsAbstractor>();
+                services.AddSingleton<ILowLevelArtefactsAbstractorUtils, LowLevelArtefactsAbstractorUtils>();
+                services.AddSingleton<ILowLevelArtefactsAbstractor, LowLevelArtefactsAbstractor>();
+
                 services.AddSingleton<IntegrityViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();
                 services.AddSingleton<EventTreeViewModel>();
@@ -49,6 +59,7 @@ public partial class App : Application
                 services.AddSingleton<FilterViewModel>();
                 services.AddSingleton<ChangeColourViewModel>();
                 services.AddSingleton<ColourViewModel>();
+                services.AddSingleton<AbstractedEventsViewModel>();
 
                 services.AddSingleton(s => new IntegrityView()
                 {
@@ -90,6 +101,10 @@ public partial class App : Application
                 {
                     DataContext = s.GetRequiredService<FilterViewModel>()
                 });
+                services.AddSingleton(s => new AbstractionView()
+                {
+                    DataContext = s.GetRequiredService<AbstractedEventsViewModel>()
+                });
                 services.AddSingleton(s => new MainWindow(
                     s.GetRequiredService<ImportView>(), 
                     s.GetRequiredService<SaveWorkView>(), 
@@ -98,7 +113,8 @@ public partial class App : Application
                     s.GetRequiredService<FilterView>(), 
                     s.GetRequiredService<ChangeColourView>(),
                     s.GetRequiredService<ColourView>(), 
-                    s.GetRequiredService<IntegrityView>()) {
+                    s.GetRequiredService<IntegrityView>(),
+                    s.GetRequiredService<AbstractionView>()) {
                     DataContext = s.GetRequiredService<MainWindowViewModel>()
                 });
             })
