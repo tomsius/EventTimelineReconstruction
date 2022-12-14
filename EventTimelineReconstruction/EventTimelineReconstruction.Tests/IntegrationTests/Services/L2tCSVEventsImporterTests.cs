@@ -14,6 +14,7 @@ public class L2tCSVEventsImporterTests
         using StreamWriter writeStream = File.CreateText(@"EventsImporter.csv");
         writeStream.WriteLine(@"date,time,timezone,MACB,source,sourcetype,type,user,host,short,desc,version,filename,inode,notes,format,extra");
         writeStream.WriteLine(@"01/01/1970,00:00:00,UTC,....,WEBHIST,MSIE Cache File URL record,Expiration Time,-,PC1-5DFC89FB1E0,Location: Visited: PC1@about:Home,Location: Visited: PC1@about:Home Number of hits: 2 Cached file size: 0,2,TSK:/Documents and Settings/PC1/Local Settings/History/History.IE5/index.dat,10536,-,msiecf,cache_directory_index: -2; recovered: False; sha256_hash: 243645de118fab85ae3e5f4f820ee50717ddf478f17f7a678c88aa5d437a7e70");
+        writeStream.WriteLine(@"11/17/2001,09:09:53,UTC,.A..,WEBHIST,Firefox History,Last Visited Time,-,PC1-5DFC89FB1E0,URL: https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABA...,https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABAAGgJsZQ&sig=AOD64_3ykMPCxolRZ-sO--e3gKiL0Le_6g&ved=2ahUKEwju7oid77T7AhWplosKHafFCrgQ0Qx6BAgMEAE&adurl= [count: 1] Host: www.google.com visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com) (URL not typed directly) Transition: LINK,2,TSK:/Documents and Settings/PC1/Application Data/Mozilla/Firefox/Profiles/obcflyez.default/places.sqlite,10816,-,sqlite/firefox_history,extra: ['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']; schema_match: False; sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7; visit_type: 1");
         writeStream.WriteLine(@"01/01/2003,00:00:00,UTC,....,WEBHIST,MSIE Cache File URL record,Expiration Time,-,PC1-5DFC89FB1E0,Location: Visited: PC1@about:Home,Location: Visited: PC1@about:Home Number of hits: 2 Cached file size: 0,2,TSK:/Documents and Settings/PC1/Local Settings/History/History.IE5/index.dat,10536,-,msiecf,cache_directory_index: -2; recovered: False; sha256_hash: ");
         writeStream.WriteLine(@"01/01/2020,15:25:55,UTC,....,REG,AppCompatCache Registry Entry,File Last Modification Time,-,PC1-5DFC89FB1E0,[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\Session Manager\AppCompatibi...,[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\Session Manager\AppCompatibility] Cached entry: 28,2,TSK:/System Volume Information/_restore{5D162324-8035-4BDB-B6BA-8D2C3C5FBFF0}/RP2/snapshot/_REGISTRY_MACHINE_SYSTEM,13932,-,winreg/appcompatcache,sha256_hash: c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38");
         writeStream.WriteLine(@"00:00:00,UTC,....,REG,AppCompatCache Registry Entry,File Last Modification Time,-,PC1-5DFC89FB1E0,[HKEY_LOCAL_MACHINE\System\ControlSet002\Control\Session Manager\AppCompatibi...,[HKEY_LOCAL_MACHINE\System\ControlSet002\Control\Session Manager\AppCompatibility] Cached entry: 28,2,TSK:/System Volume Information/_restore{5D162324-8035-4BDB-B6BA-8D2C3C5FBFF0}/RP2/snapshot/_REGISTRY_MACHINE_SYSTEM,13932,-,winreg/appcompatcache,sha256_hash: c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38");
@@ -54,6 +55,26 @@ public class L2tCSVEventsImporterTests
         List<EventModel> expected = new()
         {
             new EventModel(
+                new DateOnly(2001, 11, 17),
+                new TimeOnly(9, 9, 53),
+                TimeZoneInfo.Utc,
+                ".A..",
+                "WEBHIST",
+                "Firefox History",
+                "Last Visited Time",
+                "-",
+                "PC1-5DFC89FB1E0",
+                "URL: https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABA...",
+                "https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABAAGgJsZQ&sig=AOD64_3ykMPCxolRZ-sO--e3gKiL0Le_6g&ved=2ahUKEwju7oid77T7AhWplosKHafFCrgQ0Qx6BAgMEAE&adurl= [count: 1] Host: www.google.com visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com) (URL not typed directly) Transition: LINK",
+                2,
+                "TSK:/Documents and Settings/PC1/Application Data/Mozilla/Firefox/Profiles/obcflyez.default/places.sqlite",
+                "10816",
+                "-",
+                "sqlite/firefox_history",
+                new Dictionary<string, string>() { { "extra", "['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']" }, { "schema_match", "False" }, { "sha256_hash", "4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7" }, { "visit_type", "1" } },
+                "3"
+                ),
+            new EventModel(
                 new DateOnly(2003, 1, 1),
                 new TimeOnly(0, 0, 0),
                 TimeZoneInfo.Utc,
@@ -71,7 +92,7 @@ public class L2tCSVEventsImporterTests
                 "-",
                 "msiecf",
                 new Dictionary<string, string>() { { "cache_directory_index", "-2" }, { "recovered", "False" }, { "sha256_hash", "" } },
-                "3"
+                "4"
                 ),
             new EventModel(
                 new DateOnly(2020, 1, 1),
@@ -91,7 +112,7 @@ public class L2tCSVEventsImporterTests
                 "-",
                 "winreg/appcompatcache",
                 new Dictionary<string, string>() { { "sha256_hash", "c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38" } },
-                "4"
+                "5"
                 )
         };
 
