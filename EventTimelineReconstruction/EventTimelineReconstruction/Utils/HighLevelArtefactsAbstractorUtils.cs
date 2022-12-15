@@ -228,6 +228,11 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
             startIndex = description.IndexOf(startKey, endIndex);
         }
 
+        if (sb.Length == 0)
+        {
+            return sb.ToString();
+        }
+
         return sb.Remove(sb.Length - 2, 2).ToString();
     }
 
@@ -264,14 +269,16 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
 
     public string GetFilename(string description)
     {
-        char startKey = '/';
+        string startKey = "/";
         string endKey = " Type:";
         int startIndex = description.LastIndexOf(startKey);
         int endIndex = description.LastIndexOf(endKey);
 
         if (startIndex == -1)
         {
-            return description.Substring(0, endIndex);
+            startKey = "Origin: ";
+            startIndex = description.LastIndexOf(startKey) + startKey.Length;
+            return description.Substring(startIndex);
         }
 
         startIndex += 1;

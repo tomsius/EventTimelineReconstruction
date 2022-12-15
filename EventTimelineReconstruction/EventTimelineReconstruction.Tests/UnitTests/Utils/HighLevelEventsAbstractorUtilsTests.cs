@@ -180,6 +180,7 @@ public class HighLevelEventsAbstractorUtilsTests
     [DataRow("[Empty description] something...", "something...")]
     [DataRow("[Process RAR  ZIP and other archive formats] something something test.zip", "something something test.zip")]
     [DataRow("[Create beautiful documents easily work with others and enjoy the read.] C:...", "Create beautiful documents easily work with others and enjoy the read.")]
+    [DataRow("[Use your computer to connect to a computer that is located elsewhere and run...", "Use your computer to connect to a computer that is located elsewhere and run...")]
     public void GetShort_ShouldReturnShortValue_WhenInputIsGiven(string input, string expected)
     {
         // Arrange

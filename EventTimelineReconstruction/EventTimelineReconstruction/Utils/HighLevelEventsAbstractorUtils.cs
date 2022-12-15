@@ -147,6 +147,12 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
 
         int startIndex = data.IndexOf('[') + 1;
         int endIndex = data.IndexOf(']');
+
+        if (endIndex == -1)
+        {
+            endIndex = data.Length;
+        }
+
         int length = endIndex - startIndex;
         return data.Substring(startIndex, length);
     }

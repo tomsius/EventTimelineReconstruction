@@ -32,6 +32,11 @@ public class LowLevelEventsAbstractorUtilsTests
                 {
                     new Dictionary<string, string>() { { "host", "." }, { "visit_type", "5" }, { "schema_match", "False" }, { "sha256_hash", "a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741" } },
                     "host: . visit_type: 5"
+                },
+                new object[]
+                {
+                    new Dictionary<string, string>() { { "extra", "['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']" }, { "schema_match", "False" }, { "sha256_hash", "4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7" }, { "visit_type", "1" } },
+                    "https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b"
                 }
             };
         }

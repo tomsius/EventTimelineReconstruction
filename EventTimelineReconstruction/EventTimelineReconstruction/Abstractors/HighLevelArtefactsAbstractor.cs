@@ -315,6 +315,11 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 
     private bool IsFileEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
+        if (highLevelArtefacts.Count == 0)
+        {
+            return true;
+        }
+
         HighLevelArtefactViewModel previous = highLevelArtefacts[^1];
         DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
         DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
@@ -426,7 +431,6 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 
     private HighLevelArtefactViewModel FormEventFromRegSource(EventViewModel eventViewModel)
     {
-        string shortValue = _lowLevelEventsAbstractorUtils.GetSummaryFromShort(eventViewModel.Description);
         string extraValue = _lowLevelEventsAbstractorUtils.GetExtraTillSha256(eventViewModel.Extra);
         string descriptionValue = _highLevelArtefactsAbstractorUtils.GetDescriptionFromRegSource(eventViewModel.SourceType, eventViewModel.Description);
 
@@ -435,7 +439,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
             Date = DateOnly.FromDateTime(eventViewModel.FullDate),
             Time = TimeOnly.FromDateTime(eventViewModel.FullDate),
             Source = eventViewModel.Source,
-            Short = shortValue,
+            Short = eventViewModel.Short,
             Extra = extraValue,
             Reference = eventViewModel.SourceLine,
             Macb = eventViewModel.MACB,

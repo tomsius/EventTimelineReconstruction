@@ -368,6 +368,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     [DataRow("UNKNOWN", "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\15.0\\Word\\Reading Locations\\Document 2] Datetime: [REG_SZ] 2017-11-07T09:41 File Path: [REG_SZ] test.docx Position: [REG_SZ] 0 0, (Vac_lapkrgruC)", "test.docx")]
     [DataRow("UNKNOWN", "Something else", "Something else")]
     [DataRow("Something something", "Some description", "")]
+    [DataRow("Registry Key : BagMRU", "[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\ShellNoRoam\\BagMRU\\3]", "")]
     public void GetDescriptionFromRegSource_ShouldReturnFilenameFromDescription_WhenMetodsIsCalled(string sourceType, string description, string expected)
     {
         // Arrange
