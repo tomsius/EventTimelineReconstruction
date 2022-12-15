@@ -85,6 +85,9 @@
                 <Button ToolTip="{DynamicResource ToolBar_Integrity}" Click="CheckIntegrityButton_Click">
                     <Image Width="32" Source="/Resources/lock.png" />
                 </Button>
+                <Button ToolTip="Suformuoti abstrakcijos lygius" Click="AbstractButton_Click">
+                    <Image Width="32" Source="/Resources/import.png" />
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <views:EventDetailsView Width="300" DockPanel.Dock="Right" DataContext="{Binding EventDetailsViewModel}" />

@@ -13,6 +13,7 @@ public partial class MainWindow : Window
     private readonly ChangeColourView _changeColourView;
     private readonly ColourView _colourView;
     private readonly IntegrityView _integrityView;
+    private readonly AbstractionView _abstractionView;
 
     public MainWindow(
         ImportView view, 
@@ -22,7 +23,8 @@ public partial class MainWindow : Window
         FilterView filterView,
         ChangeColourView changeColourView,
         ColourView colourView,
-        IntegrityView integrityView)
+        IntegrityView integrityView,
+        AbstractionView abstractionView)
     {
         this.InitializeComponent();
         _importView = view;
@@ -33,6 +35,7 @@ public partial class MainWindow : Window
         _changeColourView = changeColourView;
         _colourView = colourView;
         _integrityView = integrityView;
+        _abstractionView = abstractionView;
     }
 
     private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -73,5 +76,10 @@ public partial class MainWindow : Window
     private void CheckIntegrityButton_Click(object sender, RoutedEventArgs e)
     {
         _integrityView.Show();
+    }
+
+    private void AbstractButton_Click(object sender, RoutedEventArgs e)
+    {
+        _abstractionView.Show();
     }
 }
