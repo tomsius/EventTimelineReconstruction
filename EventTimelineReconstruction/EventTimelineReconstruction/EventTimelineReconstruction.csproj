@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\abstraction-levels.png" />
     <None Remove="Resources\fillcolour.png" />
     <None Remove="Resources\filter.png" />
     <None Remove="Resources\hidden.png" />
@@ -28,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\abstraction-levels.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\fillcolour.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
