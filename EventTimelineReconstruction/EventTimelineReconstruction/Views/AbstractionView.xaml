@@ -70,7 +70,7 @@
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <Button 
-                Style="{StaticResource CancelButton}"
+                Style="{StaticResource AbstractionLevelButton}"
                 Width="140"
                 Height="30"
                 Padding="0 0 0 2"
@@ -91,7 +91,7 @@
                 </Button.CommandParameter>
             </Button>
             <Button 
-                Style="{StaticResource CancelButton}"
+                Style="{StaticResource AbstractionLevelButton}"
                 Width="140"
                 Height="30"
                 Padding="0 0 0 2"
@@ -112,7 +112,7 @@
                 </Button.CommandParameter>
             </Button>
             <Button 
-                Style="{StaticResource CancelButton}"
+                Style="{StaticResource AbstractionLevelButton}"
                 Width="140"
                 Height="30"
                 Padding="0 0 0 2"
@@ -133,7 +133,7 @@
                 </Button.CommandParameter>
             </Button>
             <Button 
-                Style="{StaticResource CancelButton}"
+                Style="{StaticResource AbstractionLevelButton}"
                 Width="140"
                 Height="30"
                 Padding="0 0 0 2"
