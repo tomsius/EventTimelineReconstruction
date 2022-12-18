@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,22 @@
     <None Remove="Resources\marker.png" />
     <None Remove="Resources\moveup.png" />
     <None Remove="Resources\save.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Resources\Localizations\Resource.en.xaml" />
+    <Page Remove="Resources\Localizations\Resource.lt.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Localizations\Resource.en.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Localizations\Resource.lt.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -65,17 +82,6 @@
     <Resource Include="Resources\save.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Resources\Localizations\Resource.en.xaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Update="Resources\Localizations\Resource.lt.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
   </ItemGroup>
 
 </Project>

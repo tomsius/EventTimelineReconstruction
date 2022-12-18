@@ -80,7 +80,7 @@ public class ErrorsViewModel : IErrorsViewModel
 
     public void UpdateErrorsLanguage(string oldLanguage)
     {
-        string dictionaryPath = $@"{Directory.GetCurrentDirectory()}/../../../Resources/Localizations/Resource.{oldLanguage}.xaml";
+        string dictionaryPath = $@"{AppDomain.CurrentDomain.BaseDirectory}Resources/Localizations/Resource.{oldLanguage}.xaml";
         ResourceDictionary dictionary = new();
         Uri uri = new(dictionaryPath, UriKind.Absolute);
         dictionary.Source = uri;

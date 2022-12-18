@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 
 namespace EventTimelineReconstruction.Utils;
@@ -10,7 +11,7 @@ public class FileUtils : IFileUtils
 
     public string[] GetResourcesPaths()
     {
-        string fullPath = @$"{Directory.GetCurrentDirectory()}/../../../{_languagesFolder}";
+        string fullPath = @$"{AppDomain.CurrentDomain.BaseDirectory}{_languagesFolder}";
         string[] paths = Directory.GetFiles(fullPath, _fileExtension);
 
         return paths;
