@@ -51,7 +51,8 @@ public class EventTreeViewModelTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "1"
                         )
                     )
                 },
@@ -75,7 +76,8 @@ public class EventTreeViewModelTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "2"
                         )
                     )
                 },
@@ -99,7 +101,8 @@ public class EventTreeViewModelTests
                             "iNode number",
                             "Notes",
                             "Format",
-                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                            "3"
                         )
                     )
                 }
@@ -166,7 +169,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }));
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"));
 
         // Act
         _eventTreeViewModel.DraggedItem = expected;
@@ -207,7 +211,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }));
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"));
 
         // Act
         _eventTreeViewModel.Target = expected;
@@ -275,7 +280,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }));
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"));
         TreeViewItem uiElement = new() { Header = eventViewModel };
         DraggableAdorner expected = new(uiElement, uiElement);
 
@@ -384,7 +390,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 );
         int expectedCount = 1;
 
@@ -424,7 +431,8 @@ public class EventTreeViewModelTests
         }
 
         Assert.AreEqual(expected.IsVisible, actualValue[0].IsVisible);
-        Assert.AreEqual(expected.Colour, actualValue[0].Colour);
+        Assert.AreEqual(expected.Colour.ToString(), actualValue[0].Colour.ToString());
+        Assert.AreEqual(expected.SourceLine, actualValue[0].SourceLine);
     }
 
     [TestMethod]
@@ -449,7 +457,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 );
         _eventTreeViewModel.AddEvent(eventViewModel);
         int expected = 0;
@@ -484,7 +493,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 );
         EventViewModel otherViewModel = new(
                 new EventModel(
@@ -504,7 +514,8 @@ public class EventTreeViewModelTests
                         "iNode number2",
                         "Notes2",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } })
+                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
+                        "2")
                 );
         _eventTreeViewModel.AddEvent(originalViewModel);
         int expected = 1;
@@ -539,7 +550,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 )
         {
             IsVisible = true
@@ -562,7 +574,8 @@ public class EventTreeViewModelTests
                         "iNode number2",
                         "Notes2",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } })
+                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } }, 
+                        "2")
                 )
         {
             IsVisible = false
@@ -609,7 +622,8 @@ public class EventTreeViewModelTests
         }
 
         Assert.AreEqual(expected.IsVisible, actualValue[0].IsVisible);
-        Assert.AreEqual(expected.Colour, actualValue[0].Colour);
+        Assert.AreEqual(expected.Colour.ToString(), actualValue[0].Colour.ToString());
+        Assert.AreEqual(expected.SourceLine, actualValue[0].SourceLine);
     }
 
     [DataTestMethod]
@@ -642,7 +656,8 @@ public class EventTreeViewModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1")
                 )
         {
             IsVisible = true
@@ -665,7 +680,8 @@ public class EventTreeViewModelTests
                         "iNode number2",
                         "Notes2",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } })
+                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
+                        "2")
                 )
         {
             IsVisible = false
@@ -688,7 +704,8 @@ public class EventTreeViewModelTests
                         "iNode number2",
                         "Notes2",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } })
+                        new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
+                        "3")
                 )
         {
             IsVisible = false
@@ -711,7 +728,8 @@ public class EventTreeViewModelTests
                         "iNode number3",
                         "Notes3",
                         "Format3",
-                        new Dictionary<string, string>() { { "Key123", "Value123" }, { "Key213", "Value213" } })
+                        new Dictionary<string, string>() { { "Key123", "Value123" }, { "Key213", "Value213" } },
+                        "4")
                 )
         {
             IsVisible = true
@@ -766,7 +784,8 @@ public class EventTreeViewModelTests
         }
 
         Assert.AreEqual(expected.IsVisible, actualValue[0].IsVisible);
-        Assert.AreEqual(expected.Colour, actualValue[0].Colour);
+        Assert.AreEqual(expected.Colour.ToString(), actualValue[0].Colour.ToString());
+        Assert.AreEqual(expected.SourceLine, actualValue[0].SourceLine);
     }
 
     [TestMethod]
@@ -820,6 +839,7 @@ public class EventTreeViewModelTests
         }
 
         Assert.AreEqual(expected.IsVisible, actualValue[0].IsVisible);
-        Assert.AreEqual(expected.Colour, actualValue[0].Colour);
+        Assert.AreEqual(expected.Colour.ToString(), actualValue[0].Colour.ToString());
+        Assert.AreEqual(expected.SourceLine, actualValue[0].SourceLine);
     }
 }

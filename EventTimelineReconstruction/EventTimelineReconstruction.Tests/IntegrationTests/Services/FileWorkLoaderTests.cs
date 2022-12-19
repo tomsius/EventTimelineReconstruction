@@ -13,12 +13,12 @@ public class FileWorkLoaderTests
     public static void Initialize(TestContext context)
     {
         using StreamWriter writeStream = File.CreateText(_file);
-        writeStream.WriteLine("2020,4,6,5,23,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB1,Source1,Source Type1,Type1,Username1,Hostname1,Short Description1,Full Description1,2.5,Filename1,iNode number1,Notes1,Format1,Key11:Value11;Key12:Value12,True,#FF000000");
-        writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB3,Source3,Source Type3,Type3,Username3,Hostname3,Short Description3,Full Description3,2.5,Filename3,iNode number3,Notes3,Format3,Key31:Value31;Key32:Value32,True,#FF000000");
-        writeStream.WriteLine("\t\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB4,Source4,Source Type4,Type4,Username4,Hostname4,Short Description4,Full Description4,2.5,Filename4,iNode number4,Notes4,Format4,Key41:Value41;Key42:Value42,True,#FF000000");
-        writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB5,Source5,Source Type5,Type5,Username5,Hostname5,Short Description5,Full Description5,2.5,Filename5,iNode number5,Notes5,Format5,Key51:Value51;Key52:Value52,True,#FF000000");
-        writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB6,Source6,Source Type6,Type6,Username6,Hostname6,Short Description6,Full Description6,2.5,Filename6,iNode number6,Notes6,Format6,Key61:Value61;Key62:Value62,True,#FF000000");
-        writeStream.WriteLine("2022,10,14,10,52,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB2,Source2,Source Type2,Type2,Username2,Hostname2,Short Description2,Full Description2,2.5,Filename2,iNode number2,Notes2,Format2,Key21:Value21;Key22:Value22,True,#FF000000");
+        writeStream.WriteLine("2020,4,6,5,23,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB1,Source1,Source Type1,Type1,Username1,Hostname1,Short Description1,Full Description1,2.5,Filename1,iNode number1,Notes1,Format1,Key11:Value11;Key12:Value12,1,True,#FF000000");
+        writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB3,Source3,Source Type3,Type3,Username3,Hostname3,Short Description3,Full Description3,2.5,Filename3,iNode number3,Notes3,Format3,Key31:Value31;Key32:Value32,3,True,#FF000000");
+        writeStream.WriteLine("\t\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB4,Source4,Source Type4,Type4,Username4,Hostname4,Short Description4,Full Description4,2.5,Filename4,iNode number4,Notes4,Format4,Key41:Value41;Key42:Value42,4,True,#FF000000");
+        writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB5,Source5,Source Type5,Type5,Username5,Hostname5,Short Description5,Full Description5,2.5,Filename5,iNode number5,Notes5,Format5,Key51:Value51;Key52:Value52,5,True,#FF000000");
+        writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB6,Source6,Source Type6,Type6,Username6,Hostname6,Short Description6,Full Description6,2.5,Filename6,iNode number6,Notes6,Format6,Key61:Value61;Key62:Value62,6,True,#FF000000");
+        writeStream.WriteLine("2022,10,14,10,52,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB2,Source2,Source Type2,Type2,Username2,Hostname2,Short Description2,Full Description2,2.5,Filename2,iNode number2,Notes2,Format2,Key21:Value21;Key22:Value22,2,True,#FF000000");
     }
 
     [ClassCleanup]
@@ -51,7 +51,8 @@ public class FileWorkLoaderTests
                     "iNode number1",
                     "Notes1",
                     "Format1",
-                    new Dictionary<string, string>() { { "Key11", "Value11" }, { "Key12", "Value12" } }
+                    new Dictionary<string, string>() { { "Key11", "Value11" }, { "Key12", "Value12" } },
+                    "1"
                     )),
             new EventViewModel(
                 new EventModel(
@@ -71,7 +72,8 @@ public class FileWorkLoaderTests
                     "iNode number2",
                     "Notes2",
                     "Format2",
-                    new Dictionary<string, string>() { { "Key21", "Value21" }, { "Key22", "Value22" } }
+                    new Dictionary<string, string>() { { "Key21", "Value21" }, { "Key22", "Value22" } },
+                    "2"
                 ))
         };
         EventViewModel firstChild = new(
@@ -92,7 +94,8 @@ public class FileWorkLoaderTests
                     "iNode number3",
                     "Notes3",
                     "Format3",
-                    new Dictionary<string, string>() { { "Key31", "Value31" }, { "Key32", "Value32" } }
+                    new Dictionary<string, string>() { { "Key31", "Value31" }, { "Key32", "Value32" } },
+                    "3"
                     ));
         EventViewModel secondChild = new(
                 new EventModel(
@@ -112,7 +115,8 @@ public class FileWorkLoaderTests
                     "iNode number4",
                     "Notes4",
                     "Format4",
-                    new Dictionary<string, string>() { { "Key41", "Value41" }, { "Key42", "Value42" } }
+                    new Dictionary<string, string>() { { "Key41", "Value41" }, { "Key42", "Value42" } },
+                    "4"
                     ));
         EventViewModel thirdChild = new(
                 new EventModel(
@@ -132,7 +136,8 @@ public class FileWorkLoaderTests
                     "iNode number5",
                     "Notes5",
                     "Format5",
-                    new Dictionary<string, string>() { { "Key51", "Value51" }, { "Key52", "Value52" } }
+                    new Dictionary<string, string>() { { "Key51", "Value51" }, { "Key52", "Value52" } },
+                    "5"
                     ));
         EventViewModel fourthChild = new(
                 new EventModel(
@@ -152,7 +157,8 @@ public class FileWorkLoaderTests
                     "iNode number6",
                     "Notes6",
                     "Format6",
-                    new Dictionary<string, string>() { { "Key61", "Value61" }, { "Key62", "Value62" } }
+                    new Dictionary<string, string>() { { "Key61", "Value61" }, { "Key62", "Value62" } },
+                    "6"
                     ));
         expected[0].AddChild(firstChild);
         expected[0].Children[0].AddChild(secondChild);
@@ -208,6 +214,7 @@ public class FileWorkLoaderTests
 
             Assert.AreEqual(currentExpected.IsVisible, currentActual.IsVisible);
             Assert.AreEqual(currentExpected.Colour.ToString(), currentActual.Colour.ToString());
+            Assert.AreEqual(currentExpected.SourceLine, currentActual.SourceLine);
 
             for (int i = 0; i < currentExpected.Children.Count; i++)
             {

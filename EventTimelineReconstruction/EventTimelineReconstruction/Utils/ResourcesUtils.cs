@@ -19,7 +19,7 @@ public class ResourcesUtils : IResourcesUtils
     public void ChangeLanguage(string language)
     {
         ResourceDictionary dictionary = new();
-        string dictionaryPath = $@"{Directory.GetCurrentDirectory()}/../../../Resources/Localizations/Resource.{language}.xaml";
+        string dictionaryPath = $@"{AppDomain.CurrentDomain.BaseDirectory}Resources/Localizations/Resource.{language}.xaml";
         Uri uri = new(dictionaryPath, UriKind.Absolute);
         dictionary.Source = uri;
 

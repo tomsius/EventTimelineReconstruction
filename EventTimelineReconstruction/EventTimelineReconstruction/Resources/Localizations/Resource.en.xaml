@@ -46,6 +46,7 @@
     <system:String x:Key="ToolBar_Change_Colour">Change event's colour</system:String>
     <system:String x:Key="ToolBar_Colour">Change colouring of each event type</system:String>
     <system:String x:Key="ToolBar_Integrity">Check events' integrity</system:String>
+    <system:String x:Key="ToolBar_Abstraction">Form abstraction levels</system:String>
      
     <!--ImportView-->
     <system:String x:Key="Import_Window_Title">Import events...</system:String>
@@ -127,6 +128,19 @@
     <system:String x:Key="Integrity_Events_Compromised">Events' integrity is compromised.</system:String>
     <system:String x:Key="Integrity_Check">Check</system:String>
 
+    <!--AbstractionView-->
+    <system:String x:Key="Abstraction_Window_Title">Abstraction levels</system:String>
+    <system:String x:Key="Abstraction_Form">Form</system:String>
+    <system:String x:Key="Abstraction_Reform">Reform low level artefacts</system:String>
+    <system:String x:Key="Abstraction_High_Level_Events">High level events</system:String>
+    <system:String x:Key="Abstraction_Low_Level_Events">Low level events</system:String>
+    <system:String x:Key="Abstraction_High_Level_Artefacts">High level artefacts</system:String>
+    <system:String x:Key="Abstraction_Low_Level_Artefacts">Low level artefacts</system:String>
+    <system:String x:Key="Abstraction_Time">Time</system:String>
+    <system:String x:Key="Abstraction_Short">Short description</system:String>
+    <system:String x:Key="Abstraction_Visit">Visit</system:String>
+    <system:String x:Key="Abstraction_Reference">Reference</system:String>
+
     <!--DragDropUtils-->
     <system:String x:Key="DragDrop_Question">Would you like to move</system:String>
     <system:String x:Key="DragDrop_Into">into</system:String>
@@ -143,6 +157,8 @@
     <system:String x:Key="Error_Filename">File is not selected.</system:String>
     <system:String x:Key="FileNotFound_Caption">File not found</system:String>
     <system:String x:Key="FileNotFound_Message">Error while trying to read file:</system:String>
+    <system:String x:Key="FileInUse_Caption">File is in use by other program</system:String>
+    <system:String x:Key="FileInUse_Message">Other program is using file: </system:String>
     <system:String x:Key="LoadingError_Caption">Work cannot be imported</system:String>
     <system:String x:Key="LoadingError_Message">Error while trying to import work. Make sure correct file is selected.</system:String>
 </ResourceDictionary>

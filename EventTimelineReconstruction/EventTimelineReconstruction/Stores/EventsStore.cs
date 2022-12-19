@@ -107,11 +107,36 @@ public class EventsStore : IEventsStore
                 current.INode,
                 current.Notes,
                 current.Format,
-                current.Extra
+                current.Extra,
+                current.SourceLine
                 );
             eventModels.Add(eventModel);
         }
 
         return eventModels;
+    }
+
+    public List<EventViewModel> GetStoredEventViewModelsAsOneLevel()
+    {
+        List<EventViewModel> eventModels = new(_events.Count);
+        Queue<EventViewModel> queue = new(_events.Count);
+
+        foreach (EventViewModel eventViewModel in _events)
+        {
+            queue.Enqueue(eventViewModel);
+        }
+
+        while (queue.Count > 0)
+        {
+            EventViewModel current = queue.Dequeue();
+            foreach (EventViewModel eventViewModel in current.Children)
+            {
+                queue.Enqueue(eventViewModel);
+            }
+
+            eventModels.Add(current);
+        }
+
+        return eventModels.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
     }
 }

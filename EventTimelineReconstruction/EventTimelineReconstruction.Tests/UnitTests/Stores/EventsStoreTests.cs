@@ -30,7 +30,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"),
             new EventModel(
                         new DateOnly(2021, 10, 14),
                         new TimeOnly(10, 52),
@@ -48,7 +49,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "2"),
             new EventModel(
                         new DateOnly(2022, 11, 14),
                         new TimeOnly(10, 52),
@@ -66,7 +68,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "3"),
             new EventModel(
                         new DateOnly(2022, 10, 15),
                         new TimeOnly(10, 52),
@@ -84,7 +87,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "4"),
             new EventModel(
                         new DateOnly(2022, 10, 14),
                         new TimeOnly(20, 52),
@@ -102,7 +106,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "5"),
             new EventModel(
                         new DateOnly(2022, 10, 14),
                         new TimeOnly(10, 15),
@@ -120,7 +125,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "6"),
             new EventModel(
                         new DateOnly(2022, 12, 14),
                         new TimeOnly(10, 52),
@@ -138,7 +144,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "7"),
             new EventModel(
                         new DateOnly(2022, 9, 16),
                         new TimeOnly(10, 52),
@@ -156,7 +163,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "8"),
             new EventModel(
                         new DateOnly(2020, 2, 1),
                         new TimeOnly(10, 52),
@@ -174,7 +182,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }),
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "9"),
             new EventModel(
                         new DateOnly(2020, 2, 1),
                         new TimeOnly(10, 52),
@@ -192,7 +201,8 @@ public class EventsStoreTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } })
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "10")
         };
 
         return events;
@@ -219,7 +229,8 @@ public class EventsStoreTests
             "iNode number8",
             "Notes5",
             "Format1",
-            new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } });
+            new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } },
+            "3");
         EventViewModel childEventViewModel = new(eventModel) { IsVisible = false };
 
         eventViewModels[^1].AddChild(childEventViewModel);
@@ -241,6 +252,224 @@ public class EventsStoreTests
         };
 
         return hiddenEvents;
+    }
+
+    private List<EventViewModel> GetEventViewModelsAsOneLevel()
+    {
+        List<EventViewModel> eventViewModels = new() 
+        {
+            new EventViewModel(new EventModel(
+                new DateOnly(2018, 8, 5),
+                new TimeOnly(12, 32),
+                TimeZoneInfo.Local,
+                "MACB8",
+                "Source1",
+                "Source Type8",
+                "Type5",
+                "Username4",
+                "Hostname6",
+                "Short Description3",
+                "Full Description5",
+                2.5,
+                "Filename7",
+                "iNode number8",
+                "Notes5",
+                "Format1",
+                new Dictionary<string, string>() { { "Key10", "Value10" }, { "Key21", "Value21" } },
+                "3")) { IsVisible = false },
+            new EventViewModel(new EventModel(
+                    new DateOnly(2020, 2, 1),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source2",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename123",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "9")),
+            new EventViewModel(new EventModel(
+                    new DateOnly(2020, 2, 1),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source",
+                    "Source Type2",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename321",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "10")),
+            new EventViewModel(new EventModel(
+                new DateOnly(2021, 10, 14),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "2")) { IsVisible = false },
+            new EventViewModel(new EventModel(
+                    new DateOnly(2022, 9, 16),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Local,
+                    "BCAM",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "8")),
+            new EventViewModel(new EventModel(
+                    new DateOnly(2022, 10, 14),
+                    new TimeOnly(10, 15),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "6")),
+            new EventViewModel(new EventModel(
+                new DateOnly(2022, 10, 14),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "1")) { IsVisible = false },
+            new EventViewModel(new EventModel(
+                    new DateOnly(2022, 10, 14),
+                    new TimeOnly(20, 52),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "5")),
+            new EventViewModel(new EventModel(
+                    new DateOnly(2022, 10, 15),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "4")),
+            new EventViewModel(new EventModel(
+                    new DateOnly(2022, 11, 14),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Local,
+                    "MACB",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "3")),
+            new EventViewModel(new EventModel(
+                    new DateOnly(2022, 12, 14),
+                    new TimeOnly(10, 52),
+                    TimeZoneInfo.Utc,
+                    "MACB",
+                    "Source",
+                    "Source Type",
+                    "Type",
+                    "Username",
+                    "Hostname",
+                    "Short Description",
+                    "Full Description",
+                    2.5,
+                    "Filename",
+                    "iNode number",
+                    "Notes",
+                    "Format",
+                    new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                    "7"))
+        };
+
+        return eventViewModels;
     }
 
     [TestMethod]
@@ -292,7 +521,8 @@ public class EventsStoreTests
             }
 
             Assert.AreEqual(expectedEvents[i].IsVisible, eventsStore.Events[i].IsVisible);
-            Assert.AreEqual(expectedEvents[i].Colour, eventsStore.Events[i].Colour);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), eventsStore.Events[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, eventsStore.Events[i].SourceLine);
         }
     }
 
@@ -341,7 +571,8 @@ public class EventsStoreTests
             }
 
             Assert.AreEqual(expectedEvents[i].IsVisible, eventsStore.Events[i].IsVisible);
-            Assert.AreEqual(expectedEvents[i].Colour, eventsStore.Events[i].Colour);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), eventsStore.Events[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, eventsStore.Events[i].SourceLine);
         }
     }
 
@@ -391,7 +622,8 @@ public class EventsStoreTests
             }
 
             Assert.AreEqual(expectedEvents[i].IsVisible, actualEvents[i].IsVisible);
-            Assert.AreEqual(expectedEvents[i].Colour, actualEvents[i].Colour);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), actualEvents[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, eventsStore.Events[i].SourceLine);
         }
     }
 
@@ -425,7 +657,8 @@ public class EventsStoreTests
                 childEvent.INode,
                 childEvent.Notes,
                 childEvent.Format,
-                childEvent.Extra
+                childEvent.Extra,
+                childEvent.SourceLine
                 );
         expectedEvents.Add(childEventModel);
 
@@ -463,6 +696,58 @@ public class EventsStoreTests
                 Assert.IsTrue(actualEvents[i].Extra.ContainsKey(expectedKey));
                 Assert.AreEqual(expectedValue, actualEvents[i].Extra[expectedKey]);
             }
+
+            Assert.AreEqual(expectedEvents[i].SourceLine, actualEvents[i].SourceLine);
+        }
+    }
+
+    [TestMethod]
+    public void GetStoredEventViewModelsAsOneLevel_ShouldReturnAllEventViewModelsInSingleLevel_WhenThereAreEvents()
+    {
+        // Arrange
+        Mock<IEventsImporter> mock = new();
+        EventsStore eventsStore = new(mock.Object);
+
+        List<EventViewModel> expectedEvents = this.GetEventViewModelsAsOneLevel();
+        eventsStore.LoadEvents(this.GetEventViewModels());
+
+        // Act
+        List<EventViewModel> actualEvents = eventsStore.GetStoredEventViewModelsAsOneLevel();
+
+        // Assert
+        Assert.AreEqual(expectedEvents.Count, actualEvents.Count);
+
+        for (int i = 0; i < expectedEvents.Count; i++)
+        {
+            Assert.AreEqual(expectedEvents[i].FullDate, actualEvents[i].FullDate);
+            Assert.AreEqual(expectedEvents[i].Timezone, actualEvents[i].Timezone);
+            Assert.AreEqual(expectedEvents[i].MACB, actualEvents[i].MACB);
+            Assert.AreEqual(expectedEvents[i].Source, actualEvents[i].Source);
+            Assert.AreEqual(expectedEvents[i].SourceType, actualEvents[i].SourceType);
+            Assert.AreEqual(expectedEvents[i].Type, actualEvents[i].Type);
+            Assert.AreEqual(expectedEvents[i].User, actualEvents[i].User);
+            Assert.AreEqual(expectedEvents[i].Host, actualEvents[i].Host);
+            Assert.AreEqual(expectedEvents[i].Short, actualEvents[i].Short);
+            Assert.AreEqual(expectedEvents[i].Description, actualEvents[i].Description);
+            Assert.AreEqual(expectedEvents[i].Version, actualEvents[i].Version);
+            Assert.AreEqual(expectedEvents[i].Filename, actualEvents[i].Filename);
+            Assert.AreEqual(expectedEvents[i].INode, actualEvents[i].INode);
+            Assert.AreEqual(expectedEvents[i].Notes, actualEvents[i].Notes);
+            Assert.AreEqual(expectedEvents[i].Format, actualEvents[i].Format);
+            Assert.AreEqual(expectedEvents[i].Extra.Count, actualEvents[i].Extra.Count);
+
+            foreach (KeyValuePair<string, string> kvp in expectedEvents[i].Extra)
+            {
+                string expectedKey = kvp.Key;
+                string expectedValue = kvp.Value;
+
+                Assert.IsTrue(actualEvents[i].Extra.ContainsKey(expectedKey));
+                Assert.AreEqual(expectedValue, actualEvents[i].Extra[expectedKey]);
+            }
+
+            Assert.AreEqual(expectedEvents[i].IsVisible, actualEvents[i].IsVisible);
+            Assert.AreEqual(expectedEvents[i].Colour.ToString(), actualEvents[i].Colour.ToString());
+            Assert.AreEqual(expectedEvents[i].SourceLine, actualEvents[i].SourceLine);
         }
     }
 }

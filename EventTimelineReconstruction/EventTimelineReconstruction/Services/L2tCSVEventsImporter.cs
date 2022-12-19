@@ -13,7 +13,7 @@ public class L2tCSVEventsImporter : IEventsImporter
     public async Task<List<EventModel>> Import(string path, DateTime fromDate, DateTime toDate)
     {
         string[] rows = await File.ReadAllLinesAsync(path);
-        List<EventModel> events = new(rows.Length); // TODO - try using CollectionsMarshal.AsSpan
+        List<EventModel> events = new(rows.Length);
         object lockObj = new();
 
         Parallel.ForEach(rows, (line, _, lineNumber) =>
@@ -28,7 +28,7 @@ public class L2tCSVEventsImporter : IEventsImporter
 
                 try
                 {
-                    EventModel eventModel = ConvertRowToModel(columns);
+                    EventModel eventModel = ConvertRowToModel(columns, lineNumber + 1);
                     DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
                     if (DateTime.Compare(eventDate, fromDate) < 0 || DateTime.Compare(eventDate, toDate) > 0)
@@ -55,7 +55,7 @@ public class L2tCSVEventsImporter : IEventsImporter
         return events;
     }
 
-    private static EventModel ConvertRowToModel(string[] columns)
+    private static EventModel ConvertRowToModel(string[] columns, long lineNumber)
     {
         DateOnly date = ConvertColumnToDate(columns[0]);
         TimeOnly time = ConvertColumnToTime(columns[1]);
@@ -74,8 +74,9 @@ public class L2tCSVEventsImporter : IEventsImporter
         string notes = columns[14];
         string format = columns[15];
         Dictionary<string, string> extra = ConvertColumnToExtra(columns[16]);
+        string sourceLine = lineNumber.ToString();
 
-        EventModel newEvent = new(date, time, timezone, mACB, source, sourceType, type, user, host, shortDescription, description, version, filename, iNode, notes, format, extra);
+        EventModel newEvent = new(date, time, timezone, mACB, source, sourceType, type, user, host, shortDescription, description, version, filename, iNode, notes, format, extra, sourceLine);
         return newEvent;
     }
 
@@ -106,7 +107,7 @@ public class L2tCSVEventsImporter : IEventsImporter
         Dictionary<string, string> extra = new(extraParts.Length);
 
         foreach (string part in extraParts) {
-            string[] pair = part.Split(":");
+            string[] pair = part.Split(":", 2);
             string key = pair[0].Trim();
             string value = pair[1].Trim();
 

@@ -113,7 +113,7 @@
                 <TextBlock Text="{Binding Path=SelectedEvent.Short}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
             </Border>
             <Border Grid.Row="10" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
-                <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.DisplayDescription, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.Description, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="11" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
                 <TextBlock Text="{Binding Path=SelectedEvent.Version}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />

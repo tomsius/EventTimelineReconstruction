@@ -46,6 +46,7 @@
     <system:String x:Key="ToolBar_Change_Colour">Paryškinti pasirinktą įvykį</system:String>
     <system:String x:Key="ToolBar_Colour">Paryškinti įvykius pagal tipą</system:String>
     <system:String x:Key="ToolBar_Integrity">Patikrinti įvykių vientisumą</system:String>
+    <system:String x:Key="ToolBar_Abstraction">Suformuoti abstrakcijos lygius</system:String>
 
     <!--ImportView-->
     <system:String x:Key="Import_Window_Title">Importuoti įvykius...</system:String>
@@ -133,6 +134,19 @@
     <system:String x:Key="DragDrop_First_Level">pirmą lygį</system:String>
     <system:String x:Key="DragDrop_Confirmation">Patvirtinimas</system:String>
 
+    <!--AbstractionView-->
+    <system:String x:Key="Abstraction_Window_Title">Abstrakcijos lygiai</system:String>
+    <system:String x:Key="Abstraction_Form">Formuoti</system:String>
+    <system:String x:Key="Abstraction_Reform">Performuoti žemo lygio artefaktus</system:String>
+    <system:String x:Key="Abstraction_High_Level_Events">Aukšto lygio įvykiai</system:String>
+    <system:String x:Key="Abstraction_Low_Level_Events">Žemo lygio įvykiai</system:String>
+    <system:String x:Key="Abstraction_High_Level_Artefacts">Aukšto lygio artefaktai</system:String>
+    <system:String x:Key="Abstraction_Low_Level_Artefacts">Žemo lygio artefaktai</system:String>
+    <system:String x:Key="Abstraction_Time">Laikas</system:String>
+    <system:String x:Key="Abstraction_Short">Trumpas aprašymas</system:String>
+    <system:String x:Key="Abstraction_Visit">Apsilankymas</system:String>
+    <system:String x:Key="Abstraction_Reference">Nuoroda</system:String>
+
     <!--Errors-->
     <system:String x:Key="Error_To_Before_From">Data „Iki“ negali būti ankstesnė nei „Nuo“.</system:String>
     <system:String x:Key="Error_From_After_To">Data „Nuo“ negali būti vėlesnė nei „Iki“.</system:String>
@@ -143,6 +157,8 @@
     <system:String x:Key="Error_Filename">Nepasirinktas joks failas.</system:String>
     <system:String x:Key="FileNotFound_Caption">Failas nerastas</system:String>
     <system:String x:Key="FileNotFound_Message">Klaida bandant nuskaityti failą:</system:String>
+    <system:String x:Key="FileInUse_Caption">Failas atidarytas kitos programos</system:String>
+    <system:String x:Key="FileInUse_Message">Kita programa naudoja nurodytą failą:</system:String>
     <system:String x:Key="LoadingError_Caption">Darbas negali būti įkeltas</system:String>
     <system:String x:Key="LoadingError_Message">Klaida bandant įkelti darbą. Įsitikinkite, kad nurodėte teisingą failą.</system:String>
 </ResourceDictionary>

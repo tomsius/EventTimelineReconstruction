@@ -4,9 +4,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\abstraction-levels.png" />
     <None Remove="Resources\fillcolour.png" />
     <None Remove="Resources\filter.png" />
     <None Remove="Resources\hidden.png" />
@@ -21,6 +23,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Resources\Localizations\Resource.en.xaml" />
+    <Page Remove="Resources\Localizations\Resource.lt.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Localizations\Resource.en.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Localizations\Resource.lt.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.4.0" />
     <PackageReference Include="FontAwesome6.Svg" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -28,6 +46,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\abstraction-levels.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\fillcolour.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -61,17 +82,6 @@
     <Resource Include="Resources\save.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Resources\Localizations\Resource.en.xaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Update="Resources\Localizations\Resource.lt.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
   </ItemGroup>
 
 </Project>

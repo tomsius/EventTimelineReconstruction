@@ -12,7 +12,9 @@
              Loaded="Window_Loaded">
     <TreeView 
         ItemsSource="{Binding EventsView, UpdateSourceTrigger=PropertyChanged}"
-        AllowDrop="True">
+        AllowDrop="True"
+        VirtualizingStackPanel.IsVirtualizing="True"
+        VirtualizingStackPanel.VirtualizationMode="Recycling">
         <TreeView.Resources>
             <HierarchicalDataTemplate 
                 DataType="{x:Type vms:EventViewModel}" 

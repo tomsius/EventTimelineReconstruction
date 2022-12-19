@@ -30,7 +30,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2021, 10, 14),
@@ -49,7 +50,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -71,7 +73,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 11, 14),
@@ -90,7 +93,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -112,7 +116,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 15),
@@ -131,7 +136,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -153,7 +159,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -172,7 +179,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -194,7 +202,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -213,7 +222,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -235,7 +245,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -254,7 +265,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -276,7 +288,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -295,7 +308,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -317,7 +331,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -336,7 +351,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -358,7 +374,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -377,7 +394,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -399,7 +417,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -418,7 +437,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -440,7 +460,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -459,7 +480,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -481,7 +503,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -500,7 +523,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -522,7 +546,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -541,7 +566,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -563,7 +589,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -582,7 +609,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -604,7 +632,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -623,7 +652,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -645,7 +675,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -664,7 +695,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -686,7 +718,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -705,7 +738,8 @@ public class EventModelTests
                         "iNode number2",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -727,7 +761,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -746,7 +781,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes2",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -768,7 +804,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -787,7 +824,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format2",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -809,7 +847,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -828,7 +867,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -850,7 +890,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -869,7 +910,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key2", "Value2" } },
+                        "1"
                     )
                 },
                 new object[]
@@ -891,7 +933,8 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -910,7 +953,51 @@ public class EventModelTests
                         "iNode number",
                         "Notes",
                         "Format",
-                        new Dictionary<string, string>() { { "Key1", "Value3" }, { "Key2", "Value2" } }
+                        new Dictionary<string, string>() { { "Key1", "Value3" }, { "Key2", "Value2" } },
+                        "1"
+                    )
+                },
+                new object[]
+                {
+                    new EventModel(
+                        new DateOnly(2022, 10, 14),
+                        new TimeOnly(10, 52),
+                        TimeZoneInfo.Local,
+                        "MACB",
+                        "Source",
+                        "Source Type",
+                        "Type",
+                        "Username",
+                        "Hostname",
+                        "Short Description",
+                        "Full Description",
+                        2.5,
+                        "Filename",
+                        "iNode number",
+                        "Notes",
+                        "Format",
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "1"
+                    ),
+                    new EventModel(
+                        new DateOnly(2022, 10, 14),
+                        new TimeOnly(10, 52),
+                        TimeZoneInfo.Local,
+                        "MACB",
+                        "Source",
+                        "Source Type",
+                        "Type",
+                        "Username",
+                        "Hostname",
+                        "Short Description",
+                        "Full Description",
+                        2.5,
+                        "Filename",
+                        "iNode number",
+                        "Notes",
+                        "Format",
+                        new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+                        "2"
                     )
                 }
             };
@@ -938,7 +1025,8 @@ public class EventModelTests
             "iNode number",
             "Notes",
             "Format",
-            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } });
+            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+            "1");
 
         EventModel secondObject = new(
             new DateOnly(2022, 10, 14),
@@ -957,7 +1045,8 @@ public class EventModelTests
             "iNode number",
             "Notes",
             "Format",
-            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } });
+            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+            "1");
 
         // Act
         bool result = firstObject.Equals(secondObject);
@@ -1003,7 +1092,8 @@ public class EventModelTests
             "iNode number",
             "Notes",
             "Format",
-            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } });
+            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+            "1");
 
         // Act
         bool result = firstObject.Equals(secondObject);
@@ -1033,7 +1123,8 @@ public class EventModelTests
             "iNode number",
             "Notes",
             "Format",
-            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } });
+            new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
+            "1");
 
         // Act
         int firstCode = eventModel.GetHashCode();

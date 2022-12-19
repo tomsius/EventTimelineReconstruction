@@ -50,6 +50,13 @@ public class LoadWorkCommand : AsyncCommandBase
             _store.LoadEvents(loadedEvents);
             _eventTreeViewModel.LoadEvents(loadedEvents);
         }
+        catch (IOException)
+        {
+            string message = $"{(string)App.Current.Resources["FileInUse_Message"]} {_loadWorkViewModel.FileName}";
+            string caption = (string)App.Current.Resources["FileInUse_Caption"];
+
+            MessageBox.Show(message, caption, MessageBoxButton.OK);
+        }
         catch (Exception)
         {
             string message = (string)App.Current.Resources["LoadingError_Message"];
@@ -57,10 +64,8 @@ public class LoadWorkCommand : AsyncCommandBase
 
             MessageBox.Show(message, caption, MessageBoxButton.OK);
         }
-        finally
-        {
-            _loadWorkViewModel.IsLoading = false;
-        }
+
+        _loadWorkViewModel.IsLoading = false;
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

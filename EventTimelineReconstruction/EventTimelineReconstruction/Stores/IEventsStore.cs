@@ -14,6 +14,7 @@ public interface IEventsStore
 
     List<EventViewModel> GetAllHiddenEvents();
     List<EventModel> GetStoredEventModels();
+    List<EventViewModel> GetStoredEventViewModelsAsOneLevel();
     Task Import(string path, DateTime fromDate, DateTime toDate);
     void LoadEvents(List<EventViewModel> events);
 }
