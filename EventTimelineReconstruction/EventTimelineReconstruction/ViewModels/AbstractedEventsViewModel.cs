@@ -129,7 +129,7 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
         }
     }
 
-    private string _threshold = "1.0";
+    private string _threshold = "1";
 
     public string Threshold
     {
