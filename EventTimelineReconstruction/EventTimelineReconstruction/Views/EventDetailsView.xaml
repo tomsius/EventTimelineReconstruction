@@ -17,14 +17,14 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -89,7 +89,9 @@
                 <TextBlock Text="{Binding Path=SelectedEvent.DisplayTime}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="2" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
-                <TextBlock Text="{Binding Path=SelectedEvent.Timezone}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding Path=SelectedEvent.Timezone}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                </ScrollViewer>
             </Border>
             <Border Grid.Row="3" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
                 <TextBlock Text="{Binding Path=SelectedEvent.MACB}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
@@ -98,10 +100,14 @@
                 <TextBlock Text="{Binding Path=SelectedEvent.Source}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="5" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
-                <TextBlock Text="{Binding Path=SelectedEvent.SourceType}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding Path=SelectedEvent.SourceType}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                </ScrollViewer>
             </Border>
             <Border Grid.Row="6" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
-                <TextBlock Text="{Binding Path=SelectedEvent.Type}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding Path=SelectedEvent.Type}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                </ScrollViewer>
             </Border>
             <Border Grid.Row="7" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
                 <TextBlock Text="{Binding Path=SelectedEvent.User}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
@@ -110,16 +116,22 @@
                 <TextBlock Text="{Binding Path=SelectedEvent.Host}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="9" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
-                <TextBlock Text="{Binding Path=SelectedEvent.Short}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding Path=SelectedEvent.Short}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                </ScrollViewer>
             </Border>
             <Border Grid.Row="10" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
-                <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.Description, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.Description, Mode=OneWay}" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                </ScrollViewer>
             </Border>
             <Border Grid.Row="11" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
                 <TextBlock Text="{Binding Path=SelectedEvent.Version}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="12" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
-                <TextBlock Text="{Binding Path=SelectedEvent.Filename}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding Path=SelectedEvent.Filename}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                </ScrollViewer>
             </Border>
             <Border Grid.Row="13" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 1">
                 <TextBlock Text="{Binding Path=SelectedEvent.INode}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
@@ -131,7 +143,9 @@
                 <TextBlock Text="{Binding Path=SelectedEvent.Format}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
             </Border>
             <Border Grid.Row="16" Grid.Column="1" BorderBrush="Silver" BorderThickness="0 0 0 0">
-                <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.DisplayExtra, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBox Background="Transparent" BorderThickness="0" Text="{Binding Path=SelectedEvent.DisplayExtra, Mode=OneWay}" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="5 0 5 0" TextWrapping="Wrap" />
+                </ScrollViewer>
             </Border>
         </Grid>
     </Border>
