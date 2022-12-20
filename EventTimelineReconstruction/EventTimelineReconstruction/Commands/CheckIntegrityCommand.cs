@@ -76,13 +76,9 @@ public class CheckIntegrityCommand : AsyncCommandBase
         if (_eventsStore.Events.Any())
         {
             List<EventModel> fileEvents = await _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate);
-            fileEvents = fileEvents.OrderBy(e => e.Date).ThenBy(e => e.Time).ThenBy(e => e.Filename).ToList();
+            fileEvents = fileEvents.OrderBy(e => e.SourceLine).ToList();
 
-            List<EventModel> storedEvents = _eventsStore.GetStoredEventModels()
-                .OrderBy(e => e.Date)
-                .ThenBy(e => e.Time)
-                .ThenBy(e => e.Filename)
-                .ToList();
+            List<EventModel> storedEvents = _eventsStore.GetStoredEventModels().OrderBy(e => e.SourceLine).ToList();
 
             if (AreEventsEqual(fileEvents, storedEvents))
             {
