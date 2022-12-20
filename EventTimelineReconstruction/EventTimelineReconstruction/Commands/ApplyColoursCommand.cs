@@ -44,8 +44,17 @@ public class ApplyColoursCommand : CommandBase
             }
 
             string[] eventTypes = current.Type.Split("; ");
-            Brush colour = _colouringStore.ColoursByType[eventTypes[^1]];
-            current.Colour = colour;
+
+            foreach (var eventType in eventTypes)
+            {
+                if (_colouringStore.ColoursByType.ContainsKey(eventType))
+                {
+                    Brush colour = _colouringStore.ColoursByType[eventType];
+                    current.Colour = colour;
+
+                    break;
+                }
+            }
         }
     }
 
