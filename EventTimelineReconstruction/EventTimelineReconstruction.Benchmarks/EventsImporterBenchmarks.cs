@@ -13,31 +13,65 @@ public class EventsImporterBenchmarks
     [Params(1000, 100_000, 1_000_000)]
     public int N;
 
-    private string[] _rows;
     private DateTime _fromDate;
     private DateTime _toDate;
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        _rows = new string[N];
-
-        for (int i = 0; i < N; i++)
+        if (!File.Exists(@"EventsBenchmark.csv"))
         {
-            _rows[i] = @"01/01/2020,15:25:55,UTC,....,REG,AppCompatCache Registry Entry,File Last Modification Time,-,PC1-5DFC89FB1E0,[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\Session Manager\AppCompatibi...,[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\Session Manager\AppCompatibility] Cached entry: 28,2,TSK:/System Volume Information/_restore{5D162324-8035-4BDB-B6BA-8D2C3C5FBFF0}/RP2/snapshot/_REGISTRY_MACHINE_SYSTEM,13932,-,winreg/appcompatcache,sha256_hash: c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38";
+            using StreamWriter writeStream = new(@"EventsBenchmark.csv", false);
+            writeStream.WriteLine("header");
+
+            for (int i = 1; i < N; i++)
+            {
+                writeStream.WriteLine(@"01/01/2020,15:25:55,UTC,....,REG,AppCompatCache Registry Entry,File Last Modification Time,-,PC1-5DFC89FB1E0,[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\Session Manager\AppCompatibi...,[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\Session Manager\AppCompatibility] Cached entry: 28,2,TSK:/System Volume Information/_restore{5D162324-8035-4BDB-B6BA-8D2C3C5FBFF0}/RP2/snapshot/_REGISTRY_MACHINE_SYSTEM,13932,-,winreg/appcompatcache,sha256_hash: c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38");
+            }
         }
 
         _fromDate = DateTime.MinValue;
         _toDate = DateTime.MaxValue;
     }
 
+    [GlobalCleanup]
+    public void GlobalCleanup()
+    {
+        File.Delete(@"EventsBenchmark.csv");
+    }
+
+    public string[] ReadLinesArray()
+    {
+        using StreamReader reader = new(@"EventsBenchmark.csv", new FileStreamOptions() { Access = FileAccess.Read, Mode = FileMode.Open, Share = FileShare.Read });
+        List<string> lines = new();
+
+        string? line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            lines.Add(line);
+        }
+
+        return lines.ToArray();
+    }
+
+    public IEnumerable<string> ReadLinesEnumerable()
+    {
+        using StreamReader reader = new(@"EventsBenchmark.csv", new FileStreamOptions() { Access = FileAccess.Read, Mode = FileMode.Open, Share = FileShare.Read });
+        string? line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            yield return line;
+        }
+    }
+
     [Benchmark(Baseline = true)]
     public List<EventModel> Import_Parallel()
     {
-        List<EventModel> events = new(_rows.Length);
+        string[] rows = this.ReadLinesArray();
+        List<EventModel> events = new(rows.Length);
         object lockObj = new();
 
-        Parallel.ForEach(_rows, (line, _, lineNumber) =>
+        Parallel.ForEach(rows, (line, _, lineNumber) =>
         {
             if (lineNumber != 0)
             {
@@ -80,11 +114,12 @@ public class EventsImporterBenchmarks
     [Benchmark]
     public List<EventModel> Import_For()
     {
-        List<EventModel> events = new(_rows.Length);
+        string[] rows = this.ReadLinesArray();
+        List<EventModel> events = new(rows.Length);
 
-        for (int i = 1; i < _rows.Length; i++)
+        for (int i = 1; i < rows.Length; i++)
         {
-            string[] columns = _rows[i].Split(',');
+            string[] columns = rows[i].Split(',');
 
             if (columns.Length != 17)
             {
@@ -100,7 +135,7 @@ public class EventsImporterBenchmarks
                 {
                     continue;
                 }
-                
+
                 events.Add(eventModel);
             }
             catch (FormatException)
@@ -119,9 +154,10 @@ public class EventsImporterBenchmarks
     [Benchmark]
     public List<EventModel> Import_Foreach()
     {
-        List<EventModel> events = new(_rows.Length);
+        string[] rows = this.ReadLinesArray();
+        List<EventModel> events = new(rows.Length);
 
-        foreach (string row in _rows.Skip(1))
+        foreach (string row in rows.Skip(1))
         {
             string[] columns = row.Split(',');
 
@@ -158,8 +194,9 @@ public class EventsImporterBenchmarks
     [Benchmark]
     public List<EventModel> Import_ForSpanWithList()
     {
-        List<EventModel> events = new(_rows.Length);
-        List<string> rowsList = new(_rows);
+        string[] rows = this.ReadLinesArray();
+        List<EventModel> events = new(rows.Length);
+        List<string> rowsList = new(rows);
 
         Span<string> rowsSpan = CollectionsMarshal.AsSpan(rowsList);
 
@@ -200,8 +237,9 @@ public class EventsImporterBenchmarks
     [Benchmark]
     public List<EventModel> Import_ForSpanWithArray()
     {
-        List<EventModel> events = new(_rows.Length);
-        Span<string> rowsSpan = _rows.AsSpan();
+        string[] rows = this.ReadLinesArray();
+        List<EventModel> events = new(rows.Length);
+        Span<string> rowsSpan = rows.AsSpan();
 
         for (int i = 1; i < rowsSpan.Length; i++)
         {
@@ -237,7 +275,146 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    private static EventModel ConvertRowToModel(string[] columns)
+    [Benchmark]
+    public async Task<List<EventModel>> Import_ParallelInsideAsync()
+    {
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new(rows.Count());
+        object lockObj = new();
+
+        await Task.Run(() =>
+        {
+            Parallel.ForEach(rows, (line, _, lineNumber) =>
+            {
+                string[] columns = line.Split(',');
+
+                if (columns.Length != 17)
+                {
+                    return;
+                }
+
+                try
+                {
+                    EventModel eventModel = ConvertRowToModel(columns, lineNumber + 1);
+                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                    if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                    {
+                        return;
+                    }
+
+                    lock (lockObj)
+                    {
+                        events.Add(eventModel);
+                    }
+                }
+                catch (FormatException)
+                {
+                    return;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    return;
+                }
+            });
+        });
+
+        return events;
+    }
+
+    [Benchmark]
+    public async Task<List<EventModel>> Import_ForeachInsideAsync()
+    {
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new();
+        int lineNumber = 0;
+        await Task.Run(() =>
+        {
+            foreach (string line in rows)
+            {
+                string[] columns = line.Split(',');
+
+                if (columns.Length != 17)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    EventModel eventModel = ConvertRowToModel(columns, lineNumber + 1);
+                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                    if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                    {
+                        continue;
+                    }
+
+                    events.Add(eventModel);
+                }
+                catch (FormatException)
+                {
+                    continue;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    continue;
+                }
+
+                lineNumber++;
+            }
+        });
+
+        return events;
+    }
+
+    [Benchmark]
+    public async Task<List<EventModel>> Import_ParallelForeachAsync()
+    {
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new();
+        object lockObj = new();
+
+        await Parallel.ForEachAsync(rows, async (line, token) =>
+        {
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
+            {
+                return;
+            }
+
+            try
+            {
+                await Task.Run(() => 
+                {
+                    EventModel eventModel = ConvertRowToModel(columns);
+                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                    if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                    {
+                        return;
+                    }
+
+                    lock (lockObj)
+                    {
+                        events.Add(eventModel);
+                    }
+                }, token);
+            }
+            catch (FormatException)
+            {
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return;
+            }
+        });
+
+        return events;
+    }
+
+    private static EventModel ConvertRowToModel(string[] columns, long lineNumber = 0)
     {
         DateOnly date = ConvertColumnToDate(columns[0]);
         TimeOnly time = ConvertColumnToTime(columns[1]);
