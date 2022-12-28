@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using EventTimelineReconstruction.Models;
 
@@ -12,43 +14,43 @@ public class L2tCSVEventsImporter : IEventsImporter
 
     public async Task<List<EventModel>> Import(string path, DateTime fromDate, DateTime toDate)
     {
-        string[] rows = await File.ReadAllLinesAsync(path);
-        List<EventModel> events = new(rows.Length);
-        object lockObj = new();
+        IEnumerable<string> rows = File.ReadLines(path).Skip(1);
+        List<EventModel> events = new();
 
-        Parallel.ForEach(rows, (line, _, lineNumber) =>
+        int lineNumber = 1;
+        await Task.Run(() =>
         {
-            if (lineNumber != 0) {
+            foreach (string line in rows)
+            {
                 string[] columns = line.Split(',');
 
                 if (columns.Length != _colCount)
                 {
-                    return;
+                    continue;
                 }
 
                 try
                 {
-                    EventModel eventModel = ConvertRowToModel(columns, lineNumber + 1);
+                    EventModel eventModel = ConvertRowToModel(columns, lineNumber);
                     DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
                     if (DateTime.Compare(eventDate, fromDate) < 0 || DateTime.Compare(eventDate, toDate) > 0)
                     {
-                        return;
+                        continue;
                     }
 
-                    lock (lockObj)
-                    {
-                        events.Add(eventModel);
-                    }
+                    events.Add(eventModel);
                 }
                 catch (FormatException)
                 {
-                    return;
+                    continue;
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    return;
+                    continue;
                 }
+
+                lineNumber++;
             }
         });
 

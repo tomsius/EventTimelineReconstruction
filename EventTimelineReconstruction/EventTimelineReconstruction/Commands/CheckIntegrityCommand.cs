@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
@@ -76,9 +74,11 @@ public class CheckIntegrityCommand : AsyncCommandBase
         if (_eventsStore.Events.Any())
         {
             List<EventModel> fileEvents = await _eventsImporter.Import(_integrityViewModel.FileName, _integrityViewModel.FullFromDate, _integrityViewModel.FullToDate);
-            fileEvents = fileEvents.OrderBy(e => e.SourceLine).ToList();
+            await Task.Run(() => fileEvents = fileEvents.OrderBy(e => e.SourceLine).ToList());
 
-            List<EventModel> storedEvents = _eventsStore.GetStoredEventModels().OrderBy(e => e.SourceLine).ToList();
+            List<EventModel> storedEvents = new();
+            await Task.Run(() => storedEvents = _eventsStore.GetStoredEventModels().OrderBy(e => e.SourceLine).ToList());
+            
 
             if (AreEventsEqual(fileEvents, storedEvents))
             {
