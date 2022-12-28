@@ -22,4 +22,49 @@ public class LowLevelArtefactViewModel
     public string Format { get; set; }
     public string Extra { get; set; }
     public string Reference { get; set; }
+
+    public LowLevelArtefactViewModel(DateOnly date, TimeOnly time, string timezone, string macb, string source, string sourceType, string type, string user, string host, string shortDesc, string description, string version, string filename, string inode, string notes, string format, string extra, string reference)
+    {
+        Date = new(date.Year, date.Month, date.Day);
+        Time = new(time.Hour, time.Minute, time.Second);
+        Timezone = timezone;
+        Macb = macb;
+        Source = source;
+        SourceType = sourceType;
+        Type = type;
+        User = user;
+        Host = host;
+        Short = shortDesc;
+        Description = description;
+        Version = version;
+        Filename = filename;
+        Inode = inode;
+        Notes = notes;
+        Format = format;
+        Extra = extra;
+        Reference = reference;
+    }
+
+    public string Serialize()
+    {
+        return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21}",
+            Date.Year, Date.Month, Date.Day, Time.Hour, Time.Minute, Time.Second,
+            Timezone,
+            Macb,
+            Source,
+            SourceType,
+            Type,
+            User,
+            Host,
+            Short,
+            Description,
+            Version,
+            Filename,
+            Inode,
+            Notes,
+            Format,
+            Extra,
+            Reference
+            );
+    }
 }

@@ -17,4 +17,27 @@ public class LowLevelEventViewModel
         Visit = "-";
         Extra = "-";
     }
+
+    public LowLevelEventViewModel(DateOnly date, TimeOnly time, string source, string shortDesc, string visit, string extra, string reference)
+    {
+        Date = new(date.Year, date.Month, date.Day);
+        Time = new(time.Hour, time.Minute, time.Second);
+        Source = source;
+        Short = shortDesc;
+        Visit = visit;
+        Extra = extra;
+        Reference = reference;
+    }
+
+    public string Serialize()
+    {
+        return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+            Date.Year, Date.Month, Date.Day, Time.Hour, Time.Minute, Time.Second,
+            Source,
+            Short,
+            Visit,
+            Extra,
+            Reference
+            );
+    }
 }
