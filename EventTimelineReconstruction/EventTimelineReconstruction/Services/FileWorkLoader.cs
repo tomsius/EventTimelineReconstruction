@@ -1,28 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.ViewModels;
-using System;
-using System.IO;
-using System.Windows.Media;
-using System.Globalization;
-using System.Threading.Tasks;
-using System.Text;
 
 namespace EventTimelineReconstruction.Services;
 
 public class FileWorkLoader : IWorkLoader
 {
-    private const int _expectedColumnLength = 24;
+    private const int _expectedEventColumnCount = 24;
+    private const int _expectedLowLevelArtefactColumnCount = 22;
 
-    public async Task<List<EventViewModel>> LoadWork(string path)
+    public async Task<LoadedWork> LoadWork(string path)
+    {
+        using StreamReader inputStream = new(path);
+
+        LoadedWork loadedWork = new();
+        loadedWork.Events = await this.LoadEvents(inputStream);
+        loadedWork.HighLevelEvents = await this.LoadHighLevelEvents(inputStream);
+        loadedWork.LowLevelEvents = await this.LoadLowLevelEvents(inputStream);
+        loadedWork.HighLevelArtefacts = await this.LoadHighLevelArtefacts(inputStream);
+        loadedWork.LowLevelArtefacts = await this.LoadLowLevelArtefacts(inputStream);
+
+        return loadedWork;
+    }
+
+    private async Task<List<EventViewModel>> LoadEvents(StreamReader inputStream)
     {
         List<EventViewModel> events = new();
-        using StreamReader inputStream = new(path);
         string row = await inputStream.ReadLineAsync();
         int currentDepth = 0;
         Stack<EventViewModel> stack = new();
 
-        while (row != null)
+        while (row != "")
         {
             string[] columns = row.Split(',');
             int depth = GetDepth(columns[0]);
@@ -88,7 +102,7 @@ public class FileWorkLoader : IWorkLoader
     {
         DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
         TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
-        TimeZoneInfo timezone = TimeZoneInfo.FromSerializedString(GetSerializedTimezoneString(columns));
+        TimeZoneInfo timezone = TimeZoneInfo.FromSerializedString(GetSerializedTimezoneString(columns, _expectedEventColumnCount));
         string mACB = columns[^17];
         string source = columns[^16];
         string sourceType = columns[^15];
@@ -109,10 +123,10 @@ public class FileWorkLoader : IWorkLoader
         return newEvent;
     }
 
-    private static string GetSerializedTimezoneString(string[] columns)
+    private static string GetSerializedTimezoneString(string[] columns, int expectedColumnCount)
     {
         int offset = 6;
-        int timezoneCellSpan = columns.Length - _expectedColumnLength;
+        int timezoneCellSpan = columns.Length - expectedColumnCount;
         StringBuilder sb = new();
 
         for (int i = 0; i <= timezoneCellSpan; i++)
@@ -171,5 +185,146 @@ public class FileWorkLoader : IWorkLoader
         eventViewModel.Colour = brush;
 
         return eventViewModel;
+    }
+
+    private async Task<List<HighLevelEventViewModel>> LoadHighLevelEvents(StreamReader inputStream)
+    {
+        List<HighLevelEventViewModel> highLevelEvents = new();
+
+        string row = await inputStream.ReadLineAsync();
+
+        while (row != "")
+        {
+            string[] columns = row.Split(',');
+            HighLevelEventViewModel highLevelEvent = ConvertRowToHighLevelEvent(columns);
+            highLevelEvents.Add(highLevelEvent);
+
+            row = await inputStream.ReadLineAsync();
+        }
+
+        return highLevelEvents;
+    }
+
+    private static HighLevelEventViewModel ConvertRowToHighLevelEvent(string[] columns)
+    {
+        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
+        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
+        string source = columns[6];
+        string shortDescription = columns[7];
+        string visit = columns[8];
+        string reference = columns[9];
+
+        HighLevelEventViewModel highLevelEvent = new(date, time, source, shortDescription, visit, reference);
+        return highLevelEvent;
+    }
+
+    private async Task<List<LowLevelEventViewModel>> LoadLowLevelEvents(StreamReader inputStream)
+    {
+        List<LowLevelEventViewModel> lowLevelEvents = new();
+
+        string row = await inputStream.ReadLineAsync();
+
+        while (row != "")
+        {
+            string[] columns = row.Split(',');
+            LowLevelEventViewModel lowLevelEvent = ConvertRowToLowLevelEvent(columns);
+            lowLevelEvents.Add(lowLevelEvent);
+
+            row = await inputStream.ReadLineAsync();
+        }
+
+        return lowLevelEvents;
+    }
+
+    private static LowLevelEventViewModel ConvertRowToLowLevelEvent(string[] columns)
+    {
+        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
+        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
+        string source = columns[6];
+        string shortDescription = columns[7];
+        string visit = columns[8];
+        string extra = columns[9];
+        string reference = columns[10];
+
+        LowLevelEventViewModel lowLevelEvent = new(date, time, source, shortDescription, visit, extra, reference);
+        return lowLevelEvent;
+    }
+
+    private async Task<List<HighLevelArtefactViewModel>> LoadHighLevelArtefacts(StreamReader inputStream)
+    {
+        List<HighLevelArtefactViewModel> highLevelArtefacts = new();
+
+        string row = await inputStream.ReadLineAsync();
+
+        while (row != "")
+        {
+            string[] columns = row.Split(',');
+            HighLevelArtefactViewModel highLevelArtefact = ConvertRowToHighLevelArtefact(columns);
+            highLevelArtefacts.Add(highLevelArtefact);
+
+            row = await inputStream.ReadLineAsync();
+        }
+
+        return highLevelArtefacts;
+    }
+
+    private static HighLevelArtefactViewModel ConvertRowToHighLevelArtefact(string[] columns)
+    {
+        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
+        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
+        string source = columns[6];
+        string shortDescription = columns[7];
+        string visit = columns[8];
+        string extra = columns[9];
+        string reference = columns[10];
+        string macb = columns[11];
+        string sourceType = columns[12];
+        string description = columns[13];
+
+        HighLevelArtefactViewModel highLevelArtefact = new(date, time, source, shortDescription, visit, extra, reference, macb, sourceType, description);
+        return highLevelArtefact;
+    }
+
+    private async Task<List<LowLevelArtefactViewModel>> LoadLowLevelArtefacts(StreamReader inputStream)
+    {
+        List<LowLevelArtefactViewModel> lowLevelArtefacts = new();
+
+        string row = await inputStream.ReadLineAsync();
+
+        while (row != null)
+        {
+            string[] columns = row.Split(',');
+            LowLevelArtefactViewModel lowLevelArtefact = ConvertRowToLowLevelArtefact(columns);
+            lowLevelArtefacts.Add(lowLevelArtefact);
+
+            row = await inputStream.ReadLineAsync();
+        }
+
+        return lowLevelArtefacts;
+    }
+
+    private static LowLevelArtefactViewModel ConvertRowToLowLevelArtefact(string[] columns)
+    {
+        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
+        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
+        string timezone = GetSerializedTimezoneString(columns, _expectedLowLevelArtefactColumnCount);
+        string macb = columns[^15];
+        string source = columns[^14];
+        string sourceType = columns[^13];
+        string type = columns[^12];
+        string user = columns[^11];
+        string host = columns[^10];
+        string shortDescription = columns[^9];
+        string description = columns[^8];
+        string version = columns[^7];
+        string filename = columns[^6];
+        string inode = columns[^5];
+        string notes = columns[^4];
+        string format = columns[^3];
+        string extra = columns[^2];
+        string reference = columns[^1];
+
+        LowLevelArtefactViewModel lowLevelArtefact = new (date, time, timezone, macb, source, sourceType, type, user, host, shortDescription, description, version, filename, inode, notes, format, extra, reference);
+        return lowLevelArtefact;
     }
 }

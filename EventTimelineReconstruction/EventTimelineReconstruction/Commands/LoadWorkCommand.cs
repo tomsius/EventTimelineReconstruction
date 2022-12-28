@@ -1,8 +1,8 @@
-﻿using EventTimelineReconstruction.Services;
+﻿using EventTimelineReconstruction.Models;
+using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,13 +14,15 @@ public class LoadWorkCommand : AsyncCommandBase
 {
     private readonly LoadWorkViewModel _loadWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;
+    private readonly AbstractedEventsViewModel _abstractedEventsViewModel;
     private readonly IEventsStore _store;
     private readonly IWorkLoader _workLoader;
 
-    public LoadWorkCommand(LoadWorkViewModel loadWorkViewModel, EventTreeViewModel eventTreeViewModel, IEventsStore store, IWorkLoader workLoader)
+    public LoadWorkCommand(LoadWorkViewModel loadWorkViewModel, EventTreeViewModel eventTreeViewModel, AbstractedEventsViewModel abstractedEventsViewModel, IEventsStore store, IWorkLoader workLoader)
     {
         _loadWorkViewModel = loadWorkViewModel;
         _eventTreeViewModel = eventTreeViewModel;
+        _abstractedEventsViewModel = abstractedEventsViewModel;
         _store = store;
         _workLoader = workLoader;
         _loadWorkViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
@@ -46,9 +48,13 @@ public class LoadWorkCommand : AsyncCommandBase
 
         try
         {
-            List<EventViewModel> loadedEvents = await _workLoader.LoadWork(_loadWorkViewModel.FileName);
-            _store.LoadEvents(loadedEvents);
-            _eventTreeViewModel.LoadEvents(loadedEvents);
+            LoadedWork loadedWork = await _workLoader.LoadWork(_loadWorkViewModel.FileName);
+            _store.LoadEvents(loadedWork.Events);
+            _eventTreeViewModel.LoadEvents(loadedWork.Events);
+            _abstractedEventsViewModel.LoadHighLevelEvents(loadedWork.HighLevelEvents);
+            _abstractedEventsViewModel.LoadLowLevelEvents(loadedWork.LowLevelEvents);
+            _abstractedEventsViewModel.LoadHighLevelArtefacts(loadedWork.HighLevelArtefacts);
+            _abstractedEventsViewModel.LoadLowLevelArtefacts(loadedWork.LowLevelArtefacts);
         }
         catch (IOException)
         {

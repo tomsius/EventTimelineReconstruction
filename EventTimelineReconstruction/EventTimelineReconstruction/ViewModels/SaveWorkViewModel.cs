@@ -39,9 +39,9 @@ public class SaveWorkViewModel : ViewModelBase, IFileSelectable
     public ICommand ChooseFileCommand { get; }
     public ICommand SaveCommand { get; }
 
-    public SaveWorkViewModel(EventTreeViewModel eventTreeViewModel, IWorkSaver fileSaver)
+    public SaveWorkViewModel(EventTreeViewModel eventTreeViewModel, AbstractedEventsViewModel abstractedEventsViewModel, IWorkSaver fileSaver)
     {
         ChooseFileCommand = new ChooseSaveFileCommand(this);
-        SaveCommand = new SaveWorkCommand(this, eventTreeViewModel, fileSaver);
+        SaveCommand = new SaveWorkCommand(this, eventTreeViewModel, abstractedEventsViewModel, fileSaver);
     }
 }

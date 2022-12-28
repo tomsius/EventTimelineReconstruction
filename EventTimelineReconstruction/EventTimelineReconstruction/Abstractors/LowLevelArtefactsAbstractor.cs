@@ -70,27 +70,26 @@ public class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
     {
         string extraValue = _lowLevelArtefactsAbstractorUtils.GetExtraValue(eventViewModel.Extra);
 
-        LowLevelArtefactViewModel result = new()
-        {
-            Date = DateOnly.FromDateTime(eventViewModel.FullDate),
-            Time = TimeOnly.FromDateTime(eventViewModel.FullDate),
-            Timezone = eventViewModel.Timezone.DisplayName,
-            Macb = eventViewModel.MACB,
-            Source = eventViewModel.Source,
-            SourceType = eventViewModel.SourceType,
-            Type = eventViewModel.Type,
-            User = eventViewModel.User,
-            Host = eventViewModel.Host,
-            Short = eventViewModel.Short,
-            Description = eventViewModel.Description,
-            Version = eventViewModel.Version.ToString(),
-            Filename = eventViewModel.Filename,
-            Inode = eventViewModel.INode,
-            Notes = eventViewModel.Notes,
-            Format = eventViewModel.Format,
-            Extra = extraValue,
-            Reference = eventViewModel.SourceLine
-        };
+        LowLevelArtefactViewModel result = new(
+            DateOnly.FromDateTime(eventViewModel.FullDate),
+            TimeOnly.FromDateTime(eventViewModel.FullDate),
+            eventViewModel.Timezone.DisplayName,
+            eventViewModel.MACB,
+            eventViewModel.Source,
+            eventViewModel.SourceType,
+            eventViewModel.Type,
+            eventViewModel.User,
+            eventViewModel.Host,
+            eventViewModel.Short,
+            eventViewModel.Description,
+            eventViewModel.Version.ToString(),
+            eventViewModel.Filename,
+            eventViewModel.INode,
+            eventViewModel.Notes,
+            eventViewModel.Format,
+            extraValue,
+            eventViewModel.SourceLine
+        );
 
         return result;
     }
