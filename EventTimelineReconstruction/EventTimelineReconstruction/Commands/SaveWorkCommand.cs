@@ -9,12 +9,14 @@ public class SaveWorkCommand : AsyncCommandBase
 {
     private readonly SaveWorkViewModel _saveWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;
+    private readonly AbstractedEventsViewModel _abstractedEventsViewModel;
     private readonly IWorkSaver _workSaver;
 
-    public SaveWorkCommand(SaveWorkViewModel saveWorkViewModel, EventTreeViewModel eventTreeViewModel, IWorkSaver workSaver)
+    public SaveWorkCommand(SaveWorkViewModel saveWorkViewModel, EventTreeViewModel eventTreeViewModel, AbstractedEventsViewModel abstractedEventsViewModel, IWorkSaver workSaver)
     {
         _saveWorkViewModel = saveWorkViewModel;
         _eventTreeViewModel = eventTreeViewModel;
+        _abstractedEventsViewModel = abstractedEventsViewModel;
         _workSaver = workSaver;
         _saveWorkViewModel.PropertyChanged += this.OnViewModelPropertyChanged;
     }
@@ -28,7 +30,13 @@ public class SaveWorkCommand : AsyncCommandBase
     {
         _saveWorkViewModel.IsSaving = true;
 
-        await _workSaver.SaveWork(_saveWorkViewModel.FileName, _eventTreeViewModel.Events);
+        await _workSaver.SaveWork(
+            _saveWorkViewModel.FileName, 
+            _eventTreeViewModel.Events, 
+            _abstractedEventsViewModel.HighLevelEvents, 
+            _abstractedEventsViewModel.LowLevelEvents, 
+            _abstractedEventsViewModel.HighLevelArtefacts, 
+            _abstractedEventsViewModel.LowLevelArtefacts);
 
         _saveWorkViewModel.IsSaving = false;
     }
