@@ -277,8 +277,12 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         if (startIndex == -1)
         {
             startKey = "Origin: ";
-            startIndex = description.LastIndexOf(startKey) + startKey.Length;
-            return description.Substring(startIndex);
+            startIndex = description.LastIndexOf(startKey);
+
+            if (startIndex != -1)
+            {
+                startIndex += startKey.Length - 1;
+            }
         }
 
         startIndex += 1;

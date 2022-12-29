@@ -5,6 +5,7 @@ using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.ViewModels;
 using Moq;
+using EventTimelineReconstruction.Abstractors;
 
 namespace EventTimelineReconstruction.Tests.UnitTests.ViewModels;
 
@@ -20,8 +21,15 @@ public class SaveWorkViewModelTests
         Mock<ChangeColourViewModel> changeColourViewModelMock = new(eventDetailsViewModelMock.Object);
         Mock<IDragDropUtils> iDragDropUtilsMock = new();
         Mock<EventTreeViewModel> eventTreeViewModelMock = new(eventDetailsViewModelMock.Object, iFilteringStoreMock.Object, changeColourViewModelMock.Object, iDragDropUtilsMock.Object);
+        Mock<IEventsStore> iEventsStoreMock = new();
+        Mock<IHighLevelEventsAbstractor> iHighLevelEventsAbstractor = new();
+        Mock<ILowLevelEventsAbstractor> iLowLevelEventsAbstractor = new();
+        Mock<IHighLevelArtefactsAbstractor> iHighLevelArtefactsAbstractor = new();
+        Mock<ILowLevelArtefactsAbstractor> iLowLevelArtefactsAbstractor = new();
+        Mock<IErrorsViewModel> iErrorsViewModelMock = new();
+        Mock<AbstractedEventsViewModel> abstractedEventsViewModelMock = new(iEventsStoreMock.Object, iHighLevelEventsAbstractor.Object, iLowLevelEventsAbstractor.Object, iHighLevelArtefactsAbstractor.Object, iLowLevelArtefactsAbstractor.Object, iErrorsViewModelMock.Object);
         Mock<IWorkSaver> iWorkSaver = new();
-        _saveWorkViewModel = new(eventTreeViewModelMock.Object, iWorkSaver.Object);
+        _saveWorkViewModel = new(eventTreeViewModelMock.Object, abstractedEventsViewModelMock.Object, iWorkSaver.Object);
     }
 
     [TestMethod]

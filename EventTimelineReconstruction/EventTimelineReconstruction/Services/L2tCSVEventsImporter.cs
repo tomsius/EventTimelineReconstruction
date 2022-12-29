@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ public class L2tCSVEventsImporter : IEventsImporter
         IEnumerable<string> rows = File.ReadLines(path).Skip(1);
         List<EventModel> events = new();
 
-        int lineNumber = 1;
+        int lineNumber = 2;
         await Task.Run(() =>
         {
             foreach (string line in rows)
@@ -26,6 +25,7 @@ public class L2tCSVEventsImporter : IEventsImporter
 
                 if (columns.Length != _colCount)
                 {
+                    lineNumber++;
                     continue;
                 }
 
@@ -34,19 +34,19 @@ public class L2tCSVEventsImporter : IEventsImporter
                     EventModel eventModel = ConvertRowToModel(columns, lineNumber);
                     DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                    if (DateTime.Compare(eventDate, fromDate) < 0 || DateTime.Compare(eventDate, toDate) > 0)
+                    if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
                     {
-                        continue;
+                        events.Add(eventModel);
                     }
-
-                    events.Add(eventModel);
                 }
                 catch (FormatException)
                 {
+                    lineNumber++;
                     continue;
                 }
                 catch (IndexOutOfRangeException)
                 {
+                    lineNumber++;
                     continue;
                 }
 

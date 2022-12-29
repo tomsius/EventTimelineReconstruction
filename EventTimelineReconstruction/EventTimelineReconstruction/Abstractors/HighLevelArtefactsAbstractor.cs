@@ -431,6 +431,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 
     private HighLevelArtefactViewModel FormEventFromRegSource(EventViewModel eventViewModel)
     {
+        string shortValue = _lowLevelEventsAbstractorUtils.GetSummaryFromShort(eventViewModel.Description);
         string extraValue = _lowLevelEventsAbstractorUtils.GetExtraTillSha256(eventViewModel.Extra);
         string descriptionValue = _highLevelArtefactsAbstractorUtils.GetDescriptionFromRegSource(eventViewModel.SourceType, eventViewModel.Description);
 
@@ -439,7 +440,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
             Date = DateOnly.FromDateTime(eventViewModel.FullDate),
             Time = TimeOnly.FromDateTime(eventViewModel.FullDate),
             Source = eventViewModel.Source,
-            Short = eventViewModel.Short,
+            Short = shortValue,
             Extra = extraValue,
             Reference = eventViewModel.SourceLine,
             Macb = eventViewModel.MACB,
