@@ -384,6 +384,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     [DataTestMethod]
     [DataRow("TSK:/WINDOWS/system32/usrshuta.exe Type: file", "usrshuta.exe")]
     [DataRow("usrshuta.exe Type: file", "usrshuta.exe")]
+    [DataRow("Origin: usrshuta.exe Type: file", "usrshuta.exe")]
     public void GetFilename_ShouldReturnFilenameFromDescription_WhenFormatIsCalled(string description, string expected)
     {
         // Arrange

@@ -36,15 +36,11 @@ public class L2tCSVEventsImporterTests
         L2tCSVEventsImporter importer = new();
         int expected = 0;
 
-        // Test for threading issues
-        for (int k = 0; k < 1000; k++)
-        {
-            // Act
-            int actual = importer.Import("EventsImporterEmpty.csv", DateTime.MinValue, DateTime.MaxValue).Result.Count;
+        // Act
+        int actual = importer.Import("EventsImporterEmpty.csv", DateTime.MinValue, DateTime.MaxValue).Result.Count;
 
-            // Assert
-            Assert.AreEqual(expected, actual); 
-        }
+        // Assert
+        Assert.AreEqual(expected, actual); 
     }
 
     [TestMethod]
@@ -115,47 +111,42 @@ public class L2tCSVEventsImporterTests
                 "5"
                 )
         };
+        // Act
+        List<EventModel> actual = importer.Import("EventsImporter.csv", new DateTime(2000, 1, 1), DateTime.MaxValue).Result.OrderBy(e => e.SourceLine).ToList();
 
-        // Test for threading issues
-        for (int k = 0; k < 1000; k++)
+        // Assert
+        Assert.AreEqual(expected.Count, actual.Count);
+
+        for (int i = 0; i < expected.Count; i++)
         {
-            // Act
-            List<EventModel> actual = importer.Import("EventsImporter.csv", new DateTime(2000, 1, 1), DateTime.MaxValue).Result.OrderBy(e => e.Date).ThenBy(e => e.Time).ThenBy(e => e.Filename).ToList();
+            Assert.AreEqual(expected[i].Date, actual[i].Date);
+            Assert.AreEqual(expected[i].Time, actual[i].Time);
+            Assert.AreEqual(expected[i].Timezone, actual[i].Timezone);
+            Assert.AreEqual(expected[i].MACB, actual[i].MACB);
+            Assert.AreEqual(expected[i].Source, actual[i].Source);
+            Assert.AreEqual(expected[i].SourceType, actual[i].SourceType);
+            Assert.AreEqual(expected[i].Type, actual[i].Type);
+            Assert.AreEqual(expected[i].User, actual[i].User);
+            Assert.AreEqual(expected[i].Host, actual[i].Host);
+            Assert.AreEqual(expected[i].Short, actual[i].Short);
+            Assert.AreEqual(expected[i].Description, actual[i].Description);
+            Assert.AreEqual(expected[i].Version, actual[i].Version);
+            Assert.AreEqual(expected[i].Filename, actual[i].Filename);
+            Assert.AreEqual(expected[i].INode, actual[i].INode);
+            Assert.AreEqual(expected[i].Notes, actual[i].Notes);
+            Assert.AreEqual(expected[i].Format, actual[i].Format);
+            Assert.AreEqual(expected[i].Extra.Count, actual[i].Extra.Count);
 
-            // Assert
-            Assert.AreEqual(expected.Count, actual.Count);
-
-            for (int i = 0; i < expected.Count; i++)
+            foreach (KeyValuePair<string, string> kvp in expected[i].Extra)
             {
-                Assert.AreEqual(expected[i].Date, actual[i].Date);
-                Assert.AreEqual(expected[i].Time, actual[i].Time);
-                Assert.AreEqual(expected[i].Timezone, actual[i].Timezone);
-                Assert.AreEqual(expected[i].MACB, actual[i].MACB);
-                Assert.AreEqual(expected[i].Source, actual[i].Source);
-                Assert.AreEqual(expected[i].SourceType, actual[i].SourceType);
-                Assert.AreEqual(expected[i].Type, actual[i].Type);
-                Assert.AreEqual(expected[i].User, actual[i].User);
-                Assert.AreEqual(expected[i].Host, actual[i].Host);
-                Assert.AreEqual(expected[i].Short, actual[i].Short);
-                Assert.AreEqual(expected[i].Description, actual[i].Description);
-                Assert.AreEqual(expected[i].Version, actual[i].Version);
-                Assert.AreEqual(expected[i].Filename, actual[i].Filename);
-                Assert.AreEqual(expected[i].INode, actual[i].INode);
-                Assert.AreEqual(expected[i].Notes, actual[i].Notes);
-                Assert.AreEqual(expected[i].Format, actual[i].Format);
-                Assert.AreEqual(expected[i].Extra.Count, actual[i].Extra.Count);
+                string expectedKey = kvp.Key;
+                string expectedValue = kvp.Value;
 
-                foreach (KeyValuePair<string, string> kvp in expected[i].Extra)
-                {
-                    string expectedKey = kvp.Key;
-                    string expectedValue = kvp.Value;
+                Assert.IsTrue(actual[i].Extra.ContainsKey(expectedKey));
+                Assert.AreEqual(expectedValue, actual[i].Extra[expectedKey]);
+            }
 
-                    Assert.IsTrue(actual[i].Extra.ContainsKey(expectedKey));
-                    Assert.AreEqual(expectedValue, actual[i].Extra[expectedKey]);
-                }
-
-                Assert.AreEqual(expected[i].SourceLine, actual[i].SourceLine);
-            } 
+            Assert.AreEqual(expected[i].SourceLine, actual[i].SourceLine);
         }
     }
 }

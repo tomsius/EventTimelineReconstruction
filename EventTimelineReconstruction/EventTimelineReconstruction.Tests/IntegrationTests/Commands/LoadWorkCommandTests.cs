@@ -1,4 +1,5 @@
-﻿using EventTimelineReconstruction.Commands;
+﻿using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
@@ -11,6 +12,7 @@ public class LoadWorkCommandTests
 {
     private readonly LoadWorkViewModel _loadWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;
+    private readonly AbstractedEventsViewModel _abstractedEventsViewModel;
     private readonly IEventsStore _eventsStore;
     private readonly IWorkLoader _workLoader;
     private readonly LoadWorkCommand _command;
@@ -20,14 +22,24 @@ public class LoadWorkCommandTests
         IDragDropUtils dragDropUtils = new DragDropUtils();
         IFilteringStore filteringStore = new FilteringStore();
         IEventsImporter eventsImporter = new L2tCSVEventsImporter();
+        IHighLevelEventsAbstractorUtils highLevelEventsAbstractorUtils = new HighLevelEventsAbstractorUtils();
+        ILowLevelEventsAbstractorUtils lowLevelEventsAbstractorUtils = new LowLevelEventsAbstractorUtils();
+        IHighLevelArtefactsAbstractorUtils highLevelArtefactsAbstractorUtils = new HighLevelArtefactsAbstractorUtils();
+        ILowLevelArtefactsAbstractorUtils lowLevelArtefactsAbstractorUtils = new LowLevelArtefactsAbstractorUtils();
+        IHighLevelEventsAbstractor highLevelEventsAbstractor = new HighLevelEventsAbstractor(highLevelEventsAbstractorUtils);
+        ILowLevelEventsAbstractor lowLevelEventsAbstractor = new LowLevelEventsAbstractor(highLevelEventsAbstractorUtils, lowLevelEventsAbstractorUtils);
+        IHighLevelArtefactsAbstractor highLevelArtefactsAbstractor = new HighLevelArtefactsAbstractor(highLevelEventsAbstractorUtils, lowLevelEventsAbstractorUtils, highLevelArtefactsAbstractorUtils);
+        ILowLevelArtefactsAbstractor lowLevelArtefactsAbstractor = new LowLevelArtefactsAbstractor(lowLevelArtefactsAbstractorUtils);
+        IErrorsViewModel errorsViewModel = new ErrorsViewModel();
         EventDetailsViewModel eventDetailsViewModel = new();
         ChangeColourViewModel changeColourViewModel = new(eventDetailsViewModel);
         _eventTreeViewModel = new(eventDetailsViewModel, filteringStore, changeColourViewModel, dragDropUtils);
         _eventsStore = new EventsStore(eventsImporter);
         _workLoader = new FileWorkLoader();
-        _loadWorkViewModel = new(_eventTreeViewModel, _eventsStore, _workLoader);
+        _abstractedEventsViewModel = new(_eventsStore, highLevelEventsAbstractor, lowLevelEventsAbstractor, highLevelArtefactsAbstractor, lowLevelArtefactsAbstractor, errorsViewModel);
+        _loadWorkViewModel = new(_eventTreeViewModel, _abstractedEventsViewModel, _eventsStore, _workLoader);
 
-        _command = new(_loadWorkViewModel, _eventTreeViewModel, _eventsStore, _workLoader);
+        _command = new(_loadWorkViewModel, _eventTreeViewModel, _abstractedEventsViewModel, _eventsStore, _workLoader);
     }
 
     [ClassInitialize]
