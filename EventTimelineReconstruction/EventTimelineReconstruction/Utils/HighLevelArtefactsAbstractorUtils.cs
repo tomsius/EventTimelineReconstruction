@@ -285,6 +285,11 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
             }
         }
 
+        if (endIndex == -1)
+        {
+            endIndex = description.Length;
+        }
+
         startIndex += 1;
         int filenameLength = endIndex - startIndex;
         return description.Substring(startIndex, filenameLength);

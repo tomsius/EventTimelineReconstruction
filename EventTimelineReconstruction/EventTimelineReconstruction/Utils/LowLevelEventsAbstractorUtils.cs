@@ -282,6 +282,12 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         char endKey = '}';
         char extensionKey = '.';
         int startIndex = data.IndexOf(startKey);
+
+        if (startIndex == -1)
+        {
+            return data;
+        }
+
         int endIndex = data.IndexOf(endKey, startIndex);
         int extensionIndex = data.IndexOf(extensionKey, endIndex);
 

@@ -642,6 +642,7 @@ public class LowLevelEventsAbstractorUtilsTests
     [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0} Cou...", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}")]
     [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}")]
     [DataRow("UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows\\Accessories\\wordpad3.exe", "{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows\\Accessories\\wordpad3.exe")]
+    [DataRow("Something else", "Something else")]
     public void GetSummaryFromShort_ShouldReturnFormattedShortDescription_WhenMethodIsCalled(string description, string expected)
     {
         // Arrange
