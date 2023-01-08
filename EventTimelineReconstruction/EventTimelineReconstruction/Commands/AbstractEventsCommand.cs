@@ -8,7 +8,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class AbstractEventsCommand : AsyncCommandBase
+public sealed class AbstractEventsCommand : AsyncCommandBase
 {
     private readonly AbstractedEventsViewModel _viewModel;
     private readonly IEventsStore _store;

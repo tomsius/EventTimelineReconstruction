@@ -4,7 +4,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class ApplyFilterOptionsCommand : CommandBase
+public sealed class ApplyFilterOptionsCommand : CommandBase
 {
     private readonly FilterViewModel _filterViewModel;
     private readonly IFilteringStore _filteringStore;

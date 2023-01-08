@@ -12,7 +12,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class CheckIntegrityCommand : AsyncCommandBase
+public sealed class CheckIntegrityCommand : AsyncCommandBase
 {
     private readonly IntegrityViewModel _integrityViewModel;
     private readonly IEventsStore _eventsStore;

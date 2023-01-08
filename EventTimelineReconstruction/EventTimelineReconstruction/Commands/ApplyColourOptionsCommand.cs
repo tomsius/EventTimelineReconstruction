@@ -6,7 +6,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class ApplyColourOptionsCommand : CommandBase
+public sealed class ApplyColourOptionsCommand : CommandBase
 {
     private readonly ColourViewModel _colourViewModel;
     private readonly IColouringStore _colouringStore;

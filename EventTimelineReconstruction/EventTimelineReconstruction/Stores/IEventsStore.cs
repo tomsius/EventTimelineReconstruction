@@ -7,10 +7,7 @@ using EventTimelineReconstruction.ViewModels;
 namespace EventTimelineReconstruction.Stores;
 public interface IEventsStore
 {
-    List<EventViewModel> Events
-    {
-        get;
-    }
+    List<EventViewModel> Events { get; }
 
     List<EventViewModel> GetAllHiddenEvents();
     List<EventModel> GetStoredEventModels();

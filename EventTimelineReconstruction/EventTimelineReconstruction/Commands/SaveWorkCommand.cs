@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class SaveWorkCommand : AsyncCommandBase
+public sealed class SaveWorkCommand : AsyncCommandBase
 {
     private readonly SaveWorkViewModel _saveWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class FilteringUtils : IFilteringUtils
+public sealed class FilteringUtils : IFilteringUtils
 {
     public CheckBox GetRootCheckBox(CheckBox item)
     {

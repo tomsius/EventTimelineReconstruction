@@ -4,7 +4,7 @@ using EventTimelineReconstruction.Services;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class SaveWorkViewModel : ViewModelBase, IFileSelectable
+public sealed class SaveWorkViewModel : ViewModelBase, IFileSelectable
 {
     private string _fileName;
 

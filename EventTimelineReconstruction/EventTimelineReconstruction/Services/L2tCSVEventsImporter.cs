@@ -7,7 +7,7 @@ using EventTimelineReconstruction.Models;
 
 namespace EventTimelineReconstruction.Services;
 
-public class L2tCSVEventsImporter : IEventsImporter
+public sealed class L2tCSVEventsImporter : IEventsImporter
 {
     private const int _colCount = 17;
 
@@ -76,7 +76,7 @@ public class L2tCSVEventsImporter : IEventsImporter
         string notes = columns[14];
         string format = columns[15];
         Dictionary<string, string> extra = ConvertColumnToExtra(columns[16]);
-        string sourceLine = lineNumber.ToString();
+        int sourceLine = (int)lineNumber;
 
         EventModel newEvent = new(date, time, timezone, mACB, source, sourceType, type, user, host, shortDescription, description, version, filename, iNode, notes, format, extra, sourceLine);
         return newEvent;

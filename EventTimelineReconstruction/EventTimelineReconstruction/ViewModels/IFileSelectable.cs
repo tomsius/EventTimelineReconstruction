@@ -2,9 +2,5 @@
 
 public interface IFileSelectable
 {
-    string FileName
-    {
-        get;
-        set;
-    }
+    string FileName { get; set; }
 }

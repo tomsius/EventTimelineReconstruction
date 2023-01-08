@@ -5,10 +5,7 @@ namespace EventTimelineReconstruction.ViewModels;
 
 public interface IErrorsViewModel : INotifyDataErrorInfo
 {
-    ObservableCollection<string> Errors
-    {
-        get;
-    }
+    ObservableCollection<string> Errors { get; }
 
     void AddError(string propertyName, string errorMessage);
     void ClearErrors(string propertyName);

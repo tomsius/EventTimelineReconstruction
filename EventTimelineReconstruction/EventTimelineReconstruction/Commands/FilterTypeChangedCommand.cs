@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.Commands;
 
-public class FilterTypeChangedCommand : CommandBase
+public sealed class FilterTypeChangedCommand : CommandBase
 {
     private readonly FilterViewModel _filterViewModel;
 

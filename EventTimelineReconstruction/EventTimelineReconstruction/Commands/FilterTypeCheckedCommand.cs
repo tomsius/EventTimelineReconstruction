@@ -6,7 +6,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class FilterTypeCheckedCommand : CommandBase
+public sealed class FilterTypeCheckedCommand : CommandBase
 {
     private readonly FilterViewModel _filterViewModel;
     private readonly IFilteringUtils _filteringUtils;

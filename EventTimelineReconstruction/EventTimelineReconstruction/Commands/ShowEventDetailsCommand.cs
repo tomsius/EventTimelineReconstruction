@@ -3,7 +3,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class ShowEventDetailsCommand : CommandBase
+public sealed class ShowEventDetailsCommand : CommandBase
 {
     private readonly EventDetailsViewModel _eventDetailsViewModel;
     private readonly ChangeColourViewModel _changeColourViewModel;

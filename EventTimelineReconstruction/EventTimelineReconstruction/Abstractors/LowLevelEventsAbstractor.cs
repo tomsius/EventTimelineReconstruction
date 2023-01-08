@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
+public sealed class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
 {
     private const double _minutesThreshold = 30.0;
 
@@ -33,7 +33,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
                     {
                         lowLevelEvent = this.FormEventFromWebhistSource(events[i]);
 
-                        if (!this.IsWebhistEventValid(lowLevelEvents, lowLevelEvent))
+                        if (!IsWebhistEventValid(lowLevelEvents, lowLevelEvent))
                         {
                             lowLevelEvent = null;
                         }
@@ -89,17 +89,17 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
                     break;
                 case "OLECF":
                     // Choose the last line of the same OLECF time - skip same time OLECF type events
-                    while (i < events.Count - 1 && this.AreOlecfEventsOfSameTime(events[i], events[i + 1]))
+                    while (i < events.Count - 1 && AreOlecfEventsOfSameTime(events[i], events[i + 1]))
                     {
                         i++;
                     }
 
-                    lowLevelEvent = this.FormEventFromOlecfSource(events[i]);
+                    lowLevelEvent = FormEventFromOlecfSource(events[i]);
                     break;
                 case "PE":
                     if (_highLevelAbstractorUtils.IsValidPeEvent(events[i]))
                     {
-                        lowLevelEvent = this.FormEventFromPeSource(events[i]);
+                        lowLevelEvent = FormEventFromPeSource(events[i]);
                     }
 
                     break;
@@ -113,21 +113,21 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
             if (lowLevelEvent is not null)
             {
                 lowLevelEvents.Add(lowLevelEvent);
-                this.NormalizeEvents(lowLevelEvents, events, events[i]);
+                NormalizeEvents(lowLevelEvents, events, events[i]);
             }
         }
 
         return lowLevelEvents;
     }
 
-    private void NormalizeEvents(List<LowLevelEventViewModel> lowLevelEvents, List<EventViewModel> events, EventViewModel currentEvent)
+    private static void NormalizeEvents(List<LowLevelEventViewModel> lowLevelEvents, List<EventViewModel> events, EventViewModel currentEvent)
     {
         if (lowLevelEvents.Count < 2)
         {
             return;
         }
 
-        int eventIndex = this.GetEventIndex(events, lowLevelEvents[^2].Reference);
+        int eventIndex = GetEventIndex(events, lowLevelEvents[^2].Reference);
         EventViewModel lastEvent = events[eventIndex];
 
         if (lastEvent.FullDate.CompareTo(currentEvent.FullDate) != 0 || lowLevelEvents[^2].Short != lowLevelEvents[^1].Short)
@@ -180,7 +180,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         lowLevelEvents.RemoveAt(lowLevelEvents.Count - 1);
     }
 
-    private int GetEventIndex(List<EventViewModel> events, string reference)
+    private static int GetEventIndex(List<EventViewModel> events, int reference)
     {
         int index = -1;
 
@@ -218,7 +218,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return false;
     }
 
-    private bool IsWebhistEventValid(List<LowLevelEventViewModel> lowLevelEvents, LowLevelEventViewModel lowLevelEvent)
+    private static bool IsWebhistEventValid(List<LowLevelEventViewModel> lowLevelEvents, LowLevelEventViewModel lowLevelEvent)
     {
         if (lowLevelEvent is null)
         {
@@ -341,7 +341,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
             {
                 if (events[startIndex].SourceType == "File entry shell item")
                 {
-                    return this.GetIndexOfLastFileEntryShellItemEventOfSameTime(events, startIndex);
+                    return GetIndexOfLastFileEntryShellItemEventOfSameTime(events, startIndex);
                 }
                 else
                 {
@@ -353,9 +353,9 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return -1;
     }
 
-    private int GetIndexOfLastFileEntryShellItemEventOfSameTime(List<EventViewModel> events, int startIndex)
+    private static int GetIndexOfLastFileEntryShellItemEventOfSameTime(List<EventViewModel> events, int startIndex)
     {
-        int lastIndex = this.FindLastIndexOfSameTimeAndSourceType(events, startIndex);
+        int lastIndex = FindLastIndexOfSameTimeAndSourceType(events, startIndex);
         int output = -1;
 
         while (startIndex <= lastIndex)
@@ -372,7 +372,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return output == -1 ? lastIndex : output;
     }
 
-    private int FindLastIndexOfSameTimeAndSourceType(List<EventViewModel> events, int startIndex)
+    private static int FindLastIndexOfSameTimeAndSourceType(List<EventViewModel> events, int startIndex)
     {
         while (startIndex < events.Count - 1 && events[startIndex].Source == "FILE" && events[startIndex + 1].Source == "FILE")
         {
@@ -500,7 +500,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return result;
     }
 
-    private bool AreOlecfEventsOfSameTime(EventViewModel firstEvent, EventViewModel secondEvent)
+    private static bool AreOlecfEventsOfSameTime(EventViewModel firstEvent, EventViewModel secondEvent)
     {
         bool isSameSource = firstEvent.Source == secondEvent.Source;
         bool isSameTime = firstEvent.FullDate.CompareTo(secondEvent.FullDate) == 0;
@@ -508,7 +508,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return isSameSource && isSameTime;
     }
 
-    private LowLevelEventViewModel FormEventFromOlecfSource(EventViewModel eventViewModel)
+    private static LowLevelEventViewModel FormEventFromOlecfSource(EventViewModel eventViewModel)
     {
         string shortValue = eventViewModel.Filename;
         string extraValue = eventViewModel.Short;
@@ -526,7 +526,7 @@ public class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return result;
     }
 
-    private LowLevelEventViewModel FormEventFromPeSource(EventViewModel eventViewModel)
+    private static LowLevelEventViewModel FormEventFromPeSource(EventViewModel eventViewModel)
     {
         string shortValue = eventViewModel.Filename;
 

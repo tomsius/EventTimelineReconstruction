@@ -2,22 +2,22 @@
 
 namespace EventTimelineReconstruction.Utils;
 
-public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
+public sealed class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
 {
     public string GenerateVisitValue(string data)
     {
         bool isGoogleBrowser = data.Contains("Type");
-        string keyword = this.GetKeyword(data, isGoogleBrowser);
-        string count = this.GetCount(data, isGoogleBrowser);
+        string keyword = GetKeyword(data, isGoogleBrowser);
+        string count = GetCount(data, isGoogleBrowser);
         string visitValue = $"{keyword} {count}";
 
         return visitValue.TrimEnd();
     }
 
-    private string GetKeyword(string data, bool isGoogleBrowser)
+    private static string GetKeyword(string data, bool isGoogleBrowser)
     {
-        int startIndex = this.GetKeywordStartIndex(data, isGoogleBrowser);
-        int endIndex = this.GetKeywordEndIndex(data, startIndex);
+        int startIndex = GetKeywordStartIndex(data, isGoogleBrowser);
+        int endIndex = GetKeywordEndIndex(data, startIndex);
         int keywordLength = endIndex - startIndex;
 
         string keyword = data.Substring(startIndex, keywordLength);
@@ -30,7 +30,7 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
         return keyword;
     }
 
-    private int GetKeywordStartIndex(string data, bool isGoogleBrowser)
+    private static int GetKeywordStartIndex(string data, bool isGoogleBrowser)
     {
         if (isGoogleBrowser)
         {
@@ -44,7 +44,7 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
         }
     }
 
-    private int GetKeywordEndIndex(string data, int startIndex)
+    private static int GetKeywordEndIndex(string data, int startIndex)
     {
         int endIndex = data.IndexOf(' ', startIndex);
 
@@ -56,23 +56,23 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
         return endIndex;
     }
 
-    private string GetCount(string data, bool isGoogleBrowser)
+    private static string GetCount(string data, bool isGoogleBrowser)
     {
         string count;
 
         if (isGoogleBrowser)
         {
-            count = this.GetCountFromGoogleBrowser(data);
+            count = GetCountFromGoogleBrowser(data);
         }
         else
         {
-            count = this.GetCountFromFirefoxBrowser(data);
+            count = GetCountFromFirefoxBrowser(data);
         }
 
         return count == "0" ? "" : count;
     }
 
-    private string GetCountFromGoogleBrowser(string data)
+    private static string GetCountFromGoogleBrowser(string data)
     {
         string key = "type count ";
 
@@ -88,7 +88,7 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
         return data.Substring(startIndex, countLength);
     }
 
-    private string GetCountFromFirefoxBrowser(string data)
+    private static string GetCountFromFirefoxBrowser(string data)
     {
         string key = "[count: ";
 
@@ -142,7 +142,7 @@ public class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
         if (data.ToLower().Contains("empty description") || !data.EndsWith("..."))
         {
             int index = data.IndexOf(']') + 1;
-            return data.Substring(index).TrimStart();
+            return data[index..].TrimStart();
         }
 
         int startIndex = data.IndexOf('[') + 1;

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class DraggableAdorner : Adorner
+public sealed class DraggableAdorner : Adorner
 {
     public Point CenterOffset;
     private readonly FormattedText _txt;

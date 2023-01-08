@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
+public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 {
     private const double _minutesThreshold = 15.0;
     private const int _fileArtefactsInRowCount = 36;
@@ -35,7 +35,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
                     {
                         highLevelArtefact = this.FormEventFromWebhistSource(events[i]);
 
-                        if (!this.IsWebhistEventValid(highLevelArtefacts, highLevelArtefact))
+                        if (!IsWebhistEventValid(highLevelArtefacts, highLevelArtefact))
                         {
                             highLevelArtefact = null;
                         }
@@ -45,7 +45,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
                 case "LNK":
                     highLevelArtefact = this.FormEventFromLnkSource(events[i]);
 
-                    if (!this.IsLnkEventValid(highLevelArtefacts, highLevelArtefact))
+                    if (!IsLnkEventValid(highLevelArtefacts, highLevelArtefact))
                     {
                         highLevelArtefact = null;
                     }
@@ -69,7 +69,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
                             {
                                 HighLevelArtefactViewModel artefact = this.FormEventFromFileSource(events[i]);
                                 // single artefact per second
-                                if (this.IsFileEventValid(highLevelArtefacts, artefact))
+                                if (IsFileEventValid(highLevelArtefacts, artefact))
                                 {
                                     highLevelArtefacts.Add(artefact);
                                 }
@@ -101,7 +101,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
                 case "REG":
                     highLevelArtefact = this.FormEventFromRegSource(events[i]);
 
-                    if (!this.IsRegEventValid(highLevelArtefacts, highLevelArtefact))
+                    if (!IsRegEventValid(highLevelArtefacts, highLevelArtefact))
                     {
                         highLevelArtefact = null;
                     }
@@ -112,17 +112,17 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
                     break;
                 case "OLECF":
                     // Choose the last line of the same OLECF time - skip same time OLECF type events
-                    while (i < events.Count - 1 && this.AreOlecfEventsOfSameTime(events[i], events[i + 1]))
+                    while (i < events.Count - 1 && AreOlecfEventsOfSameTime(events[i], events[i + 1]))
                     {
                         i++;
                     }
 
-                    highLevelArtefact = this.FormEventFromOlecfSource(events[i]);
+                    highLevelArtefact = FormEventFromOlecfSource(events[i]);
                     break;
                 case "PE":
                     if (this.IsPeEventValid(highLevelArtefacts, events[i]))
                     {
-                        highLevelArtefact = this.FormEventFromPeSource(events[i]);
+                        highLevelArtefact = FormEventFromPeSource(events[i]);
                     }
 
                     break;
@@ -130,7 +130,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
                     break;
             }
 
-            if (this.IsEventValid(highLevelArtefacts, highLevelArtefact))
+            if (IsEventValid(highLevelArtefacts, highLevelArtefact))
             {
                 highLevelArtefacts.Add(highLevelArtefact);
             }
@@ -233,7 +233,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private bool IsWebhistEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsWebhistEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (current is null)
         {
@@ -277,7 +277,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private bool IsLnkEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsLnkEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         for (int i = highLevelArtefacts.Count - 1; i >= 0; i--)
         {
@@ -313,7 +313,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private bool IsFileEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsFileEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (highLevelArtefacts.Count == 0)
         {
@@ -358,10 +358,10 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 
         if (!current.Short.StartsWith("Entry"))
         {
-            return this.IsSingleLineOfSameTimeWithoutEntry(events, startIndex - 1, current.FullDate);
+            return IsSingleLineOfSameTimeWithoutEntry(events, startIndex - 1, current.FullDate);
         }
 
-        bool isSameTimeAsReg = this.DoesRegOfSameTimeExist(events, startIndex - 1, current.FullDate);
+        bool isSameTimeAsReg = DoesRegOfSameTimeExist(events, startIndex - 1, current.FullDate);
 
         if (isSameTimeAsReg)
         {
@@ -371,7 +371,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return !this.IsDuplicateByShort(events, startIndex - 1, current);
     }
 
-    private bool IsSingleLineOfSameTimeWithoutEntry(List<EventViewModel> events, int startIndex, DateTime currentDate)
+    private static bool IsSingleLineOfSameTimeWithoutEntry(List<EventViewModel> events, int startIndex, DateTime currentDate)
     {
         for (int i = startIndex; i >= 0; i--)
         {
@@ -390,7 +390,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return true;
     }
 
-    private bool DoesRegOfSameTimeExist(List<EventViewModel> events, int startIndex, DateTime currentDate)
+    private static bool DoesRegOfSameTimeExist(List<EventViewModel> events, int startIndex, DateTime currentDate)
     {
         for (int i = startIndex; i >= 0; i--)
         {
@@ -451,7 +451,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private bool IsRegEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsRegEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (current.SourceType == "Registry Key: UserAssist" && !current.Description.Contains(".exe"))
         {
@@ -508,7 +508,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private bool AreOlecfEventsOfSameTime(EventViewModel firstEvent, EventViewModel secondEvent)
+    private static bool AreOlecfEventsOfSameTime(EventViewModel firstEvent, EventViewModel secondEvent)
     {
         bool isSameSource = firstEvent.Source == secondEvent.Source;
         bool isSameTime = firstEvent.FullDate.CompareTo(secondEvent.FullDate) == 0;
@@ -516,12 +516,12 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return isSameSource && isSameTime;
     }
 
-    private HighLevelArtefactViewModel FormEventFromOlecfSource(EventViewModel eventViewModel)
+    private static HighLevelArtefactViewModel FormEventFromOlecfSource(EventViewModel eventViewModel)
     {
         string shortValue = eventViewModel.Filename;
         string extraValue = eventViewModel.Short;
         int length = eventViewModel.Description.Length <= 80 ? eventViewModel.Description.Length : 80;
-        string descriptionValue = eventViewModel.Description.Substring(0, length);
+        string descriptionValue = eventViewModel.Description[..length];
 
         HighLevelArtefactViewModel result = new()
         {
@@ -570,7 +570,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return true;
     }
 
-    private HighLevelArtefactViewModel FormEventFromPeSource(EventViewModel eventViewModel)
+    private static HighLevelArtefactViewModel FormEventFromPeSource(EventViewModel eventViewModel)
     {
         string shortValue = eventViewModel.Filename;
 
@@ -589,7 +589,7 @@ public class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private bool IsEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (current is null)
         {

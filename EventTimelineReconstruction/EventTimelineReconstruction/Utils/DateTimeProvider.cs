@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.Utils;
 
-public class DateTimeProvider : IDateTimeProvider
+public sealed class DateTimeProvider : IDateTimeProvider
 {
     public DateTime Now
     {

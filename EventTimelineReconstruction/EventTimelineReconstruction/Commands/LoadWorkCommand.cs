@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class LoadWorkCommand : AsyncCommandBase
+public sealed class LoadWorkCommand : AsyncCommandBase
 {
     private readonly LoadWorkViewModel _loadWorkViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;

@@ -2,21 +2,21 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class HighLevelEventViewModel
+public sealed class HighLevelEventViewModel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
     public string Source { get; set; }
     public string Short { get; set; }
     public string Visit { get; set; }
-    public string Reference { get; set; }
+    public int Reference { get; set; }
 
     public HighLevelEventViewModel()
     {
         Visit = "-";
     }
 
-    public HighLevelEventViewModel(DateOnly date, TimeOnly time, string source, string shortDesc, string visit, string reference)
+    public HighLevelEventViewModel(DateOnly date, TimeOnly time, string source, string shortDesc, string visit, int reference)
     {
         Date = new(date.Year, date.Month, date.Day);
         Time = new(time.Hour, time.Minute, time.Second);

@@ -4,7 +4,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
+public sealed class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 {
     public string AddMailUser(string extraValue, string description)
     {
@@ -15,14 +15,14 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         }
 
         StringBuilder sb = new(extraValue);
-        string mailUser = this.ExtractMailUser(description);
+        string mailUser = ExtractMailUser(description);
         sb.Append(" Mail User: ");
         sb.Append(mailUser);
 
         return sb.ToString().TrimStart(new char[] { '-', ' ' });
     }
 
-    private string ExtractMailUser(string description)
+    private static string ExtractMailUser(string description)
     {
         string keyword = " - ";
         int startIndex = description.IndexOf(keyword) + keyword.Length;
@@ -43,7 +43,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
                 break;
             }
 
-            string extraValue = this.FormatExtraFieldValue(kvp.Key, kvp.Value);
+            string extraValue = FormatExtraFieldValue(kvp.Key, kvp.Value);
             sb.Append(extraValue);
             sb.Append(' ');
         }
@@ -51,7 +51,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         return sb.ToString().TrimEnd();
     }
 
-    private string FormatExtraFieldValue(string key, string value)
+    private static string FormatExtraFieldValue(string key, string value)
     {
         return $"{key}: {value}";
     }
@@ -63,13 +63,13 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 
         if (doesExtraExist)
         {
-            return this.ExtractVisit(value);
+            return ExtractVisit(value);
         }
 
-        return this.ExtractTillSchemaMatch(extra);
+        return ExtractTillSchemaMatch(extra);
     }
 
-    private string ExtractTillSchemaMatch(Dictionary<string, string> extra)
+    private static string ExtractTillSchemaMatch(Dictionary<string, string> extra)
     {
         StringBuilder sb = new();
         string key = "schema_match";
@@ -81,14 +81,14 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
                 break;
             }
 
-            sb.Append(this.FormatExtraFieldValue(kvp.Key, kvp.Value));
+            sb.Append(FormatExtraFieldValue(kvp.Key, kvp.Value));
             sb.Append(' ');
         }
 
         return sb.ToString().TrimEnd();
     }
 
-    private string ExtractVisit(string extra)
+    private static string ExtractVisit(string extra)
     {
         char key = '\'';
         int startIndex = extra.IndexOf(key);
@@ -106,7 +106,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 
         if (visit.Contains("username="))
         {
-            string uername = this.ExtractUsername(visit);
+            string uername = ExtractUsername(visit);
             sb.Append(' ');
             sb.Append(uername);
         }
@@ -114,7 +114,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         return sb.ToString();
     }
 
-    private string ExtractUsername(string visit)
+    private static string ExtractUsername(string visit)
     {
         int startIndex = visit.IndexOf("username=");
         int endIndex = visit.IndexOf('&', startIndex);
@@ -141,13 +141,13 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
             return data;
         }
 
-        string beginValue = this.GetBeginValue(data);
-        string extraValues = this.FormExtraValues(numberOfParagraphsKey, numberOfParagraphsValue, totalTimeKey, totalTimeValue);
+        string beginValue = GetBeginValue(data);
+        string extraValues = FormExtraValues(numberOfParagraphsKey, numberOfParagraphsValue, totalTimeKey, totalTimeValue);
         
-        return this.FormExtraResult(beginValue, extraValues);
+        return FormExtraResult(beginValue, extraValues);
     }
 
-    private string GetBeginValue(string data)
+    private static string GetBeginValue(string data)
     {
         string keyword = "Creating App";
 
@@ -159,13 +159,13 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         return "";
     }
 
-    private string FormExtraValues(string numberOfParagraphsKey, string numberOfParagraphsValue, string totalTimeKey, string totalTimeValue)
+    private static string FormExtraValues(string numberOfParagraphsKey, string numberOfParagraphsValue, string totalTimeKey, string totalTimeValue)
     {
         StringBuilder sb = new();
 
         if (numberOfParagraphsValue is not null)
         {
-            string numberOfParagraphs = this.FormatExtraFieldValue(numberOfParagraphsKey, numberOfParagraphsValue);
+            string numberOfParagraphs = FormatExtraFieldValue(numberOfParagraphsKey, numberOfParagraphsValue);
             sb.Append(numberOfParagraphs);
         }
 
@@ -173,14 +173,14 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 
         if (totalTimeValue is not null)
         {
-            string totalTime = this.FormatExtraFieldValue(totalTimeKey, totalTimeValue);
+            string totalTime = FormatExtraFieldValue(totalTimeKey, totalTimeValue);
             sb.Append(totalTime);
         }
 
         return sb.ToString().TrimStart();
     }
 
-    private string FormExtraResult(string beginValue, string extraValues)
+    private static string FormExtraResult(string beginValue, string extraValues)
     {
         StringBuilder sb = new();
 
@@ -195,14 +195,14 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
     {
         return eventViewModel.Source switch
         {
-            "FILE" => this.GetFilenameFromFileSource(eventViewModel.Short),
-            "LNK" => this.GetFilenameFromLnkSource(eventViewModel.Description),
-            "LOG" => this.GetFilenameFromLogSource(eventViewModel.Description),
+            "FILE" => GetFilenameFromFileSource(eventViewModel.Short),
+            "LNK" => GetFilenameFromLnkSource(eventViewModel.Description),
+            "LOG" => GetFilenameFromLogSource(eventViewModel.Description),
             _ => "",
         };
     }
 
-    private string GetFilenameFromFileSource(string data)
+    private static string GetFilenameFromFileSource(string data)
     {
         string startKey = "Name: ";
         char endKey = ' ';
@@ -219,7 +219,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
             }
             else
             {
-                return data.Substring(startIndex + 1);
+                return data[(startIndex + 1)..];
             }
         }
 
@@ -229,7 +229,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 
         if (endIndex == -1)
         {
-            return data.Substring(startIndex);
+            return data[startIndex..];
         }
 
         int filenameLength = endIndex - startIndex;
@@ -237,23 +237,23 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
         return data.Substring(startIndex, filenameLength);
     }
 
-    private string GetFilenameFromLnkSource(string data)
+    private static string GetFilenameFromLnkSource(string data)
     {
         string startKey = "Link target: ";
         int startIndex = data.IndexOf(startKey) + startKey.Length;
 
-        return data.Substring(startIndex);
+        return data[startIndex..];
     }
 
-    private string GetFilenameFromLogSource(string data)
+    private static string GetFilenameFromLogSource(string data)
     {
         string startKey = " Path: ";
         int startIndex = data.IndexOf(startKey) + startKey.Length;
 
-        string fullFilename = data.Substring(startIndex);
+        string fullFilename = data[startIndex..];
         startIndex = fullFilename.LastIndexOf('\\') + 1;
 
-        return fullFilename.Substring(startIndex);
+        return fullFilename[startIndex..];
     }
 
     public string GetShort(string data)
@@ -273,7 +273,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
             startIndex = data.IndexOf(key);
         }
 
-        return data.Substring(startIndex + key.Length);
+        return data[(startIndex + key.Length)..];
     }
 
     public string GetSummaryFromShort(string data)
@@ -300,10 +300,11 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 
         if (endIndex == -1 || endIndex < extensionIndex)
         {
-            return data.Substring(startIndex);
+            return data[startIndex..];
         }
 
-        return data.Substring(startIndex, endIndex - startIndex);
+        int summaryLength = endIndex - startIndex;
+        return data.Substring(startIndex, summaryLength);
     }
 
     public string GetUrl(string data)
@@ -313,7 +314,7 @@ public class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 
         if (hostEnd == data.Length)
         {
-            return data.Substring(urlStart);
+            return data[urlStart..];
         }
 
         int urlEnd = data.IndexOf("/", hostEnd + 1);

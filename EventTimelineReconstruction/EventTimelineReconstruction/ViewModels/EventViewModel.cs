@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class EventViewModel : ViewModelBase, IComparable
+public sealed class EventViewModel : ViewModelBase, IComparable
 {
     private readonly EventModel _eventModel;
     private readonly ObservableCollection<EventViewModel> _children;
@@ -150,7 +150,7 @@ public class EventViewModel : ViewModelBase, IComparable
         }
     }
 
-    public string SourceLine
+    public int SourceLine
     {
         get
         {

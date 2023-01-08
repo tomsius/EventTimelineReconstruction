@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventTimelineReconstruction.Models;
 
-public class EventModel
+public sealed class EventModel
 {
     public DateOnly Date { get; }
     public TimeOnly Time { get; }
@@ -22,7 +22,7 @@ public class EventModel
     public string Notes { get; }
     public string Format { get; }
     public Dictionary<string, string> Extra { get; }
-    public string SourceLine { get; }
+    public int SourceLine { get; }
 
     public EventModel(
         DateOnly date, 
@@ -42,7 +42,7 @@ public class EventModel
         string notes, 
         string format, 
         Dictionary<string, string> extra,
-        string sourceLine)
+        int sourceLine)
     {
         Date = date;
         Time = time;

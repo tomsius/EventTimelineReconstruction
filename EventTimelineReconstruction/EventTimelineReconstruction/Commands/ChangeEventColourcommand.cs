@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class ChangeEventColourCommand : CommandBase
+public sealed class ChangeEventColourCommand : CommandBase
 {
     private readonly ChangeColourViewModel _changeColourViewModel;
     private readonly EventDetailsViewModel _eventDetailsViewModel;

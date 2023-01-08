@@ -5,7 +5,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class ColouringUtils : IColouringUtils
+public sealed class ColouringUtils : IColouringUtils
 {
     public Dictionary<TextBlock, ColorPicker> GetChildrenElements(StackPanel parent)
     {

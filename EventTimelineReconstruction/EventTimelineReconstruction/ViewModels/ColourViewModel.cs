@@ -7,7 +7,7 @@ using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class ColourViewModel : ViewModelBase
+public sealed class ColourViewModel : ViewModelBase
 {
     private readonly Dictionary<string, Brush> _coloursByType;
 

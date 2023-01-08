@@ -7,7 +7,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class SelectedColourChangedCommand : CommandBase
+public sealed class SelectedColourChangedCommand : CommandBase
 {
     private readonly ColourViewModel _colourViewModel;
     private readonly IColouringUtils _colouringUtils;

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace EventTimelineReconstruction.Services;
 
-public class SHA256Calculator : IHashCalculator
+public sealed class SHA256Calculator : IHashCalculator
 {
     public async Task<byte[]> Calculate(string filePath)
     {

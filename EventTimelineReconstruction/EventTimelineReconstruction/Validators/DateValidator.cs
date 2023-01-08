@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.Validators;
 
-public class TimeValidator : ITimeValidator
+public sealed class TimeValidator : ITimeValidator
 {
     public bool AreDatesValid(DateTime start, DateTime end)
     {

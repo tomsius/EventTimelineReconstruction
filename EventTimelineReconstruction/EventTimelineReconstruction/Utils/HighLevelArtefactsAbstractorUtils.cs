@@ -4,7 +4,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUtils
+public sealed class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUtils
 {
     private const double _secondsThreshold = 2.0;
 
@@ -15,10 +15,10 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
             return eventViewModel.Filename;
         }
 
-        return this.GetFilenameFromDescription(eventViewModel.Description);
+        return GetFilenameFromDescription(eventViewModel.Description);
     }
 
-    private string GetFilenameFromDescription(string description)
+    private static string GetFilenameFromDescription(string description)
     {
         string startKey = " Path: ";
         int startIndex = description.IndexOf(startKey);
@@ -28,28 +28,28 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
             return description;
         }
 
-        return description.Substring(startIndex + startKey.Length);
+        return description[(startIndex + startKey.Length)..];
     }
 
     public string GetDescriptionFromMetaSource(string description)
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         string[] keys = new string[] { "Author: ", "Last saved by: ", "Number of pages: ", "Number of words: ", "Number of characters: ", "Number of characters with spaces: ", "Number of lines: " };
 
         for (int i = 0; i < keys.Length; i++)
         {
-            string value = this.GetValueFromDescription(description, keys[i]);
+            string value = GetValueFromDescription(description, keys[i]);
 
             if (value != "")
             {
-                this.AppendFormattedValue(sb, value);
+                AppendFormattedValue(sb, value);
             }
         }
 
         return sb.ToString().TrimEnd();
     }
 
-    private string GetValueFromDescription(string description, string key)
+    private static string GetValueFromDescription(string description, string key)
     {
         int startIndex = description.IndexOf(key);
 
@@ -73,18 +73,18 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
     {
         return sourceType switch
         {
-            "Registry Key: UserAssist" => this.GetUserAssistDescription(description),
-            "Registry Key : MRU List" => this.GetMRUListDescription(description),
-            "Registry Key : MRUListEx" => this.GetMRUListExDescription(description),
-            "Registry Key : Typed URLs" => this.GetTypedUrlsDescription(description),
-            "Registry Key : BagMRU" => this.GetBagMRUDescription(description),
+            "Registry Key: UserAssist" => GetUserAssistDescription(description),
+            "Registry Key : MRU List" => GetMRUListDescription(description),
+            "Registry Key : MRUListEx" => GetMRUListExDescription(description),
+            "Registry Key : Typed URLs" => GetTypedUrlsDescription(description),
+            "Registry Key : BagMRU" => GetBagMRUDescription(description),
             "Registry Key : Run Key" => description,
-            "UNKNOWN" => this.GetUnknownDescription(description),
+            "UNKNOWN" => GetUnknownDescription(description),
             _ => "",
         };
     }
 
-    private string GetUserAssistDescription(string description)
+    private static string GetUserAssistDescription(string description)
     {
         string startKey = "Value name: ";
         string endKey = " Count";
@@ -100,10 +100,10 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
             return valueName;
         }
 
-        return valueName.Substring(startIndex + 1);
+        return valueName[(startIndex + 1)..];
     }
 
-    private string GetMRUListDescription(string description)
+    private static string GetMRUListDescription(string description)
     {
         StringBuilder sb = new();
         string startKey = "]: ";
@@ -120,8 +120,8 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
                 endIndex = description.Length;
             }
 
-            string value = this.GetValueBetween(description, startIndex, endIndex);
-            this.AppendFormattedValue(sb, value, "; ");
+            string value = GetValueBetween(description, startIndex, endIndex);
+            AppendFormattedValue(sb, value, "; ");
 
             startIndex = description.IndexOf(startKey, endIndex);
         }
@@ -129,31 +129,31 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         return sb.Remove(sb.Length - 2, 2).ToString();
     }
 
-    private string GetValueBetween(string description, int startIndex, int endIndex)
+    private static string GetValueBetween(string description, int startIndex, int endIndex)
     {
         int valueLength = endIndex - startIndex;
         return description.Substring(startIndex, valueLength);
     }
 
-    private void AppendFormattedValue(StringBuilder sb, string value, string separator = " ")
+    private static void AppendFormattedValue(StringBuilder sb, string value, string separator = " ")
     {
         sb.Append(value);
         sb.Append(separator);
     }
 
-    private string GetMRUListExDescription(string description)
+    private static string GetMRUListExDescription(string description)
     {
         if (description.Contains("Path:"))
         {
-            return this.GetMRUListDescriptionExtended(description);
+            return GetMRUListDescriptionExtended(description);
         }
         else
         {
-            return this.GetMRUListDescription(description);
+            return GetMRUListDescription(description);
         }
     }
 
-    private string GetMRUListDescriptionExtended(string description)
+    private static string GetMRUListDescriptionExtended(string description)
     {
         StringBuilder sb = new();
         string startKey = "Path: ";
@@ -170,8 +170,8 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
                 endIndex = description.Length;
             }
 
-            string value = this.GetValueBetween(description, startIndex, endIndex);
-            this.AppendFormattedValue(sb, value, "; ");
+            string value = GetValueBetween(description, startIndex, endIndex);
+            AppendFormattedValue(sb, value, "; ");
 
             startIndex = description.IndexOf(startKey, endIndex);
         }
@@ -179,7 +179,7 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         return sb.Remove(sb.Length - 2, 2).ToString();
     }
 
-    private string GetTypedUrlsDescription(string description)
+    private static string GetTypedUrlsDescription(string description)
     {
         StringBuilder sb = new();
         string startKey = ": ";
@@ -196,8 +196,8 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
                 endIndex = description.Length;
             }
 
-            string value = this.GetValueBetween(description, startIndex, endIndex);
-            this.AppendFormattedValue(sb, value);
+            string value = GetValueBetween(description, startIndex, endIndex);
+            AppendFormattedValue(sb, value);
 
             startIndex = description.IndexOf(startKey, endIndex);
         }
@@ -205,7 +205,7 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         return sb.ToString().TrimEnd();
     }
 
-    private string GetBagMRUDescription(string description)
+    private static string GetBagMRUDescription(string description)
     {
         StringBuilder sb = new();
         string startKey = "Shell item path: ";
@@ -222,8 +222,8 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
                 endIndex = description.Length;
             }
 
-            string value = this.GetValueBetween(description, startIndex, endIndex);
-            this.AppendFormattedValue(sb, value, "; ");
+            string value = GetValueBetween(description, startIndex, endIndex);
+            AppendFormattedValue(sb, value, "; ");
 
             startIndex = description.IndexOf(startKey, endIndex);
         }
@@ -236,7 +236,7 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         return sb.Remove(sb.Length - 2, 2).ToString();
     }
 
-    private string GetUnknownDescription(string description)
+    private static string GetUnknownDescription(string description)
     {
         string startKey = "File Path: [REG_SZ] ";
         string endKey = " Position:";
@@ -252,16 +252,16 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         int fullFilePathLength = endIndex - startIndex;
         string fullFilePath = description.Substring(startIndex, fullFilePathLength);
 
-        return this.GetFileNameFromPath(fullFilePath);
+        return GetFileNameFromPath(fullFilePath);
     }
 
-    private string GetFileNameFromPath(string fullFilePath)
+    private static string GetFileNameFromPath(string fullFilePath)
     {
         int startIndex = fullFilePath.LastIndexOf('\\');
 
         if (startIndex != -1)
         {
-            return fullFilePath.Substring(startIndex + 1);
+            return fullFilePath[(startIndex + 1)..];
         }
 
         return fullFilePath;
@@ -306,14 +306,14 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
                 break;
             }
 
-            string extraValue = this.FormatExtraFieldValue(kvp.Key, kvp.Value);
-            this.AppendFormattedValue(sb, extraValue);
+            string extraValue = FormatExtraFieldValue(kvp.Key, kvp.Value);
+            AppendFormattedValue(sb, extraValue);
         }
 
         return sb.ToString().TrimEnd();
     }
 
-    private string FormatExtraFieldValue(string key, string value)
+    private static string FormatExtraFieldValue(string key, string value)
     {
         return $"{key}: {value}";
     }
@@ -338,8 +338,10 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
 
     public List<int> GetValidFileEventIndices(List<EventViewModel> events, int startIndex, int endIndex)
     {
-        List<int> indices = new(endIndex - startIndex);
-        indices.Add(startIndex);
+        List<int> indices = new(endIndex - startIndex)
+        {
+            startIndex
+        };
 
         for (int i = startIndex + 1; i <= endIndex && i < events.Count; i++)
         {
@@ -373,8 +375,8 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
                 break;
             }
 
-            string lnkArtefact = this.GetArtefactName(previous.Filename);
-            string fileArtefact = this.GetArtefactName(current.Filename);
+            string lnkArtefact = GetArtefactName(previous.Filename);
+            string fileArtefact = GetArtefactName(current.Filename);
 
             if (lnkArtefact == fileArtefact)
             {
@@ -385,7 +387,7 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
         return false;
     }
 
-    private string GetArtefactName(string filename)
+    private static string GetArtefactName(string filename)
     {
         char startKey = '/';
         int startIndex = filename.LastIndexOf(startKey);
@@ -395,7 +397,7 @@ public class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUt
             return filename;
         }
 
-        return filename.Substring(startIndex);
+        return filename[startIndex..];
     }
 
     public bool IsPeLineExecutable(EventViewModel eventViewModel)

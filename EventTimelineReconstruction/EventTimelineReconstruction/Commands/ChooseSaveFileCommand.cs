@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class ChooseSaveFileCommand : CommandBase
+public sealed class ChooseSaveFileCommand : CommandBase
 {
     private readonly IFileSelectable _viewModel;
 

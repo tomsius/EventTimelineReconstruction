@@ -5,35 +5,35 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Services;
 
-public class FileWorkSaver : IWorkSaver
+public sealed class FileWorkSaver : IWorkSaver
 {
     public async Task SaveWork(string path, IEnumerable<EventViewModel> events, IEnumerable<HighLevelEventViewModel> highLevelEvents, IEnumerable<LowLevelEventViewModel> lowLevelEvents, IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts)
     {
         using StreamWriter outputStream = new(path);
 
-        await this.WriteTreeToFile(events, outputStream, 0);
+        await WriteTreeToFile(events, outputStream, 0);
         await outputStream.WriteLineAsync();
-        await this.WriteHighLevelEventsToFile(highLevelEvents, outputStream);
+        await WriteHighLevelEventsToFile(highLevelEvents, outputStream);
         await outputStream.WriteLineAsync();
-        await this.WriteLowLevelEventsToFile(lowLevelEvents, outputStream);
+        await WriteLowLevelEventsToFile(lowLevelEvents, outputStream);
         await outputStream.WriteLineAsync();
-        await this.WriteHighLevelArtefactsToFile(highLevelArtefacts, outputStream);
+        await WriteHighLevelArtefactsToFile(highLevelArtefacts, outputStream);
         await outputStream.WriteLineAsync();
-        await this.WriteLowLevelArtefactsToFile(lowLevelArtefacts, outputStream);
+        await WriteLowLevelArtefactsToFile(lowLevelArtefacts, outputStream);
     }
 
-    private async Task WriteTreeToFile(IEnumerable<EventViewModel> events, StreamWriter outputStream, int currentLevel)
+    private static async Task WriteTreeToFile(IEnumerable<EventViewModel> events, StreamWriter outputStream, int currentLevel)
     {
         foreach (EventViewModel eventViewModel in events) {
             string serializedEventViewModel = eventViewModel.Serialize();
             string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
             await outputStream.WriteLineAsync(dataToWrite);
 
-            await this.WriteTreeToFile(eventViewModel.Children, outputStream, currentLevel + 1);
+            await WriteTreeToFile(eventViewModel.Children, outputStream, currentLevel + 1);
         }
     }
 
-    private async Task WriteHighLevelEventsToFile(IEnumerable<HighLevelEventViewModel> highLevelEvents, StreamWriter outputStream)
+    private static async Task WriteHighLevelEventsToFile(IEnumerable<HighLevelEventViewModel> highLevelEvents, StreamWriter outputStream)
     {
         foreach (HighLevelEventViewModel highLevelEvent in highLevelEvents)
         {
@@ -42,7 +42,7 @@ public class FileWorkSaver : IWorkSaver
         }
     }
 
-    private async Task WriteLowLevelEventsToFile(IEnumerable<LowLevelEventViewModel> lowLevelEvents, StreamWriter outputStream)
+    private static async Task WriteLowLevelEventsToFile(IEnumerable<LowLevelEventViewModel> lowLevelEvents, StreamWriter outputStream)
     {
         foreach (LowLevelEventViewModel lowLevelEvent in lowLevelEvents)
         {
@@ -51,7 +51,7 @@ public class FileWorkSaver : IWorkSaver
         }
     }
 
-    private async Task WriteHighLevelArtefactsToFile(IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, StreamWriter outputStream)
+    private static async Task WriteHighLevelArtefactsToFile(IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, StreamWriter outputStream)
     {
         foreach (HighLevelArtefactViewModel highLevelArtefact in highLevelArtefacts)
         {
@@ -60,7 +60,7 @@ public class FileWorkSaver : IWorkSaver
         }
     }
 
-    private async Task WriteLowLevelArtefactsToFile(IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts, StreamWriter outputStream)
+    private static async Task WriteLowLevelArtefactsToFile(IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts, StreamWriter outputStream)
     {
         foreach (LowLevelArtefactViewModel lowLevelArtefact in lowLevelArtefacts)
         {
