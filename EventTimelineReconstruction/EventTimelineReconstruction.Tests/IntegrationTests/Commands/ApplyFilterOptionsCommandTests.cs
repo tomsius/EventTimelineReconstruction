@@ -81,8 +81,8 @@ public class ApplyFilterOptionsCommandTests
             _filterViewModel.UpdateChosenEventType(item.Key, item.Value);
         }
         
-        EventViewModel expectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Utc, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, "1"));
-        EventViewModel other = new(new EventModel(new DateOnly(2002, 1, 2), new TimeOnly(6, 12), TimeZoneInfo.Utc, "BCAM", "Saltinis", "Saltinio Tipas", "Tipas", "Naudotojas", "Seimininkas", "Trumpas Aprasymas", "Aprasymas", 3, "Failo vardas", "iNode numeris", "Papildoma informacija", "Formatas", new Dictionary<string, string>() { { "Raktas1", "Reiksme1" }, { "Raktas2", "Reiksme2" } }, "2"));
+        EventViewModel expectedEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Utc, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, 1));
+        EventViewModel other = new(new EventModel(new DateOnly(2002, 1, 2), new TimeOnly(6, 12), TimeZoneInfo.Utc, "BCAM", "Saltinis", "Saltinio Tipas", "Tipas", "Naudotojas", "Seimininkas", "Trumpas Aprasymas", "Aprasymas", 3, "Failo vardas", "iNode numeris", "Papildoma informacija", "Formatas", new Dictionary<string, string>() { { "Raktas1", "Reiksme1" }, { "Raktas2", "Reiksme2" } }, 2));
         _eventTreeViewModel.AddEvent(expectedEvent);
         _eventTreeViewModel.AddEvent(other);
         int expectedCount = 1;
@@ -157,8 +157,8 @@ public class ApplyFilterOptionsCommandTests
             _filterViewModel.UpdateChosenEventType(item.Key, item.Value);
         }
 
-        EventViewModel firstEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Utc, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, "1"));
-        EventViewModel secondEvent = new(new EventModel(new DateOnly(2002, 1, 2), new TimeOnly(6, 12), TimeZoneInfo.Utc, "BCAM", "Saltinis", "Saltinio Tipas", "Tipas", "Naudotojas", "Seimininkas", "Trumpas Aprasymas", "Aprasymas", 3, "Failo vardas", "iNode numeris", "Papildoma informacija", "Formatas", new Dictionary<string, string>() { { "Raktas1", "Reiksme1" }, { "Raktas2", "Reiksme2" } }, "2"));
+        EventViewModel firstEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Utc, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, 1));
+        EventViewModel secondEvent = new(new EventModel(new DateOnly(2002, 1, 2), new TimeOnly(6, 12), TimeZoneInfo.Utc, "BCAM", "Saltinis", "Saltinio Tipas", "Tipas", "Naudotojas", "Seimininkas", "Trumpas Aprasymas", "Aprasymas", 3, "Failo vardas", "iNode numeris", "Papildoma informacija", "Formatas", new Dictionary<string, string>() { { "Raktas1", "Reiksme1" }, { "Raktas2", "Reiksme2" } }, 2));
         _eventTreeViewModel.AddEvent(firstEvent);
         _eventTreeViewModel.AddEvent(secondEvent);
         List<EventViewModel> expectedValues = new() { firstEvent, secondEvent };

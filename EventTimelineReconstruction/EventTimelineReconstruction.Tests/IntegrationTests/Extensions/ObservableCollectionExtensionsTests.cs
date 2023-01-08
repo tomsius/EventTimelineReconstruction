@@ -38,7 +38,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "1")
+                                    1)
                             ),
                             new EventViewModel(
                                 new EventModel(
@@ -59,7 +59,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "2")
+                                    2)
                             ),
                             new EventViewModel(
                                 new EventModel(
@@ -80,7 +80,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "3")
+                                    3)
                                 ),
                             new EventViewModel(
                                 new EventModel(
@@ -101,7 +101,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "4")
+                                    4)
                                 )
                         })
                 },
@@ -129,7 +129,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "4")
+                                    4)
                                 ),
                                 new EventViewModel(
                                 new EventModel(
@@ -150,7 +150,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "3")
+                                    3)
                                 ),
                                 new EventViewModel(
                                 new EventModel(
@@ -171,7 +171,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "2")
+                                    2)
                                 ),
                                 new EventViewModel(
                                     new EventModel(
@@ -192,7 +192,7 @@ public class ObservableCollectionExtensionsTests
                                     "Notes",
                                     "Format",
                                     new Dictionary<string, string>(),
-                                    "1")
+                                    1)
                                     )
                         })
                 }
@@ -227,7 +227,7 @@ public class ObservableCollectionExtensionsTests
                     "Notes",
                     "Format",
                     new Dictionary<string, string>(),
-                    "1")
+                    1)
                 ),
             new EventViewModel(
                 new EventModel(
@@ -248,7 +248,7 @@ public class ObservableCollectionExtensionsTests
                     "Notes",
                     "Format",
                     new Dictionary<string, string>(),
-                    "2")
+                    2)
                 ),
             new EventViewModel(
                 new EventModel(
@@ -269,7 +269,7 @@ public class ObservableCollectionExtensionsTests
                     "Notes",
                     "Format",
                     new Dictionary<string, string>(),
-                    "3")
+                    3)
                 ),
             new EventViewModel(
                 new EventModel(
@@ -290,7 +290,7 @@ public class ObservableCollectionExtensionsTests
                     "Notes",
                     "Format",
                     new Dictionary<string, string>(),
-                    "4")
+                    4)
                 )
             });
 

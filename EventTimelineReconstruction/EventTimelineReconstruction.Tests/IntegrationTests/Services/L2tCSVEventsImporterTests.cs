@@ -68,7 +68,7 @@ public class L2tCSVEventsImporterTests
                 "-",
                 "sqlite/firefox_history",
                 new Dictionary<string, string>() { { "extra", "['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']" }, { "schema_match", "False" }, { "sha256_hash", "4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7" }, { "visit_type", "1" } },
-                "3"
+                3
                 ),
             new EventModel(
                 new DateOnly(2003, 1, 1),
@@ -88,7 +88,7 @@ public class L2tCSVEventsImporterTests
                 "-",
                 "msiecf",
                 new Dictionary<string, string>() { { "cache_directory_index", "-2" }, { "recovered", "False" }, { "sha256_hash", "" } },
-                "4"
+                4
                 ),
             new EventModel(
                 new DateOnly(2020, 1, 1),
@@ -108,7 +108,7 @@ public class L2tCSVEventsImporterTests
                 "-",
                 "winreg/appcompatcache",
                 new Dictionary<string, string>() { { "sha256_hash", "c822dbf91f7d96c0fcea412ed5ad22d8b1b0b7047357153d631940ac89042e38" } },
-                "5"
+                5
                 )
         };
         // Act

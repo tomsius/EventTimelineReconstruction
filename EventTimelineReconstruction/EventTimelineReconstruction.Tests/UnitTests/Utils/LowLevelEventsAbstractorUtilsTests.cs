@@ -109,7 +109,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     "testas 1.txt"
@@ -135,7 +135,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     "testas 2.txt"
@@ -161,7 +161,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     "testas 3.txt"
@@ -187,7 +187,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     ""
@@ -213,7 +213,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     "testas 4.txt..."
@@ -239,7 +239,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     "testas 5.txt"
@@ -265,7 +265,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     "testas 6.txt"
@@ -301,7 +301,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 },
@@ -326,7 +326,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 },
@@ -351,7 +351,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 }
@@ -386,7 +386,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 },
@@ -411,7 +411,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 }
@@ -446,7 +446,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 },
@@ -471,7 +471,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 },
@@ -496,7 +496,7 @@ public class LowLevelEventsAbstractorUtilsTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 }
@@ -704,7 +704,7 @@ public class LowLevelEventsAbstractorUtilsTests
     public void IsValidRegEvent_ShouldReturnTrue_WhenEventIsValid()
     {
         // Arrange
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Registry Key: UserAssist", "Type", "Username", "Hostname", "UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad.exe Cou...", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, "1" ));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Registry Key: UserAssist", "Type", "Username", "Hostname", "UEME_RUNPIDL:::{2559A1F4-21D7-11D4-BDAF-00C04F60B9F0}\\Windows NT\\Accessories\\wordpad.exe Cou...", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, 1 ));
         LowLevelEventsAbstractorUtils utils = new();
 
         // Act

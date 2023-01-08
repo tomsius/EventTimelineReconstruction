@@ -44,7 +44,7 @@ public class EventDetailsViewModelTests
                 "Notes",
                 "Format",
                 new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                "1")
+                1)
             );
 
         // Act

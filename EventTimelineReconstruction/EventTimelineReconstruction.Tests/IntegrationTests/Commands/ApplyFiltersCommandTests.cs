@@ -57,7 +57,7 @@ public class ApplyFiltersCommandTests
                 "Notes",
                 "Format",
                 new Dictionary<string, string>(),
-                "1"));
+                1));
         EventViewModel otherEvent = new(new EventModel(
                 new DateOnly(2018, 1, 5),
                 new TimeOnly(15, 14),
@@ -76,7 +76,7 @@ public class ApplyFiltersCommandTests
                 "Notes2",
                 "Format2",
                 new Dictionary<string, string>(),
-                "2"));
+                2));
         _eventTreeViewModel.AddEvent(expected);
         _eventTreeViewModel.AddEvent(otherEvent);
 
@@ -155,7 +155,7 @@ public class ApplyFiltersCommandTests
                 "Notes",
                 "Format",
                 new Dictionary<string, string>(),
-                "1"));
+                1));
         EventViewModel secondEvent = new(new EventModel(
                 new DateOnly(2018, 1, 5),
                 new TimeOnly(15, 14),
@@ -174,7 +174,7 @@ public class ApplyFiltersCommandTests
                 "Notes2",
                 "Format2",
                 new Dictionary<string, string>(),
-                "2"));
+                2));
         List<EventViewModel> expected = new() { firstEvent, secondEvent };
         expected = expected.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
         _eventTreeViewModel.AddEvent(firstEvent);
