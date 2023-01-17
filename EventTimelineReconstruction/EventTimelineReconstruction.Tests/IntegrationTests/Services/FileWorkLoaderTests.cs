@@ -19,6 +19,7 @@ public class FileWorkLoaderTests
         writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB5,Source5,Source Type5,Type5,Username5,Hostname5,Short Description5,Full Description5,2.5,Filename5,iNode number5,Notes5,Format5,Key51:Value51;Key52:Value52,5,True,#FF000000");
         writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB6,Source6,Source Type6,Type6,Username6,Hostname6,Short Description6,Full Description6,2.5,Filename6,iNode number6,Notes6,Format6,Key61:Value61;Key62:Value62,6,True,#FF000000");
         writeStream.WriteLine("2022,10,14,10,52,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB2,Source2,Source Type2,Type2,Username2,Hostname2,Short Description2,Full Description2,2.5,Filename2,iNode number2,Notes2,Format2,Key21:Value21;Key22:Value22,2,True,#FF000000");
+        writeStream.WriteLine("2022,11,17,9,9,53,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,.A..,WEBHIST,Firefox History,Last Visited Time,-,PC1-5DFC89FB1E0,URL: https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABA...,https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABAAGgJsZQ&sig=AOD64_3ykMPCxolRZ-sO--e3gKiL0Le_6g&ved=2ahUKEwju7oid77T7AhWplosKHafFCrgQ0Qx6BAgMEAE&adurl= [count: 1] Host: www.google.com visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com) (URL not typed directly) Transition: LINK,2,TSK:/Documents and Settings/PC1/Application Data/Mozilla/Firefox/Profiles/obcflyez.default/places.sqlite,10816,-,sqlite/firefox_history,extra:['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK'];schema_match:False;sha256_hash:4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7;visit_type:1,7,True,#FF000000");
         writeStream.WriteLine();
         writeStream.WriteLine("2020,1,1,4,20,54,Source4,Short4,Visit4,4");
         writeStream.WriteLine("2020,1,2,4,21,4,Source5,Short5,Visit5,5");
@@ -47,7 +48,7 @@ public class FileWorkLoaderTests
             new EventViewModel(
                 new EventModel(
                     new DateOnly(2020, 4, 6),
-                    new TimeOnly(5, 23),
+                    new TimeOnly(5, 23, 0),
                     TimeZoneInfo.Utc,
                     "MACB1",
                     "Source1",
@@ -68,7 +69,7 @@ public class FileWorkLoaderTests
             new EventViewModel(
                 new EventModel(
                     new DateOnly(2022, 10, 14),
-                    new TimeOnly(10, 52),
+                    new TimeOnly(10, 52, 0),
                     TimeZoneInfo.Utc,
                     "MACB2",
                     "Source2",
@@ -85,12 +86,33 @@ public class FileWorkLoaderTests
                     "Format2",
                     new Dictionary<string, string>() { { "Key21", "Value21" }, { "Key22", "Value22" } },
                     2
+                )),
+            new EventViewModel(
+                new EventModel(
+                    new DateOnly(2022, 11, 17),
+                    new TimeOnly(9, 9, 53),
+                    TimeZoneInfo.Utc,
+                    ".A..",
+                    "WEBHIST",
+                    "Firefox History",
+                    "Last Visited Time",
+                    "-",
+                    "PC1-5DFC89FB1E0",
+                    "URL: https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABA...",
+                    "https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABAAGgJsZQ&sig=AOD64_3ykMPCxolRZ-sO--e3gKiL0Le_6g&ved=2ahUKEwju7oid77T7AhWplosKHafFCrgQ0Qx6BAgMEAE&adurl= [count: 1] Host: www.google.com visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com) (URL not typed directly) Transition: LINK",
+                    2,
+                    "TSK:/Documents and Settings/PC1/Application Data/Mozilla/Firefox/Profiles/obcflyez.default/places.sqlite",
+                    "10816",
+                    "-",
+                    "sqlite/firefox_history",
+                    new Dictionary<string, string>() { { "extra", "['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']" }, { "schema_match", "False" }, { "sha256_hash", "4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7" }, { "visit_type", "1" } },
+                    7
                 ))
         };
         EventViewModel firstChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB3",
                     "Source3",
@@ -111,7 +133,7 @@ public class FileWorkLoaderTests
         EventViewModel secondChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB4",
                     "Source4",
@@ -132,7 +154,7 @@ public class FileWorkLoaderTests
         EventViewModel thirdChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB5",
                     "Source5",
@@ -153,7 +175,7 @@ public class FileWorkLoaderTests
         EventViewModel fourthChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB6",
                     "Source6",
