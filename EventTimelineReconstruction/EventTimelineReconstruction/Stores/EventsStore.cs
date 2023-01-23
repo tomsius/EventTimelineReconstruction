@@ -74,7 +74,7 @@ public sealed class EventsStore : IEventsStore
 
     public List<EventModel> GetStoredEventModels()
     {
-        List<EventModel> eventModels = new(_events.Count);
+        HashSet<EventModel> eventModels = new(_events.Count);
         Queue<EventViewModel> queue = new(_events.Count);
 
         foreach (EventViewModel eventViewModel in _events)
@@ -113,7 +113,7 @@ public sealed class EventsStore : IEventsStore
             eventModels.Add(eventModel);
         }
 
-        return eventModels;
+        return eventModels.ToList();
     }
 
     public List<EventViewModel> GetStoredEventViewModelsAsOneLevel()
