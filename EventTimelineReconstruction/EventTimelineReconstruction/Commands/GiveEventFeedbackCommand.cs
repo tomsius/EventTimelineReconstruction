@@ -7,7 +7,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class GiveEventFeedbackCommand : CommandBase
+public sealed class GiveEventFeedbackCommand : CommandBase
 {
     private readonly EventTreeViewModel _eventTreeViewModel;
 

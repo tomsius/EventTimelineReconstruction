@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class LowLevelEventViewModel
+public sealed class LowLevelEventViewModel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
@@ -10,7 +10,7 @@ public class LowLevelEventViewModel
     public string Short { get; set; }
     public string Visit { get; set; }
     public string Extra { get; set; }
-    public string Reference { get; set; }
+    public int Reference { get; set; }
 
     public LowLevelEventViewModel()
     {
@@ -18,7 +18,7 @@ public class LowLevelEventViewModel
         Extra = "-";
     }
 
-    public LowLevelEventViewModel(DateOnly date, TimeOnly time, string source, string shortDesc, string visit, string extra, string reference)
+    public LowLevelEventViewModel(DateOnly date, TimeOnly time, string source, string shortDesc, string visit, string extra, int reference)
     {
         Date = new(date.Year, date.Month, date.Day);
         Time = new(time.Hour, time.Minute, time.Second);

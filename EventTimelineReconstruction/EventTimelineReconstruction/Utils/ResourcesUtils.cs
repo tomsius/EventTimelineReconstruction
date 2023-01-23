@@ -1,10 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class ResourcesUtils : IResourcesUtils
+public sealed class ResourcesUtils : IResourcesUtils
 {
     public string GetCurrentLanguage()
     {

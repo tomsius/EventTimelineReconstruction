@@ -36,7 +36,7 @@ public class SelectedColourChangedCommandTests
         string expectedType = "Created";
         Color expectedColour = Colors.Green;
         DockPanel dockPanel = new();
-        TextBlock textBlock = new() { Text = expectedType };
+        TextBlock textBlock = new() { Tag = expectedType };
         ColorPicker colorPicker = new() { SelectedColor = expectedColour };
         dockPanel.Children.Add(textBlock);
         dockPanel.Children.Add(colorPicker);
@@ -58,7 +58,7 @@ public class SelectedColourChangedCommandTests
         string expectedType = "Created";
         Color expectedColour = Colors.Black;
         DockPanel dockPanel = new();
-        TextBlock textBlock = new() { Text = expectedType };
+        TextBlock textBlock = new() { Tag = expectedType };
         ColorPicker colorPicker = new() { SelectedColor = null };
         dockPanel.Children.Add(textBlock);
         dockPanel.Children.Add(colorPicker);

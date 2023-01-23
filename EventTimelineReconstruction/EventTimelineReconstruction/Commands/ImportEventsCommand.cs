@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class ImportEventsCommand : AsyncCommandBase
+public sealed class ImportEventsCommand : AsyncCommandBase
 {
     private readonly ImportViewModel _importViewModel;
     private readonly IEventsStore _store;

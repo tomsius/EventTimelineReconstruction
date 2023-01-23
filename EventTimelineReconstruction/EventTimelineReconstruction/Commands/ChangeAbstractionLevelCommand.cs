@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +6,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class ChangeAbstractionLevelCommand : CommandBase
+public sealed class ChangeAbstractionLevelCommand : CommandBase
 {
     private readonly AbstractedEventsViewModel _viewModel;
 

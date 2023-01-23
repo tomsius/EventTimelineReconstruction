@@ -3,7 +3,7 @@ using System.Text;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class LowLevelArtefactsAbstractorUtils : ILowLevelArtefactsAbstractorUtils
+public sealed class LowLevelArtefactsAbstractorUtils : ILowLevelArtefactsAbstractorUtils
 {
     public string GetAddress(string description)
     {
@@ -35,7 +35,7 @@ public class LowLevelArtefactsAbstractorUtils : ILowLevelArtefactsAbstractorUtil
 
         foreach (KeyValuePair<string, string> kvp in extra)
         {
-            string pair = this.FormatPair(kvp.Key, kvp.Value);
+            string pair = FormatPair(kvp.Key, kvp.Value);
             sb.Append(pair);
             sb.Append(' ');
         }
@@ -43,7 +43,7 @@ public class LowLevelArtefactsAbstractorUtils : ILowLevelArtefactsAbstractorUtil
         return sb.ToString().TrimEnd();
     }
 
-    private string FormatPair(string key, string value)
+    private static string FormatPair(string key, string value)
     {
         return $"{key}: {value}";
     }

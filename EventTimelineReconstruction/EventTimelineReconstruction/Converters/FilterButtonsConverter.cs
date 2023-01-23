@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace EventTimelineReconstruction.Converters;
 
-public class FilterButtonsConverter : IMultiValueConverter
+public sealed class FilterButtonsConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {

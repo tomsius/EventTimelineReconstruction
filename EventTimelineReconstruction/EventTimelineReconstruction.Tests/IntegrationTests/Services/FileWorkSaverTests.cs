@@ -42,7 +42,7 @@ public class FileWorkSaverTests
                     "Notes1",
                     "Format1",
                     new Dictionary<string, string>() { { "Key11", "Value11" }, { "Key12", "Value12" } },
-                    "1"
+                    1
                     )),
             new EventViewModel(
                 new EventModel(
@@ -63,7 +63,7 @@ public class FileWorkSaverTests
                     "Notes2",
                     "Format2",
                     new Dictionary<string, string>() { { "Key21", "Value21" }, { "Key22", "Value22" } },
-                    "2"
+                    2
                 ))
         };
         EventViewModel child = new(
@@ -85,27 +85,27 @@ public class FileWorkSaverTests
                     "Notes3",
                     "Format3",
                     new Dictionary<string, string>() { { "Key31", "Value31" }, { "Key32", "Value32" } },
-                    "3"
+                    3
                     ));
         events[0].AddChild(child);
         List<HighLevelEventViewModel> highLevelEvents = new()
         {
-            new HighLevelEventViewModel(new DateOnly(2020, 1, 1), new TimeOnly(4, 20, 54), "Source4", "Short4", "Visit4", "4"),
-            new HighLevelEventViewModel(new DateOnly(2020, 1, 2), new TimeOnly(4, 21, 4), "Source5", "Short5", "Visit5", "5")
+            new HighLevelEventViewModel(new DateOnly(2020, 1, 1), new TimeOnly(4, 20, 54), "Source4", "Short4", "Visit4", 4),
+            new HighLevelEventViewModel(new DateOnly(2020, 1, 2), new TimeOnly(4, 21, 4), "Source5", "Short5", "Visit5", 5)
         };
         List<LowLevelEventViewModel> lowLevelEvents = new()
         {
-            new LowLevelEventViewModel(new DateOnly(2020, 1, 3), new TimeOnly(4, 22, 54), "Source6", "Short6", "Visit6", "Extra6", "6"),
-            new LowLevelEventViewModel(new DateOnly(2020, 1, 4), new TimeOnly(4, 23, 4), "Source7", "Short7", "Visit7", "Extra7", "7")
+            new LowLevelEventViewModel(new DateOnly(2020, 1, 3), new TimeOnly(4, 22, 54), "Source6", "Short6", "Visit6", "Extra6", 6),
+            new LowLevelEventViewModel(new DateOnly(2020, 1, 4), new TimeOnly(4, 23, 4), "Source7", "Short7", "Visit7", "Extra7", 7)
         };
         List<HighLevelArtefactViewModel> highLevelArtefacts = new()
         {
-            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 5), new TimeOnly(4, 22, 54), "Source8", "Short8", "Visit8", "Extra8", "8", "MACB8", "SourceType8", "Desc8"),
-            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 6), new TimeOnly(4, 23, 4), "Source9", "Short9", "Visit9", "Extra9", "9", "MACB9", "SourceType9", "Desc9")
+            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 5), new TimeOnly(4, 22, 54), "Source8", "Short8", "Visit8", "Extra8", 8, "MACB8", "SourceType8", "Desc8"),
+            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 6), new TimeOnly(4, 23, 4), "Source9", "Short9", "Visit9", "Extra9", 9, "MACB9", "SourceType9", "Desc9")
         };
         List<LowLevelArtefactViewModel> lowLevelArtefacts = new()
         {
-            new LowLevelArtefactViewModel(new DateOnly(2020, 1, 7), new TimeOnly(4, 22, 54), "Vilnius", "MACB10", "Source10", "SourceType10", "Type10", "User10", "Host10", "Short10", "Desc10", "2", "Filename10", "Inode10", "Notes10", "Format10", "Extra10", "10")
+            new LowLevelArtefactViewModel(new DateOnly(2020, 1, 7), new TimeOnly(4, 22, 54), "Vilnius", "MACB10", "Source10", "SourceType10", "Type10", "User10", "Host10", "Short10", "Desc10", "2", "Filename10", "Inode10", "Notes10", "Format10", "Extra10", 10)
         };
         string[] expected = new string[]
         {

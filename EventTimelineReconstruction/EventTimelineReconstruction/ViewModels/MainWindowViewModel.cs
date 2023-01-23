@@ -4,7 +4,7 @@ using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class MainWindowViewModel
+public sealed class MainWindowViewModel
 {
     private readonly EventTreeViewModel _eventTreeViewModel;
 

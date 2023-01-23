@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace EventTimelineReconstruction.Converters;
 
-public class IntegrityResultsConverter : IMultiValueConverter
+public sealed class IntegrityResultsConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {

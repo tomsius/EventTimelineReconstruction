@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class InitializeLanguagesCommand : CommandBase
+public sealed class InitializeLanguagesCommand : CommandBase
 {
     private readonly ImportViewModel _importViewModel;
     private readonly FilterViewModel _filterViewModel;
@@ -30,9 +30,9 @@ public class InitializeLanguagesCommand : CommandBase
 
         foreach (string path in paths)
         {
-            (string code, string name) locale = _fileUtils.GetLocale(path);
+            (string code, string name) = _fileUtils.GetLocale(path);
 
-            MenuItem menuItem = new() { Header = locale.name, Tag = locale.code, IsChecked = locale.code == "en" };
+            MenuItem menuItem = new() { Header = name, Tag = code, IsChecked = code == "en" };
             menuItem.Click += this.MenuItem_Click;
             languages.Items.Add(menuItem);
         }

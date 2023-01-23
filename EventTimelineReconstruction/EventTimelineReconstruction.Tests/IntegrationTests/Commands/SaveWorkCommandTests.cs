@@ -118,7 +118,7 @@ public class SaveWorkCommandTests
                     "-",
                     "msiecf",
                     new Dictionary<string, string>() { { "cache_directory_index", "-2" }, { "recovered", "False" }, { "sha256_hash", "243645de118fab85ae3e5f4f820ee50717ddf478f17f7a678c88aa5d437a7e70" } },
-                    "1")) { IsVisible = true, Colour = Brushes.Red },
+                    1)) { IsVisible = true, Colour = Brushes.Red },
                 new EventViewModel(new EventModel(
                     new DateOnly(2022, 5, 28),
                     new TimeOnly(8, 33, 0),
@@ -137,7 +137,7 @@ public class SaveWorkCommandTests
                     "-",
                     "msiecf",
                     new Dictionary<string, string>() { { "cache_directory_index", "-2" }, { "recovered", "False" }, { "sha256_hash", "228b35c5c30b9314ab588e2d8a147c24c93c53fd2ae392808456e850d7e83ae3" } },
-                    "2")) { IsVisible = true, Colour = Brushes.Red },
+                    2)) { IsVisible = true, Colour = Brushes.Red },
                 new EventViewModel(new EventModel(
                     new DateOnly(2022, 5, 28),
                     new TimeOnly(8, 33, 6),
@@ -156,7 +156,7 @@ public class SaveWorkCommandTests
                     "-",
                     "msiecf",
                     new Dictionary<string, string>() { { "cache_directory_index", "-2" }, { "recovered", "False" }, { "sha256_hash", "243645de118fab85ae3e5f4f820ee50717ddf478f17f7a678c88aa5d437a7e70" } },
-                    "3")) { IsVisible = true, Colour = Brushes.Black }
+                    3)) { IsVisible = true, Colour = Brushes.Black }
             };
         _eventTreeViewModel.LoadEvents(events);
         _saveWorkViewModel.FileName = @"Save.csv";

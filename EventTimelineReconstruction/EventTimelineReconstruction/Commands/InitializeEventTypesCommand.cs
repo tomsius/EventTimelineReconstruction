@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class InitializeEventTypesCommand : CommandBase
+public sealed class InitializeEventTypesCommand : CommandBase
 {
     private readonly FilterViewModel _filterViewModel;
     private readonly IFilteringUtils _filteringUtils;

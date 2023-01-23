@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class RangeEnabledObservableCollection<T> : ObservableCollection<T>
+public sealed class RangeEnabledObservableCollection<T> : ObservableCollection<T>
 {
     public void AddRange(IEnumerable<T> items)
     {

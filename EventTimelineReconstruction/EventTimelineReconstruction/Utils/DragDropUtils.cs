@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class DragDropUtils : IDragDropUtils
+public sealed class DragDropUtils : IDragDropUtils
 {
     public TreeViewItem GetNearestContainer(UIElement element)
     {

@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class HighLevelArtefactViewModel
+public sealed class HighLevelArtefactViewModel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
@@ -10,7 +10,7 @@ public class HighLevelArtefactViewModel
     public string Short { get; set; }
     public string Visit { get; set; }
     public string Extra { get; set; }
-    public string Reference { get; set; }
+    public int Reference { get; set; }
     public string Macb { get; set; }
     public string SourceType { get; set; }
     public string Description { get; set; }
@@ -22,7 +22,7 @@ public class HighLevelArtefactViewModel
         Description = "-";
     }
 
-    public HighLevelArtefactViewModel(DateOnly date, TimeOnly time, string source, string shortDesc, string visit, string extra, string reference, string macb, string sourceType, string description)
+    public HighLevelArtefactViewModel(DateOnly date, TimeOnly time, string source, string shortDesc, string visit, string extra, int reference, string macb, string sourceType, string description)
     {
         Date = new(date.Year, date.Month, date.Day);
         Time = new(time.Hour, time.Minute, time.Second);

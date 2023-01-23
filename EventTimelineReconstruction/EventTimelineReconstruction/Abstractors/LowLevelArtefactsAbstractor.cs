@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
+public sealed class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
 {
     private readonly ILowLevelArtefactsAbstractorUtils _lowLevelArtefactsAbstractorUtils;
 
@@ -46,7 +46,7 @@ public class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
                     lowLevelArtefact = this.FormEvent(events[i]);
                     int needsSkipping = this.SkipFileEvents(events, i, periodInMinutes);
 
-                    if (!this.IsFileEventValid(lowLevelArtefacts, lowLevelArtefact))
+                    if (!IsFileEventValid(lowLevelArtefacts, lowLevelArtefact))
                     {
                         lowLevelArtefact = null;
                     }
@@ -158,13 +158,13 @@ public class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
         return count;
     }
 
-    private bool IsFileEventValid(List<LowLevelArtefactViewModel> lowLevelArtefacts, LowLevelArtefactViewModel current)
+    private static bool IsFileEventValid(List<LowLevelArtefactViewModel> lowLevelArtefacts, LowLevelArtefactViewModel current)
     {
         DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
 
         if (current.SourceType != "OS Content Modification Time")
         {
-            return !this.DoFileAndWebhistOfSameTimeExist(lowLevelArtefacts, currentTime);
+            return !DoFileAndWebhistOfSameTimeExist(lowLevelArtefacts, currentTime);
         }
 
         for (int i = lowLevelArtefacts.Count - 1; i >= 0; i--)
@@ -185,7 +185,7 @@ public class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
         return true;
     }
 
-    private bool DoFileAndWebhistOfSameTimeExist(List<LowLevelArtefactViewModel> lowLevelArtefacts, DateTime currentTime)
+    private static bool DoFileAndWebhistOfSameTimeExist(List<LowLevelArtefactViewModel> lowLevelArtefacts, DateTime currentTime)
     {
         bool doesFileExist = false;
         bool doesWebhistExist = false;

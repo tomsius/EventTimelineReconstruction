@@ -5,7 +5,7 @@ using EventTimelineReconstruction.Utils;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class DropEventCommand : CommandBase
+public sealed class DropEventCommand : CommandBase
 {
     private readonly EventTreeViewModel _eventTreeViewModel;
     private readonly IDragDropUtils _dragDropUtils;

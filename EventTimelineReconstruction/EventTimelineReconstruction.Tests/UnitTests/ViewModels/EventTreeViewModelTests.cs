@@ -52,7 +52,7 @@ public class EventTreeViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     )
                 },
@@ -77,7 +77,7 @@ public class EventTreeViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     )
                 },
@@ -102,7 +102,7 @@ public class EventTreeViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "3"
+                            3
                         )
                     )
                 }
@@ -170,7 +170,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"));
+                        1));
 
         // Act
         _eventTreeViewModel.DraggedItem = expected;
@@ -212,7 +212,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"));
+                        1));
 
         // Act
         _eventTreeViewModel.Target = expected;
@@ -281,7 +281,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"));
+                        1));
         TreeViewItem uiElement = new() { Header = eventViewModel };
         DraggableAdorner expected = new(uiElement, uiElement);
 
@@ -391,7 +391,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 );
         int expectedCount = 1;
 
@@ -458,7 +458,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 );
         _eventTreeViewModel.AddEvent(eventViewModel);
         int expected = 0;
@@ -494,7 +494,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 );
         EventViewModel otherViewModel = new(
                 new EventModel(
@@ -515,7 +515,7 @@ public class EventTreeViewModelTests
                         "Notes2",
                         "Format2",
                         new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
-                        "2")
+                        2)
                 );
         _eventTreeViewModel.AddEvent(originalViewModel);
         int expected = 1;
@@ -551,7 +551,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 )
         {
             IsVisible = true
@@ -575,7 +575,7 @@ public class EventTreeViewModelTests
                         "Notes2",
                         "Format2",
                         new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } }, 
-                        "2")
+                        2)
                 )
         {
             IsVisible = false
@@ -657,7 +657,7 @@ public class EventTreeViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 )
         {
             IsVisible = true
@@ -681,7 +681,7 @@ public class EventTreeViewModelTests
                         "Notes2",
                         "Format2",
                         new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
-                        "2")
+                        2)
                 )
         {
             IsVisible = false
@@ -705,7 +705,7 @@ public class EventTreeViewModelTests
                         "Notes2",
                         "Format2",
                         new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
-                        "3")
+                        3)
                 )
         {
             IsVisible = false
@@ -729,7 +729,7 @@ public class EventTreeViewModelTests
                         "Notes3",
                         "Format3",
                         new Dictionary<string, string>() { { "Key123", "Value123" }, { "Key213", "Value213" } },
-                        "4")
+                        4)
                 )
         {
             IsVisible = true

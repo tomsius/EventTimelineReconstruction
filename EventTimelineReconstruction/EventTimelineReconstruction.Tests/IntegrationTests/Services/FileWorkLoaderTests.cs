@@ -19,6 +19,7 @@ public class FileWorkLoaderTests
         writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB5,Source5,Source Type5,Type5,Username5,Hostname5,Short Description5,Full Description5,2.5,Filename5,iNode number5,Notes5,Format5,Key51:Value51;Key52:Value52,5,True,#FF000000");
         writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB6,Source6,Source Type6,Type6,Username6,Hostname6,Short Description6,Full Description6,2.5,Filename6,iNode number6,Notes6,Format6,Key61:Value61;Key62:Value62,6,True,#FF000000");
         writeStream.WriteLine("2022,10,14,10,52,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB2,Source2,Source Type2,Type2,Username2,Hostname2,Short Description2,Full Description2,2.5,Filename2,iNode number2,Notes2,Format2,Key21:Value21;Key22:Value22,2,True,#FF000000");
+        writeStream.WriteLine("2022,11,17,9,9,53,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,.A..,WEBHIST,Firefox History,Last Visited Time,-,PC1-5DFC89FB1E0,URL: https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABA...,https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABAAGgJsZQ&sig=AOD64_3ykMPCxolRZ-sO--e3gKiL0Le_6g&ved=2ahUKEwju7oid77T7AhWplosKHafFCrgQ0Qx6BAgMEAE&adurl= [count: 1] Host: www.google.com visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com) (URL not typed directly) Transition: LINK,2,TSK:/Documents and Settings/PC1/Application Data/Mozilla/Firefox/Profiles/obcflyez.default/places.sqlite,10816,-,sqlite/firefox_history,extra:['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK'];schema_match:False;sha256_hash:4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7;visit_type:1,7,True,#FF000000");
         writeStream.WriteLine();
         writeStream.WriteLine("2020,1,1,4,20,54,Source4,Short4,Visit4,4");
         writeStream.WriteLine("2020,1,2,4,21,4,Source5,Short5,Visit5,5");
@@ -47,7 +48,7 @@ public class FileWorkLoaderTests
             new EventViewModel(
                 new EventModel(
                     new DateOnly(2020, 4, 6),
-                    new TimeOnly(5, 23),
+                    new TimeOnly(5, 23, 0),
                     TimeZoneInfo.Utc,
                     "MACB1",
                     "Source1",
@@ -63,12 +64,12 @@ public class FileWorkLoaderTests
                     "Notes1",
                     "Format1",
                     new Dictionary<string, string>() { { "Key11", "Value11" }, { "Key12", "Value12" } },
-                    "1"
+                    1
                     )),
             new EventViewModel(
                 new EventModel(
                     new DateOnly(2022, 10, 14),
-                    new TimeOnly(10, 52),
+                    new TimeOnly(10, 52, 0),
                     TimeZoneInfo.Utc,
                     "MACB2",
                     "Source2",
@@ -84,13 +85,34 @@ public class FileWorkLoaderTests
                     "Notes2",
                     "Format2",
                     new Dictionary<string, string>() { { "Key21", "Value21" }, { "Key22", "Value22" } },
-                    "2"
+                    2
+                )),
+            new EventViewModel(
+                new EventModel(
+                    new DateOnly(2022, 11, 17),
+                    new TimeOnly(9, 9, 53),
+                    TimeZoneInfo.Utc,
+                    ".A..",
+                    "WEBHIST",
+                    "Firefox History",
+                    "Last Visited Time",
+                    "-",
+                    "PC1-5DFC89FB1E0",
+                    "URL: https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABA...",
+                    "https://www.google.com/aclk?sa=l&ai=DChcSEwi5sI6d77T7AhVJGXsKHUduB9UYABAAGgJsZQ&sig=AOD64_3ykMPCxolRZ-sO--e3gKiL0Le_6g&ved=2ahUKEwju7oid77T7AhWplosKHafFCrgQ0Qx6BAgMEAE&adurl= [count: 1] Host: www.google.com visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com) (URL not typed directly) Transition: LINK",
+                    2,
+                    "TSK:/Documents and Settings/PC1/Application Data/Mozilla/Firefox/Profiles/obcflyez.default/places.sqlite",
+                    "10816",
+                    "-",
+                    "sqlite/firefox_history",
+                    new Dictionary<string, string>() { { "extra", "['visited from: https://www.google.com/search?q=chrome&ie=utf-8&oe=utf-8&client=firefox-b (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']" }, { "schema_match", "False" }, { "sha256_hash", "4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7" }, { "visit_type", "1" } },
+                    7
                 ))
         };
         EventViewModel firstChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB3",
                     "Source3",
@@ -106,12 +128,12 @@ public class FileWorkLoaderTests
                     "Notes3",
                     "Format3",
                     new Dictionary<string, string>() { { "Key31", "Value31" }, { "Key32", "Value32" } },
-                    "3"
+                    3
                     ));
         EventViewModel secondChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB4",
                     "Source4",
@@ -127,12 +149,12 @@ public class FileWorkLoaderTests
                     "Notes4",
                     "Format4",
                     new Dictionary<string, string>() { { "Key41", "Value41" }, { "Key42", "Value42" } },
-                    "4"
+                    4
                     ));
         EventViewModel thirdChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB5",
                     "Source5",
@@ -148,12 +170,12 @@ public class FileWorkLoaderTests
                     "Notes5",
                     "Format5",
                     new Dictionary<string, string>() { { "Key51", "Value51" }, { "Key52", "Value52" } },
-                    "5"
+                    5
                     ));
         EventViewModel fourthChild = new(
                 new EventModel(
                     new DateOnly(2021, 12, 1),
-                    new TimeOnly(17, 53),
+                    new TimeOnly(17, 53, 0),
                     TimeZoneInfo.Utc,
                     "MACB6",
                     "Source6",
@@ -169,7 +191,7 @@ public class FileWorkLoaderTests
                     "Notes6",
                     "Format6",
                     new Dictionary<string, string>() { { "Key61", "Value61" }, { "Key62", "Value62" } },
-                    "6"
+                    6
                     ));
         expectedEvents[0].AddChild(firstChild);
         expectedEvents[0].Children[0].AddChild(secondChild);
@@ -177,22 +199,22 @@ public class FileWorkLoaderTests
         expectedEvents[0].AddChild(fourthChild);
         List<HighLevelEventViewModel> expectedHighLevelEvents = new()
         {
-            new HighLevelEventViewModel(new DateOnly(2020, 1, 1), new TimeOnly(4, 20, 54), "Source4", "Short4", "Visit4", "4"),
-            new HighLevelEventViewModel(new DateOnly(2020, 1, 2), new TimeOnly(4, 21, 4), "Source5", "Short5", "Visit5", "5")
+            new HighLevelEventViewModel(new DateOnly(2020, 1, 1), new TimeOnly(4, 20, 54), "Source4", "Short4", "Visit4", 4),
+            new HighLevelEventViewModel(new DateOnly(2020, 1, 2), new TimeOnly(4, 21, 4), "Source5", "Short5", "Visit5", 5)
         };
         List<LowLevelEventViewModel> expectedLowLevelEvents = new()
         {
-            new LowLevelEventViewModel(new DateOnly(2020, 1, 3), new TimeOnly(4, 22, 54), "Source6", "Short6", "Visit6", "Extra6", "6"),
-            new LowLevelEventViewModel(new DateOnly(2020, 1, 4), new TimeOnly(4, 23, 4), "Source7", "Short7", "Visit7", "Extra7", "7")
+            new LowLevelEventViewModel(new DateOnly(2020, 1, 3), new TimeOnly(4, 22, 54), "Source6", "Short6", "Visit6", "Extra6", 6),
+            new LowLevelEventViewModel(new DateOnly(2020, 1, 4), new TimeOnly(4, 23, 4), "Source7", "Short7", "Visit7", "Extra7", 7)
         };
         List<HighLevelArtefactViewModel> expectedHighLevelArtefacts = new()
         {
-            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 5), new TimeOnly(4, 22, 54), "Source8", "Short8", "Visit8", "Extra8", "8", "MACB8", "SourceType8", "Desc8"),
-            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 6), new TimeOnly(4, 23, 4), "Source9", "Short9", "Visit9", "Extra9", "9", "MACB9", "SourceType9", "Desc9")
+            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 5), new TimeOnly(4, 22, 54), "Source8", "Short8", "Visit8", "Extra8", 8, "MACB8", "SourceType8", "Desc8"),
+            new HighLevelArtefactViewModel(new DateOnly(2020, 1, 6), new TimeOnly(4, 23, 4), "Source9", "Short9", "Visit9", "Extra9", 9, "MACB9", "SourceType9", "Desc9")
         };
         List<LowLevelArtefactViewModel> expectedLowLevelArtefacts = new()
         {
-            new LowLevelArtefactViewModel(new DateOnly(2020, 1, 7), new TimeOnly(4, 22, 54), "Vilnius", "MACB10", "Source10", "SourceType10", "Type10", "User10", "Host10", "Short10", "Desc10", "2", "Filename10", "Inode10", "Notes10", "Format10", "Extra10", "10")
+            new LowLevelArtefactViewModel(new DateOnly(2020, 1, 7), new TimeOnly(4, 22, 54), "Vilnius", "MACB10", "Source10", "SourceType10", "Type10", "User10", "Host10", "Short10", "Desc10", "2", "Filename10", "Inode10", "Notes10", "Format10", "Extra10", 10)
         };
         FileWorkLoader loader = new();
 

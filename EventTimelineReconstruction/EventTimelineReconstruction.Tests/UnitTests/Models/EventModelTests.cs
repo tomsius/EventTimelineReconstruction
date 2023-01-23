@@ -31,7 +31,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2021, 10, 14),
@@ -51,7 +51,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -74,7 +74,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 11, 14),
@@ -94,7 +94,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -117,7 +117,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 15),
@@ -137,7 +137,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -160,7 +160,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -180,7 +180,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -203,7 +203,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -223,7 +223,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -246,7 +246,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -266,7 +266,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -289,7 +289,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -309,7 +309,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -332,7 +332,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -352,7 +352,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -375,7 +375,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -395,7 +395,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -418,7 +418,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -438,7 +438,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -461,7 +461,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -481,7 +481,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -504,7 +504,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -524,7 +524,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -547,7 +547,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -567,7 +567,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -590,7 +590,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -610,7 +610,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -633,7 +633,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -653,7 +653,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -676,7 +676,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -696,7 +696,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -719,7 +719,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -739,7 +739,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -762,7 +762,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -782,7 +782,7 @@ public class EventModelTests
                         "Notes2",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -805,7 +805,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -825,7 +825,7 @@ public class EventModelTests
                         "Notes",
                         "Format2",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -848,7 +848,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -868,7 +868,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -891,7 +891,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -911,7 +911,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -934,7 +934,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -954,7 +954,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value3" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     )
                 },
                 new object[]
@@ -977,7 +977,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1"
+                        1
                     ),
                     new EventModel(
                         new DateOnly(2022, 10, 14),
@@ -997,7 +997,7 @@ public class EventModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "2"
+                        2
                     )
                 }
             };
@@ -1026,7 +1026,7 @@ public class EventModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
 
         EventModel secondObject = new(
             new DateOnly(2022, 10, 14),
@@ -1046,7 +1046,7 @@ public class EventModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
 
         // Act
         bool result = firstObject.Equals(secondObject);
@@ -1093,7 +1093,7 @@ public class EventModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
 
         // Act
         bool result = firstObject.Equals(secondObject);
@@ -1124,7 +1124,7 @@ public class EventModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
 
         // Act
         int firstCode = eventModel.GetHashCode();

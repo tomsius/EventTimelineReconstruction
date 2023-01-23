@@ -48,7 +48,7 @@ public class UnhideEventCommandTests
     {
         // Arrange
         bool expected = true;
-        _hiddenEventsViewModel.SelectedHiddenEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1"));
+        _hiddenEventsViewModel.SelectedHiddenEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1));
 
         // Act
         bool actual = _command.CanExecute(null);
@@ -62,8 +62,8 @@ public class UnhideEventCommandTests
     public void Execute_ShouldUnhideSelectedEvent_WhenCommandIsExecuted()
     {
         // Arrange
-        EventViewModel hiddenEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")) { IsVisible = false };
-        EventViewModel otherEvent = new(new EventModel(new DateOnly(2000, 1, 2), new TimeOnly(17, 55), TimeZoneInfo.Utc, "MACB2", "Source2", "Source Type2", "Type2", "Username2", "Hostname2", "Short Description2", "Full Description2", 2.5, "Filename2", "iNode number2", "Notes2", "Format2", new Dictionary<string, string>() { { "Key1", "Value1" } }, "2"));
+        EventViewModel hiddenEvent = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "Source", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)) { IsVisible = false };
+        EventViewModel otherEvent = new(new EventModel(new DateOnly(2000, 1, 2), new TimeOnly(17, 55), TimeZoneInfo.Utc, "MACB2", "Source2", "Source Type2", "Type2", "Username2", "Hostname2", "Short Description2", "Full Description2", 2.5, "Filename2", "iNode number2", "Notes2", "Format2", new Dictionary<string, string>() { { "Key1", "Value1" } }, 2));
         List<EventViewModel> expected = new() { hiddenEvent, otherEvent };
         expected = expected.OrderBy(e => e.FullDate).ThenBy(e => e.Filename).ToList();
         _eventTreeViewModel.LoadEvents(expected);

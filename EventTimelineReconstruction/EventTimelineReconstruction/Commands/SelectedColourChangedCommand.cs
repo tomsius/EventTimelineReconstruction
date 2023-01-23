@@ -7,7 +7,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class SelectedColourChangedCommand : CommandBase
+public sealed class SelectedColourChangedCommand : CommandBase
 {
     private readonly ColourViewModel _colourViewModel;
     private readonly IColouringUtils _colouringUtils;
@@ -24,7 +24,7 @@ public class SelectedColourChangedCommand : CommandBase
         ColorPicker colorPicker = e.OriginalSource as ColorPicker;
         TextBlock textBlock = _colouringUtils.GetSiblingTextBlock(colorPicker);
 
-        string key = textBlock.Text;
+        string key = (string)textBlock.Tag;
         Brush value = new SolidColorBrush(colorPicker.SelectedColor ?? Colors.Black);
         _colourViewModel.UpdateColourByType(key, value);
     }

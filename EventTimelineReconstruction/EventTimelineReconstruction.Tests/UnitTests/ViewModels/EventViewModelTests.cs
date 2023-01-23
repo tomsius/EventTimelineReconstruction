@@ -33,7 +33,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -55,7 +55,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     1
@@ -81,7 +81,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -103,7 +103,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     -1
@@ -129,7 +129,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -151,7 +151,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     0
@@ -177,7 +177,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -199,7 +199,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     -1
@@ -225,7 +225,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -247,7 +247,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     1
@@ -273,7 +273,7 @@ public class EventViewModelTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     null,
@@ -305,7 +305,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventViewModel eventViewModel = new(eventModel);
         string expected = "2022,10,14,10,52,0,FLE Standard Time;120;(UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius;FLE Standard Time;FLE Daylight Time;[01:01:0001;12:31:9999;60;[0;03:00:00;3;5;0;];[0;04:00:00;10;5;0;];];,MACB,Source,Source Type,Type,Username,Hostname,Short Description,Full Description,2.5,Filename,iNode number,Notes,Format,Key1:Value1;Key2:Value2,1,True,#FF000000";
 
@@ -340,7 +340,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventViewModel eventViewModel = new(eventModel);
         string expected = string.Format("{0, 10} {1}", date, file);
 
@@ -374,7 +374,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventViewModel eventViewModel = new(eventModel);
         string expected = date.ToString("dd/MM/yyyy");
 
@@ -407,7 +407,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventViewModel eventViewModel = new(eventModel);
         string expected = "10:52:00";
 
@@ -440,7 +440,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventViewModel eventViewModel = new(eventModel);
         string expected = "Key1=Value1\r\nKey2=Value2";
 
@@ -473,7 +473,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventModel childEventModel = new(
             new DateOnly(2020, 11, 5),
             new TimeOnly(7, 14),
@@ -492,7 +492,7 @@ public class EventViewModelTests
             "Notes2",
             "Format2",
             new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key4", "Value4" } },
-            "2");
+            2);
         EventViewModel parentEventViewModel = new(parentEventModel);
         EventViewModel childEventViewModel = new(childEventModel);
         int expectedCount = 1;
@@ -558,7 +558,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventModel childEventModel = new(
             new DateOnly(2020, 11, 5),
             new TimeOnly(7, 14),
@@ -577,7 +577,7 @@ public class EventViewModelTests
             "Notes2",
             "Format2",
             new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key4", "Value4" } },
-            "2");
+            2);
         EventViewModel parentEventViewModel = new(parentEventModel);
         EventViewModel childEventViewModel = new(childEventModel);
         parentEventViewModel.AddChild(childEventViewModel);
@@ -613,7 +613,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventModel childEventModel = new(
             new DateOnly(2020, 11, 5),
             new TimeOnly(7, 14),
@@ -632,7 +632,7 @@ public class EventViewModelTests
             "Notes2",
             "Format2",
             new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key4", "Value4" } },
-            "2");
+            2);
         EventViewModel parentEventViewModel = new(parentEventModel);
         EventViewModel childEventViewModel = new(childEventModel);
         parentEventViewModel.AddChild(childEventViewModel);
@@ -668,7 +668,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventModel childEventModel = new(
             new DateOnly(2020, 11, 5),
             new TimeOnly(7, 14),
@@ -687,7 +687,7 @@ public class EventViewModelTests
             "Notes2",
             "Format2",
             new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key4", "Value4" } },
-            "2");
+            2);
         EventViewModel parentEventViewModel = new(parentEventModel);
         EventViewModel childEventViewModel = new(childEventModel);
         parentEventViewModel.AddChild(childEventViewModel);
@@ -721,7 +721,7 @@ public class EventViewModelTests
             "Notes",
             "Format",
             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-            "1");
+            1);
         EventModel childEventModel = new(
             new DateOnly(2020, 11, 5),
             new TimeOnly(7, 14),
@@ -740,7 +740,7 @@ public class EventViewModelTests
             "Notes2",
             "Format2",
             new Dictionary<string, string>() { { "Key3", "Value3" }, { "Key4", "Value4" } },
-            "2");
+            2);
         EventViewModel parentEventViewModel = new(parentEventModel);
         EventViewModel childEventViewModel = new(childEventModel);
 

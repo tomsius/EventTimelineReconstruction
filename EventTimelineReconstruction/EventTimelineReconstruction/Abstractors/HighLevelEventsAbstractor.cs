@@ -5,7 +5,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Abstractors;
 
-public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
+public sealed class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
 {
     private const double _minutesThreshold = 50.0;
 
@@ -28,7 +28,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
                 {
                     case "LOG":
                         HighLevelEventViewModel logEvent = this.FormEventFromLogSource(events[i]);
-                        int lastLogEventIndex = this.FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "LOG");
+                        int lastLogEventIndex = FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "LOG");
 
                         if (lastLogEventIndex != -1)
                         {
@@ -43,7 +43,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
                         break;
                     case "LNK":
                         HighLevelEventViewModel lnkEvent = this.FormEventFromLnkSource(events[i]);
-                        int lastLnkEventIndex = this.FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "LNK");
+                        int lastLnkEventIndex = FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "LNK");
 
                         if (lastLnkEventIndex != -1)
                         {
@@ -57,17 +57,17 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
 
                         break;
                     case "META":
-                        int lastMetaEventIndex = this.FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "META");
+                        int lastMetaEventIndex = FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "META");
 
                         if (lastMetaEventIndex == -1)
                         {
-                            HighLevelEventViewModel metaEvent = this.FormEventFromMetaSource(events[i]);
+                            HighLevelEventViewModel metaEvent = FormEventFromMetaSource(events[i]);
                             highLevelEvents.Add(metaEvent);
                         }
 
                         break;
                     case "OLECF":
-                        HighLevelEventViewModel olecfEvent = this.FormEventFromOlecfSource(events[i]);
+                        HighLevelEventViewModel olecfEvent = FormEventFromOlecfSource(events[i]);
 
                         if (IsOlecfEventValid(highLevelEvents[^1], olecfEvent))
                         {
@@ -76,11 +76,11 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
 
                         break;
                     case "PE":
-                        int lastPeEventIndex = this.FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "PE");
+                        int lastPeEventIndex = FindLastEventIndexOf(highLevelEvents, events[i].FullDate, "PE");
 
                         if (lastPeEventIndex == -1 && _abstractorUtils.IsValidPeEvent(events[i]))
                         {
-                            HighLevelEventViewModel peEvent = this.FormEventFromPeSource(events[i]);
+                            HighLevelEventViewModel peEvent = FormEventFromPeSource(events[i]);
                             highLevelEvents.Add(peEvent);
                         }
 
@@ -94,7 +94,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
             {
                 HighLevelEventViewModel webhistEvent = this.FormEventFromWebhistSource(events[i]);
 
-                if (webhistEvent is not null && this.IsWebhistEventValid(highLevelEvents, webhistEvent))
+                if (webhistEvent is not null && IsWebhistEventValid(highLevelEvents, webhistEvent))
                 {
                     highLevelEvents.Add(webhistEvent);
                 }
@@ -122,7 +122,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         return result;
     }
 
-    private int FindLastEventIndexOf(List<HighLevelEventViewModel> highLevelEvents, DateTime newEventDate, string source)
+    private static int FindLastEventIndexOf(List<HighLevelEventViewModel> highLevelEvents, DateTime newEventDate, string source)
     {
         for (int i = highLevelEvents.Count - 1; i >= 0; i--)
         {
@@ -158,7 +158,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         return result;
     }
 
-    private HighLevelEventViewModel FormEventFromMetaSource(EventViewModel eventViewModel)
+    private static HighLevelEventViewModel FormEventFromMetaSource(EventViewModel eventViewModel)
     {
         string shortValue = eventViewModel.Filename;
 
@@ -174,7 +174,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         return result;
     }
 
-    private HighLevelEventViewModel FormEventFromOlecfSource(EventViewModel eventViewModel)
+    private static HighLevelEventViewModel FormEventFromOlecfSource(EventViewModel eventViewModel)
     {
         string shortValue = eventViewModel.Filename;
 
@@ -198,7 +198,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         return isSameSource == false || isSameShortValue == false;
     }
 
-    private HighLevelEventViewModel FormEventFromPeSource(EventViewModel eventViewModel)
+    private static HighLevelEventViewModel FormEventFromPeSource(EventViewModel eventViewModel)
     {
         string shortValue = eventViewModel.Filename;
 
@@ -284,7 +284,7 @@ public class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         return result;
     }
 
-    private bool IsWebhistEventValid(List<HighLevelEventViewModel> highLevelEvents, HighLevelEventViewModel webhistEvent)
+    private static bool IsWebhistEventValid(List<HighLevelEventViewModel> highLevelEvents, HighLevelEventViewModel webhistEvent)
     {
         if (highLevelEvents.Count < 2)
         {

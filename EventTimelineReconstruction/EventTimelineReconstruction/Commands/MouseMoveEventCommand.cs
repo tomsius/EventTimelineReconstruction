@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class MouseMoveEventCommand : CommandBase
+public sealed class MouseMoveEventCommand : CommandBase
 {
     private readonly EventTreeViewModel _eventTreeViewModel;
     private readonly EventDetailsViewModel _eventDetailsViewModel;

@@ -68,7 +68,7 @@ public class HiddenEventsViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 ),
             new EventViewModel(
                 new EventModel(
@@ -89,7 +89,7 @@ public class HiddenEventsViewModelTests
                         "Notes1",
                         "Format2",
                         new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key25", "Value25" } },
-                        "2"))
+                        2))
 
         };
         _eventsStoreMock.Setup(store => store.GetAllHiddenEvents()).Returns(expected);
@@ -176,7 +176,7 @@ public class HiddenEventsViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 ),
             new EventViewModel(
                 new EventModel(
@@ -197,7 +197,7 @@ public class HiddenEventsViewModelTests
                         "Notes1",
                         "Format2",
                         new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key25", "Value25" } },
-                        "2"))
+                        2))
 
         };
         _eventsStoreMock.Setup(store => store.GetAllHiddenEvents()).Returns(expected);
@@ -284,7 +284,7 @@ public class HiddenEventsViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 );
 
         // Act
@@ -333,7 +333,7 @@ public class HiddenEventsViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 );
         int expectedCount = 1;
 
@@ -400,7 +400,7 @@ public class HiddenEventsViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 );
         _hiddenEventsViewModel.AddHiddenEvent(eventViewModel);
         int expected = 0;
@@ -436,7 +436,7 @@ public class HiddenEventsViewModelTests
                         "Notes",
                         "Format",
                         new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                        "1")
+                        1)
                 );
         EventViewModel otherViewModel = new(
                 new EventModel(
@@ -457,7 +457,7 @@ public class HiddenEventsViewModelTests
                         "Notes2",
                         "Format2",
                         new Dictionary<string, string>() { { "Key12", "Value12" }, { "Key21", "Value21" } },
-                        "2")
+                        2)
                 );
         _hiddenEventsViewModel.AddHiddenEvent(originalViewModel);
         int expected = 1;

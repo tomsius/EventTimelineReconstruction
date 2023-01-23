@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class InitializeColoursByTypeCommand : CommandBase
+public sealed class InitializeColoursByTypeCommand : CommandBase
 {
     private readonly ColourViewModel _colourViewModel;
     private readonly IColouringUtils _colouringUtils;

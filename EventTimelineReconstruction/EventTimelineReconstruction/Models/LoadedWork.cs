@@ -3,7 +3,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Models;
 
-public class LoadedWork
+public sealed class LoadedWork
 {
     public List<EventViewModel> Events { get; set; }
     public List<HighLevelEventViewModel> HighLevelEvents { get; set; }

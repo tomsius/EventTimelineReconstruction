@@ -41,7 +41,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -63,7 +63,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     1
@@ -89,7 +89,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -111,7 +111,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     -1
@@ -137,7 +137,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -159,7 +159,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     0
@@ -185,7 +185,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -207,7 +207,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     -1
@@ -233,7 +233,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     new EventViewModel(
@@ -255,7 +255,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "2"
+                            2
                         )
                     ),
                     1
@@ -281,7 +281,7 @@ public class EventSorterTests
                             "Notes",
                             "Format",
                             new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } },
-                            "1"
+                            1
                         )
                     ),
                     null,

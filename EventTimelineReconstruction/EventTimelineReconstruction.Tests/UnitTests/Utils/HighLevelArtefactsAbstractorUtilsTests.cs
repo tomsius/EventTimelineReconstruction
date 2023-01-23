@@ -15,12 +15,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
             {
                 new object[]
                 {
-                    new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Entry: number Pin status: unpinned Path: Something/Test.txt", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, "1")),
+                    new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Entry: number Pin status: unpinned Path: Something/Test.txt", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, 1)),
                     "Something/Test.txt"
                 },
                 new object[]
                 {
-                    new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Something something", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, "1")),
+                    new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Something something", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>() { { "Key1", "Value1" }, { "Key2", "Value2" } }, 1)),
                     "Something something"
                 }
             };
@@ -55,12 +55,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>() 
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     6
@@ -69,12 +69,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     5
@@ -83,12 +83,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     1
@@ -97,12 +97,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     5,
                     1
@@ -111,12 +111,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     4,
                     2
@@ -125,12 +125,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     0
@@ -148,12 +148,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     5,
@@ -163,12 +163,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     5,
@@ -178,12 +178,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     3,
                     5,
@@ -193,12 +193,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     3,
                     5,
@@ -208,12 +208,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.exe", 2.5, "Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     5,
@@ -223,12 +223,12 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "3")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "4")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "5")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "6"))
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 3)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 4)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 5)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 6))
                     },
                     0,
                     6,
@@ -247,8 +247,8 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 0), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 0), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Something/Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 0), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 0), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Something/Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
                     },
                     0
                 },
@@ -256,8 +256,8 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 10), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 12), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Something/Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 10), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 12), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Something/Filename.lnk", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
                     },
                     0
                 }
@@ -274,8 +274,8 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename.exe", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
                     },
                     0
                 },
@@ -283,8 +283,8 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "REG", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
                     },
                     0
                 },
@@ -292,8 +292,8 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 10), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 13), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 10), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52, 13), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
                     },
                     0
                 },
@@ -301,8 +301,8 @@ public class HighLevelArtefactsAbstractorUtilsTests
                 {
                     new List<EventViewModel>()
                     {
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename1.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "1")),
-                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename2.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), "2")),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LNK", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename1.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 1)),
+                        new EventViewModel(new EventModel( new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "FILE", "Source Type", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Something/Filename2.lnk", "iNode number", "Notes", "Format", new Dictionary<string, string>(), 2)),
                     },
                     0
                 }
@@ -315,7 +315,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     {
         // Arrange
         string expected = "Test.txt";
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, expected, "iNode number", "Notes", "lnk", new Dictionary<string, string>(), "1"));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, expected, "iNode number", "Notes", "lnk", new Dictionary<string, string>(), 1));
         HighLevelArtefactsAbstractorUtils utils = new();
 
         // Act
@@ -385,6 +385,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     [DataRow("TSK:/WINDOWS/system32/usrshuta.exe Type: file", "usrshuta.exe")]
     [DataRow("usrshuta.exe Type: file", "usrshuta.exe")]
     [DataRow("Origin: usrshuta.exe Type: file", "usrshuta.exe")]
+    [DataRow("Something/test.exe", "test.exe")]
     public void GetFilename_ShouldReturnFilenameFromDescription_WhenFormatIsCalled(string description, string expected)
     {
         // Arrange
@@ -478,7 +479,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     public void IsPeLineExecutable_ShouldReturnTrue_WhenFileIsExecutable()
     {
         // Arrange
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.exe", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), "1"));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.exe", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), 1));
         HighLevelArtefactsAbstractorUtils utils = new();
 
         // Act
@@ -492,7 +493,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     public void IsPeLineExecutable_ShouldReturnFalse_WhenFileIsNotExecutable()
     {
         // Arrange
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.txt", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), "1"));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename.txt", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), 1));
         HighLevelArtefactsAbstractorUtils utils = new();
 
         // Act
@@ -506,7 +507,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     public void IsPeLineValid_ShouldReturnTrue_WhenShortFieldHasKey()
     {
         // Arrange
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "pe_type", "Full Description", 2.5, "Filename", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), "1"));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "pe_type", "Full Description", 2.5, "Filename", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), 1));
         HighLevelArtefactsAbstractorUtils utils = new();
 
         // Act
@@ -520,7 +521,7 @@ public class HighLevelArtefactsAbstractorUtilsTests
     public void IsPeLineValid_ShouldReturnFalse_WhenShortFieldDoesNotHaveKey()
     {
         // Arrange
-        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), "1"));
+        EventViewModel eventViewModel = new(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(10, 52), TimeZoneInfo.Local, "MACB", "LOG", "SourceType", "Type", "Username", "Hostname", "Short Description", "Full Description", 2.5, "Filename", "iNode number", "Notes", "lnk", new Dictionary<string, string>(), 1));
         HighLevelArtefactsAbstractorUtils utils = new();
 
         // Act

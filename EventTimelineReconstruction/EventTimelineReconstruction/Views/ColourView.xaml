@@ -37,7 +37,7 @@
         </Button>
         <StackPanel Margin="0 0 0 50" Orientation="Vertical">
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Analytics_Creation_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Analytics Creation Time" Text="{DynamicResource General_Analytics_Creation_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -47,7 +47,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Analytics_Previous_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Analytics Previous Time" Text="{DynamicResource General_Analytics_Previous_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -57,7 +57,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Content_Deletion_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Content Deletion Time" Text="{DynamicResource General_Content_Deletion_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -67,7 +67,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Content_Modification_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Content Modification Time" Text="{DynamicResource General_Content_Modification_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -77,7 +77,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Creation_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Creation Time" Text="{DynamicResource General_Creation_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -87,7 +87,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Expiration_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Expiration Time" Text="{DynamicResource General_Expiration_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -97,7 +97,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_File_Last_Modification_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="File Last Modification Time Time" Text="{DynamicResource General_File_Last_Modification_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -107,7 +107,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Installation_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Installation Time" Text="{DynamicResource General_Installation_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -117,7 +117,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Access_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Access Time" Text="{DynamicResource General_Last_Access_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -127,7 +127,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Checked_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Checked Time" Text="{DynamicResource General_Last_Checked_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -137,7 +137,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Connection_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Connection Time" Text="{DynamicResource General_Last_Connection_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -147,7 +147,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Login_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Login Time" Text="{DynamicResource General_Last_Login_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -157,7 +157,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Password_Reset}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Password Reset" Text="{DynamicResource General_Last_Password_Reset}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -167,7 +167,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Shutdown_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Shutdown Time" Text="{DynamicResource General_Last_Shutdown_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -177,7 +177,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Time_Executed}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Time Executed" Text="{DynamicResource General_Last_Time_Executed}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -187,7 +187,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Last_Visited_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Last Visited Time" Text="{DynamicResource General_Last_Visited_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -197,7 +197,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Metadata_Modification_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Metadata Modification Time" Text="{DynamicResource General_Metadata_Modification_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">
@@ -207,7 +207,7 @@
                 </xctk:ColorPicker>
             </DockPanel>
             <DockPanel LastChildFill="False">
-                <TextBlock Width="170" Text="{DynamicResource General_Not_a_Time}" DockPanel.Dock="Left"/>
+                <TextBlock Width="170" Tag="Not a Time" Text="{DynamicResource General_Not_a_Time}" DockPanel.Dock="Left"/>
                 <xctk:ColorPicker Width="100" SelectedColor="Black" DockPanel.Dock="Right">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedColorChanged">

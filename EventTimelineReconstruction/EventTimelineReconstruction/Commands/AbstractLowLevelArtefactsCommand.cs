@@ -6,7 +6,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class AbstractLowLevelArtefactsCommand : CommandBase
+public sealed class AbstractLowLevelArtefactsCommand : CommandBase
 {
     private readonly AbstractedEventsViewModel _viewModel;
     private readonly IEventsStore _store;

@@ -3,7 +3,7 @@ using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Commands;
 
-public class UnhideEventCommand : CommandBase
+public sealed class UnhideEventCommand : CommandBase
 {
     private readonly HiddenEventsViewModel _hiddenEventsViewModel;
     private readonly EventTreeViewModel _eventTreeViewModel;

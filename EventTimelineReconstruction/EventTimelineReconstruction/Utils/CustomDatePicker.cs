@@ -4,7 +4,7 @@ using System.Windows.Controls.Primitives;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class CustomDatePicker : DatePicker
+public sealed class CustomDatePicker : DatePicker
 {
     public string PlaceholderText
     {

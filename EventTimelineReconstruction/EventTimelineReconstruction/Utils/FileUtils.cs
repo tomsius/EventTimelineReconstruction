@@ -4,7 +4,7 @@ using System.IO;
 
 namespace EventTimelineReconstruction.Utils;
 
-public class FileUtils : IFileUtils
+public sealed class FileUtils : IFileUtils
 {
     private const string _languagesFolder = $@"Resources/Localizations";
     private const string _fileExtension = $@"*.xaml";

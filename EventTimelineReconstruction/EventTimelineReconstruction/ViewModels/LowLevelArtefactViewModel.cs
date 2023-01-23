@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public class LowLevelArtefactViewModel
+public sealed class LowLevelArtefactViewModel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
@@ -21,11 +21,11 @@ public class LowLevelArtefactViewModel
     public string Notes { get; set; }
     public string Format { get; set; }
     public string Extra { get; set; }
-    public string Reference { get; set; }
+    public int Reference { get; set; }
 
     public LowLevelArtefactViewModel() {}
 
-    public LowLevelArtefactViewModel(DateOnly date, TimeOnly time, string timezone, string macb, string source, string sourceType, string type, string user, string host, string shortDesc, string description, string version, string filename, string inode, string notes, string format, string extra, string reference)
+    public LowLevelArtefactViewModel(DateOnly date, TimeOnly time, string timezone, string macb, string source, string sourceType, string type, string user, string host, string shortDesc, string description, string version, string filename, string inode, string notes, string format, string extra, int reference)
     {
         Date = new(date.Year, date.Month, date.Day);
         Time = new(time.Hour, time.Minute, time.Second);
