@@ -261,12 +261,10 @@ public class EventsImporterBenchmarks
                 DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
                                          eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
                 {
-                    continue;
+                    events.Add(eventModel);
                 }
-
-                events.Add(eventModel);
             }
             catch (FormatException)
             {
@@ -277,6 +275,49 @@ public class EventsImporterBenchmarks
                 continue;
             }
         }
+
+        return events;
+    }
+
+    [Benchmark]
+    public List<EventModel> Import_PLinq()
+    {
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
+        object lockObj = new();
+
+        rows.AsParallel().ForAll(line =>
+        {
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
+            {
+                return;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, 0);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    lock (lockObj)
+                    {
+                        events.Add(eventModel);
+                    }
+                }
+            }
+            catch (FormatException)
+            {
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return;
+            }
+        });
 
         return events;
     }
