@@ -66,7 +66,7 @@ public class EventsImporterBenchmarks
         }
     }
 
-    [Benchmark(Baseline = true)]
+    [Benchmark]
     public List<EventModel> Import_ParallelForeach()
     {
         List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
@@ -607,6 +607,55 @@ public class EventsImporterBenchmarks
             catch (IndexOutOfRangeException)
             {
                 continue;
+            }
+        }
+
+        return events;
+    }
+
+    [Benchmark]
+    public List<EventModel> Import_WhileMemoryMarshal()
+    {
+        string[] rows = this.ReadLinesEnumerable().Skip(1).ToArray();
+        List<EventModel> events = new();
+        ref string start = ref MemoryMarshal.GetArrayDataReference(rows);
+        ref string end = ref Unsafe.Add(ref start, rows.Length);
+
+        int lineNumber = 2;
+        while (Unsafe.IsAddressLessThan(ref start, ref end))
+        {
+            string[] columns = start.Split(',');
+
+            if (columns.Length != 17)
+            {
+                start = ref Unsafe.Add(ref start, 1);
+                lineNumber++;
+                continue;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                continue;
+            }
+            finally
+            {
+                start = ref Unsafe.Add(ref start, 1);
+                lineNumber++;
             }
         }
 
