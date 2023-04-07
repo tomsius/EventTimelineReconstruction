@@ -240,15 +240,13 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    // ----------------------------------
-
     [Benchmark]
     public List<EventModel> Import_For()
     {
-        string[] rows = this.ReadLinesArray();
-        List<EventModel> events = new(rows.Length);
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
 
-        for (int i = 1; i < rows.Length; i++)
+        for (int i = 0; i < rows.Count; i++)
         {
             string[] columns = rows[i].Split(',');
 
@@ -259,8 +257,9 @@ public class EventsImporterBenchmarks
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                EventModel eventModel = ConvertRowToModel(columns, i + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
                 if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
                 {
@@ -281,6 +280,8 @@ public class EventsImporterBenchmarks
 
         return events;
     }
+
+    // ----------------------------------
 
     [Benchmark]
     public List<EventModel> Import_ForSpanWithList()
