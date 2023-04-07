@@ -108,42 +108,44 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    [Benchmark]
-    public List<EventModel> Import_For()
+    public List<EventModel> Import_ParallelFor()
     {
-        string[] rows = this.ReadLinesArray();
-        List<EventModel> events = new(rows.Length);
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
+        object lockObj = new();
 
-        for (int i = 1; i < rows.Length; i++)
+        Parallel.For(0, rows.Count, index =>
         {
-            string[] columns = rows[i].Split(',');
+            string[] columns = rows[index].Split(',');
 
             if (columns.Length != 17)
             {
-                continue;
+                return;
             }
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                EventModel eventModel = ConvertRowToModel(columns, index + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
                 {
-                    continue;
+                    lock (lockObj)
+                    {
+                        events.Add(eventModel);
+                    }
                 }
-
-                events.Add(eventModel);
             }
             catch (FormatException)
             {
-                continue;
+                return;
             }
             catch (IndexOutOfRangeException)
             {
-                continue;
+                return;
             }
-        }
+        });
 
         return events;
     }
@@ -234,6 +236,48 @@ public class EventsImporterBenchmarks
 
             lineNumber++;
         });
+
+        return events;
+    }
+
+    // ----------------------------------
+
+    [Benchmark]
+    public List<EventModel> Import_For()
+    {
+        string[] rows = this.ReadLinesArray();
+        List<EventModel> events = new(rows.Length);
+
+        for (int i = 1; i < rows.Length; i++)
+        {
+            string[] columns = rows[i].Split(',');
+
+            if (columns.Length != 17)
+            {
+                continue;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                {
+                    continue;
+                }
+
+                events.Add(eventModel);
+            }
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                continue;
+            }
+        }
 
         return events;
     }
