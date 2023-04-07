@@ -525,100 +525,6 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    // ----------------------------------
-
-    [Benchmark]
-    public async Task<List<EventModel>> Import_ParallelInsideAsync()
-    {
-        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
-        List<EventModel> events = new(rows.Count());
-        object lockObj = new();
-
-        await Task.Run(() =>
-        {
-            Parallel.ForEach(rows, (line, _, lineNumber) =>
-            {
-                string[] columns = line.Split(',');
-
-                if (columns.Length != 17)
-                {
-                    return;
-                }
-
-                try
-                {
-                    EventModel eventModel = ConvertRowToModel(columns, lineNumber + 1);
-                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
-
-                    if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
-                    {
-                        return;
-                    }
-
-                    lock (lockObj)
-                    {
-                        events.Add(eventModel);
-                    }
-                }
-                catch (FormatException)
-                {
-                    return;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    return;
-                }
-            });
-        });
-
-        return events;
-    }
-
-    [Benchmark]
-    public async Task<List<EventModel>> Import_ForeachInsideAsync()
-    {
-        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
-        List<EventModel> events = new();
-        int lineNumber = 0;
-        await Task.Run(() =>
-        {
-            foreach (string line in rows)
-            {
-                string[] columns = line.Split(',');
-
-                if (columns.Length != 17)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    EventModel eventModel = ConvertRowToModel(columns, lineNumber + 1);
-                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
-
-                    if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
-                    {
-                        continue;
-                    }
-
-                    events.Add(eventModel);
-                }
-                catch (FormatException)
-                {
-                    continue;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    continue;
-                }
-
-                lineNumber++;
-            }
-        });
-
-        return events;
-    }
-
     [Benchmark]
     public async Task<List<EventModel>> Import_ParallelForeachAsync()
     {
@@ -637,19 +543,18 @@ public class EventsImporterBenchmarks
 
             try
             {
-                await Task.Run(() => 
+                await Task.Run(() =>
                 {
-                    EventModel eventModel = ConvertRowToModel(columns);
-                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                    EventModel eventModel = ConvertRowToModel(columns, 0);
+                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                             eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                    if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                    if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
                     {
-                        return;
-                    }
-
-                    lock (lockObj)
-                    {
-                        events.Add(eventModel);
+                        lock (lockObj)
+                        {
+                            events.Add(eventModel);
+                        }
                     }
                 }, token);
             }
