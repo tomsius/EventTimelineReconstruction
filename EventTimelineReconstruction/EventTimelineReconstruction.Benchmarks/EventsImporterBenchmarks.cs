@@ -441,18 +441,15 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    // ----------------------------------
-
     [Benchmark]
-    public List<EventModel> Import_ForSpanWithArray()
+    public List<EventModel> Import_ForeachSpanArray()
     {
-        string[] rows = this.ReadLinesArray();
+        string[] rows = this.ReadLinesEnumerable().Skip(1).ToArray();
         List<EventModel> events = new(rows.Length);
-        Span<string> rowsSpan = rows.AsSpan();
 
-        for (int i = 1; i < rowsSpan.Length; i++)
+        foreach (string line in rows.AsSpan())
         {
-            string[] columns = rowsSpan[i].Split(',');
+            string[] columns = line.Split(',');
 
             if (columns.Length != 17)
             {
@@ -461,15 +458,14 @@ public class EventsImporterBenchmarks
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                EventModel eventModel = ConvertRowToModel(columns, 0);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
                 {
-                    continue;
+                    events.Add(eventModel);
                 }
-
-                events.Add(eventModel);
             }
             catch (FormatException)
             {
@@ -483,6 +479,8 @@ public class EventsImporterBenchmarks
 
         return events;
     }
+
+    // ----------------------------------
 
     [Benchmark]
     public async Task<List<EventModel>> Import_ParallelInsideAsync()
