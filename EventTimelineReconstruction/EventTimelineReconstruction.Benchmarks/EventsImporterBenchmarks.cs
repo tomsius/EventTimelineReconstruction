@@ -362,6 +362,45 @@ public class EventsImporterBenchmarks
         return events;
     }
 
+    [Benchmark]
+    public List<EventModel> Import_ForeachSpanList()
+    {
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
+
+        foreach (string line in CollectionsMarshal.AsSpan(rows))
+        {
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
+            {
+                continue;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, 0);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                continue;
+            }
+        }
+
+        return events;
+    }
+
     // ----------------------------------
 
     [Benchmark]
