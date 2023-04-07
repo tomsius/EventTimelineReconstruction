@@ -151,7 +151,7 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    [Benchmark]
+    [Benchmark(Baseline = true)]
     public List<EventModel> Import_Foreach()
     {
         IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
