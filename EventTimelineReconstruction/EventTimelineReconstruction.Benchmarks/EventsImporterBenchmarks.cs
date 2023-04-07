@@ -480,6 +480,51 @@ public class EventsImporterBenchmarks
         return events;
     }
 
+    [Benchmark]
+    public List<EventModel> Import_While()
+    {
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
+        int index = 0;
+
+        while (index < rows.Count)
+        {
+            string[] columns = rows[index].Split(',');
+
+            if (columns.Length != 17)
+            {
+                index++;
+                continue;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, index + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                continue;
+            }
+            finally
+            {
+                index++;
+            }
+        }
+
+        return events;
+    }
+
     // ----------------------------------
 
     [Benchmark]
