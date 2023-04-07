@@ -66,46 +66,42 @@ public class EventsImporterBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public List<EventModel> Import_Parallel()
+    public List<EventModel> Import_ParallelForeach()
     {
-        string[] rows = this.ReadLinesArray();
-        List<EventModel> events = new(rows.Length);
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
         object lockObj = new();
 
         Parallel.ForEach(rows, (line, _, lineNumber) =>
         {
-            if (lineNumber != 0)
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
             {
-                string[] columns = line.Split(',');
+                return;
+            }
 
-                if (columns.Length != 17)
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
                 {
-                    return;
-                }
-
-                try
-                {
-                    EventModel eventModel = ConvertRowToModel(columns);
-                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
-
-                    if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
-                    {
-                        return;
-                    }
-
                     lock (lockObj)
                     {
                         events.Add(eventModel);
                     }
                 }
-                catch (FormatException)
-                {
-                    return;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    return;
-                }
+            }
+            catch (FormatException)
+            {
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return;
             }
         });
 
