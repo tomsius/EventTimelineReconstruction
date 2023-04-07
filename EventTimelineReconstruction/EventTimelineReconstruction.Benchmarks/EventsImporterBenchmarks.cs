@@ -322,20 +322,16 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    // ----------------------------------
-
     [Benchmark]
-    public List<EventModel> Import_ForSpanWithList()
+    public List<EventModel> Import_ForSpanList()
     {
-        string[] rows = this.ReadLinesArray();
-        List<EventModel> events = new(rows.Length);
-        List<string> rowsList = new(rows);
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
 
-        Span<string> rowsSpan = CollectionsMarshal.AsSpan(rowsList);
-
-        for (int i = 1; i < rowsSpan.Length; i++)
+        Span<string> rowsAsSpan = CollectionsMarshal.AsSpan(rows);
+        for (int i = 0; i < rowsAsSpan.Length; i++)
         {
-            string[] columns = rowsSpan[i].Split(',');
+            string[] columns = rowsAsSpan[i].Split(',');
 
             if (columns.Length != 17)
             {
@@ -344,15 +340,14 @@ public class EventsImporterBenchmarks
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                EventModel eventModel = ConvertRowToModel(columns, i + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
                 {
-                    continue;
+                    events.Add(eventModel);
                 }
-
-                events.Add(eventModel);
             }
             catch (FormatException)
             {
@@ -366,6 +361,8 @@ public class EventsImporterBenchmarks
 
         return events;
     }
+
+    // ----------------------------------
 
     [Benchmark]
     public List<EventModel> Import_ForSpanWithArray()
