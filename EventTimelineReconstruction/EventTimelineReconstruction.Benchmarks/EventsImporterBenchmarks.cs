@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.IO;
+using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using EventTimelineReconstruction.Benchmarks.Models;
@@ -10,7 +11,7 @@ namespace EventTimelineReconstruction.Benchmarks;
 [RankColumn]
 public class EventsImporterBenchmarks
 {
-    [Params(1000, 100_000, 1_000_000)]
+    [Params(1000, 10_000, 100_000, 1_000_000)]
     public int N;
 
     private DateTime _fromDate;
@@ -152,40 +153,45 @@ public class EventsImporterBenchmarks
     }
 
     [Benchmark]
-    public List<EventModel> Import_Foreach()
+    public List<EventModel> Import_ForeachSafe()
     {
-        string[] rows = this.ReadLinesArray();
-        List<EventModel> events = new(rows.Length);
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new();
 
-        foreach (string row in rows.Skip(1))
+        int lineNumber = 2;
+        foreach (string line in rows)
         {
-            string[] columns = row.Split(',');
+            string[] columns = line.Split(',');
 
             if (columns.Length != 17)
             {
+                lineNumber++;
                 continue;
             }
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
-                if (DateTime.Compare(eventDate, _fromDate) < 0 || DateTime.Compare(eventDate, _toDate) > 0)
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
                 {
-                    continue;
+                    events.Add(eventModel);
                 }
-
-                events.Add(eventModel);
             }
             catch (FormatException)
             {
+                lineNumber++;
                 continue;
             }
             catch (IndexOutOfRangeException)
             {
+                lineNumber++;
                 continue;
             }
+
+            lineNumber++;
         }
 
         return events;
