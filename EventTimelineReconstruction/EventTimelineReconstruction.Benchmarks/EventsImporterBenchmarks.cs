@@ -153,7 +153,7 @@ public class EventsImporterBenchmarks
     }
 
     [Benchmark]
-    public List<EventModel> Import_ForeachSafe()
+    public List<EventModel> Import_Foreach()
     {
         IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
         List<EventModel> events = new();
@@ -193,6 +193,51 @@ public class EventsImporterBenchmarks
 
             lineNumber++;
         }
+
+        return events;
+    }
+
+    [Benchmark]
+    public List<EventModel> Import_ForeachLinq()
+    {
+        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
+        List<EventModel> events = new();
+
+        int lineNumber = 2;
+        rows.ForEach(line =>
+        {
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
+            {
+                lineNumber++;
+                return;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                lineNumber++;
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                lineNumber++;
+                return;
+            }
+
+            lineNumber++;
+        });
 
         return events;
     }
