@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using EventTimelineReconstruction.Models;
 
 namespace EventTimelineReconstruction.Services;
@@ -11,48 +10,47 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
 {
     private const int _colCount = 17;
 
-    public async Task<List<EventModel>> Import(string path, DateTime fromDate, DateTime toDate)
+    public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
     {
         IEnumerable<string> rows = File.ReadLines(path).Skip(1);
         List<EventModel> events = new();
 
         int lineNumber = 2;
-        await Task.Run(() =>
+
+        foreach (string line in rows)
         {
-            foreach (string line in rows)
+            string[] columns = line.Split(',');
+
+            if (columns.Length != _colCount)
             {
-                string[] columns = line.Split(',');
-
-                if (columns.Length != _colCount)
-                {
-                    lineNumber++;
-                    continue;
-                }
-
-                try
-                {
-                    EventModel eventModel = ConvertRowToModel(columns, lineNumber);
-                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
-
-                    if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
-                    {
-                        events.Add(eventModel);
-                    }
-                }
-                catch (FormatException)
-                {
-                    lineNumber++;
-                    continue;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    lineNumber++;
-                    continue;
-                }
-
                 lineNumber++;
+                continue;
             }
-        });
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                lineNumber++;
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                lineNumber++;
+                continue;
+            }
+
+            lineNumber++;
+        }
+
 
         return events;
     }

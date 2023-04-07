@@ -29,10 +29,9 @@ public sealed class EventsStore : IEventsStore
 
     public async Task Import(string path, DateTime fromDate, DateTime toDate)
     {
-        List<EventModel> importedEvents = await _eventsImporter.Import(path, fromDate, toDate);
-
         await Task.Run(() =>
         {
+            List<EventModel> importedEvents = _eventsImporter.Import(path, fromDate, toDate);
             _events.Clear();
             _events.AddRange(importedEvents.Select(e => new EventViewModel(e)));
             _events = _events.OrderBy(e => e.SourceLine).ToList();

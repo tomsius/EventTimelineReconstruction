@@ -37,7 +37,7 @@ public class L2tCSVEventsImporterTests
         int expected = 0;
 
         // Act
-        int actual = importer.Import("EventsImporterEmpty.csv", DateTime.MinValue, DateTime.MaxValue).Result.Count;
+        int actual = importer.Import("EventsImporterEmpty.csv", DateTime.MinValue, DateTime.MaxValue).Count;
 
         // Assert
         Assert.AreEqual(expected, actual); 
@@ -112,7 +112,7 @@ public class L2tCSVEventsImporterTests
                 )
         };
         // Act
-        List<EventModel> actual = importer.Import("EventsImporter.csv", new DateTime(2000, 1, 1), DateTime.MaxValue).Result.OrderBy(e => e.SourceLine).ToList();
+        List<EventModel> actual = importer.Import("EventsImporter.csv", new DateTime(2000, 1, 1), DateTime.MaxValue).OrderBy(e => e.SourceLine).ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);

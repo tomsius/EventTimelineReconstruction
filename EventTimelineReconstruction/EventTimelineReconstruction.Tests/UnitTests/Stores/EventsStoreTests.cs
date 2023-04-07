@@ -477,7 +477,7 @@ public class EventsStoreTests
     {
         // Arrange
         Mock<IEventsImporter> mock = new();
-        mock.Setup(importer => importer.Import(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).ReturnsAsync(this.GetEventModels);
+        mock.Setup(importer => importer.Import(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(this.GetEventModels);
         EventsStore eventsStore = new(mock.Object);
 
         string path = "FilePath";
