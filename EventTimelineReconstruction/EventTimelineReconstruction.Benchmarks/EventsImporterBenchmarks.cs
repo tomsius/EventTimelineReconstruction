@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
@@ -567,6 +568,47 @@ public class EventsImporterBenchmarks
                 return;
             }
         });
+
+        return events;
+    }
+
+    [Benchmark]
+    public List<EventModel> Import_ForMemoryMarshal()
+    {
+        string[] rows = this.ReadLinesEnumerable().Skip(1).ToArray();
+        List<EventModel> events = new();
+        ref var searchSpace = ref MemoryMarshal.GetArrayDataReference(rows);
+
+        for (int i = 0; i < rows.Length; i++)
+        {
+            string row = Unsafe.Add(ref searchSpace, i);
+            string[] columns = row.Split(',');
+
+            if (columns.Length != 17)
+            {
+                continue;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, i + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                            eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                continue;
+            }
+        }
 
         return events;
     }
