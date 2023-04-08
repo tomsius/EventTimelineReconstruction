@@ -575,7 +575,7 @@ public class EventsImporterBenchmarks
     public List<EventModel> Import_ForMemoryMarshal()
     {
         string[] rows = this.ReadLinesEnumerable().Skip(1).ToArray();
-        List<EventModel> events = new();
+        List<EventModel> events = new(rows.Length);
         ref var searchSpace = ref MemoryMarshal.GetArrayDataReference(rows);
 
         for (int i = 0; i < rows.Length; i++)
