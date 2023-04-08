@@ -51,7 +51,6 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
             lineNumber++;
         }
 
-
         return events;
     }
 
