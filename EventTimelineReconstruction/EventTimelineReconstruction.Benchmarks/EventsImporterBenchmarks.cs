@@ -181,16 +181,16 @@ public class EventsImporterBenchmarks
             }
             catch (FormatException)
             {
-                lineNumber++;
                 continue;
             }
             catch (IndexOutOfRangeException)
             {
-                lineNumber++;
                 continue;
             }
-
-            lineNumber++;
+            finally
+            {
+                lineNumber++;
+            }
         }
 
         return events;
@@ -226,16 +226,16 @@ public class EventsImporterBenchmarks
             }
             catch (FormatException)
             {
-                lineNumber++;
                 return;
             }
             catch (IndexOutOfRangeException)
             {
-                lineNumber++;
                 return;
             }
-
-            lineNumber++;
+            finally
+            {
+                lineNumber++;
+            }
         });
 
         return events;

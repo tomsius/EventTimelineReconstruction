@@ -39,16 +39,16 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
             }
             catch (FormatException)
             {
-                lineNumber++;
                 continue;
             }
             catch (IndexOutOfRangeException)
             {
-                lineNumber++;
                 continue;
             }
-
-            lineNumber++;
+            finally
+            {
+                lineNumber++;
+            }
         }
 
         return events;
