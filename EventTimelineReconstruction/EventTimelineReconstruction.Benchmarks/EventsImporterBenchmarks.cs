@@ -409,18 +409,20 @@ public class EventsImporterBenchmarks
         List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
         List<EventModel> events = new(rows.Count);
 
+        int lineNumber = 2;
         foreach (string line in CollectionsMarshal.AsSpan(rows))
         {
             string[] columns = line.Split(',');
 
             if (columns.Length != 17)
             {
+                lineNumber++;
                 continue;
             }
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns, 0);
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
                 DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
                                          eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
@@ -436,6 +438,10 @@ public class EventsImporterBenchmarks
             catch (IndexOutOfRangeException)
             {
                 continue;
+            }
+            finally
+            {
+                lineNumber++;
             }
         }
 
@@ -448,18 +454,20 @@ public class EventsImporterBenchmarks
         string[] rows = this.ReadLinesEnumerable().Skip(1).ToArray();
         List<EventModel> events = new(rows.Length);
 
+        int lineNumber = 2;
         foreach (string line in rows.AsSpan())
         {
             string[] columns = line.Split(',');
 
             if (columns.Length != 17)
             {
+                lineNumber++;
                 continue;
             }
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns, 0);
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
                 DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
                                          eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
@@ -475,6 +483,10 @@ public class EventsImporterBenchmarks
             catch (IndexOutOfRangeException)
             {
                 continue;
+            }
+            finally
+            {
+                lineNumber++;
             }
         }
 
