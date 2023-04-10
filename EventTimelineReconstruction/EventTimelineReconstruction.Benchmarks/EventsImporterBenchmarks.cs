@@ -108,6 +108,7 @@ public class EventsImporterBenchmarks
         return events;
     }
 
+    [Benchmark]
     public List<EventModel> Import_ParallelFor()
     {
         List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
