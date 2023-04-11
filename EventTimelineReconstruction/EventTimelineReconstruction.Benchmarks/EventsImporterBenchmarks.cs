@@ -68,8 +68,8 @@ public class EventsImporterBenchmarks
     [Benchmark]
     public List<EventModel> Import_ParallelForeach()
     {
-        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
-        List<EventModel> events = new(rows.Count);
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new();
         object lockObj = new();
 
         Parallel.ForEach(rows, (line, _, lineNumber) =>
