@@ -631,7 +631,7 @@ public class EventsImporterBenchmarks
     public List<EventModel> Import_WhileMemoryMarshal()
     {
         string[] rows = this.ReadLinesEnumerable().Skip(1).ToArray();
-        List<EventModel> events = new();
+        List<EventModel> events = new(rows.Length);
         ref string start = ref MemoryMarshal.GetArrayDataReference(rows);
         ref string end = ref Unsafe.Add(ref start, rows.Length);
 
