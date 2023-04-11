@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
@@ -496,23 +497,24 @@ public class EventsImporterBenchmarks
     [Benchmark]
     public List<EventModel> Import_While()
     {
-        List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
-        List<EventModel> events = new(rows.Count);
-        int index = 0;
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        IEnumerator<string> enumerator = rows.GetEnumerator();
+        List<EventModel> events = new();
+        int lineNumber = 2;
 
-        while (index < rows.Count)
+        while (enumerator.MoveNext())
         {
-            string[] columns = rows[index].Split(',');
+            string[] columns = enumerator.Current.Split(',');
 
             if (columns.Length != 17)
             {
-                index++;
+                lineNumber++;
                 continue;
             }
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns, index + 2);
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
                 DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
                                          eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
@@ -531,7 +533,7 @@ public class EventsImporterBenchmarks
             }
             finally
             {
-                index++;
+                lineNumber++;
             }
         }
 
