@@ -661,6 +661,95 @@ public class WorkSaverBenchmarks
         }
     }
 
+    [Benchmark]
+    public async Task SaveWork_WhileMemoryMarshal()
+    {
+        using StreamWriter outputStream = new(@"EventsBenchmark.csv");
+
+        this.WriteTreeToFile_WhileMemoryMarshal(_events.ToArray(), outputStream, 0);
+        await outputStream.WriteLineAsync();
+        this.WriteHighLevelEventsToFile_WhileMemoryMarshal(_highLevelEvents.ToArray(), outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteLowLevelEventsToFile_WhileMemoryMarshal(_lowLevelEvents.ToArray(), outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteHighLevelArtefactsToFile_WhileMemoryMarshal(_highLevelArtefacts.ToArray(), outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteLowLevelArtefactsToFile_WhileMemoryMarshal(_lowLevelArtefacts.ToArray(), outputStream);
+    }
+
+    private void WriteTreeToFile_WhileMemoryMarshal(EventViewModel[] events, StreamWriter outputStream, int currentLevel)
+    {
+        ref EventViewModel start = ref MemoryMarshal.GetArrayDataReference(events);
+        ref EventViewModel end = ref Unsafe.Add(ref start, events.Length);
+
+        while (Unsafe.IsAddressLessThan(ref start, ref end))
+        {
+            string serializedEventViewModel = start.Serialize();
+            string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
+            outputStream.WriteLine(dataToWrite);
+
+            this.WriteTreeToFile_WhileMemoryMarshal(start.Children.ToArray(), outputStream, currentLevel + 1);
+
+            start = ref Unsafe.Add(ref start, 1);
+        }
+    }
+
+    private void WriteHighLevelEventsToFile_WhileMemoryMarshal(HighLevelEventViewModel[] highLevelEvents, StreamWriter outputStream)
+    {
+        ref HighLevelEventViewModel start = ref MemoryMarshal.GetArrayDataReference(highLevelEvents);
+        ref HighLevelEventViewModel end = ref Unsafe.Add(ref start, highLevelEvents.Length);
+
+        while (Unsafe.IsAddressLessThan(ref start, ref end))
+        {
+            string serializedLine = start.Serialize();
+            outputStream.WriteLine(serializedLine);
+
+            start = ref Unsafe.Add(ref start, 1);
+        }
+    }
+
+    private void WriteLowLevelEventsToFile_WhileMemoryMarshal(LowLevelEventViewModel[] lowLevelEvents, StreamWriter outputStream)
+    {
+        ref LowLevelEventViewModel start = ref MemoryMarshal.GetArrayDataReference(lowLevelEvents);
+        ref LowLevelEventViewModel end = ref Unsafe.Add(ref start, lowLevelEvents.Length);
+
+        while (Unsafe.IsAddressLessThan(ref start, ref end))
+        {
+            string serializedLine = start.Serialize();
+            outputStream.WriteLine(serializedLine);
+
+            start = ref Unsafe.Add(ref start, 1);
+        }
+    }
+
+    private void WriteHighLevelArtefactsToFile_WhileMemoryMarshal(HighLevelArtefactViewModel[] highLevelArtefacts, StreamWriter outputStream)
+    {
+        ref HighLevelArtefactViewModel start = ref MemoryMarshal.GetArrayDataReference(highLevelArtefacts);
+        ref HighLevelArtefactViewModel end = ref Unsafe.Add(ref start, highLevelArtefacts.Length);
+
+        while (Unsafe.IsAddressLessThan(ref start, ref end))
+        {
+            string serializedLine = start.Serialize();
+            outputStream.WriteLine(serializedLine);
+
+            start = ref Unsafe.Add(ref start, 1);
+        }
+    }
+
+    private  void WriteLowLevelArtefactsToFile_WhileMemoryMarshal(LowLevelArtefactViewModel[] lowLevelArtefacts, StreamWriter outputStream)
+    {
+        ref LowLevelArtefactViewModel start = ref MemoryMarshal.GetArrayDataReference(lowLevelArtefacts);
+        ref LowLevelArtefactViewModel end = ref Unsafe.Add(ref start, lowLevelArtefacts.Length);
+
+        while (Unsafe.IsAddressLessThan(ref start, ref end))
+        {
+            string serializedLine = start.Serialize();
+            outputStream.WriteLine(serializedLine);
+
+            start = ref Unsafe.Add(ref start, 1);
+        }
+    }
+
     [GlobalCleanup]
     public void GlobalCleanup()
     {
