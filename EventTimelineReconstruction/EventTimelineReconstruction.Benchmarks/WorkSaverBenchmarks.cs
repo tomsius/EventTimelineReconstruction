@@ -14,6 +14,10 @@ public class WorkSaverBenchmarks
     public int N;
 
     private List<EventViewModel> _events;
+    private List<HighLevelEventViewModel> _highLevelEvents;
+    private List<LowLevelEventViewModel> _lowLevelEvents;
+    private List<HighLevelArtefactViewModel> _highLevelArtefacts;
+    private List<LowLevelArtefactViewModel> _lowLevelArtefacts;
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -42,6 +46,59 @@ public class WorkSaverBenchmarks
                     "Format1",
                     new Dictionary<string, string>() { { "Key11", "Value11" }, { "Key12", "Value12" } }
                     )));
+
+            _highLevelEvents.Add(new HighLevelEventViewModel(
+                new DateOnly(2020, 4, 6),
+                new TimeOnly(5, 23),
+                "Source",
+                "Short Description",
+                "Visit",
+                1
+            ));
+
+            _lowLevelEvents.Add(new LowLevelEventViewModel(
+                new DateOnly(2020, 4, 6),
+                new TimeOnly(5, 23),
+                "Source",
+                "Short Description",
+                "Visit",
+                "Extra",
+                1
+            ));
+
+            _highLevelArtefacts.Add(new HighLevelArtefactViewModel(
+                new DateOnly(2020, 4, 6),
+                new TimeOnly(5, 23),
+                "Source",
+                "Short Description",
+                "Visit",
+                "Extra",
+                1,
+                "MACB",
+                "SourceType",
+                "Description"
+            ));
+
+            _lowLevelArtefacts.Add(new LowLevelArtefactViewModel(
+                new DateOnly(2020, 4, 6),
+                new TimeOnly(5, 23),
+                "Timezone",
+                "MACB",
+                "Soruce",
+                "SourceType",
+                "Type",
+                "User",
+                "Host",
+                "Short Description",
+                "Description",
+                "Version",
+                "Filename",
+                "INode",
+                "Notes",
+                "Format",
+                "Extra",
+                1
+            ));
         }
     }
 
@@ -66,22 +123,66 @@ public class WorkSaverBenchmarks
     }
 
     [Benchmark]
-    public void SaveWork_Foreach()
+    public async Task SaveWork_Foreach()
     {
         using StreamWriter outputStream = new(@"EventsBenchmark.csv");
 
-        this.WriteTreeToFile_Foreach(_events, outputStream, 0);
+        await this.WriteTreeToFile_Foreach(_events, outputStream, 0);
+        await outputStream.WriteLineAsync();
+        await this.WriteHighLevelEventsToFile_Foreach(_highLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        await this.WriteLowLevelEventsToFile_Foreach(_lowLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        await this.WriteHighLevelArtefactsToFile_Foreach(_highLevelArtefacts, outputStream);
+        await outputStream.WriteLineAsync();
+        await this.WriteLowLevelArtefactsToFile_Foreach(_lowLevelArtefacts, outputStream);
     }
 
-    private void WriteTreeToFile_Foreach(IEnumerable<EventViewModel> events, StreamWriter outputStream, int currentLevel)
+    private async Task WriteTreeToFile_Foreach(IEnumerable<EventViewModel> events, StreamWriter outputStream, int currentLevel)
     {
         foreach (EventViewModel eventViewModel in events)
         {
             string serializedEventViewModel = eventViewModel.Serialize();
             string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
-            outputStream.WriteLine(dataToWrite);
+            await outputStream.WriteLineAsync(dataToWrite);
 
-            this.WriteTreeToFile_Foreach(eventViewModel.Children, outputStream, currentLevel + 1);
+            await this.WriteTreeToFile_Foreach(eventViewModel.Children, outputStream, currentLevel + 1);
+        }
+    }
+
+    private async Task WriteHighLevelEventsToFile_Foreach(IEnumerable<HighLevelEventViewModel> highLevelEvents, StreamWriter outputStream)
+    {
+        foreach (HighLevelEventViewModel highLevelEvent in highLevelEvents)
+        {
+            string serializedLine = highLevelEvent.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private async Task WriteLowLevelEventsToFile_Foreach(IEnumerable<LowLevelEventViewModel> lowLevelEvents, StreamWriter outputStream)
+    {
+        foreach (LowLevelEventViewModel lowLevelEvent in lowLevelEvents)
+        {
+            string serializedLine = lowLevelEvent.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private async Task WriteHighLevelArtefactsToFile_Foreach(IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, StreamWriter outputStream)
+    {
+        foreach (HighLevelArtefactViewModel highLevelArtefact in highLevelArtefacts)
+        {
+            string serializedLine = highLevelArtefact.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private async Task WriteLowLevelArtefactsToFile_Foreach(IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts, StreamWriter outputStream)
+    {
+        foreach (LowLevelArtefactViewModel lowLevelArtefact in lowLevelArtefacts)
+        {
+            string serializedLine = lowLevelArtefact.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
         }
     }
 
