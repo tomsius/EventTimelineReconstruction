@@ -262,14 +262,22 @@ public class WorkSaverBenchmarks
     }
 
     [Benchmark]
-    public void SaveWork_ForeachSpan()
+    public async Task SaveWork_ForeachSpanList()
     {
         using StreamWriter outputStream = new(@"EventsBenchmark.csv");
 
-        this.WriteTreeToFile_ForeachSpan(_events, outputStream, 0);
+        this.WriteTreeToFile_ForeachSpanList(_events, outputStream, 0);
+        await outputStream.WriteLineAsync();
+        this.WriteHighLevelEventsToFile_ForeachSpanList(_highLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteLowLevelEventsToFile_ForeachSpanList(_lowLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteHighLevelArtefactsToFile_ForeachSpanList(_highLevelArtefacts, outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteLowLevelArtefactsToFile_ForeachSpanList(_lowLevelArtefacts, outputStream);
     }
 
-    private void WriteTreeToFile_ForeachSpan(List<EventViewModel> events, StreamWriter outputStream, int currentLevel)
+    private void WriteTreeToFile_ForeachSpanList(List<EventViewModel> events, StreamWriter outputStream, int currentLevel)
     {
         foreach (EventViewModel eventViewModel in CollectionsMarshal.AsSpan(events))
         {
@@ -277,7 +285,43 @@ public class WorkSaverBenchmarks
             string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
             outputStream.WriteLine(dataToWrite);
 
-            this.WriteTreeToFile_ForeachSpan(new List<EventViewModel>(eventViewModel.Children), outputStream, currentLevel + 1);
+            this.WriteTreeToFile_ForeachSpanList(new List<EventViewModel>(eventViewModel.Children), outputStream, currentLevel + 1);
+        }
+    }
+
+    private void WriteHighLevelEventsToFile_ForeachSpanList(List<HighLevelEventViewModel> highLevelEvents, StreamWriter outputStream)
+    {
+        foreach (HighLevelEventViewModel highLevelEvent in CollectionsMarshal.AsSpan(highLevelEvents))
+        {
+            string serializedLine = highLevelEvent.Serialize();
+            outputStream.WriteLine(serializedLine);
+        }
+    }
+
+    private void WriteLowLevelEventsToFile_ForeachSpanList(List<LowLevelEventViewModel> lowLevelEvents, StreamWriter outputStream)
+    {
+        foreach (LowLevelEventViewModel lowLevelEvent in CollectionsMarshal.AsSpan(lowLevelEvents))
+        {
+            string serializedLine = lowLevelEvent.Serialize();
+            outputStream.WriteLine(serializedLine);
+        }
+    }
+
+    private void WriteHighLevelArtefactsToFile_ForeachSpanList(List<HighLevelArtefactViewModel> highLevelArtefacts, StreamWriter outputStream)
+    {
+        foreach (HighLevelArtefactViewModel highLevelArtefact in CollectionsMarshal.AsSpan(highLevelArtefacts))
+        {
+            string serializedLine = highLevelArtefact.Serialize();
+            outputStream.WriteLine(serializedLine);
+        }
+    }
+
+    private void WriteLowLevelArtefactsToFile_ForeachSpanList(List<LowLevelArtefactViewModel> lowLevelArtefacts, StreamWriter outputStream)
+    {
+        foreach (LowLevelArtefactViewModel lowLevelArtefact in CollectionsMarshal.AsSpan(lowLevelArtefacts))
+        {
+            string serializedLine = lowLevelArtefact.Serialize();
+            outputStream.WriteLine(serializedLine);
         }
     }
 
