@@ -104,23 +104,67 @@ public class WorkSaverBenchmarks
         }
     }
 
-    [Benchmark(Baseline = true)]
-    public void SaveWork_For()
+    [Benchmark]
+    public async Task SaveWork_For()
     {
         using StreamWriter outputStream = new(@"EventsBenchmark.csv");
 
-        this.WriteTreeToFile_For(_events, outputStream, 0);
+        await this.WriteTreeToFile_For(_events, outputStream, 0);
+        await outputStream.WriteLineAsync();
+        await WriteHighLevelEventsToFile_For(_highLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        await WriteLowLevelEventsToFile_For(_lowLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        await WriteHighLevelArtefactsToFile_For(_highLevelArtefacts, outputStream);
+        await outputStream.WriteLineAsync();
+        await WriteLowLevelArtefactsToFile_For(_lowLevelArtefacts, outputStream);
     }
 
-    private void WriteTreeToFile_For(List<EventViewModel> events, StreamWriter outputStream, int currentLevel)
+    private async Task WriteTreeToFile_For(List<EventViewModel> events, StreamWriter outputStream, int currentLevel)
     {
         for (int i = 0; i < events.Count; i++)
         {
             string serializedEventViewModel = events[i].Serialize();
             string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
-            outputStream.WriteLine(dataToWrite);
+            await outputStream.WriteLineAsync(dataToWrite);
 
-            this.WriteTreeToFile_For(new List<EventViewModel>(events[i].Children), outputStream, currentLevel + 1);
+            await this.WriteTreeToFile_For(events[i].Children.ToList(), outputStream, currentLevel + 1);
+        }
+    }
+
+    private static async Task WriteHighLevelEventsToFile_For(List<HighLevelEventViewModel> highLevelEvents, StreamWriter outputStream)
+    {
+        for (int i = 0; i < highLevelEvents.Count; i++)
+        {
+            string serializedLine = highLevelEvents[i].Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private static async Task WriteLowLevelEventsToFile_For(List<LowLevelEventViewModel> lowLevelEvents, StreamWriter outputStream)
+    {
+        for (int i = 0; i < lowLevelEvents.Count; i++)
+        {
+            string serializedLine = lowLevelEvents[i].Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private static async Task WriteHighLevelArtefactsToFile_For(List<HighLevelArtefactViewModel> highLevelArtefacts, StreamWriter outputStream)
+    {
+        for (int i = 0; i < highLevelArtefacts.Count; i++)
+        {
+            string serializedLine = highLevelArtefacts[i].Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private static async Task WriteLowLevelArtefactsToFile_For(List<LowLevelArtefactViewModel> lowLevelArtefacts, StreamWriter outputStream)
+    {
+        for (int i = 0; i < lowLevelArtefacts.Count; i++)
+        {
+            string serializedLine = lowLevelArtefacts[i].Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
         }
     }
 
@@ -351,7 +395,7 @@ public class WorkSaverBenchmarks
         }
     }
 
-    [Benchmark]
+    [Benchmark(Baseline = true)]
     public async Task SaveWork_Foreach()
     {
         using StreamWriter outputStream = new(@"EventsBenchmark.csv");
