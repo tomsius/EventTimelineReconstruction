@@ -587,6 +587,80 @@ public class WorkSaverBenchmarks
         }
     }
 
+    [Benchmark]
+    public async Task SaveWork_While()
+    {
+        using StreamWriter outputStream = new(@"EventsBenchmark.csv");
+
+        await this.WriteTreeToFile_While(_events, outputStream, 0);
+        await outputStream.WriteLineAsync();
+        await this.WriteHighLevelEventsToFile_While(_highLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        await this.WriteLowLevelEventsToFile_While(_lowLevelEvents, outputStream);
+        await outputStream.WriteLineAsync();
+        await this.WriteHighLevelArtefactsToFile_While(_highLevelArtefacts, outputStream);
+        await outputStream.WriteLineAsync();
+        await this.WriteLowLevelArtefactsToFile_While(_lowLevelArtefacts, outputStream);
+    }
+
+    private async Task WriteTreeToFile_While(IEnumerable<EventViewModel> events, StreamWriter outputStream, int currentLevel)
+    {
+        IEnumerator<EventViewModel> enumerator = events.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            string serializedEventViewModel = enumerator.Current.Serialize();
+            string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
+            await outputStream.WriteLineAsync(dataToWrite);
+
+            await this.WriteTreeToFile_While(enumerator.Current.Children, outputStream, currentLevel + 1);
+        }
+    }
+
+    private async Task WriteHighLevelEventsToFile_While(IEnumerable<HighLevelEventViewModel> highLevelEvents, StreamWriter outputStream)
+    {
+        IEnumerator<HighLevelEventViewModel> enumerator = highLevelEvents.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            string serializedLine = enumerator.Current.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private async Task WriteLowLevelEventsToFile_While(IEnumerable<LowLevelEventViewModel> lowLevelEvents, StreamWriter outputStream)
+    {
+        IEnumerator<LowLevelEventViewModel> enumerator = lowLevelEvents.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            string serializedLine = enumerator.Current.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private async Task WriteHighLevelArtefactsToFile_While(IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, StreamWriter outputStream)
+    {
+        IEnumerator<HighLevelArtefactViewModel> enumerator = highLevelArtefacts.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            string serializedLine = enumerator.Current.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
+    private async Task WriteLowLevelArtefactsToFile_While(IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts, StreamWriter outputStream)
+    {
+        IEnumerator<LowLevelArtefactViewModel> enumerator = lowLevelArtefacts.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            string serializedLine = enumerator.Current.Serialize();
+            await outputStream.WriteLineAsync(serializedLine);
+        }
+    }
+
     [GlobalCleanup]
     public void GlobalCleanup()
     {
