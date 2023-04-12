@@ -325,6 +325,70 @@ public class WorkSaverBenchmarks
         }
     }
 
+    [Benchmark]
+    public async Task SaveWork_ForeachSpanArray()
+    {
+        using StreamWriter outputStream = new(@"EventsBenchmark.csv");
+
+        this.WriteTreeToFile_ForeachSpanArray(_events.ToArray(), outputStream, 0);
+        await outputStream.WriteLineAsync();
+        this.WriteHighLevelEventsToFile_ForeachSpanArray(_highLevelEvents.ToArray(), outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteLowLevelEventsToFile_ForeachSpanArray(_lowLevelEvents.ToArray(), outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteHighLevelArtefactsToFile_ForeachSpanArray(_highLevelArtefacts.ToArray(), outputStream);
+        await outputStream.WriteLineAsync();
+        this.WriteLowLevelArtefactsToFile_ForeachSpanArray(_lowLevelArtefacts.ToArray(), outputStream);
+    }
+
+    private void WriteTreeToFile_ForeachSpanArray(EventViewModel[] events, StreamWriter outputStream, int currentLevel)
+    {
+        foreach (EventViewModel eventViewModel in events.AsSpan())
+        {
+            string serializedEventViewModel = eventViewModel.Serialize();
+            string dataToWrite = string.Format("{0}{1}", new string('\t', currentLevel), serializedEventViewModel);
+            outputStream.WriteLine(dataToWrite);
+
+            this.WriteTreeToFile_ForeachSpanArray(eventViewModel.Children.ToArray(), outputStream, currentLevel + 1);
+        }
+    }
+
+    private void WriteHighLevelEventsToFile_ForeachSpanArray(HighLevelEventViewModel[] highLevelEvents, StreamWriter outputStream)
+    {
+        foreach (HighLevelEventViewModel highLevelEvent in highLevelEvents.AsSpan())
+        {
+            string serializedLine = highLevelEvent.Serialize();
+            outputStream.WriteLine(serializedLine);
+        }
+    }
+
+    private void WriteLowLevelEventsToFile_ForeachSpanArray(LowLevelEventViewModel[] lowLevelEvents, StreamWriter outputStream)
+    {
+        foreach (LowLevelEventViewModel lowLevelEvent in lowLevelEvents.AsSpan())
+        {
+            string serializedLine = lowLevelEvent.Serialize();
+            outputStream.WriteLine(serializedLine);
+        }
+    }
+
+    private void WriteHighLevelArtefactsToFile_ForeachSpanArray(HighLevelArtefactViewModel[] highLevelArtefacts, StreamWriter outputStream)
+    {
+        foreach (HighLevelArtefactViewModel highLevelArtefact in highLevelArtefacts.AsSpan())
+        {
+            string serializedLine = highLevelArtefact.Serialize();
+            outputStream.WriteLine(serializedLine);
+        }
+    }
+
+    private void WriteLowLevelArtefactsToFile_ForeachSpanArray(LowLevelArtefactViewModel[] lowLevelArtefacts, StreamWriter outputStream)
+    {
+        foreach (LowLevelArtefactViewModel lowLevelArtefact in lowLevelArtefacts.AsSpan())
+        {
+            string serializedLine = lowLevelArtefact.Serialize();
+            outputStream.WriteLine(serializedLine);
+        }
+    }
+
     [GlobalCleanup]
     public void GlobalCleanup()
     {
