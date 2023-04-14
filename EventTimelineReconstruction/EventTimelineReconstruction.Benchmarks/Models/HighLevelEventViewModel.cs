@@ -1,6 +1,6 @@
 ﻿namespace EventTimelineReconstruction.Benchmarks.Models;
 
-public sealed class HighLevelEventViewModel
+public sealed class HighLevelEventViewModel : ISerializableLevel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }

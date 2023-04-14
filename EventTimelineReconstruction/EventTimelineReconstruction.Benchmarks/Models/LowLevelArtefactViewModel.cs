@@ -1,6 +1,6 @@
 ﻿namespace EventTimelineReconstruction.Benchmarks.Models;
 
-public sealed class LowLevelArtefactViewModel
+public sealed class LowLevelArtefactViewModel : ISerializableLevel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
