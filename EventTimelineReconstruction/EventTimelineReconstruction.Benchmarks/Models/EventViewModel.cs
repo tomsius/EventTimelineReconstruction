@@ -217,4 +217,10 @@ public class EventViewModel
             _colour.ToString()
             );
     }
+
+    public void AddChild(EventViewModel child)
+    {
+        _children.Add(child);
+        _children.Sort();
+    }
 }

@@ -1,75 +1,27 @@
-﻿namespace EventTimelineReconstruction.Benchmarks.Models;
+﻿using Microsoft.Diagnostics.Symbols;
+
+namespace EventTimelineReconstruction.Benchmarks.Models;
 
 public class EventModel
 {
-    public DateOnly Date
-    {
-        get;
-    }
-    public TimeOnly Time
-    {
-        get;
-    }
-    public TimeZoneInfo Timezone
-    {
-        get;
-    }
-    public string MACB
-    {
-        get;
-    }
-    public string Source
-    {
-        get;
-    }
-    public string SourceType
-    {
-        get;
-    }
-    public string Type
-    {
-        get;
-    }
-    public string User
-    {
-        get;
-    }
-    public string Host
-    {
-        get;
-    }
-    public string Short
-    {
-        get;
-    }
-    public string Description
-    {
-        get;
-    }
-    public double Version
-    {
-        get;
-    }
-    public string Filename
-    {
-        get;
-    }
-    public string INode
-    {
-        get;
-    }
-    public string Notes
-    {
-        get;
-    }
-    public string Format
-    {
-        get;
-    }
-    public Dictionary<string, string> Extra
-    {
-        get;
-    }
+    public DateOnly Date { get; }
+    public TimeOnly Time { get; }
+    public TimeZoneInfo Timezone { get; }
+    public string MACB { get; }
+    public string Source { get; }
+    public string SourceType { get; }
+    public string Type { get; }
+    public string User { get; }
+    public string Host { get; }
+    public string Short { get; }
+    public string Description { get; }
+    public double Version { get; }
+    public string Filename { get; }
+    public string INode { get; }
+    public string Notes { get; }
+    public string Format { get; }
+    public Dictionary<string, string> Extra { get; }
+    public int SourceLine { get; }
 
     public EventModel(
         DateOnly date,
@@ -88,7 +40,8 @@ public class EventModel
         string iNode,
         string notes,
         string format,
-        Dictionary<string, string> extra)
+        Dictionary<string, string> extra,
+        int sourceLine)
     {
         Date = date;
         Time = time;
@@ -107,5 +60,6 @@ public class EventModel
         Notes = notes;
         Format = format;
         Extra = extra;
+        SourceLine = sourceLine;
     }
 }
