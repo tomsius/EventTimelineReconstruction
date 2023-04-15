@@ -14,9 +14,9 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
 {
     private readonly IErrorsViewModel _errorsViewModel;
 
-    private readonly RangeEnabledObservableCollection<HighLevelEventViewModel> _highLevelEvents;
+    private readonly RangeEnabledObservableCollection<ISerializableLevel> _highLevelEvents;
 
-    public IEnumerable<HighLevelEventViewModel> HighLevelEvents
+    public IEnumerable<ISerializableLevel> HighLevelEvents
     {
         get
         {
@@ -39,9 +39,9 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
         }
     }
 
-    private readonly RangeEnabledObservableCollection<LowLevelEventViewModel> _lowLevelEvents;
+    private readonly RangeEnabledObservableCollection<ISerializableLevel> _lowLevelEvents;
 
-    public IEnumerable<LowLevelEventViewModel> LowLevelEvents
+    public IEnumerable<ISerializableLevel> LowLevelEvents
     {
         get
         {
@@ -64,9 +64,9 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
         }
     }
 
-    private readonly RangeEnabledObservableCollection<HighLevelArtefactViewModel> _highLevelArtefacts;
+    private readonly RangeEnabledObservableCollection<ISerializableLevel> _highLevelArtefacts;
 
-    public IEnumerable<HighLevelArtefactViewModel> HighLevelArtefacts
+    public IEnumerable<ISerializableLevel> HighLevelArtefacts
     {
         get
         {
@@ -89,9 +89,9 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
         }
     }
 
-    private readonly RangeEnabledObservableCollection<LowLevelArtefactViewModel> _lowLevelArtefacts;
+    private readonly RangeEnabledObservableCollection<ISerializableLevel> _lowLevelArtefacts;
 
-    public IEnumerable<LowLevelArtefactViewModel> LowLevelArtefacts
+    public IEnumerable<ISerializableLevel> LowLevelArtefacts
     {
         get
         {
@@ -192,28 +192,28 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
         return _errorsViewModel.GetErrors(propertyName);
     }
 
-    public void LoadHighLevelEvents(List<HighLevelEventViewModel> highLevelEvents)
+    public void LoadHighLevelEvents(List<ISerializableLevel> highLevelEvents)
     {
         _highLevelEvents.Clear();
         _highLevelEvents.AddRange(highLevelEvents);
         this.OnPropertyChanged(nameof(HighLevelEvents));
     }
 
-    public void LoadLowLevelEvents(List<LowLevelEventViewModel> lowLevelEvents)
+    public void LoadLowLevelEvents(List<ISerializableLevel> lowLevelEvents)
     {
         _lowLevelEvents.Clear();
         _lowLevelEvents.AddRange(lowLevelEvents);
         this.OnPropertyChanged(nameof(LowLevelEvents));
     }
 
-    public void LoadHighLevelArtefacts(List<HighLevelArtefactViewModel> highLevelArtefacts)
+    public void LoadHighLevelArtefacts(List<ISerializableLevel> highLevelArtefacts)
     {
         _highLevelArtefacts.Clear();
         _highLevelArtefacts.AddRange(highLevelArtefacts);
         this.OnPropertyChanged(nameof(HighLevelArtefacts));
     }
 
-    public void LoadLowLevelArtefacts(List<LowLevelArtefactViewModel> lowLevelArtefacts)
+    public void LoadLowLevelArtefacts(List<ISerializableLevel> lowLevelArtefacts)
     {
         _lowLevelArtefacts.Clear();
         _lowLevelArtefacts.AddRange(lowLevelArtefacts);

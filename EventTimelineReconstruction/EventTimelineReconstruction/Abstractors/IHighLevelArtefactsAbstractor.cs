@@ -5,5 +5,5 @@ namespace EventTimelineReconstruction.Abstractors;
 
 public interface IHighLevelArtefactsAbstractor
 {
-    List<HighLevelArtefactViewModel> FormHighLevelArtefacts(List<EventViewModel> events);
+    List<ISerializableLevel> FormHighLevelArtefacts(List<EventViewModel> events);
 }

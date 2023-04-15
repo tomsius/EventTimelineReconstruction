@@ -17,9 +17,9 @@ public sealed class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
         _lowLevelArtefactsAbstractorUtils = lowLevelArtefactsAbstractorUtils;
     }
 
-    public List<LowLevelArtefactViewModel> FormLowLevelArtefacts(List<EventViewModel> events, double periodInMinutes = 1.0)
+    public List<ISerializableLevel> FormLowLevelArtefacts(List<EventViewModel> events, double periodInMinutes = 1.0)
     {
-        List<LowLevelArtefactViewModel> lowLevelArtefacts = new(events.Count);
+        List<ISerializableLevel> lowLevelArtefacts = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {
@@ -94,13 +94,13 @@ public sealed class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
         return result;
     }
 
-    private LowLevelArtefactViewModel NormalizeCookie(List<LowLevelArtefactViewModel> lowLevelArtefacts, LowLevelArtefactViewModel current)
+    private LowLevelArtefactViewModel NormalizeCookie(List<ISerializableLevel> lowLevelArtefacts, LowLevelArtefactViewModel current)
     {
         string currentAddress = _lowLevelArtefactsAbstractorUtils.GetAddress(current.Description);
 
         for (int i = lowLevelArtefacts.Count - 1; i >= 0; i--)
         {
-            LowLevelArtefactViewModel previous = lowLevelArtefacts[i];
+            LowLevelArtefactViewModel previous = (LowLevelArtefactViewModel)lowLevelArtefacts[i];
             DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
             DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
             if (previousTime.CompareTo(currentTime) != 0)
@@ -158,7 +158,7 @@ public sealed class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
         return count;
     }
 
-    private static bool IsFileEventValid(List<LowLevelArtefactViewModel> lowLevelArtefacts, LowLevelArtefactViewModel current)
+    private static bool IsFileEventValid(List<ISerializableLevel> lowLevelArtefacts, LowLevelArtefactViewModel current)
     {
         DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
 
@@ -169,7 +169,7 @@ public sealed class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
 
         for (int i = lowLevelArtefacts.Count - 1; i >= 0; i--)
         {
-            LowLevelArtefactViewModel previous = lowLevelArtefacts[i];
+            LowLevelArtefactViewModel previous = (LowLevelArtefactViewModel)lowLevelArtefacts[i];
             DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
             if (previousTime.CompareTo(currentTime) != 0)
             {
@@ -185,14 +185,14 @@ public sealed class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
         return true;
     }
 
-    private static bool DoFileAndWebhistOfSameTimeExist(List<LowLevelArtefactViewModel> lowLevelArtefacts, DateTime currentTime)
+    private static bool DoFileAndWebhistOfSameTimeExist(List<ISerializableLevel> lowLevelArtefacts, DateTime currentTime)
     {
         bool doesFileExist = false;
         bool doesWebhistExist = false;
 
         for (int i = lowLevelArtefacts.Count - 1; i >= 0; i--)
         {
-            LowLevelArtefactViewModel previous = lowLevelArtefacts[i];
+            LowLevelArtefactViewModel previous = (LowLevelArtefactViewModel)lowLevelArtefacts[i];
             DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
             if (previousTime.CompareTo(currentTime) != 0)
             {

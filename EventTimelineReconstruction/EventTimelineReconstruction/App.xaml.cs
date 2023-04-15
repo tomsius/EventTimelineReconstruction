@@ -1,4 +1,5 @@
 ﻿using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.FactoryPattern;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
@@ -27,6 +28,8 @@ public partial class App : Application
                 services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
                 services.AddTransient<IErrorsViewModel, ErrorsViewModel>();
+
+                services.AddTransient<IAbstractionLevelFactory, AbstractionLevelFactory>();
 
                 services.AddSingleton<IEventsImporter, L2tCSVEventsImporter>();
                 services.AddSingleton<IWorkSaver, FileWorkSaver>();

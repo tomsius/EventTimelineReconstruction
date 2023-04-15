@@ -1,5 +1,6 @@
 ﻿using EventTimelineReconstruction.Abstractors;
 using EventTimelineReconstruction.Commands;
+using EventTimelineReconstruction.FactoryPattern;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
@@ -35,7 +36,8 @@ public class LoadWorkCommandTests
         ChangeColourViewModel changeColourViewModel = new(eventDetailsViewModel);
         _eventTreeViewModel = new(eventDetailsViewModel, filteringStore, changeColourViewModel, dragDropUtils);
         _eventsStore = new EventsStore(eventsImporter);
-        _workLoader = new FileWorkLoader();
+        IAbstractionLevelFactory factory = new AbstractionLevelFactory();
+        _workLoader = new FileWorkLoader(factory);
         _abstractedEventsViewModel = new(_eventsStore, highLevelEventsAbstractor, lowLevelEventsAbstractor, highLevelArtefactsAbstractor, lowLevelArtefactsAbstractor, errorsViewModel);
         _loadWorkViewModel = new(_eventTreeViewModel, _abstractedEventsViewModel, _eventsStore, _workLoader);
 

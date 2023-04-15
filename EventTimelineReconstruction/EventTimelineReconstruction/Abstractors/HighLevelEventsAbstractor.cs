@@ -16,9 +16,9 @@ public sealed class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         _abstractorUtils = abstractorUtils;
     }
 
-    public List<HighLevelEventViewModel> FormHighLevelEvents(List<EventViewModel> events)
+    public List<ISerializableLevel> FormHighLevelEvents(List<EventViewModel> events)
     {
-        List<HighLevelEventViewModel> highLevelEvents = new(events.Count);
+        List<ISerializableLevel> highLevelEvents = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {
@@ -69,7 +69,7 @@ public sealed class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
                     case "OLECF":
                         HighLevelEventViewModel olecfEvent = FormEventFromOlecfSource(events[i]);
 
-                        if (IsOlecfEventValid(highLevelEvents[^1], olecfEvent))
+                        if (IsOlecfEventValid((HighLevelEventViewModel)highLevelEvents[^1], olecfEvent))
                         {
                             highLevelEvents.Add(olecfEvent);
                         }
@@ -122,18 +122,19 @@ public sealed class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         return result;
     }
 
-    private static int FindLastEventIndexOf(List<HighLevelEventViewModel> highLevelEvents, DateTime newEventDate, string source)
+    private static int FindLastEventIndexOf(List<ISerializableLevel> highLevelEvents, DateTime newEventDate, string source)
     {
         for (int i = highLevelEvents.Count - 1; i >= 0; i--)
         {
-            DateTime highLevelEventDate = new(highLevelEvents[i].Date.Year, highLevelEvents[i].Date.Month, highLevelEvents[i].Date.Day, highLevelEvents[i].Time.Hour, highLevelEvents[i].Time.Minute, highLevelEvents[i].Time.Second);
+            HighLevelEventViewModel highLevelEvent = (HighLevelEventViewModel)highLevelEvents[i];
+            DateTime highLevelEventDate = new(highLevelEvent.Date.Year, highLevelEvent.Date.Month, highLevelEvent.Date.Day, highLevelEvent.Time.Hour, highLevelEvent.Time.Minute, highLevelEvent.Time.Second);
 
             if (highLevelEventDate.CompareTo(newEventDate) == -1)
             {
                 break;
             }
 
-            if (highLevelEvents[i].Source == source && highLevelEventDate.CompareTo(newEventDate) == 0)
+            if (highLevelEvent.Source == source && highLevelEventDate.CompareTo(newEventDate) == 0)
             {
                 return i;
             }
@@ -284,24 +285,24 @@ public sealed class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         return result;
     }
 
-    private static bool IsWebhistEventValid(List<HighLevelEventViewModel> highLevelEvents, HighLevelEventViewModel webhistEvent)
+    private static bool IsWebhistEventValid(List<ISerializableLevel> highLevelEvents, HighLevelEventViewModel webhistEvent)
     {
         if (highLevelEvents.Count < 2)
         {
             return true;
         }
 
-        if (highLevelEvents[^1].Source != "WEBHIST")
+        if (((HighLevelEventViewModel)highLevelEvents[^1]).Source != "WEBHIST")
         {
             return true;
         }
 
-        if (highLevelEvents[^1].Short != webhistEvent.Short)
+        if (((HighLevelEventViewModel)highLevelEvents[^1]).Short != webhistEvent.Short)
         {
             return true;
         }
 
-        HighLevelEventViewModel startEvent = highLevelEvents[^1];
+        HighLevelEventViewModel startEvent = (HighLevelEventViewModel)highLevelEvents[^1];
         DateTime startTime = new(startEvent.Date.Year, startEvent.Date.Month, startEvent.Date.Day, startEvent.Time.Hour, startEvent.Time.Minute, startEvent.Time.Second);
         DateTime endTime = new(webhistEvent.Date.Year, webhistEvent.Date.Month, webhistEvent.Date.Day, webhistEvent.Time.Hour, webhistEvent.Time.Minute, webhistEvent.Time.Second);
 

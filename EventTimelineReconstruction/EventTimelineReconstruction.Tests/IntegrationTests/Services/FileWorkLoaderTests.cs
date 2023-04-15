@@ -1,4 +1,5 @@
-﻿using EventTimelineReconstruction.Models;
+﻿using EventTimelineReconstruction.FactoryPattern;
+using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.ViewModels;
 
@@ -216,15 +217,15 @@ public class FileWorkLoaderTests
         {
             new LowLevelArtefactViewModel(new DateOnly(2020, 1, 7), new TimeOnly(4, 22, 54), "Vilnius", "MACB10", "Source10", "SourceType10", "Type10", "User10", "Host10", "Short10", "Desc10", "2", "Filename10", "Inode10", "Notes10", "Format10", "Extra10", 10)
         };
-        FileWorkLoader loader = new();
+        FileWorkLoader loader = new(new AbstractionLevelFactory());
 
         // Act
         LoadedWork loadedWork = loader.LoadWork(_file).Result;
         List<EventViewModel> actualEvents = loadedWork.Events;
-        List<HighLevelEventViewModel> actualHighLevelEvents = loadedWork.HighLevelEvents;
-        List<LowLevelEventViewModel> actualLowLevelEvents = loadedWork.LowLevelEvents;
-        List<HighLevelArtefactViewModel> actualHighLevelArtefacts = loadedWork.HighLevelArtefacts;
-        List<LowLevelArtefactViewModel> actualLowLevelArtefacts = loadedWork.LowLevelArtefacts;
+        List<HighLevelEventViewModel> actualHighLevelEvents = loadedWork.HighLevelEvents.Cast<HighLevelEventViewModel>().ToList();
+        List<LowLevelEventViewModel> actualLowLevelEvents = loadedWork.LowLevelEvents.Cast<LowLevelEventViewModel>().ToList();
+        List<HighLevelArtefactViewModel> actualHighLevelArtefacts = loadedWork.HighLevelArtefacts.Cast<HighLevelArtefactViewModel>().ToList();
+        List<LowLevelArtefactViewModel> actualLowLevelArtefacts = loadedWork.LowLevelArtefacts.Cast<LowLevelArtefactViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expectedEvents.Count, actualEvents.Count);

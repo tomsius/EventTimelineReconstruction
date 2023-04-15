@@ -20,9 +20,9 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         _highLevelArtefactsAbstractorUtils = highLevelArtefactsAbstractorUtils;
     }
 
-    public List<HighLevelArtefactViewModel> FormHighLevelArtefacts(List<EventViewModel> events)
+    public List<ISerializableLevel> FormHighLevelArtefacts(List<EventViewModel> events)
     {
-        List<HighLevelArtefactViewModel> highLevelArtefacts = new(events.Count);
+        List<ISerializableLevel> highLevelArtefacts = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {
@@ -233,7 +233,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private static bool IsWebhistEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsWebhistEventValid(List<ISerializableLevel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (current is null)
         {
@@ -242,7 +242,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 
         for (int i = highLevelArtefacts.Count - 1; i >= 0; i--)
         {
-            HighLevelArtefactViewModel previous = highLevelArtefacts[i];
+            HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[i];
             DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
             DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
             if (previousTime.CompareTo(currentTime) != 0)
@@ -277,11 +277,11 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private static bool IsLnkEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsLnkEventValid(List<ISerializableLevel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         for (int i = highLevelArtefacts.Count - 1; i >= 0; i--)
         {
-            HighLevelArtefactViewModel previous = highLevelArtefacts[i];
+            HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[i];
 
             if (previous.Short == current.Short && previous.Source == "LNK")
             {
@@ -313,14 +313,14 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private static bool IsFileEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsFileEventValid(List<ISerializableLevel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (highLevelArtefacts.Count == 0)
         {
             return true;
         }
 
-        HighLevelArtefactViewModel previous = highLevelArtefacts[^1];
+        HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[^1];
         DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
         DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
 
@@ -451,7 +451,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private static bool IsRegEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsRegEventValid(List<ISerializableLevel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (current.SourceType == "Registry Key: UserAssist" && !current.Description.Contains(".exe"))
         {
@@ -467,7 +467,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         {
             for (int i = highLevelArtefacts.Count - 1; i >= 0; i--)
             {
-                HighLevelArtefactViewModel previous = highLevelArtefacts[i];
+                HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[i];
                 DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
                 DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
 
@@ -539,7 +539,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private bool IsPeEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, EventViewModel current)
+    private bool IsPeEventValid(List<ISerializableLevel> highLevelArtefacts, EventViewModel current)
     {
         if (_highLevelArtefactsAbstractorUtils.IsPeLineExecutable(current))
         {
@@ -553,7 +553,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
 
         for (int i = highLevelArtefacts.Count - 1; i >= 0; i--)
         {
-            HighLevelArtefactViewModel previous = highLevelArtefacts[i];
+            HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[i];
             DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
 
             if (previousTime.CompareTo(current.FullDate) != 0)
@@ -589,7 +589,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         return result;
     }
 
-    private static bool IsEventValid(List<HighLevelArtefactViewModel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    private static bool IsEventValid(List<ISerializableLevel> highLevelArtefacts, HighLevelArtefactViewModel current)
     {
         if (current is null)
         {
@@ -601,7 +601,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
             return true;
         }
 
-        HighLevelArtefactViewModel previous = highLevelArtefacts[^1];
+        HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[^1];
 
         if (previous.Short != current.Short)
         {

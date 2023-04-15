@@ -7,7 +7,7 @@ namespace EventTimelineReconstruction.Services;
 
 public sealed class FileWorkSaver : IWorkSaver
 {
-    public async Task SaveWork(string path, IEnumerable<EventViewModel> events, IEnumerable<HighLevelEventViewModel> highLevelEvents, IEnumerable<LowLevelEventViewModel> lowLevelEvents, IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts)
+    public async Task SaveWork(string path, IEnumerable<EventViewModel> events, IEnumerable<ISerializableLevel> highLevelEvents, IEnumerable<ISerializableLevel> lowLevelEvents, IEnumerable<ISerializableLevel> highLevelArtefacts, IEnumerable<ISerializableLevel> lowLevelArtefacts)
     {
         using StreamWriter outputStream = new(path);
 
@@ -33,7 +33,7 @@ public sealed class FileWorkSaver : IWorkSaver
         }
     }
 
-    private static async Task WriteHighLevelEventsToFile(IEnumerable<HighLevelEventViewModel> highLevelEvents, StreamWriter outputStream)
+    private static async Task WriteHighLevelEventsToFile(IEnumerable<ISerializableLevel> highLevelEvents, StreamWriter outputStream)
     {
         foreach (HighLevelEventViewModel highLevelEvent in highLevelEvents)
         {
@@ -42,7 +42,7 @@ public sealed class FileWorkSaver : IWorkSaver
         }
     }
 
-    private static async Task WriteLowLevelEventsToFile(IEnumerable<LowLevelEventViewModel> lowLevelEvents, StreamWriter outputStream)
+    private static async Task WriteLowLevelEventsToFile(IEnumerable<ISerializableLevel> lowLevelEvents, StreamWriter outputStream)
     {
         foreach (LowLevelEventViewModel lowLevelEvent in lowLevelEvents)
         {
@@ -51,7 +51,7 @@ public sealed class FileWorkSaver : IWorkSaver
         }
     }
 
-    private static async Task WriteHighLevelArtefactsToFile(IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, StreamWriter outputStream)
+    private static async Task WriteHighLevelArtefactsToFile(IEnumerable<ISerializableLevel> highLevelArtefacts, StreamWriter outputStream)
     {
         foreach (HighLevelArtefactViewModel highLevelArtefact in highLevelArtefacts)
         {
@@ -60,7 +60,7 @@ public sealed class FileWorkSaver : IWorkSaver
         }
     }
 
-    private static async Task WriteLowLevelArtefactsToFile(IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts, StreamWriter outputStream)
+    private static async Task WriteLowLevelArtefactsToFile(IEnumerable<ISerializableLevel> lowLevelArtefacts, StreamWriter outputStream)
     {
         foreach (LowLevelArtefactViewModel lowLevelArtefact in lowLevelArtefacts)
         {

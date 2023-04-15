@@ -35,25 +35,25 @@ public sealed class AbstractEventsCommand : AsyncCommandBase
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<HighLevelEventViewModel> highLevelEvents = _highLevelEventsAbstractor.FormHighLevelEvents(events);
+            List<ISerializableLevel> highLevelEvents = _highLevelEventsAbstractor.FormHighLevelEvents(events);
             _viewModel.LoadHighLevelEvents(highLevelEvents);
         });
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<LowLevelEventViewModel> lowLevelEvents = _lowLevelEventsAbstractor.FormLowLevelEvents(events);
+            List<ISerializableLevel> lowLevelEvents = _lowLevelEventsAbstractor.FormLowLevelEvents(events);
             _viewModel.LoadLowLevelEvents(lowLevelEvents);
         });
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<HighLevelArtefactViewModel> highLevelArtefacts = _highLevelArtefactsAbstractor.FormHighLevelArtefacts(events);
+            List<ISerializableLevel> highLevelArtefacts = _highLevelArtefactsAbstractor.FormHighLevelArtefacts(events);
             _viewModel.LoadHighLevelArtefacts(highLevelArtefacts);
         });
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<LowLevelArtefactViewModel> lowLevelArtefacts = _lowLevelArtefactsAbstractor.FormLowLevelArtefacts(events);
+            List<ISerializableLevel> lowLevelArtefacts = _lowLevelArtefactsAbstractor.FormLowLevelArtefacts(events);
             _viewModel.LoadLowLevelArtefacts(lowLevelArtefacts);
         });
 

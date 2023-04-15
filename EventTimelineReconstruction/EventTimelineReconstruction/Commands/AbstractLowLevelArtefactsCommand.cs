@@ -31,7 +31,7 @@ public sealed class AbstractLowLevelArtefactsCommand : CommandBase
         _viewModel.IsAbstracting = true;
 
         List<EventViewModel> events = _store.GetStoredEventViewModelsAsOneLevel();
-        List<LowLevelArtefactViewModel> lowLevelArtefacts = _abstractor.FormLowLevelArtefacts(events, double.Parse(_viewModel.Threshold));
+        List<ISerializableLevel> lowLevelArtefacts = _abstractor.FormLowLevelArtefacts(events, double.Parse(_viewModel.Threshold));
         _viewModel.LoadLowLevelArtefacts(lowLevelArtefacts);
 
         _viewModel.IsAbstracting = false;

@@ -18,9 +18,9 @@ public sealed class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         _lowLevelAbstractorUtils = lowLevelAbstractorUtils;
     }
 
-    public List<LowLevelEventViewModel> FormLowLevelEvents(List<EventViewModel> events)
+    public List<ISerializableLevel> FormLowLevelEvents(List<EventViewModel> events)
     {
-        List<LowLevelEventViewModel> lowLevelEvents = new(events.Count);
+        List<ISerializableLevel> lowLevelEvents = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {
@@ -120,17 +120,17 @@ public sealed class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return lowLevelEvents;
     }
 
-    private static void NormalizeEvents(List<LowLevelEventViewModel> lowLevelEvents, List<EventViewModel> events, EventViewModel currentEvent)
+    private static void NormalizeEvents(List<ISerializableLevel> lowLevelEvents, List<EventViewModel> events, EventViewModel currentEvent)
     {
         if (lowLevelEvents.Count < 2)
         {
             return;
         }
 
-        int eventIndex = GetEventIndex(events, lowLevelEvents[^2].Reference);
+        int eventIndex = GetEventIndex(events, ((LowLevelEventViewModel)lowLevelEvents[^2]).Reference);
         EventViewModel lastEvent = events[eventIndex];
 
-        if (lastEvent.FullDate.CompareTo(currentEvent.FullDate) != 0 || lowLevelEvents[^2].Short != lowLevelEvents[^1].Short)
+        if (lastEvent.FullDate.CompareTo(currentEvent.FullDate) != 0 || ((LowLevelEventViewModel)lowLevelEvents[^2]).Short != ((LowLevelEventViewModel)lowLevelEvents[^1]).Short)
         {
             return;
         }
@@ -218,7 +218,7 @@ public sealed class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return false;
     }
 
-    private static bool IsWebhistEventValid(List<LowLevelEventViewModel> lowLevelEvents, LowLevelEventViewModel lowLevelEvent)
+    private static bool IsWebhistEventValid(List<ISerializableLevel> lowLevelEvents, LowLevelEventViewModel lowLevelEvent)
     {
         if (lowLevelEvent is null)
         {
@@ -230,12 +230,12 @@ public sealed class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
             return true;
         }
 
-        if (lowLevelEvents[^1].Short != lowLevelEvent.Short)
+        if (((LowLevelEventViewModel)lowLevelEvents[^1]).Short != lowLevelEvent.Short)
         {
             return true;
         }
 
-        LowLevelEventViewModel startEvent = lowLevelEvents[^1];
+        LowLevelEventViewModel startEvent = (LowLevelEventViewModel)lowLevelEvents[^1];
         DateTime startTime = new(startEvent.Date.Year, startEvent.Date.Month, startEvent.Date.Day, startEvent.Time.Hour, startEvent.Time.Minute, startEvent.Time.Second);
         DateTime endTime = new(lowLevelEvent.Date.Year, lowLevelEvent.Date.Month, lowLevelEvent.Date.Day, lowLevelEvent.Time.Hour, lowLevelEvent.Time.Minute, lowLevelEvent.Time.Second);
 

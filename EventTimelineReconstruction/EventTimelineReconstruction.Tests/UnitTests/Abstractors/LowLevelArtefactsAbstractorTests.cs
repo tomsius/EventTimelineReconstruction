@@ -127,7 +127,7 @@ public class LowLevelArtefactsAbstractorTests
         List<LowLevelArtefactViewModel> expected = GetExpectedEvents();
 
         // Act
-        List<LowLevelArtefactViewModel> actual = _abstractor.FormLowLevelArtefacts(_events);
+        List<LowLevelArtefactViewModel> actual = _abstractor.FormLowLevelArtefacts(_events).Cast<LowLevelArtefactViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);
