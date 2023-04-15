@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
@@ -15,30 +14,34 @@ public class WorkLoaderBenchmarks
     [Params(1000, 100_000, 1_000_000)]
     public int N;
 
+    private AbstractionLevelFactory _factory;
+
     [GlobalSetup]
     public void GlobalSetup()
     {
+        _factory = new();
+
         // padalinti is 5, kad butu po lygiai ivykiu
     }
 
     [Benchmark(Baseline = true)]
-    public async Task<LoadedWork> LoadWork(string path)
+    public async Task<LoadedWork> LoadWork_LineByLine(string path)
     {
         using StreamReader inputStream = new(path);
 
         LoadedWork loadedWork = new()
         {
-            Events = await LoadEvents(inputStream),
-            HighLevelEvents = await LoadHighLevelEvents(inputStream),
-            LowLevelEvents = await LoadLowLevelEvents(inputStream),
-            HighLevelArtefacts = await LoadHighLevelArtefacts(inputStream),
-            LowLevelArtefacts = await LoadLowLevelArtefacts(inputStream)
+            Events = await LoadEvents_LineByLine(inputStream),
+            HighLevelEvents = await LoadHighLevelEvents_LineByLine(inputStream),
+            LowLevelEvents = await LoadLowLevelEvents_LineByLine(inputStream),
+            HighLevelArtefacts = await LoadHighLevelArtefacts_LineByLine(inputStream),
+            LowLevelArtefacts = await LoadLowLevelArtefacts_LineByLine(inputStream)
         };
 
         return loadedWork;
     }
 
-    private static async Task<List<EventViewModel>> LoadEvents(StreamReader inputStream)
+    private static async Task<List<EventViewModel>> LoadEvents_LineByLine(StreamReader inputStream)
     {
         List<EventViewModel> events = new();
         string row = await inputStream.ReadLineAsync();
@@ -198,7 +201,7 @@ public class WorkLoaderBenchmarks
         return eventViewModel;
     }
 
-    private static async Task<List<HighLevelEventViewModel>> LoadHighLevelEvents(StreamReader inputStream)
+    private static async Task<List<HighLevelEventViewModel>> LoadHighLevelEvents_LineByLine(StreamReader inputStream)
     {
         List<HighLevelEventViewModel> highLevelEvents = new();
 
@@ -229,7 +232,7 @@ public class WorkLoaderBenchmarks
         return highLevelEvent;
     }
 
-    private static async Task<List<LowLevelEventViewModel>> LoadLowLevelEvents(StreamReader inputStream)
+    private static async Task<List<LowLevelEventViewModel>> LoadLowLevelEvents_LineByLine(StreamReader inputStream)
     {
         List<LowLevelEventViewModel> lowLevelEvents = new();
 
@@ -261,7 +264,7 @@ public class WorkLoaderBenchmarks
         return lowLevelEvent;
     }
 
-    private static async Task<List<HighLevelArtefactViewModel>> LoadHighLevelArtefacts(StreamReader inputStream)
+    private static async Task<List<HighLevelArtefactViewModel>> LoadHighLevelArtefacts_LineByLine(StreamReader inputStream)
     {
         List<HighLevelArtefactViewModel> highLevelArtefacts = new();
 
@@ -296,7 +299,7 @@ public class WorkLoaderBenchmarks
         return highLevelArtefact;
     }
 
-    private static async Task<List<LowLevelArtefactViewModel>> LoadLowLevelArtefacts(StreamReader inputStream)
+    private static async Task<List<LowLevelArtefactViewModel>> LoadLowLevelArtefacts_LineByLine(StreamReader inputStream)
     {
         List<LowLevelArtefactViewModel> lowLevelArtefacts = new();
 
@@ -339,7 +342,93 @@ public class WorkLoaderBenchmarks
         return lowLevelArtefact;
     }
 
+    [Benchmark]
+    public async Task<LoadedWorkFactory> LoadWork_Factory(string path)
+    {
+        IEnumerable<string> rows = await File.ReadAllLinesAsync(path);
+        IEnumerator<string> enumerator = rows.GetEnumerator();
 
+        LoadedWorkFactory loadedWork = new()
+        {
+            Events = LoadEvents_Factory(enumerator),
+            HighLevelEvents = LoadAbstractionLevel_Factory(enumerator, AbstractionLevel.HighLevelEvent),
+            LowLevelEvents = LoadAbstractionLevel_Factory(enumerator, AbstractionLevel.LowLevelEvent),
+            HighLevelArtefacts = LoadAbstractionLevel_Factory(enumerator, AbstractionLevel.HighLevelArtefact),
+            LowLevelArtefacts = LoadAbstractionLevel_Factory(enumerator, AbstractionLevel.LowLevelArtefact)
+        };
+
+        return loadedWork;
+    }
+
+    private static List<EventViewModel> LoadEvents_Factory(IEnumerator<string> enumerator)
+    {
+        List<EventViewModel> events = new();
+        int currentDepth = 0;
+        Stack<EventViewModel> stack = new();
+
+        while (enumerator.MoveNext() && string.IsNullOrEmpty(enumerator.Current) == false)
+        {
+            string[] columns = enumerator.Current.Split(',');
+            int depth = GetDepth(columns[0]);
+            columns[0] = columns[0].Trim(new char[] { '\t' });
+
+            EventModel eventModel = ConvertRowToModel(columns);
+            EventViewModel eventViewModel = ConvertToViewModel(eventModel, columns);
+
+            if (depth == 0)
+            {
+                events.Add(eventViewModel);
+            }
+            else if (depth == currentDepth)
+            {
+                while (depth <= currentDepth)
+                {
+                    stack.Pop();
+                    currentDepth--;
+                }
+
+                currentDepth++;
+
+                EventViewModel current = stack.Peek();
+                current.AddChild(eventViewModel);
+            }
+            else if (depth > currentDepth)
+            {
+                currentDepth++;
+                EventViewModel current = stack.Peek();
+                current.AddChild(eventViewModel);
+            }
+            else if (depth < currentDepth)
+            {
+                while (depth <= currentDepth)
+                {
+                    stack.Pop();
+                    currentDepth--;
+                }
+
+                currentDepth++;
+                EventViewModel current = stack.Peek();
+                current.AddChild(eventViewModel);
+            }
+
+            stack.Push(eventViewModel);
+        }
+
+        return events;
+    }
+
+    private List<ISerializableLevel> LoadAbstractionLevel_Factory(IEnumerator<string> enumerator, AbstractionLevel abstractionLevel)
+    {
+        List<ISerializableLevel> abstractionEvents = new();
+
+        while (enumerator.MoveNext() && string.IsNullOrEmpty(enumerator.Current) == false)
+        {
+            ISerializableLevel abstractionEvent = _factory.CreateAbstractionLevel(enumerator.Current, abstractionLevel);
+            abstractionEvents.Add(abstractionEvent);
+        }
+
+        return abstractionEvents;
+    }
 
     [GlobalCleanup]
     public void GlobalCleanup()

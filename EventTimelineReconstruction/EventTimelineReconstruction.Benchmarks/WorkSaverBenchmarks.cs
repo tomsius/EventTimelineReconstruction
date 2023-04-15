@@ -19,6 +19,10 @@ public class WorkSaverBenchmarks
     private List<ISerializableLevel> _lowLevelEvents;
     private List<ISerializableLevel> _highLevelArtefacts;
     private List<ISerializableLevel> _lowLevelArtefacts;
+    private IEnumerable<HighLevelEventViewModel> _concreteHighLevelEvents;
+    private IEnumerable<LowLevelEventViewModel> _concreteLowLevelEvents;
+    private IEnumerable<HighLevelArtefactViewModel> _concreteHighLevelArtefacts;
+    private IEnumerable<LowLevelArtefactViewModel> _concreteLowLevelArtefacts;
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -29,7 +33,7 @@ public class WorkSaverBenchmarks
         _highLevelArtefacts = new(N);
         _lowLevelArtefacts = new(N);
 
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < N; i+=5)
         {
             _events.Add(new EventViewModel(
                 new EventModel(
@@ -49,7 +53,8 @@ public class WorkSaverBenchmarks
                     "iNode number1",
                     "Notes1",
                     "Format1",
-                    new Dictionary<string, string>() { { "Key11", "Value11" }, { "Key12", "Value12" } }
+                    new Dictionary<string, string>() { { "Key11", "Value11" }, { "Key12", "Value12" } },
+                    i
                     )));
 
             _highLevelEvents.Add(new HighLevelEventViewModel(
@@ -58,7 +63,7 @@ public class WorkSaverBenchmarks
                 "Source",
                 "Short Description",
                 "Visit",
-                1
+                i + 1
             ));
 
             _lowLevelEvents.Add(new LowLevelEventViewModel(
@@ -68,7 +73,7 @@ public class WorkSaverBenchmarks
                 "Short Description",
                 "Visit",
                 "Extra",
-                1
+                i + 2
             ));
 
             _highLevelArtefacts.Add(new HighLevelArtefactViewModel(
@@ -78,7 +83,7 @@ public class WorkSaverBenchmarks
                 "Short Description",
                 "Visit",
                 "Extra",
-                1,
+                i + 3,
                 "MACB",
                 "SourceType",
                 "Description"
@@ -102,9 +107,14 @@ public class WorkSaverBenchmarks
                 "Notes",
                 "Format",
                 "Extra",
-                1
+                i + 4
             ));
         }
+
+        _concreteHighLevelEvents = _highLevelEvents.Cast<HighLevelEventViewModel>();
+        _concreteLowLevelEvents = _lowLevelEvents.Cast<LowLevelEventViewModel>();
+        _concreteHighLevelArtefacts = _highLevelArtefacts.Cast<HighLevelArtefactViewModel>();
+        _concreteLowLevelArtefacts = _lowLevelArtefacts.Cast<LowLevelArtefactViewModel>();
     }
 
     [Benchmark]
@@ -276,13 +286,13 @@ public class WorkSaverBenchmarks
 
         await this.WriteTreeToFile_Foreach(_events, outputStream, 0);
         await outputStream.WriteLineAsync();
-        await this.WriteHighLevelEventsToFile_Foreach(_highLevelEvents, outputStream);
+        await this.WriteHighLevelEventsToFile_Foreach(_concreteHighLevelEvents, outputStream);
         await outputStream.WriteLineAsync();
-        await this.WriteLowLevelEventsToFile_Foreach(_lowLevelEvents, outputStream);
+        await this.WriteLowLevelEventsToFile_Foreach(_concreteLowLevelEvents, outputStream);
         await outputStream.WriteLineAsync();
-        await this.WriteHighLevelArtefactsToFile_Foreach(_highLevelArtefacts, outputStream);
+        await this.WriteHighLevelArtefactsToFile_Foreach(_concreteHighLevelArtefacts, outputStream);
         await outputStream.WriteLineAsync();
-        await this.WriteLowLevelArtefactsToFile_Foreach(_lowLevelArtefacts, outputStream);
+        await this.WriteLowLevelArtefactsToFile_Foreach(_concreteLowLevelArtefacts, outputStream);
     }
 
     private async Task WriteTreeToFile_Foreach(IEnumerable<EventViewModel> events, StreamWriter outputStream, int currentLevel)

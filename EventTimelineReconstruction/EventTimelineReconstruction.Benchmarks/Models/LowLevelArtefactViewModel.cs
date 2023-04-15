@@ -1,4 +1,6 @@
-﻿namespace EventTimelineReconstruction.Benchmarks.Models;
+﻿using System.Text;
+
+namespace EventTimelineReconstruction.Benchmarks.Models;
 
 public sealed class LowLevelArtefactViewModel : ISerializableLevel
 {
@@ -66,5 +68,54 @@ public sealed class LowLevelArtefactViewModel : ISerializableLevel
             Extra,
             Reference
             );
+    }
+
+    public static LowLevelArtefactViewModel Deserialize(string row)
+    {
+        string[] columns = row.Split(',');
+        return ConvertRowToLowLevelArtefact(columns);
+    }
+
+    private static LowLevelArtefactViewModel ConvertRowToLowLevelArtefact(string[] columns)
+    {
+        DateOnly date = new(int.Parse(columns[0]), int.Parse(columns[1]), int.Parse(columns[2]));
+        TimeOnly time = new(int.Parse(columns[3]), int.Parse(columns[4]), int.Parse(columns[5]));
+        string timezone = GetSerializedTimezoneString(columns, 22);
+        string macb = columns[^15];
+        string source = columns[^14];
+        string sourceType = columns[^13];
+        string type = columns[^12];
+        string user = columns[^11];
+        string host = columns[^10];
+        string shortDescription = columns[^9];
+        string description = columns[^8];
+        string version = columns[^7];
+        string filename = columns[^6];
+        string inode = columns[^5];
+        string notes = columns[^4];
+        string format = columns[^3];
+        string extra = columns[^2];
+        int reference = int.Parse(columns[^1]);
+
+        LowLevelArtefactViewModel lowLevelArtefact = new(date, time, timezone, macb, source, sourceType, type, user, host, shortDescription, description, version, filename, inode, notes, format, extra, reference);
+        return lowLevelArtefact;
+    }
+
+    private static string GetSerializedTimezoneString(string[] columns, int expectedColumnCount)
+    {
+        int offset = 6;
+        int timezoneCellSpan = columns.Length - expectedColumnCount;
+        StringBuilder sb = new();
+
+        for (int i = 0; i <= timezoneCellSpan; i++)
+        {
+            int index = offset + i;
+            sb.Append(columns[index]);
+            sb.Append(", ");
+        }
+
+        sb.Remove(sb.Length - 2, 2);
+
+        return sb.ToString();
     }
 }

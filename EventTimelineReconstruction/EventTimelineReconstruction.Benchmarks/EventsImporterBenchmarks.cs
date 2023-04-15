@@ -696,7 +696,7 @@ public class EventsImporterBenchmarks
         string format = columns[15];
         Dictionary<string, string> extra = ConvertColumnToExtra(columns[16]);
 
-        EventModel newEvent = new(date, time, timezone, mACB, source, sourceType, type, user, host, shortDescription, description, version, filename, iNode, notes, format, extra);
+        EventModel newEvent = new(date, time, timezone, mACB, source, sourceType, type, user, host, shortDescription, description, version, filename, iNode, notes, format, extra, lineNumber);
         return newEvent;
     }
 

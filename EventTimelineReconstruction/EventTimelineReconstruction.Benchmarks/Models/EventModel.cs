@@ -21,7 +21,7 @@ public class EventModel
     public string Notes { get; }
     public string Format { get; }
     public Dictionary<string, string> Extra { get; }
-    public int SourceLine { get; }
+    public long SourceLine { get; }
 
     public EventModel(
         DateOnly date,
@@ -41,7 +41,7 @@ public class EventModel
         string notes,
         string format,
         Dictionary<string, string> extra,
-        int sourceLine)
+        long sourceLine)
     {
         Date = date;
         Time = time;

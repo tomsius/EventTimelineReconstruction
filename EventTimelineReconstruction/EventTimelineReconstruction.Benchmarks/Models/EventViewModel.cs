@@ -221,6 +221,5 @@ public class EventViewModel
     public void AddChild(EventViewModel child)
     {
         _children.Add(child);
-        _children.Sort();
     }
 }
