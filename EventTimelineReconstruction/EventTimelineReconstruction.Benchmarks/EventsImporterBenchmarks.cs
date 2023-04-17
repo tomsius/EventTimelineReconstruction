@@ -84,7 +84,7 @@ public class EventsImporterBenchmarks
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns, lineNumber + 2);
+                EventModel eventModel = ConvertRowToModel(columns, (int)lineNumber + 2);
                 DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
                                          eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
@@ -676,7 +676,7 @@ public class EventsImporterBenchmarks
         return events;
     }
 
-    private static EventModel ConvertRowToModel(string[] columns, long lineNumber = 0)
+    private static EventModel ConvertRowToModel(string[] columns, int lineNumber = 0)
     {
         DateOnly date = ConvertColumnToDate(columns[0]);
         TimeOnly time = ConvertColumnToTime(columns[1]);

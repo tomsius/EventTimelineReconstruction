@@ -174,6 +174,14 @@ public class EventViewModel
         }
     }
 
+    public int SourceLine
+    {
+        get
+        {
+            return _eventModel.SourceLine;
+        }
+    }
+
     public EventViewModel(EventModel eventModel)
     {
         _eventModel = eventModel;
