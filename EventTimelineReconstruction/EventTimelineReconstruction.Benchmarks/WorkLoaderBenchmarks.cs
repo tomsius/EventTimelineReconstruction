@@ -2,6 +2,7 @@
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using EventTimelineReconstruction.Benchmarks.Factory;
 using EventTimelineReconstruction.Benchmarks.Models;
 
 namespace EventTimelineReconstruction.Benchmarks;

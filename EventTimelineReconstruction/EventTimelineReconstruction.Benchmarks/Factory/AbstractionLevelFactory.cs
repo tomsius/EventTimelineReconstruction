@@ -1,6 +1,6 @@
 ﻿using EventTimelineReconstruction.Benchmarks.Models;
 
-namespace EventTimelineReconstruction.Benchmarks;
+namespace EventTimelineReconstruction.Benchmarks.Factory;
 
 public class AbstractionLevelFactory
 {
