@@ -1,5 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility;
+using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility.HighLevelEvents;
 using EventTimelineReconstruction.Benchmarks.Models;
 using EventTimelineReconstruction.Benchmarks.Utils;
 
@@ -15,11 +17,26 @@ public class HighLevelEventsBenchmarks
 
     private List<EventViewModel> _events;
     private IHighLevelEventsAbstractorUtils _abstractorUtils;
+    private IHandler _handler;
 
     [GlobalSetup]
     public void GlobalSetup()
     {
         _abstractorUtils = new HighLevelEventsAbstractorUtils();
+
+        IHighLogEventHandler logHandler = new HighLogEventHandler(_abstractorUtils);
+        IHighLnkEventHandler lnkHandler = new HighLnkEventHandler(_abstractorUtils);
+        IHighMetaEventHandler metaHandler = new HighMetaEventHandler(_abstractorUtils);
+        IHighOlecfEventHandler olecfHandler = new HighOlecfEventHandler();
+        IHighPeEventHandler peHandler = new HighPeEventHandler(_abstractorUtils);
+        IHighWebhistEventHandler webhistHandler = new HighWebhistEventHandler(_abstractorUtils);
+
+        _handler = logHandler;
+        logHandler.Next = lnkHandler;
+        lnkHandler.Next = metaHandler;
+        metaHandler.Next = olecfHandler;
+        olecfHandler.Next = peHandler;
+        peHandler.Next = webhistHandler;
 
         // sukurti ivykiu sarasa
         _events = new(N);
@@ -321,5 +338,23 @@ public class HighLevelEventsBenchmarks
         }
 
         return false;
+    }
+
+    [Benchmark]
+    public List<ISerializableLevel> FormHighLevelEvents_ChainOfResponsibility()
+    {
+        List<ISerializableLevel> highLevelEvents = new(_events.Count);
+
+        for (int i = 0; i < _events.Count; i++)
+        {
+            ISerializableLevel highLevelEvent = _handler.FormAbstractEvent(_events, highLevelEvents, _events[i]);
+
+            if (highLevelEvent is not null)
+            {
+                highLevelEvents.Add(highLevelEvent);
+            }
+        }
+
+        return highLevelEvents;
     }
 }
