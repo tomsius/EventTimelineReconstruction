@@ -1,4 +1,5 @@
 ﻿using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.ChainOfResponsibility.HighLevelArtefacts;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.ViewModels;
@@ -9,147 +10,160 @@ namespace EventTimelineReconstruction.Tests.UnitTests.Abstractors;
 [TestClass]
 public class HighLevelArtefactsAbstractorTests
 {
-    private readonly Mock<ILowLevelEventsAbstractorUtils> _lowLevelEventsAbstractorUtils;
     private readonly Mock<IHighLevelArtefactsAbstractorUtils> _highLevelArtefactsAbstractorUtils;
+    private readonly Mock<IHighWebhistArtefactHandler> _webhistHandler;
+    private readonly Mock<IHighLnkArtefactHandler> _lnkHandler;
+    private readonly Mock<IHighFileArtefactHandler> _fileHandler;
+    private readonly Mock<IHighLogArtefactHandler> _logHandler;
+    private readonly Mock<IHighRegArtefactHandler> _regHandler;
+    private readonly Mock<IHighMetaArtefactHandler> _metaHandler;
+    private readonly Mock<IHighOlecfArtefactHandler> _olecfHandler;
+    private readonly Mock<IHighPeArtefactHandler> _peHandler;
     private readonly HighLevelArtefactsAbstractor _abstractor;
     private readonly List<EventViewModel> _events;
 
     public HighLevelArtefactsAbstractorTests()
     {
-        Mock<IHighLevelEventsAbstractorUtils> highLevelEventsAbstractorUtils = new();
-        _lowLevelEventsAbstractorUtils = new();
         _highLevelArtefactsAbstractorUtils = new();
-        _abstractor = new(highLevelEventsAbstractorUtils.Object, _lowLevelEventsAbstractorUtils.Object, _highLevelArtefactsAbstractorUtils.Object);
+        _webhistHandler = new();
+        _lnkHandler = new();
+        _fileHandler = new();
+        _logHandler = new();
+        _regHandler = new();
+        _metaHandler = new();
+        _olecfHandler = new();
+        _peHandler = new();
+        _abstractor = new(_highLevelArtefactsAbstractorUtils.Object, _webhistHandler.Object, _lnkHandler.Object, _fileHandler.Object, _logHandler.Object, _regHandler.Object, _metaHandler.Object, _olecfHandler.Object, _peHandler.Object);
 
         _events = GetStoredEvents();
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[0].Description)).Returns("testas0.txt");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[0].Extra)).Returns("something0: somehing0");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[0].Description)).Returns("testas0.txt");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[0].Extra)).Returns("something0: somehing0");
 
-        highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[1])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[1])).Returns(false);
 
-        highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[2])).Returns(true);
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetFirefoxExtraFromWebhistSource(_events[2].Extra)).Returns("");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetOtherBrowserExtraFromWebhistSource(_events[2].Extra)).Returns("");
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[2])).Returns(false);
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[2])).Returns(false);
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[2])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[2])).Returns(true);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetFirefoxExtraFromWebhistSource(_events[2].Extra)).Returns("");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetOtherBrowserExtraFromWebhistSource(_events[2].Extra)).Returns("");
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[2])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[2])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[2])).Returns(false);
 
-        highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[3])).Returns(true);
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetFirefoxExtraFromWebhistSource(_events[3].Extra)).Returns("https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5");
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[3])).Returns(true);
-        highLevelEventsAbstractorUtils.Setup(u => u.GetDownloadedFileName(_events[3].Description)).Returns("C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf");
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[3])).Returns(true);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetFirefoxExtraFromWebhistSource(_events[3].Extra)).Returns("https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5");
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[3])).Returns(true);
+        //highLevelEventsAbstractorUtils.Setup(u => u.GetDownloadedFileName(_events[3].Description)).Returns("C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf");
 
-        highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[4])).Returns(true);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetOtherBrowserExtraFromWebhistSource(_events[4].Extra)).Returns("visit_type: 1");
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[4])).Returns(false);
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[4])).Returns(true);
-        highLevelEventsAbstractorUtils.Setup(u => u.GetMailUrl(It.IsAny<string>())).Returns("https://mail.google.com");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.AddMailUser("visit_type: 1", _events[4].Description)).Returns("testas@gmail.com");
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[4])).Returns(true);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetOtherBrowserExtraFromWebhistSource(_events[4].Extra)).Returns("visit_type: 1");
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[4])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[4])).Returns(true);
+        //highLevelEventsAbstractorUtils.Setup(u => u.GetMailUrl(It.IsAny<string>())).Returns("https://mail.google.com");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.AddMailUser("visit_type: 1", _events[4].Description)).Returns("testas@gmail.com");
 
-        highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[5])).Returns(true);
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[5])).Returns(false);
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[5])).Returns(true);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[5])).Returns(true);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[5])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[5])).Returns(true);
 
-        highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[6])).Returns(true);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetOtherBrowserExtraFromWebhistSource(_events[6].Extra)).Returns("visit_type: 2");
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[6])).Returns(false);
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[6])).Returns(false);
-        highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[6])).Returns(true);
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetUrl(_events[6].Short)).Returns("https://www.google.com/mail/");
-        highLevelEventsAbstractorUtils.Setup(u => u.GenerateVisitValue(_events[6].Description)).Returns("LINK");
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsValidWebhistLine(_events[6])).Returns(true);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetOtherBrowserExtraFromWebhistSource(_events[6].Extra)).Returns("visit_type: 2");
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistDownloadEvent(_events[6])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistMailEvent(_events[6])).Returns(false);
+        //highLevelEventsAbstractorUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[6])).Returns(true);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetUrl(_events[6].Short)).Returns("https://www.google.com/mail/");
+        //highLevelEventsAbstractorUtils.Setup(u => u.GenerateVisitValue(_events[6].Description)).Returns("LINK");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[7].Description)).Returns("Prefetch [SPOOLSV0.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV0.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME0]");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[7])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV0.EXE-282F76A7.pf");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[7].Description)).Returns("Prefetch [SPOOLSV0.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV0.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME0]");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[7])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV0.EXE-282F76A7.pf");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[8].Description)).Returns("very secret.lnk");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[8])).Returns("TSK:/Documents and Settings/PC1/Recent/very secret.lnk");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[8].Description)).Returns("very secret.lnk");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[8])).Returns("TSK:/Documents and Settings/PC1/Recent/very secret.lnk");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[9].Description)).Returns("Prefetch [SPOOLSV1.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV1.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME1]");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[9])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV1.EXE-282F76A7.pf");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[9].Description)).Returns("Prefetch [SPOOLSV1.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV1.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME1]");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[9])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV1.EXE-282F76A7.pf");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[10].Description)).Returns("Prefetch [SPOOLSV2.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV2.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME2]");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[10])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV2.EXE-282F76A7.pf");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[10].Description)).Returns("Prefetch [SPOOLSV2.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV2.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME2]");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[10])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV2.EXE-282F76A7.pf");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[11].Description)).Returns("Prefetch [SPOOLSV3.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV3.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME3]");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[11])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV3.EXE-282F76A7.pf");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[11].Description)).Returns("Prefetch [SPOOLSV3.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV3.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME3]");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[11])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV3.EXE-282F76A7.pf");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[12].Description)).Returns("C:\\december\\testas12.txt");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[12])).Returns("");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[12].Description)).Returns("C:\\december\\testas12.txt");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[12])).Returns("");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[13].Description)).Returns("C:\\december\\testas13.txt");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[13])).Returns("");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[13].Description)).Returns("C:\\december\\testas13.txt");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[13])).Returns("");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[14].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[14].Extra)).Returns("something14: something14");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[14].SourceType, _events[14].Description)).Returns("test14.exe");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[14].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[14].Extra)).Returns("something14: something14");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[14].SourceType, _events[14].Description)).Returns("test14.exe");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[15].Description)).Returns("C:\\december\\testas15.txt");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[15])).Returns("");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[15].Description)).Returns("C:\\december\\testas15.txt");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(_events[15])).Returns("");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[16].Description)).Returns("");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[16].Extra)).Returns("something16: something16");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[16].SourceType, _events[16].Description)).Returns("");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[16].Description)).Returns("");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[16].Extra)).Returns("something16: something16");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[16].SourceType, _events[16].Description)).Returns("");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[17].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954A}");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[17].Extra)).Returns("something17: something17");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[17].SourceType, _events[17].Description)).Returns(_events[17].Description);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[17].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954A}");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[17].Extra)).Returns("something17: something17");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[17].SourceType, _events[17].Description)).Returns(_events[17].Description);
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[18].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954C}");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[18].Extra)).Returns("something18: something18");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[18].SourceType, _events[18].Description)).Returns(_events[18].Description);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[18].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954C}");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[18].Extra)).Returns("something18: something18");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[18].SourceType, _events[18].Description)).Returns(_events[18].Description);
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[19].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954B}");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[19].Extra)).Returns("something19: something19");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[19].SourceType, _events[19].Description)).Returns("");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[19].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954B}");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[19].Extra)).Returns("something19: something19");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[19].SourceType, _events[19].Description)).Returns("");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[20].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954D}");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[20].Extra)).Returns("something20: something20");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[20].SourceType, _events[20].Description)).Returns("");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[20].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954D}");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[20].Extra)).Returns("something20: something20");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[20].SourceType, _events[20].Description)).Returns("");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetKeywordsFromExtra(_events[21].Extra, _events[21].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromMetaSource(_events[21].Description)).Returns(_events[21].Description);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetKeywordsFromExtra(_events[21].Extra, _events[21].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromMetaSource(_events[21].Description)).Returns(_events[21].Description);
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[22])).Returns(false);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineValid(_events[22])).Returns(true);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[22])).Returns(false);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineValid(_events[22])).Returns(true);
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[23])).Returns(false);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineValid(_events[23])).Returns(true);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[23])).Returns(false);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineValid(_events[23])).Returns(true);
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[24])).Returns(true);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[24])).Returns(true);
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[25])).Returns(false);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineValid(_events[25])).Returns(false);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(_events[25])).Returns(false);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineValid(_events[25])).Returns(false);
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetKeywordsFromExtra(_events[26].Extra, _events[26].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromMetaSource(_events[26].Description)).Returns(_events[26].Description);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetKeywordsFromExtra(_events[26].Extra, _events[26].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromMetaSource(_events[26].Description)).Returns(_events[26].Description);
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetKeywordsFromExtra(_events[27].Extra, _events[27].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromMetaSource(_events[27].Description)).Returns(_events[27].Description);
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetKeywordsFromExtra(_events[27].Extra, _events[27].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromMetaSource(_events[27].Description)).Returns(_events[27].Description);
 
-        highLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[31].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+        //highLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[31].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 
-        highLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[32].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+        //highLevelEventsAbstractorUtils.Setup(u => u.GetShort(_events[32].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsFileDuplicateOfLnk(_events, 32, _events[33])).Returns(true);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsFileDuplicateOfLnk(_events, 32, _events[33])).Returns(true);
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsFileDuplicateOfLnk(_events, 33, _events[34])).Returns(false);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetFileCountInRowAtSameMinute(_events, 34)).Returns(2);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[34].Description)).Returns("testas34.txt");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[34].Extra)).Returns("something34: somehing34");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsFileDuplicateOfLnk(_events, 33, _events[34])).Returns(false);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetFileCountInRowAtSameMinute(_events, 34)).Returns(2);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[34].Description)).Returns("testas34.txt");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[34].Extra)).Returns("something34: somehing34");
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[35].Description)).Returns("testas35.txt");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[35].Extra)).Returns("something35: somehing34");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[35].Description)).Returns("testas35.txt");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[35].Extra)).Returns("something35: somehing34");
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[36].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954G}");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[36].Extra)).Returns("something36: something36");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[36].SourceType, _events[36].Description)).Returns("test36.txt");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetSummaryFromShort(_events[36].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954G}");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[36].Extra)).Returns("something36: something36");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromRegSource(_events[36].SourceType, _events[36].Description)).Returns("test36.txt");
 
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.IsFileDuplicateOfLnk(_events, 36, _events[37])).Returns(false);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetFileCountInRowAtSameMinute(_events, 37)).Returns(37);
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[37].Description)).Returns("testas37.txt");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[37].Extra)).Returns("something37: somehing37");
-        _highLevelArtefactsAbstractorUtils.Setup(u => u.GetValidFileEventIndices(_events, 37, It.IsAny<int>())).Returns(new List<int>() { 37 });
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.IsFileDuplicateOfLnk(_events, 36, _events[37])).Returns(false);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetFileCountInRowAtSameMinute(_events, 37)).Returns(37);
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(_events[37].Description)).Returns("testas37.txt");
+        //_lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(_events[37].Extra)).Returns("something37: somehing37");
+        //_highLevelArtefactsAbstractorUtils.Setup(u => u.GetValidFileEventIndices(_events, 37, It.IsAny<int>())).Returns(new List<int>() { 37 });
     }
 
     private List<EventViewModel> GetStoredEvents()
@@ -296,7 +310,6 @@ public class HighLevelArtefactsAbstractorTests
             new EventViewModel(new EventModel(new DateOnly(2003, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "LOG", "System", "Creation Time", "User", "Host", "SPOOLSV.EXE was run 1 time(s)", "Prefetch [SPOOLSV0.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV0.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME-0]", 2, "TSK:/WINDOWS/Prefetch/SPOOLSV-0.EXE-282F76A7.pf", "13452", "-", "prefetch", new Dictionary<string, string>(), 1))
         };
 
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetShort(events[1].Description)).Returns("Prefetch [SPOOLSV0.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV0.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME-0]");
         _highLevelArtefactsAbstractorUtils.Setup(u => u.GetDescriptionFromLogSource(events[1])).Returns("TSK:/WINDOWS/Prefetch/SPOOLSV-0.EXE-282F76A7.pf");
 
         List<HighLevelArtefactViewModel> expected = new()
@@ -336,7 +349,6 @@ public class HighLevelArtefactsAbstractorTests
         };
 
         _highLevelArtefactsAbstractorUtils.Setup(u => u.GetFilename(events[0].Description)).Returns("testas-0.txt");
-        _lowLevelEventsAbstractorUtils.Setup(u => u.GetExtraTillSha256(events[0].Extra)).Returns("something-0: somehing-0");
 
         _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineExecutable(events[1])).Returns(false);
         _highLevelArtefactsAbstractorUtils.Setup(u => u.IsPeLineValid(events[1])).Returns(true);

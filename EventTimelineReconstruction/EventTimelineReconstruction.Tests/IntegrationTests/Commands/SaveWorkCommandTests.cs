@@ -1,5 +1,10 @@
 ﻿using System.Windows.Media;
 using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.ChainOfResponsibility;
+using EventTimelineReconstruction.ChainOfResponsibility.HighLevelArtefacts;
+using EventTimelineReconstruction.ChainOfResponsibility.HighLevelEvents;
+using EventTimelineReconstruction.ChainOfResponsibility.LowLevelArtefacts;
+using EventTimelineReconstruction.ChainOfResponsibility.LowLevelEvents;
 using EventTimelineReconstruction.Commands;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Services;
@@ -26,10 +31,10 @@ public class SaveWorkCommandTests
         ILowLevelEventsAbstractorUtils lowLevelEventsAbstractorUtils = new LowLevelEventsAbstractorUtils();
         IHighLevelArtefactsAbstractorUtils highLevelArtefactsAbstractorUtils = new HighLevelArtefactsAbstractorUtils();
         ILowLevelArtefactsAbstractorUtils lowLevelArtefactsAbstractorUtils = new LowLevelArtefactsAbstractorUtils();
-        IHighLevelEventsAbstractor highLevelEventsAbstractor = new HighLevelEventsAbstractor(highLevelEventsAbstractorUtils);
-        ILowLevelEventsAbstractor lowLevelEventsAbstractor = new LowLevelEventsAbstractor(highLevelEventsAbstractorUtils, lowLevelEventsAbstractorUtils);
-        IHighLevelArtefactsAbstractor highLevelArtefactsAbstractor = new HighLevelArtefactsAbstractor(highLevelEventsAbstractorUtils, lowLevelEventsAbstractorUtils, highLevelArtefactsAbstractorUtils);
-        ILowLevelArtefactsAbstractor lowLevelArtefactsAbstractor = new LowLevelArtefactsAbstractor(lowLevelArtefactsAbstractorUtils);
+        IHighLevelEventsAbstractor highLevelEventsAbstractor = new HighLevelEventsAbstractor(new HighLogEventHandler(highLevelEventsAbstractorUtils), new HighLnkEventHandler(highLevelEventsAbstractorUtils), new HighMetaEventHandler(highLevelEventsAbstractorUtils), new HighOlecfEventHandler(), new HighPeEventHandler(highLevelEventsAbstractorUtils), new HighWebhistEventHandler(highLevelEventsAbstractorUtils));
+        ILowLevelEventsAbstractor lowLevelEventsAbstractor = new LowLevelEventsAbstractor(lowLevelEventsAbstractorUtils, new LowWebhistEventHandler(highLevelEventsAbstractorUtils, lowLevelEventsAbstractorUtils), new LowFileEventHandler(lowLevelEventsAbstractorUtils), new LowLnkEventHandler(highLevelEventsAbstractorUtils, lowLevelEventsAbstractorUtils), new LowLogEventHandler(lowLevelEventsAbstractorUtils), new LowMetaEventHandler(lowLevelEventsAbstractorUtils), new LowRegEventHandler(lowLevelEventsAbstractorUtils), new LowOlecfEventHandler(), new LowPeEventHandler(highLevelEventsAbstractorUtils), new LowRecbinEventHandler(lowLevelEventsAbstractorUtils));
+        IHighLevelArtefactsAbstractor highLevelArtefactsAbstractor = new HighLevelArtefactsAbstractor(highLevelArtefactsAbstractorUtils, new HighWebhistArtefactHandler(highLevelEventsAbstractorUtils, lowLevelEventsAbstractorUtils, highLevelArtefactsAbstractorUtils), new HighLnkArtefactHandler(highLevelEventsAbstractorUtils), new HighFileArtefactHandler(lowLevelEventsAbstractorUtils, highLevelArtefactsAbstractorUtils), new HighLogArtefactHandler(lowLevelEventsAbstractorUtils, highLevelArtefactsAbstractorUtils), new HighRegArtefactHandler(lowLevelEventsAbstractorUtils, highLevelArtefactsAbstractorUtils), new HighMetaArtefactHandler(lowLevelEventsAbstractorUtils, highLevelArtefactsAbstractorUtils), new HighOlecfArtefactHandler(), new HighPeArtefactHandler(highLevelArtefactsAbstractorUtils));
+        ILowLevelArtefactsAbstractor lowLevelArtefactsAbstractor = new LowLevelArtefactsAbstractor(new LowWebhistArtefactHandler(lowLevelArtefactsAbstractorUtils), new LowLnkArtefactHandler(lowLevelArtefactsAbstractorUtils), new LowFileArtefactHandler(lowLevelArtefactsAbstractorUtils));
         IEventsImporter eventsImporter = new L2tCSVEventsImporter();
         IEventsStore _eventsStore = new EventsStore(eventsImporter);
         IErrorsViewModel errorsViewModel = new ErrorsViewModel();

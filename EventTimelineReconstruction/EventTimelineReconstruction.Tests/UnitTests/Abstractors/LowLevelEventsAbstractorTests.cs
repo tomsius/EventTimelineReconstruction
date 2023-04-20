@@ -1,4 +1,5 @@
 ﻿using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.ChainOfResponsibility.LowLevelEvents;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.ViewModels;
@@ -11,174 +12,190 @@ public class LowLevelEventsAbstractorTests
 {
     private readonly LowLevelEventsAbstractor _abstractor;
     private readonly List<EventViewModel> _events;
-    private readonly Mock<IHighLevelEventsAbstractorUtils> _highLevelUtils;
     private readonly Mock<ILowLevelEventsAbstractorUtils> _lowLevelUtils;
+    private readonly Mock<ILowWebhistEventHandler> _webhistHandler;
+    private readonly Mock<ILowFileEventHandler> _fileHandler;
+    private readonly Mock<ILowLnkEventHandler> _lnkHandler;
+    private readonly Mock<ILowLogEventHandler> _logHandler;
+    private readonly Mock<ILowMetaEventHandler> _metaHandler;
+    private readonly Mock<ILowRegEventHandler> _regHandler;
+    private readonly Mock<ILowOlecfEventHandler> _olecfHandler;
+    private readonly Mock<ILowPeEventHandler> _peHandler;
+    private readonly Mock<ILowRecbinEventHandler> _recbinHandler;
 
     public LowLevelEventsAbstractorTests()
     {
-        _highLevelUtils = new();
         _lowLevelUtils = new();
-        _abstractor = new(_highLevelUtils.Object, _lowLevelUtils.Object);
+        _webhistHandler = new();
+        _fileHandler = new();
+        _lnkHandler = new();
+        _logHandler = new();
+        _metaHandler = new();
+        _regHandler = new();
+        _olecfHandler = new();
+        _peHandler = new();
+        _recbinHandler = new();
+        _abstractor = new(_lowLevelUtils.Object, _webhistHandler.Object, _fileHandler.Object, _lnkHandler.Object, _logHandler.Object, _metaHandler.Object, _regHandler.Object, _olecfHandler.Object, _peHandler.Object, _recbinHandler.Object);
 
         _events = GetStoredEvents();
 
-        _highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[0])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[0])).Returns(false);
 
-        _highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[1])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFirefoxExtraFromWebhistSource(_events[1].Extra)).Returns("https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5");
-        _highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[1])).Returns(true);
-        _highLevelUtils.Setup(u => u.GetDownloadedFileName(_events[1].Description)).Returns("C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf");
+        //_highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[1])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFirefoxExtraFromWebhistSource(_events[1].Extra)).Returns("https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5");
+        //_highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[1])).Returns(true);
+        //_highLevelUtils.Setup(u => u.GetDownloadedFileName(_events[1].Description)).Returns("C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf");
 
-        _highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[2])).Returns(true);
-        _highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[2])).Returns(false);
-        _highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[2])).Returns(true);
-        _highLevelUtils.Setup(u => u.GetMailUrl(It.IsAny<string>())).Returns("https://mail.google.com");
-        _lowLevelUtils.Setup(u => u.AddMailUser("-", _events[2].Description)).Returns("testas@gmail.com");
+        //_highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[2])).Returns(true);
+        //_highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[2])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[2])).Returns(true);
+        //_highLevelUtils.Setup(u => u.GetMailUrl(It.IsAny<string>())).Returns("https://mail.google.com");
+        //_lowLevelUtils.Setup(u => u.AddMailUser("-", _events[2].Description)).Returns("testas@gmail.com");
 
-        _highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[3])).Returns(true);
-        _highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[3])).Returns(false);
-        _highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[3])).Returns(true);
-        _lowLevelUtils.Setup(u => u.AddMailUser("-", _events[3].Description)).Returns("testas@gmail.com");
+        //_highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[3])).Returns(true);
+        //_highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[3])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[3])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.AddMailUser("-", _events[3].Description)).Returns("testas@gmail.com");
 
-        _highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[4])).Returns(true);
-        _highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[4])).Returns(false);
-        _highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[4])).Returns(true);
-        _lowLevelUtils.Setup(u => u.AddMailUser("-", _events[4].Description)).Returns("testas@gmail.com");
+        //_highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[4])).Returns(true);
+        //_highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[4])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[4])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.AddMailUser("-", _events[4].Description)).Returns("testas@gmail.com");
 
-        _highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[5])).Returns(true);
-        _highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[5])).Returns(false);
-        _highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[5])).Returns(false);
-        _highLevelUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[5])).Returns(true);
-        _highLevelUtils.Setup(u => u.GenerateVisitValue(_events[5].Description)).Returns("LINK");
-        _lowLevelUtils.Setup(u => u.GetUrl(_events[5].Short)).Returns("https://www.google.com/mail/");
+        //_highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[5])).Returns(true);
+        //_highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[5])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[5])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[5])).Returns(true);
+        //_highLevelUtils.Setup(u => u.GenerateVisitValue(_events[5].Description)).Returns("LINK");
+        //_lowLevelUtils.Setup(u => u.GetUrl(_events[5].Short)).Returns("https://www.google.com/mail/");
 
-        _highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[6])).Returns(true);
-        _highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[6])).Returns(false);
-        _highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[6])).Returns(false);
-        _highLevelUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[6])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsValidWebhistLine(_events[6])).Returns(true);
+        //_highLevelUtils.Setup(u => u.IsWebhistDownloadEvent(_events[6])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsWebhistMailEvent(_events[6])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsWebhistNamingActivityEvent(_events[6])).Returns(false);
 
-        _lowLevelUtils.Setup(u => u.GetKeywordsFromExtra(_events[7].Extra, _events[7].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
+        //_lowLevelUtils.Setup(u => u.GetKeywordsFromExtra(_events[7].Extra, _events[7].Short)).Returns("number_of_paragraphs: 3 total_time: 1");
 
-        _lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[8])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[8].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[8].Extra)).Returns("something1: something1");
+        //_lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[8])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[8].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[8].Extra)).Returns("something1: something1");
 
-        _lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[9])).Returns(false);
+        //_lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[9])).Returns(false);
 
-        _highLevelUtils.Setup(u => u.IsValidPeEvent(_events[10])).Returns(true);
+        //_highLevelUtils.Setup(u => u.IsValidPeEvent(_events[10])).Returns(true);
 
-        _highLevelUtils.Setup(u => u.IsValidPeEvent(_events[11])).Returns(false);
+        //_highLevelUtils.Setup(u => u.IsValidPeEvent(_events[11])).Returns(false);
 
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[12].Extra)).Returns("drive_number: 2 file_size: 4096");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[12].Extra)).Returns("drive_number: 2 file_size: 4096");
 
-        _highLevelUtils.Setup(u => u.GetShort(_events[16].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[15])).Returns(_events[15].Short);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[16])).Returns("firefox.exe");
+        //_highLevelUtils.Setup(u => u.GetShort(_events[16].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[15])).Returns(_events[15].Short);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[16])).Returns("firefox.exe");
 
-        _highLevelUtils.Setup(u => u.GetShort(_events[17].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[17])).Returns("firefox.exe");
+        //_highLevelUtils.Setup(u => u.GetShort(_events[17].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[17])).Returns("firefox.exe");
 
 
-        _highLevelUtils.Setup(u => u.GetShort(_events[18].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox2.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[18])).Returns("firefox2.exe");
+        //_highLevelUtils.Setup(u => u.GetShort(_events[18].Description)).Returns("C:\\Program Files\\Mozilla Firefox\\firefox2.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[18])).Returns("firefox2.exe");
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[19].Description)).Returns("2016.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[19])).Returns("2016.exe");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[19].Description)).Returns("2016.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[19])).Returns("2016.exe");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[20])).Returns(false);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[20])).Returns("testas1.txt");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[20].Extra)).Returns("something5: somehing5");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[20])).Returns(false);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[20])).Returns("testas1.txt");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[20].Extra)).Returns("something5: somehing5");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[21])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[21])).Returns("testas2.txt");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[21].Extra)).Returns("something6: somehing6");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[21])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[21])).Returns("testas2.txt");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[21].Extra)).Returns("something6: somehing6");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[22])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[22])).Returns("calc1.exe");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[22].Extra)).Returns("something7: somehing7");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[22])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[22])).Returns("calc1.exe");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[22].Extra)).Returns("something7: somehing7");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[23])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[23])).Returns("calc2.exe");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[23].Extra)).Returns("something8: somehing8");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[23])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[23])).Returns("calc2.exe");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[23].Extra)).Returns("something8: somehing8");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[24])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[24])).Returns("calc3.exe");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[24].Extra)).Returns("something9: somehing9");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[24])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[24])).Returns("calc3.exe");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[24].Extra)).Returns("something9: somehing9");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[25])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[25])).Returns("calc4.exe");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[25].Extra)).Returns("something10: somehing10");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[25])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[25])).Returns("calc4.exe");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[25].Extra)).Returns("something10: somehing10");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[26])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[26])).Returns("testas1.txt");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[26].Extra)).Returns("something11: somehing11");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[26])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[26])).Returns("testas1.txt");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[26].Extra)).Returns("something11: somehing11");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[27])).Returns(false);
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[27])).Returns(false);
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[28])).Returns(false);
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[28])).Returns(false);
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[29].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[29])).Returns("test1.exe");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[29].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[29])).Returns("test1.exe");
 
-        _highLevelUtils.Setup(u => u.GetShort(_events[30].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[30])).Returns("test2.exe");
+        //_highLevelUtils.Setup(u => u.GetShort(_events[30].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[30])).Returns("test2.exe");
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[31].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[31])).Returns("test1.exe");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[31].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[31])).Returns("test1.exe");
 
-        _highLevelUtils.Setup(u => u.GetShort(_events[32].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[32])).Returns("test2.exe");
+        //_highLevelUtils.Setup(u => u.GetShort(_events[32].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[32])).Returns("test2.exe");
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[33].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[33])).Returns("test1.exe");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[33].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[33])).Returns("test1.exe");
 
-        _highLevelUtils.Setup(u => u.GetShort(_events[34].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[34])).Returns("test2.exe");
+        //_highLevelUtils.Setup(u => u.GetShort(_events[34].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[34])).Returns("test2.exe");
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[35].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[35])).Returns("test1.exe");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[35].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[35])).Returns("test1.exe");
 
-        _highLevelUtils.Setup(u => u.GetShort(_events[36].Description)).Returns("test.exe");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[36])).Returns("test2.exe");
+        //_highLevelUtils.Setup(u => u.GetShort(_events[36].Description)).Returns("test.exe");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[36])).Returns("test2.exe");
 
-        _lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[37])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[37].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[37].Extra)).Returns("something13: something13");
+        //_lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[37])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[37].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[37].Extra)).Returns("something13: something13");
 
-        _lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[38])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[38].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[38].Extra)).Returns("something14: something14");
+        //_lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[38])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[38].Description)).Returns("{645FF040-5081-101B-9F08-00AA002F954E}");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[38].Extra)).Returns("something14: something14");
 
-        _lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[39])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[39].Description)).Returns("test");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[39].Extra)).Returns("something15: something15");
+        //_lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[39])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[39].Description)).Returns("test");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[39].Extra)).Returns("something15: something15");
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[40].Description)).Returns("test");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[40])).Returns("test1");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[40].Description)).Returns("test");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[40])).Returns("test1");
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[41].Description)).Returns("test");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[41])).Returns("test1");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[41].Description)).Returns("test");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[41])).Returns("test1");
 
-        _lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[42])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[42].Description)).Returns("test");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[42].Extra)).Returns("something16: something16");
+        //_lowLevelUtils.Setup(u => u.IsValidRegEvent(_events[42])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetSummaryFromShort(_events[42].Description)).Returns("test");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[42].Extra)).Returns("something16: something16");
 
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[43].Extra)).Returns("something17: something17");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[43].Extra)).Returns("something17: something17");
 
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[44].Extra)).Returns("something18: something18");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[44].Extra)).Returns("something18: something18");
 
-        _lowLevelUtils.Setup(u => u.GetShort(_events[45].Description)).Returns("Deleted file: C:\\Documents and Settings\\PC1\\Desktop\\not secret anymore.txt");
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[45])).Returns("test2");
+        //_lowLevelUtils.Setup(u => u.GetShort(_events[45].Description)).Returns("Deleted file: C:\\Documents and Settings\\PC1\\Desktop\\not secret anymore.txt");
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[45])).Returns("test2");
 
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[46].Extra)).Returns("something19: something19");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[46].Extra)).Returns("something19: something19");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[47])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[47])).Returns("calc5.exe");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[47].Extra)).Returns("something20: somehing20");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[47])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[47])).Returns("calc5.exe");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[47].Extra)).Returns("something20: somehing20");
 
-        _lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[48])).Returns(true);
-        _lowLevelUtils.Setup(u => u.GetFilename(_events[48])).Returns("calc6.exe");
-        _lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[48].Extra)).Returns("something21: somehing21");
+        //_lowLevelUtils.Setup(u => u.IsValidFileEvent(_events[48])).Returns(true);
+        //_lowLevelUtils.Setup(u => u.GetFilename(_events[48])).Returns("calc6.exe");
+        //_lowLevelUtils.Setup(u => u.GetExtraTillSha256(_events[48].Extra)).Returns("something21: somehing21");
     }
 
     private List<EventViewModel> GetStoredEvents()

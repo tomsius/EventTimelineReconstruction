@@ -1,6 +1,7 @@
 ﻿using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.ChainOfResponsibility;
+using EventTimelineReconstruction.ChainOfResponsibility.LowLevelArtefacts;
 using EventTimelineReconstruction.Models;
-using EventTimelineReconstruction.Utils;
 using EventTimelineReconstruction.ViewModels;
 using Moq;
 
@@ -9,64 +10,44 @@ namespace EventTimelineReconstruction.Tests.UnitTests.Abstractors;
 [TestClass]
 public class LowLevelArtefactsAbstractorTests
 {
-    private readonly Mock<ILowLevelArtefactsAbstractorUtils> _utils;
+    private readonly Mock<ILowWebhistArtefactHandler> _webhistHandler;
+    private readonly Mock<ILowLnkArtefactHandler> _lnkHandler;
+    private readonly Mock<ILowFileArtefactHandler> _fileHandler;
     private readonly LowLevelArtefactsAbstractor _abstractor;
     private readonly List<EventViewModel> _events;
 
     public LowLevelArtefactsAbstractorTests()
     {
-        _utils = new();
-        _abstractor = new(_utils.Object);
+        _webhistHandler = new();
+        _lnkHandler = new();
+        _fileHandler = new();
+        _abstractor = new(_webhistHandler.Object, _lnkHandler.Object, _fileHandler.Object);
 
         _events = GetStoredEvents();
+        List<LowLevelArtefactViewModel> expectedEvents = GetExpectedEvents();
 
-        _utils.Setup(u => u.IsValidWebhistLine(_events[1].SourceType, _events[1].Type)).Returns(false);
-
-        _utils.Setup(u => u.IsValidWebhistLine(_events[2].SourceType, _events[2].Type)).Returns(true);
-        _utils.Setup(u => u.GetExtraValue(_events[2].Extra)).Returns("extra: ['visited from: https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5 (www.google.com)'  '(URL not typed directly)'  'Transition: LINK'] schema_match: False sha256_hash: a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741 visit_type: 1");
-
-        _utils.Setup(u => u.IsValidWebhistLine(_events[3].SourceType, _events[3].Type)).Returns(true);
-        _utils.Setup(u => u.GetExtraValue(_events[3].Extra)).Returns("visit_type: 1 schema_match: False sha256_hash: a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741");
-        _utils.Setup(u => u.GetAddress(_events[3].Description)).Returns("mail.google.com/");
-
-        _utils.Setup(u => u.IsValidWebhistLine(_events[4].SourceType, _events[4].Type)).Returns(true);
-        _utils.Setup(u => u.GetExtraValue(_events[4].Extra)).Returns("visit_type: 2 schema_match: False sha256_hash: a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741");
-        _utils.Setup(u => u.GetAddress(_events[4].Description)).Returns("mail.google.com/");
-
-        _utils.Setup(u => u.IsValidWebhistLine(_events[5].SourceType, _events[5].Type)).Returns(true);
-        _utils.Setup(u => u.GetExtraValue(_events[5].Extra)).Returns("visit_type: 3 schema_match: False sha256_hash: a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741");
-        _utils.Setup(u => u.GetAddress(_events[5].Description)).Returns("google.com/");
-
-        _utils.Setup(u => u.GetExtraValue(_events[6].Extra)).Returns("Something6: Something6");
-
-        _utils.Setup(u => u.IsValidWebhistLine(_events[7].SourceType, _events[7].Type)).Returns(true);
-        _utils.Setup(u => u.GetExtraValue(_events[7].Extra)).Returns("extra: ['visited from: https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5 (www.google.com)'  '(URL not typed directly)'  'Transition: LINK'] schema_match: True sha256_hash: a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741 visit_type: 1");
-        
-        _utils.Setup(u => u.GetExtraValue(_events[8].Extra)).Returns("Something8: Something8");
-
-        _utils.Setup(u => u.GetExtraValue(_events[9].Extra)).Returns("Something9: Something9");
-
-        _utils.Setup(u => u.GetExtraValue(_events[10].Extra)).Returns("schema_match: False sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7");
-
-        _utils.Setup(u => u.GetExtraValue(_events[11].Extra)).Returns("schema_match: True sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb7");
-
-        _utils.Setup(u => u.GetExtraValue(_events[12].Extra)).Returns("schema_match: True sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb9");
-
-        _utils.Setup(u => u.GetExtraValue(_events[13].Extra)).Returns("Something12: Something12");
-
-        _utils.Setup(u => u.GetExtraValue(_events[14].Extra)).Returns("schema_match: False sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb8");
-
-        _utils.Setup(u => u.GetExtraValue(_events[15].Extra)).Returns("schema_match: False sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb1");
-
-        _utils.Setup(u => u.GetExtraValue(_events[16].Extra)).Returns("schema_match: False sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb2");
-
-        _utils.Setup(u => u.GetExtraValue(_events[17].Extra)).Returns("schema_match: False sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb3");
-
-        _utils.Setup(u => u.GetExtraValue(_events[18].Extra)).Returns("schema_match: False sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb4");
-
-        _utils.Setup(u => u.GetExtraValue(_events[19].Extra)).Returns("Something19: Something19");
-
-        _utils.Setup(u => u.GetExtraValue(_events[20].Extra)).Returns("schema_match: False sha256_hash: 4eb3f81bf5801eb3f96b796c4f5b2b68a187a5165893e3a7957ae347a07c4fb5");
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[0])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[1])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[2])).Returns(expectedEvents[0]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[3])).Returns(expectedEvents[1]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[4])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[5])).Returns(expectedEvents[2]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[6])).Returns(expectedEvents[3]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[7])).Returns(expectedEvents[4]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[8])).Returns(expectedEvents[5]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[9])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[10])).Returns(expectedEvents[6]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[11])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[12])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[13])).Returns(expectedEvents[7]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[14])).Returns(expectedEvents[8]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[15])).Returns(expectedEvents[9]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[16])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[17])).Returns(value: null);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[18])).Returns(expectedEvents[10]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[19])).Returns(expectedEvents[11]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[20])).Returns(expectedEvents[12]);
+        _webhistHandler.Setup(h => h.FormAbstractEvent(It.IsAny<List<EventViewModel>>(), It.IsAny<List<ISerializableLevel>>(), _events[21])).Returns(value: null);
     }
 
     private List<EventViewModel> GetStoredEvents()

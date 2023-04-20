@@ -1,4 +1,9 @@
 ﻿using EventTimelineReconstruction.Abstractors;
+using EventTimelineReconstruction.ChainOfResponsibility.HighLevelArtefacts;
+using EventTimelineReconstruction.ChainOfResponsibility.HighLevelEvents;
+using EventTimelineReconstruction.ChainOfResponsibility.LowLevelArtefacts;
+using EventTimelineReconstruction.ChainOfResponsibility.LowLevelEvents;
+using EventTimelineReconstruction.FactoryPattern;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;
@@ -39,14 +44,45 @@ public partial class App : Application
                 services.AddSingleton<IFilteringStore, FilteringStore>();
                 services.AddSingleton<IColouringStore, ColouringStore>();
 
-                services.AddSingleton<IHighLevelEventsAbstractorUtils, HighLevelEventsAbstractorUtils>();
-                services.AddSingleton<IHighLevelEventsAbstractor, HighLevelEventsAbstractor>();
-                services.AddSingleton<ILowLevelEventsAbstractorUtils, LowLevelEventsAbstractorUtils>();
-                services.AddSingleton<ILowLevelEventsAbstractor, LowLevelEventsAbstractor>();
-                services.AddSingleton<IHighLevelArtefactsAbstractorUtils, HighLevelArtefactsAbstractorUtils>();
-                services.AddSingleton<IHighLevelArtefactsAbstractor, HighLevelArtefactsAbstractor>();
-                services.AddSingleton<ILowLevelArtefactsAbstractorUtils, LowLevelArtefactsAbstractorUtils>();
-                services.AddSingleton<ILowLevelArtefactsAbstractor, LowLevelArtefactsAbstractor>();
+                services.AddTransient<IHighLevelEventsAbstractorUtils, HighLevelEventsAbstractorUtils>();
+                services.AddTransient<ILowLevelEventsAbstractorUtils, LowLevelEventsAbstractorUtils>();
+                services.AddTransient<IHighLevelArtefactsAbstractorUtils, HighLevelArtefactsAbstractorUtils>();
+                services.AddTransient<ILowLevelArtefactsAbstractorUtils, LowLevelArtefactsAbstractorUtils>();
+
+                services.AddTransient<IHighLogEventHandler, HighLogEventHandler>();
+                services.AddTransient<IHighLnkEventHandler, HighLnkEventHandler>();
+                services.AddTransient<IHighMetaEventHandler, HighMetaEventHandler>();
+                services.AddTransient<IHighOlecfEventHandler, HighOlecfEventHandler>();
+                services.AddTransient<IHighPeEventHandler, HighPeEventHandler>();
+                services.AddTransient<IHighWebhistEventHandler, HighWebhistEventHandler>();
+
+                services.AddTransient<ILowWebhistEventHandler, LowWebhistEventHandler>();
+                services.AddTransient<ILowFileEventHandler, LowFileEventHandler>();
+                services.AddTransient<ILowLnkEventHandler, LowLnkEventHandler>();
+                services.AddTransient<ILowLogEventHandler, LowLogEventHandler>();
+                services.AddTransient<ILowMetaEventHandler, LowMetaEventHandler>();
+                services.AddTransient<ILowRegEventHandler, LowRegEventHandler>();
+                services.AddTransient<ILowOlecfEventHandler, LowOlecfEventHandler>();
+                services.AddTransient<ILowPeEventHandler, LowPeEventHandler>();
+                services.AddTransient<ILowRecbinEventHandler, LowRecbinEventHandler>();
+
+                services.AddTransient<IHighWebhistArtefactHandler, HighWebhistArtefactHandler>();
+                services.AddTransient<IHighLnkArtefactHandler, HighLnkArtefactHandler>();
+                services.AddTransient<IHighFileArtefactHandler, HighFileArtefactHandler>();
+                services.AddTransient<IHighLogArtefactHandler, HighLogArtefactHandler>();
+                services.AddTransient<IHighRegArtefactHandler, HighRegArtefactHandler>();
+                services.AddTransient<IHighMetaArtefactHandler, HighMetaArtefactHandler>();
+                services.AddTransient<IHighOlecfArtefactHandler, HighOlecfArtefactHandler>();
+                services.AddTransient<IHighPeArtefactHandler, HighPeArtefactHandler>();
+
+                services.AddTransient<ILowWebhistArtefactHandler, LowWebhistArtefactHandler>();
+                services.AddTransient<ILowLnkArtefactHandler, LowLnkArtefactHandler>();
+                services.AddTransient<ILowFileArtefactHandler, LowFileArtefactHandler>();
+
+                services.AddTransient<IHighLevelEventsAbstractor, HighLevelEventsAbstractor>();
+                services.AddTransient<ILowLevelEventsAbstractor, LowLevelEventsAbstractor>();
+                services.AddTransient<IHighLevelArtefactsAbstractor, HighLevelArtefactsAbstractor>();
+                services.AddTransient<ILowLevelArtefactsAbstractor, LowLevelArtefactsAbstractor>();
 
                 services.AddSingleton<IntegrityViewModel>();
                 services.AddSingleton<EventDetailsViewModel>();
