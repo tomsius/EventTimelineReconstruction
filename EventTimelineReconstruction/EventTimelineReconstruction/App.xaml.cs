@@ -3,7 +3,6 @@ using EventTimelineReconstruction.ChainOfResponsibility.HighLevelArtefacts;
 using EventTimelineReconstruction.ChainOfResponsibility.HighLevelEvents;
 using EventTimelineReconstruction.ChainOfResponsibility.LowLevelArtefacts;
 using EventTimelineReconstruction.ChainOfResponsibility.LowLevelEvents;
-using EventTimelineReconstruction.FactoryPattern;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.Stores;
 using EventTimelineReconstruction.Utils;

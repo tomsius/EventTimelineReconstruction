@@ -25,9 +25,9 @@ public sealed class HighLevelEventsAbstractor : IHighLevelEventsAbstractor
         peHandler.Next = webhistHandler;
     }
 
-    public List<HighLevelEventViewModel> FormHighLevelEvents(List<EventViewModel> events)
+    public List<ISerializableLevel> FormHighLevelEvents(List<EventViewModel> events)
     {
-        List<HighLevelEventViewModel> highLevelEvents = new(events.Count);
+        List<ISerializableLevel> highLevelEvents = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {

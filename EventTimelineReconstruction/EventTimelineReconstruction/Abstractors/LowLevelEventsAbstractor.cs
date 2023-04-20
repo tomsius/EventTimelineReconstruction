@@ -36,9 +36,9 @@ public sealed class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         peHandler.Next = recbinHandler;
     }
 
-    public List<LowLevelEventViewModel> FormLowLevelEvents(List<EventViewModel> events)
+    public List<ISerializableLevel> FormLowLevelEvents(List<EventViewModel> events)
     {
-        List<LowLevelEventViewModel> lowLevelEvents = new(events.Count);
+        List<ISerializableLevel> lowLevelEvents = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {
@@ -84,17 +84,17 @@ public sealed class LowLevelEventsAbstractor : ILowLevelEventsAbstractor
         return lowLevelEvents;
     }
 
-    private static void NormalizeEvents(List<LowLevelEventViewModel> lowLevelEvents, List<EventViewModel> events, EventViewModel currentEvent)
+    private static void NormalizeEvents(List<ISerializableLevel> lowLevelEvents, List<EventViewModel> events, EventViewModel currentEvent)
     {
         if (lowLevelEvents.Count < 2)
         {
             return;
         }
 
-        int eventIndex = GetEventIndex(events, lowLevelEvents[^2].Reference);
+        int eventIndex = GetEventIndex(events, ((LowLevelEventViewModel)lowLevelEvents[^2]).Reference);
         EventViewModel lastEvent = events[eventIndex];
 
-        if (lastEvent.FullDate.CompareTo(currentEvent.FullDate) != 0 || lowLevelEvents[^2].Short != lowLevelEvents[^1].Short)
+        if (lastEvent.FullDate.CompareTo(currentEvent.FullDate) != 0 || ((LowLevelEventViewModel)lowLevelEvents[^2]).Short != ((LowLevelEventViewModel)lowLevelEvents[^1]).Short)
         {
             return;
         }

@@ -326,7 +326,7 @@ public class LowLevelEventsAbstractorTests
         };
 
         // Act
-        List<LowLevelEventViewModel> actual = _abstractor.FormLowLevelEvents(events);
+        List<LowLevelEventViewModel> actual = _abstractor.FormLowLevelEvents(events).Cast<LowLevelEventViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);

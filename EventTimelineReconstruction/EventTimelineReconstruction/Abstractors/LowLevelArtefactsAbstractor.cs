@@ -20,9 +20,9 @@ public sealed class LowLevelArtefactsAbstractor : ILowLevelArtefactsAbstractor
         lnkHandler.Next = fileHandler;
     }
 
-    public List<LowLevelArtefactViewModel> FormLowLevelArtefacts(List<EventViewModel> events, double periodInMinutes = 1.0)
+    public List<ISerializableLevel> FormLowLevelArtefacts(List<EventViewModel> events, double periodInMinutes = 1.0)
     {
-        List<LowLevelArtefactViewModel> lowLevelArtefacts = new(events.Count);
+        List<ISerializableLevel> lowLevelArtefacts = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {

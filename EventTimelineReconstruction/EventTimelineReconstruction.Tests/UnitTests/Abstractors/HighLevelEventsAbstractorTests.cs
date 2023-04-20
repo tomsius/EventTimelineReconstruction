@@ -122,7 +122,7 @@ public class HighLevelEventsAbstractorTests
         List<HighLevelEventViewModel> expected = GetExpectedEvents();
 
         // Act
-        List<HighLevelEventViewModel> actual = _abstractor.FormHighLevelEvents(_events);
+        List<HighLevelEventViewModel> actual = _abstractor.FormHighLevelEvents(_events).Cast<HighLevelEventViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);

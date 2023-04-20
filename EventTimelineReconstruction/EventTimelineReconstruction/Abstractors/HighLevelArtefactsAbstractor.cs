@@ -35,9 +35,9 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
         olecfHandler.Next = peHandler;
     }
 
-    public List<HighLevelArtefactViewModel> FormHighLevelArtefacts(List<EventViewModel> events)
+    public List<ISerializableLevel> FormHighLevelArtefacts(List<EventViewModel> events)
     {
-        List<HighLevelArtefactViewModel> highLevelArtefacts = new(events.Count);
+        List<ISerializableLevel> highLevelArtefacts = new(events.Count);
 
         for (int i = 0; i < events.Count; i++)
         {
@@ -89,7 +89,7 @@ public sealed class HighLevelArtefactsAbstractor : IHighLevelArtefactsAbstractor
             return true;
         }
 
-        HighLevelArtefactViewModel previous = highLevelArtefacts[^1];
+        HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[^1];
 
         if (previous.Short != current.Short)
         {

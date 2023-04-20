@@ -1,4 +1,5 @@
-﻿using EventTimelineReconstruction.Abstractors;
+﻿using System.Linq;
+using EventTimelineReconstruction.Abstractors;
 using EventTimelineReconstruction.ChainOfResponsibility.HighLevelArtefacts;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.Utils;
@@ -245,7 +246,7 @@ public class HighLevelArtefactsAbstractorTests
         List<HighLevelArtefactViewModel> expected = GetExpectedEvents();
 
         // Act
-        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(_events);
+        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(_events).Cast<HighLevelArtefactViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);
@@ -280,7 +281,7 @@ public class HighLevelArtefactsAbstractorTests
         };
 
         // Act
-        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(events);
+        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(events).Cast<HighLevelArtefactViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);
@@ -318,7 +319,7 @@ public class HighLevelArtefactsAbstractorTests
         };
 
         // Act
-        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(events);
+        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(events).Cast<HighLevelArtefactViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);
@@ -360,7 +361,7 @@ public class HighLevelArtefactsAbstractorTests
         };
 
         // Act
-        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(events);
+        List<HighLevelArtefactViewModel> actual = _abstractor.FormHighLevelArtefacts(events).Cast<HighLevelArtefactViewModel>().ToList();
 
         // Assert
         Assert.AreEqual(expected.Count, actual.Count);

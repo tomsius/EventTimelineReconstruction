@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -35,25 +36,25 @@ public sealed class AbstractEventsCommand : AsyncCommandBase
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<HighLevelEventViewModel> highLevelEvents = _highLevelEventsAbstractor.FormHighLevelEvents(events);
+            List<HighLevelEventViewModel> highLevelEvents = _highLevelEventsAbstractor.FormHighLevelEvents(events).Cast<HighLevelEventViewModel>().ToList();
             _viewModel.LoadHighLevelEvents(highLevelEvents);
         });
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<LowLevelEventViewModel> lowLevelEvents = _lowLevelEventsAbstractor.FormLowLevelEvents(events);
+            List<LowLevelEventViewModel> lowLevelEvents = _lowLevelEventsAbstractor.FormLowLevelEvents(events).Cast<LowLevelEventViewModel>().ToList();
             _viewModel.LoadLowLevelEvents(lowLevelEvents);
         });
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<HighLevelArtefactViewModel> highLevelArtefacts = _highLevelArtefactsAbstractor.FormHighLevelArtefacts(events);
+            List<HighLevelArtefactViewModel> highLevelArtefacts = _highLevelArtefactsAbstractor.FormHighLevelArtefacts(events).Cast<HighLevelArtefactViewModel>().ToList();
             _viewModel.LoadHighLevelArtefacts(highLevelArtefacts);
         });
 
         await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, () =>
         {
-            List<LowLevelArtefactViewModel> lowLevelArtefacts = _lowLevelArtefactsAbstractor.FormLowLevelArtefacts(events);
+            List<LowLevelArtefactViewModel> lowLevelArtefacts = _lowLevelArtefactsAbstractor.FormLowLevelArtefacts(events).Cast<LowLevelArtefactViewModel>().ToList();
             _viewModel.LoadLowLevelArtefacts(lowLevelArtefacts);
         });
 
