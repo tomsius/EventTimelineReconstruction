@@ -14,16 +14,16 @@ public class HighLevelArtefactsBenchmarks
     public int N;
 
     private List<EventViewModel> _events;
-    private HighLevelEventsAbstractorUtils _highLevelEventsAbstractorUtils;
-    private LowLevelEventsAbstractorUtils _lowLevelEventsAbstractorUtils;
-    private HighLevelArtefactsAbstractorUtils _highLevelArtefactsAbstractorUtils;
+    private IHighLevelEventsAbstractorUtils _highLevelEventsAbstractorUtils;
+    private ILowLevelEventsAbstractorUtils _lowLevelEventsAbstractorUtils;
+    private IHighLevelArtefactsAbstractorUtils _highLevelArtefactsAbstractorUtils;
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        _highLevelEventsAbstractorUtils = new();
-        _lowLevelEventsAbstractorUtils = new();
-        _highLevelArtefactsAbstractorUtils = new();
+        _highLevelEventsAbstractorUtils = new HighLevelEventsAbstractorUtils();
+        _lowLevelEventsAbstractorUtils = new LowLevelEventsAbstractorUtils();
+        _highLevelArtefactsAbstractorUtils = new HighLevelArtefactsAbstractorUtils();
 
         // sukurti ivykiu sarasa
         _events = new(N);

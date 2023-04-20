@@ -14,14 +14,14 @@ public class LowLevelEventsBenchmarks
     public int N;
 
     private List<EventViewModel> _events;
-    private HighLevelEventsAbstractorUtils _highLevelAbstractorUtils;
-    private LowLevelEventsAbstractorUtils _lowLevelAbstractorUtils;
+    private IHighLevelEventsAbstractorUtils _highLevelAbstractorUtils;
+    private ILowLevelEventsAbstractorUtils _lowLevelAbstractorUtils;
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        _highLevelAbstractorUtils = new();
-        _lowLevelAbstractorUtils = new();
+        _highLevelAbstractorUtils = new HighLevelEventsAbstractorUtils();
+        _lowLevelAbstractorUtils = new LowLevelEventsAbstractorUtils();
 
         // sukurti ivykiu sarasa
         _events = new(N);

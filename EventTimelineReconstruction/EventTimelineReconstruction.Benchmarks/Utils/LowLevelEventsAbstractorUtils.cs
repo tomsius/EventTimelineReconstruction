@@ -3,7 +3,7 @@ using EventTimelineReconstruction.Benchmarks.Models;
 
 namespace EventTimelineReconstruction.Benchmarks.Utils;
 
-public sealed class LowLevelEventsAbstractorUtils
+public sealed class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUtils
 {
     public string AddMailUser(string extraValue, string description)
     {
@@ -345,5 +345,27 @@ public sealed class LowLevelEventsAbstractorUtils
         bool isValidShortValue = eventViewModel.Short.Contains(key);
 
         return isValidSourceType && isValidShortValue;
+    }
+
+    public bool DoesNeedComposing(List<EventViewModel> events, int startIndex, EventViewModel current)
+    {
+        for (int i = startIndex; i >= 0; i--)
+        {
+            EventViewModel previous = events[i];
+            if (previous.FullDate.CompareTo(current.FullDate) != 0)
+            {
+                break;
+            }
+
+            string previousFilename = GetFilename(previous);
+            string currentFilename = GetFilename(current);
+
+            if (previousFilename == currentFilename)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

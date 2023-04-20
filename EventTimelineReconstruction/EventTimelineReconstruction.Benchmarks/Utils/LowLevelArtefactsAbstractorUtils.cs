@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.Benchmarks.Utils;
 
-public sealed class LowLevelArtefactsAbstractorUtils
+public sealed class LowLevelArtefactsAbstractorUtils : ILowLevelArtefactsAbstractorUtils
 {
     public string GetAddress(string description)
     {

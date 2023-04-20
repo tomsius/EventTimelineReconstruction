@@ -16,14 +16,14 @@ public class LowLevelArtefactsBenchmarks
     private int LinesSkipped;
     private int LinesNeglected;
     private List<EventViewModel> _events;
-    private LowLevelArtefactsAbstractorUtils _lowLevelArtefactsAbstractorUtils;
+    private ILowLevelArtefactsAbstractorUtils _lowLevelArtefactsAbstractorUtils;
 
     [GlobalSetup]
     public void GlobalSetup()
     {
         LinesSkipped = 0;
         LinesNeglected = 0;
-        _lowLevelArtefactsAbstractorUtils = new();
+        _lowLevelArtefactsAbstractorUtils = new LowLevelArtefactsAbstractorUtils();
 
         // sukurti ivykiu sarasa
         _events = new(N);

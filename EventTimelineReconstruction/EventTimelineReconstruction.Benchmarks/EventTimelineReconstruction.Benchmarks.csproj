@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Chain of Ressponsibility\**" />
+    <EmbeddedResource Remove="Chain of Ressponsibility\**" />
+    <None Remove="Chain of Ressponsibility\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
