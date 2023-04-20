@@ -1,5 +1,8 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Reflection.Metadata;
+using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility;
+using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility.HighLevelArtefacts;
 using EventTimelineReconstruction.Benchmarks.Models;
 using EventTimelineReconstruction.Benchmarks.Utils;
 
@@ -17,6 +20,7 @@ public class HighLevelArtefactsBenchmarks
     private IHighLevelEventsAbstractorUtils _highLevelEventsAbstractorUtils;
     private ILowLevelEventsAbstractorUtils _lowLevelEventsAbstractorUtils;
     private IHighLevelArtefactsAbstractorUtils _highLevelArtefactsAbstractorUtils;
+    private IHandler _handler;
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -24,6 +28,24 @@ public class HighLevelArtefactsBenchmarks
         _highLevelEventsAbstractorUtils = new HighLevelEventsAbstractorUtils();
         _lowLevelEventsAbstractorUtils = new LowLevelEventsAbstractorUtils();
         _highLevelArtefactsAbstractorUtils = new HighLevelArtefactsAbstractorUtils();
+
+        IHighWebhistArtefactHandler webhistHandler = new HighWebhistArtefactHandler(_highLevelEventsAbstractorUtils, _lowLevelEventsAbstractorUtils, _highLevelArtefactsAbstractorUtils);
+        IHighLnkArtefactHandler lnkHandler = new HighLnkArtefactHandler(_highLevelEventsAbstractorUtils);
+        IHighFileArtefactHandler fileHandler = new HighFileArtefactHandler(_lowLevelEventsAbstractorUtils, _highLevelArtefactsAbstractorUtils);
+        IHighLogArtefactHandler logHandler = new HighLogArtefactHandler(_lowLevelEventsAbstractorUtils, _highLevelArtefactsAbstractorUtils);
+        IHighRegArtefactHandler regHandler = new HighRegArtefactHandler(_lowLevelEventsAbstractorUtils, _highLevelArtefactsAbstractorUtils);
+        IHighMetaArtefactHandler metaHandler = new HighMetaArtefactHandler(_lowLevelEventsAbstractorUtils, _highLevelArtefactsAbstractorUtils);
+        IHighOlecfArtefactHandler olecfHandler = new HighOlecfArtefactHandler();
+        IHighPeArtefactHandler peHandler = new HighPeArtefactHandler(_highLevelArtefactsAbstractorUtils);
+
+        _handler = webhistHandler;
+        webhistHandler.Next = lnkHandler;
+        lnkHandler.Next = fileHandler;
+        fileHandler.Next = logHandler;
+        logHandler.Next = regHandler;
+        regHandler.Next = metaHandler;
+        metaHandler.Next = olecfHandler;
+        olecfHandler.Next = peHandler;
 
         // sukurti ivykiu sarasa
         _events = new(N);
@@ -612,6 +634,75 @@ public class HighLevelArtefactsBenchmarks
         }
 
         HighLevelArtefactViewModel previous = highLevelArtefacts[^1];
+
+        if (previous.Short != current.Short)
+        {
+            return true;
+        }
+
+        DateTime previousTime = new(previous.Date.Year, previous.Date.Month, previous.Date.Day, previous.Time.Hour, previous.Time.Minute, previous.Time.Second);
+        DateTime currentTime = new(current.Date.Year, current.Date.Month, current.Date.Day, current.Time.Hour, current.Time.Minute, current.Time.Second);
+        double timeDifference = currentTime.Subtract(previousTime).TotalMinutes;
+
+        return timeDifference.CompareTo(15.0) >= 0;
+    }
+
+    [Benchmark]
+    public List<ISerializableLevel> FormHighLevelArtefacts_ChainOfResponsibility()
+    {
+        List<ISerializableLevel> highLevelArtefacts = new(_events.Count);
+
+        for (int i = 0; i < _events.Count; i++)
+        {
+            if (_events[i].Source == "OLECF")
+            {
+                while (i < _events.Count - 1 && AreOlecfEventsOfSameTime_ChainOfResponsibility(_events[i], _events[i + 1]))
+                {
+                    i++;
+                }
+            }
+
+            ISerializableLevel highLevelArtefact = _handler.FormAbstractEvent(_events, highLevelArtefacts, _events[i]);
+
+            if (_events[i].Source == "FILE")
+            {
+                if (!_highLevelArtefactsAbstractorUtils.IsFileDuplicateOfLnk(_events, i - 1, _events[i]))
+                {
+                    int fileCountInRowAtSameMinute = _highLevelArtefactsAbstractorUtils.GetFileCountInRowAtSameMinute(_events, i);
+                    i += fileCountInRowAtSameMinute - 1;
+                }
+            }
+
+            if (IsEventValid_ChainOfResponsibility(highLevelArtefacts, (HighLevelArtefactViewModel)highLevelArtefact))
+            {
+                highLevelArtefacts.Add(highLevelArtefact);
+            }
+        }
+
+        return highLevelArtefacts;
+    }
+
+    private static bool AreOlecfEventsOfSameTime_ChainOfResponsibility(EventViewModel firstEvent, EventViewModel secondEvent)
+    {
+        bool isSameSource = firstEvent.Source == secondEvent.Source;
+        bool isSameTime = firstEvent.FullDate.CompareTo(secondEvent.FullDate) == 0;
+
+        return isSameSource && isSameTime;
+    }
+
+    private static bool IsEventValid_ChainOfResponsibility(List<ISerializableLevel> highLevelArtefacts, HighLevelArtefactViewModel current)
+    {
+        if (current is null)
+        {
+            return false;
+        }
+
+        if (highLevelArtefacts.Count == 0)
+        {
+            return true;
+        }
+
+        HighLevelArtefactViewModel previous = (HighLevelArtefactViewModel)highLevelArtefacts[^1];
 
         if (previous.Short != current.Short)
         {
