@@ -1,5 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility;
+using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility.LowLevelArtefacts;
 using EventTimelineReconstruction.Benchmarks.Models;
 using EventTimelineReconstruction.Benchmarks.Utils;
 
@@ -17,6 +19,7 @@ public class LowLevelArtefactsBenchmarks
     private int LinesNeglected;
     private List<EventViewModel> _events;
     private ILowLevelArtefactsAbstractorUtils _lowLevelArtefactsAbstractorUtils;
+    private IHandler _handler;
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -24,6 +27,14 @@ public class LowLevelArtefactsBenchmarks
         LinesSkipped = 0;
         LinesNeglected = 0;
         _lowLevelArtefactsAbstractorUtils = new LowLevelArtefactsAbstractorUtils();
+
+        ILowWebhistArtefactHandler webhistHandler = new LowWebhistArtefactHandler(_lowLevelArtefactsAbstractorUtils);
+        ILowLnkArtefactHandler lnkHandler = new LowLnkArtefactHandler(_lowLevelArtefactsAbstractorUtils);
+        ILowFileArtefactHandler fileHandler = new LowFileArtefactHandler(_lowLevelArtefactsAbstractorUtils);
+
+        _handler = webhistHandler;
+        webhistHandler.Next = lnkHandler;
+        lnkHandler.Next = fileHandler;
 
         // sukurti ivykiu sarasa
         _events = new(N);
@@ -224,5 +235,65 @@ public class LowLevelArtefactsBenchmarks
         }
 
         return doesFileExist && doesWebhistExist;
+    }
+
+    [Benchmark]
+    public List<ISerializableLevel> FormLowLevelArtefacts_ChainOfResponsibility()
+    {
+        List<ISerializableLevel> lowLevelArtefacts = new(_events.Count);
+
+        for (int i = 0; i < _events.Count; i++)
+        {
+            ISerializableLevel lowLevelArtefact = _handler.FormAbstractEvent(_events, lowLevelArtefacts, _events[i]);
+
+            if (_events[i].Source == "FILE")
+            {
+                int needsSkipping = this.SkipFileEvents_ChainOfResponsibility(_events, i, 1.0);
+                i += needsSkipping;
+            }
+
+            if (lowLevelArtefact is not null)
+            {
+                lowLevelArtefacts.Add(lowLevelArtefact);
+            }
+        }
+
+        return lowLevelArtefacts;
+    }
+
+    private int SkipFileEvents_ChainOfResponsibility(List<EventViewModel> events, int startIndex, double periodInMinutes)
+    {
+        DateTime startTime = events[startIndex].FullDate;
+        int count = 0;
+
+        if (events[startIndex].SourceType != "OS Last Access Time")
+        {
+            return count;
+        }
+
+        for (int i = startIndex + 1; i < events.Count; i++)
+        {
+            EventViewModel eventViewModel = events[i];
+            DateTime endTime = events[i].FullDate;
+            double differenceInMinutes = endTime.Subtract(startTime).TotalMinutes;
+
+            if (eventViewModel.Source != "FILE" || (eventViewModel.SourceType != "OS Last Access Time" && eventViewModel.SourceType != "OS Metadata Modification Time") || differenceInMinutes.CompareTo(periodInMinutes) > 0)
+            {
+                break;
+            }
+
+            if (eventViewModel.SourceType == "OS Last Access Time")
+            {
+                LinesSkipped++;
+            }
+            else
+            {
+                LinesNeglected++;
+            }
+
+            count++;
+        }
+
+        return count;
     }
 }
