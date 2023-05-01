@@ -12,7 +12,7 @@ namespace EventTimelineReconstruction.Benchmarks;
 [RankColumn]
 public class HighLevelEventsBenchmarks
 {
-    [Params(1000, 100_000, 1_000_000)]
+    [Params(1000, 10_000, 100_000, 1_000_000)]
     public int N;
 
     private List<EventViewModel> _events;
@@ -38,8 +38,21 @@ public class HighLevelEventsBenchmarks
         olecfHandler.Next = peHandler;
         peHandler.Next = webhistHandler;
 
-        // sukurti ivykiu sarasa
+        List<EventViewModel> possibleEvents = new()
+        {
+            new EventViewModel(new EventModel(new DateOnly(2018, 10, 21), new TimeOnly(18, 11, 1), TimeZoneInfo.Utc, "B...", "WEBHIST", "Firefox History", "Last Visited Time", "User", "Host", "https://google.com/mail/u/0/?tab=rm&ogbl (Gmail)", "https://google.com/mail/u/0/?tab=rm&ogbl (Gmail) [count: 0] Visit from: https://google.com/mail/?tab=rm&ogbl (Gmail) Type: [LINK - User clicked a link] (URL not typed directly - no typed count)", 2, "TSK:/Documents and Settings/PC1/Local Settings/Application Data/Google/Chrome/User Data/Default/History", "13452", "-", "sqlite/chrome_27_history", new Dictionary<string, string>(), 0)),
+            new EventViewModel(new EventModel(new DateOnly(2022, 10, 14), new TimeOnly(15, 4, 25), TimeZoneInfo.Utc, "B...", "LOG", "System", "Creation Time", "User", "Host", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2016.lnk", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2016.lnk", 2, "2016.ln", "13452", "-", "lnk", new Dictionary<string, string>(), 2)),
+            new EventViewModel(new EventModel(new DateOnly(2022, 10, 15), new TimeOnly(12, 8, 11), TimeZoneInfo.Utc, "B...", "LNK", "Windows Shortcut", "Creation Time", "User", "Host", "[Empty description] C:\\Program Files\\Mozilla Firefox\\firefox.exe", "[Empty description] C:\\Program Files\\Mozilla Firefox\\firefox.exe", 2, "TSK:/Documents and Settings/All Users/Start Menu/Programs/Mozilla Firefox.lnk", "13452", "-", "lnk", new Dictionary<string, string>(), 5)),
+            new EventViewModel(new EventModel(new DateOnly(2022, 10, 16), new TimeOnly(5, 18, 15), TimeZoneInfo.Utc, "B..M", "META", "System", "Creation Time", "User", "Host", "Something something", "Something something", 2, "C:\\Program Files\\Mozilla Firefox\\firefox.exe", "13451", "-", "meta", new Dictionary<string, string>(), 6)),
+            new EventViewModel(new EventModel(new DateOnly(2022, 10, 17), new TimeOnly(10, 12, 57), TimeZoneInfo.Utc, "B..M", "OLECF", "OLECF Item", "Creation Time", "User", "Host", "Something something", "Something something", 2, "TSK:/WINDOWS/system32/wmimgmt.msc", "13451", "-", "olecf/olecf_default", new Dictionary<string, string>(), 8)),
+            new EventViewModel(new EventModel(new DateOnly(2022, 10, 18), new TimeOnly(17, 2, 33), TimeZoneInfo.Utc, "B..M", "PE", "PE Compilation time", "Creation Time", "User", "Host", "pe_type", "Something something", 2, "test.exe", "13451", "-", "pe", new Dictionary<string, string>(), 10))
+        };
+
         _events = new(N);
+        for (int i = 0; i < N; i++)
+        {
+            _events.Add(possibleEvents[i % possibleEvents.Count]);
+        }
     }
 
     [Benchmark(Baseline = true)]

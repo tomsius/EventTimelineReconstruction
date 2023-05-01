@@ -13,10 +13,10 @@ namespace EventTimelineReconstruction.Benchmarks;
 [RankColumn]
 public class HighLevelArtefactsBenchmarks
 {
-    [Params(1000, 100_000, 1_000_000)]
+    [Params(1000, 10_000, 100_000, 1_000_000)]
     public int N;
 
-    private List<EventViewModel> _events;
+    private List<EventViewModel> _artefacts;
     private IHighLevelEventsAbstractorUtils _highLevelEventsAbstractorUtils;
     private ILowLevelEventsAbstractorUtils _lowLevelEventsAbstractorUtils;
     private IHighLevelArtefactsAbstractorUtils _highLevelArtefactsAbstractorUtils;
@@ -47,25 +47,40 @@ public class HighLevelArtefactsBenchmarks
         metaHandler.Next = olecfHandler;
         olecfHandler.Next = peHandler;
 
-        // sukurti ivykiu sarasa
-        _events = new(N);
+        List<EventViewModel> possibleArtefacts = new()
+        {
+            new EventViewModel(new EventModel(new DateOnly(2000, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "FILE", "NTFS Creation Time", "Creation Time", "User", "Host", "C:\\Users\\User\\testas0.txt", "C:\\Users\\User\\testas0.txt Type: file", 2, "TSK:\\Users\\User\\testas0.txt", "13452", "-", "filestat", new Dictionary<string, string>() { { "something0", "something0" } }, 0)),
+            new EventViewModel(new EventModel(new DateOnly(2000, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "WEBHIST", "Firefox History", "File downloaded", "User", "Host", "C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timel...", "https://mail-attachment.googleusercontent.com/attachment/... (C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf). Received: 1116192 bytes out of: 1116192 bytes.", 2, "TSK:/Documents and Settings/PC1/Local Settings/Application Data/Google/Chrome/User Data/Default/History", "13452", "-", "sqlite/firefox_history", new Dictionary<string, string>() { { "extra", "['visited from: https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5 (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']" }, { "schema_match", "False" }, { "sha256_hash", "a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741" }, { "visit_type", "1" } }, 3)),
+            new EventViewModel(new EventModel(new DateOnly(2003, 2, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "LOG", "System", "Creation Time", "User", "Host", "SPOOLSV.EXE was run 1 time(s)", "Prefetch [SPOOLSV0.EXE] was executed - run count 1 path: \\WINDOWS\\SYSTEM32\\SPOOLSV0.EXE hash: 0x282F76A7 volume: 1 [serial number: 0x6C91EF9F  device path: \\DEVICE\\HARDDISKVOLUME0]", 2, "TSK:/WINDOWS/Prefetch/SPOOLSV0.EXE-282F76A7.pf", "13452", "-", "prefetch", new Dictionary<string, string>(), 7)),
+            new EventViewModel(new EventModel(new DateOnly(2008, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, ".A..", "REG", "Registry Key: UserAssist", "Last Time Executed", "User", "Host", "UEME_RUNPATH:::{645FF040-5081-101B-9F08-00AA002F954E} Count: 1", "[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\UserAssist\\{75048700-EF1F-11D0-9888-006097DEACF9}\\Count] Value name: UEME_RUNPATH:::{645FF040-5081-101B-9F08-00AA002F954E}\\test14.exe Count: 1", 2, "TSK:/Documents and Settings/PC1/NTUSER.DAT", "13452", "-", "winreg/userassist", new Dictionary<string, string>() { { "something14", "something14" } }, 14)),
+            new EventViewModel(new EventModel(new DateOnly(2011, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "META", "System", "Creation Time", "User", "Host", "Short Description", "Full Description21", 2, "testas.docx", "13452", "-", "Format", new Dictionary<string, string>() { { "number_of_paragraphs", "3" }, { "total_time", "1" } }, 21)),
+            new EventViewModel(new EventModel(new DateOnly(2012, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "PE", "PE Compilation time", "Creation Time", "User", "Host", "pe_type", "Something22", 2, "test.txt", "13452", "-", "pe", new Dictionary<string, string>(), 22)),
+            new EventViewModel(new EventModel(new DateOnly(2015, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "OLECF", "OLECF Item", "Creation Time", "User", "Host", "Name: data", "Something something something something something something something something 30", 2, "TSK:/WINDOWS/system32/wmimgmt.msc", "13452", "-", "olecf/olecf_default", new Dictionary<string, string>(), 30)),
+            new EventViewModel(new EventModel(new DateOnly(2016, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B..M", "LNK", "Windows Shortcut", "Creation Time", "User", "Host", "[Empty description] C:\\Program Files\\Mozilla Firefox\\firefox.exe", "[Empty description] C:\\Program Files\\Mozilla Firefox\\firefox.exe", 2, "TSK:/Documents and Settings/All Users/Start Menu/Programs/Mozilla Firefox.lnk", "13451", "-", "lnk", new Dictionary<string, string>(), 31))
+        };
+
+        _artefacts = new(N);
+        for (int i = 0; i < N; i++)
+        {
+            _artefacts.Add(possibleArtefacts[i % possibleArtefacts.Count]);
+        }
     }
 
     [Benchmark(Baseline = true)]
     public List<HighLevelArtefactViewModel> FormHighLevelArtefacts_Switch()
     {
-        List<HighLevelArtefactViewModel> highLevelArtefacts = new(_events.Count);
+        List<HighLevelArtefactViewModel> highLevelArtefacts = new(_artefacts.Count);
 
-        for (int i = 0; i < _events.Count; i++)
+        for (int i = 0; i < _artefacts.Count; i++)
         {
             HighLevelArtefactViewModel highLevelArtefact = null;
 
-            switch (_events[i].Source)
+            switch (_artefacts[i].Source)
             {
                 case "WEBHIST":
-                    if (_highLevelEventsAbstractorUtils.IsValidWebhistLine(_events[i]))
+                    if (_highLevelEventsAbstractorUtils.IsValidWebhistLine(_artefacts[i]))
                     {
-                        highLevelArtefact = this.FormEventFromWebhistSource_Switch(_events[i]);
+                        highLevelArtefact = this.FormEventFromWebhistSource_Switch(_artefacts[i]);
 
                         if (!IsWebhistEventValid_Switch(highLevelArtefacts, highLevelArtefact))
                         {
@@ -75,7 +90,7 @@ public class HighLevelArtefactsBenchmarks
 
                     break;
                 case "LNK":
-                    highLevelArtefact = this.FormEventFromLnkSource_Switch(_events[i]);
+                    highLevelArtefact = this.FormEventFromLnkSource_Switch(_artefacts[i]);
 
                     if (!IsLnkEventValid_Switch(highLevelArtefacts, highLevelArtefact))
                     {
@@ -86,20 +101,20 @@ public class HighLevelArtefactsBenchmarks
                 case "FILE":
                     if (i == 0)
                     {
-                        highLevelArtefact = this.FormEventFromFileSource_Switch(_events[i]);
+                        highLevelArtefact = this.FormEventFromFileSource_Switch(_artefacts[i]);
                         break;
                     }
 
-                    if (!_highLevelArtefactsAbstractorUtils.IsFileDuplicateOfLnk(_events, i - 1, _events[i]))
+                    if (!_highLevelArtefactsAbstractorUtils.IsFileDuplicateOfLnk(_artefacts, i - 1, _artefacts[i]))
                     {
-                        int fileCountInRowAtSameMinute = _highLevelArtefactsAbstractorUtils.GetFileCountInRowAtSameMinute(_events, i);
+                        int fileCountInRowAtSameMinute = _highLevelArtefactsAbstractorUtils.GetFileCountInRowAtSameMinute(_artefacts, i);
                         int endIndex = i + fileCountInRowAtSameMinute;
 
                         if (fileCountInRowAtSameMinute <= 36)
                         {
                             for (int index = i; index < endIndex; index++)
                             {
-                                HighLevelArtefactViewModel artefact = this.FormEventFromFileSource_Switch(_events[i]);
+                                HighLevelArtefactViewModel artefact = this.FormEventFromFileSource_Switch(_artefacts[i]);
                                 // single artefact per second
                                 if (IsFileEventValid_Switch(highLevelArtefacts, artefact))
                                 {
@@ -109,10 +124,10 @@ public class HighLevelArtefactsBenchmarks
                         }
                         else
                         {
-                            List<int> validIndices = _highLevelArtefactsAbstractorUtils.GetValidFileEventIndices(_events, i, endIndex);
+                            List<int> validIndices = _highLevelArtefactsAbstractorUtils.GetValidFileEventIndices(_artefacts, i, endIndex);
                             for (int index = 0; index < validIndices.Count; index++)
                             {
-                                HighLevelArtefactViewModel artefact = this.FormEventFromFileSource_Switch(_events[validIndices[index]]);
+                                HighLevelArtefactViewModel artefact = this.FormEventFromFileSource_Switch(_artefacts[validIndices[index]]);
                                 highLevelArtefacts.Add(artefact);
                             }
                         }
@@ -122,16 +137,16 @@ public class HighLevelArtefactsBenchmarks
 
                     break;
                 case "LOG":
-                    highLevelArtefact = this.FormEventFromLogSource_Switch(_events[i]);
+                    highLevelArtefact = this.FormEventFromLogSource_Switch(_artefacts[i]);
 
-                    if (!this.IsLogEventValid_Switch(_events, i))
+                    if (!this.IsLogEventValid_Switch(_artefacts, i))
                     {
                         highLevelArtefact = null;
                     }
 
                     break;
                 case "REG":
-                    highLevelArtefact = this.FormEventFromRegSource_Switch(_events[i]);
+                    highLevelArtefact = this.FormEventFromRegSource_Switch(_artefacts[i]);
 
                     if (!IsRegEventValid_Switch(highLevelArtefacts, highLevelArtefact))
                     {
@@ -140,21 +155,21 @@ public class HighLevelArtefactsBenchmarks
 
                     break;
                 case "META":
-                    highLevelArtefact = this.FormEventFromMetaSource_Switch(_events[i]);
+                    highLevelArtefact = this.FormEventFromMetaSource_Switch(_artefacts[i]);
                     break;
                 case "OLECF":
                     // Choose the last line of the same OLECF time - skip same time OLECF type events
-                    while (i < _events.Count - 1 && AreOlecfEventsOfSameTime_Switch(_events[i], _events[i + 1]))
+                    while (i < _artefacts.Count - 1 && AreOlecfEventsOfSameTime_Switch(_artefacts[i], _artefacts[i + 1]))
                     {
                         i++;
                     }
 
-                    highLevelArtefact = FormEventFromOlecfSource_Switch(_events[i]);
+                    highLevelArtefact = FormEventFromOlecfSource_Switch(_artefacts[i]);
                     break;
                 case "PE":
-                    if (this.IsPeEventValid_Switch(highLevelArtefacts, _events[i]))
+                    if (this.IsPeEventValid_Switch(highLevelArtefacts, _artefacts[i]))
                     {
-                        highLevelArtefact = FormEventFromPeSource_Switch(_events[i]);
+                        highLevelArtefact = FormEventFromPeSource_Switch(_artefacts[i]);
                     }
 
                     break;
@@ -650,25 +665,25 @@ public class HighLevelArtefactsBenchmarks
     [Benchmark]
     public List<ISerializableLevel> FormHighLevelArtefacts_ChainOfResponsibility()
     {
-        List<ISerializableLevel> highLevelArtefacts = new(_events.Count);
+        List<ISerializableLevel> highLevelArtefacts = new(_artefacts.Count);
 
-        for (int i = 0; i < _events.Count; i++)
+        for (int i = 0; i < _artefacts.Count; i++)
         {
-            if (_events[i].Source == "OLECF")
+            if (_artefacts[i].Source == "OLECF")
             {
-                while (i < _events.Count - 1 && AreOlecfEventsOfSameTime_ChainOfResponsibility(_events[i], _events[i + 1]))
+                while (i < _artefacts.Count - 1 && AreOlecfEventsOfSameTime_ChainOfResponsibility(_artefacts[i], _artefacts[i + 1]))
                 {
                     i++;
                 }
             }
 
-            ISerializableLevel highLevelArtefact = _handler.FormAbstractEvent(_events, highLevelArtefacts, _events[i]);
+            ISerializableLevel highLevelArtefact = _handler.FormAbstractEvent(_artefacts, highLevelArtefacts, _artefacts[i]);
 
-            if (_events[i].Source == "FILE")
+            if (_artefacts[i].Source == "FILE")
             {
-                if (!_highLevelArtefactsAbstractorUtils.IsFileDuplicateOfLnk(_events, i - 1, _events[i]))
+                if (!_highLevelArtefactsAbstractorUtils.IsFileDuplicateOfLnk(_artefacts, i - 1, _artefacts[i]))
                 {
-                    int fileCountInRowAtSameMinute = _highLevelArtefactsAbstractorUtils.GetFileCountInRowAtSameMinute(_events, i);
+                    int fileCountInRowAtSameMinute = _highLevelArtefactsAbstractorUtils.GetFileCountInRowAtSameMinute(_artefacts, i);
                     i += fileCountInRowAtSameMinute - 1;
                 }
             }

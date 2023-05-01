@@ -12,7 +12,7 @@ namespace EventTimelineReconstruction.Benchmarks;
 [RankColumn]
 public class LowLevelEventsBenchmarks
 {
-    [Params(1000, 100_000, 1_000_000)]
+    [Params(1000, 10_000, 100_000, 1_000_000)]
     public int N;
 
     private List<EventViewModel> _events;
@@ -46,8 +46,24 @@ public class LowLevelEventsBenchmarks
         olecfHandler.Next = peHandler;
         peHandler.Next = recbinHandler;
 
-        // sukurti ivykiu sarasa
+        List<EventViewModel> possibleEvents = new()
+        {
+            new EventViewModel(new EventModel(new DateOnly(2000, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "WEBHIST", "Firefox History", "File downloaded", "User", "Host", "C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timel...", "https://mail-attachment.googleusercontent.com/attachment/... (C:\\Documents and Settings\\PC1\\My Documents\\Downloads\\Timeline2GUI A Log2Timeline CSV parser and training scenarios.pdf). Received: 1116192 bytes out of: 1116192 bytes.", 2, "TSK:/Documents and Settings/PC1/Local Settings/Application Data/Google/Chrome/User Data/Default/History", "13452", "-", "sqlite/firefox_history", new Dictionary<string, string>() { { "extra", "['visited from: https://www.google.com/search?client=firefox-b-ab&q=ekiga&oq=ekiga&aqs=heirloom-srp..0l5 (www.google.com)'  '(URL not typed directly)'  'Transition: LINK']" }, { "schema_match", "False" }, { "sha256_hash", "a229a3e8240d2ab8a90deabe1600728a8859e6e895a4139824bc1c9862a8b741" }, { "visit_type", "1" } }, 1)),
+            new EventViewModel(new EventModel(new DateOnly(2002, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "META", "System", "Creation Time", "User", "Host", "Short Description", "Full Description", 2, "testas.docx", "13452", "-", "Format", new Dictionary<string, string>() { { "number_of_paragraphs", "3" }, { "total_time", "1" } }, 7)),
+            new EventViewModel(new EventModel(new DateOnly(2003, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, ".A..", "REG", "Registry Key: UserAssist", "Last Time Executed", "User", "Host", "UEME_RUNPATH:::{645FF040-5081-101B-9F08-00AA002F954E} Count: 1", "[HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\UserAssist\\{75048700-EF1F-11D0-9888-006097DEACF9}\\Count] Value name: UEME_RUNPATH:::{645FF040-5081-101B-9F08-00AA002F954E} Count: 1", 2, "TSK:/Documents and Settings/PC1/NTUSER.DAT", "13452", "-", "winreg/userassist", new Dictionary<string, string>() { { "something1", "something1" } }, 8)),
+            new EventViewModel(new EventModel(new DateOnly(2004, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "PE", "PE Compilation time", "Creation Time", "User", "Host", "pe_type", "Something something", 2, "test.exe", "13452", "-", "pe", new Dictionary<string, string>(), 10)),
+            new EventViewModel(new EventModel(new DateOnly(2005, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "RECBIN", "Recycle Bin", "Content Deletion Time", "User", "Host", "Deleted file: C:\\Documents and Settings\\PC1\\Desktop\\not secret anymore.txt", "DC4 -> C:\\Documents and Settings\\PC1\\Desktop\\not secret anymore.txt (from drive: C)", 2, "TSK:/RECYCLER/S-1-5-21-1292428093-484763869-854245398-1003/INFO2", "13452", "-", "recycle_bin_info2", new Dictionary<string, string>() { { "drive_number", "2" }, { "file_size", "4096" }, { "sha256_hash", "37047395e0bfec4a6bdec6feee3bd2b262340c26349fc946b843a1bc6fdcbb4e" } }, 12)),
+            new EventViewModel(new EventModel(new DateOnly(2006, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "OLECF", "OLECF Item", "Creation Time", "User", "Host", "Name: data", "Something something", 2, "TSK:/WINDOWS/system32/wmimgmt.msc", "13452", "-", "olecf/olecf_default", new Dictionary<string, string>(), 15)),
+            new EventViewModel(new EventModel(new DateOnly(2007, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B..M", "LNK", "Windows Shortcut", "Creation Time", "User", "Host", "[Empty description] C:\\Program Files\\Mozilla Firefox\\firefox.exe", "[Empty description] C:\\Program Files\\Mozilla Firefox\\firefox.exe", 2, "TSK:/Documents and Settings/All Users/Start Menu/Programs/Mozilla Firefox.lnk", "13451", "-", "lnk", new Dictionary<string, string>(), 16)),
+            new EventViewModel(new EventModel(new DateOnly(2008, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "LOG", "System", "Creation Time", "User", "Host", "3ec2b817-c405-11e7-8ac5-a0afbdac1ec0 Origin: 2016.lnk", "Unpinned Path: 2016.exe", 2, "2016.lnk", "13452", "-", "lnk", new Dictionary<string, string>(), 19)),
+            new EventViewModel(new EventModel(new DateOnly(2009, 1, 1), new TimeOnly(12, 0, 0), TimeZoneInfo.Utc, "B...", "FILE", "NTFS Creation Time", "Creation Time", "User", "Host", "C:\\Users\\User\\testas2.txt", "C:\\Users\\User\\testas2.txt", 2, "TSK:\\Users\\User\\testas2.txt", "13452", "-", "filestat", new Dictionary<string, string>() { { "something6", "something6" } }, 21))
+        };
+
         _events = new(N);
+        for (int i = 0; i < N; i++)
+        {
+            _events.Add(possibleEvents[i % possibleEvents.Count]);
+        }
     }
 
     [Benchmark(Baseline = true)]
