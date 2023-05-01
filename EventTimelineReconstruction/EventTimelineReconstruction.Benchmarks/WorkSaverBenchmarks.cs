@@ -11,7 +11,7 @@ namespace EventTimelineReconstruction.Benchmarks;
 [RankColumn]
 public class WorkSaverBenchmarks
 {
-    [Params(1000, 100_000, 1_000_000)]
+    [Params(1000, 10_000, 100_000, 1_000_000)]
     public int N;
 
     private List<EventViewModel> _events;
