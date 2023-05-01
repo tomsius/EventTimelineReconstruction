@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
@@ -71,6 +70,49 @@ public class EventsImporterBenchmarks
     {
         IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
         List<EventModel> events = new();
+        object lockObj = new();
+
+        Parallel.ForEach(rows, (line, _, lineNumber) =>
+        {
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
+            {
+                return;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, (int)lineNumber + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    lock (lockObj)
+                    {
+                        events.Add(eventModel);
+                    }
+                }
+            }
+            catch (FormatException)
+            {
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return;
+            }
+        });
+
+        return events;
+    }
+
+    [Benchmark]
+    public List<EventModel> Import_ParallelForeach_InitializedCapacityFromIEnumerable()
+    {
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new(rows.Count());
         object lockObj = new();
 
         Parallel.ForEach(rows, (line, _, lineNumber) =>
@@ -198,10 +240,55 @@ public class EventsImporterBenchmarks
     }
 
     [Benchmark]
+    public List<EventModel> Import_Foreach_InitializedCapacityFromIEnumerable()
+    {
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new(rows.Count());
+
+        int lineNumber = 2;
+        foreach (string line in rows)
+        {
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
+            {
+                lineNumber++;
+                continue;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                continue;
+            }
+            finally
+            {
+                lineNumber++;
+            }
+        }
+
+        return events;
+    }
+
+    [Benchmark]
     public List<EventModel> Import_ForeachLinq()
     {
         List<string> rows = this.ReadLinesEnumerable().Skip(1).ToList();
-        List<EventModel> events = new();
+        List<EventModel> events = new(rows.Count);
 
         int lineNumber = 2;
         rows.ForEach(line =>
@@ -541,10 +628,102 @@ public class EventsImporterBenchmarks
     }
 
     [Benchmark]
+    public List<EventModel> Import_While_InitializedCapacityFromIEnumerable()
+    {
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        IEnumerator<string> enumerator = rows.GetEnumerator();
+        List<EventModel> events = new(rows.Count());
+        int lineNumber = 2;
+
+        while (enumerator.MoveNext())
+        {
+            string[] columns = enumerator.Current.Split(',');
+
+            if (columns.Length != 17)
+            {
+                lineNumber++;
+                continue;
+            }
+
+            try
+            {
+                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                {
+                    events.Add(eventModel);
+                }
+            }
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                continue;
+            }
+            finally
+            {
+                lineNumber++;
+            }
+        }
+
+        return events;
+    }
+
+    [Benchmark]
     public async Task<List<EventModel>> Import_ParallelForeachAsync()
     {
         IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
         List<EventModel> events = new();
+        object lockObj = new();
+
+        await Parallel.ForEachAsync(rows, async (line, token) =>
+        {
+            string[] columns = line.Split(',');
+
+            if (columns.Length != 17)
+            {
+                return;
+            }
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    EventModel eventModel = ConvertRowToModel(columns, 0);
+                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                             eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                    if (DateTime.Compare(eventDate, _fromDate) >= 0 && DateTime.Compare(eventDate, _toDate) <= 0)
+                    {
+                        lock (lockObj)
+                        {
+                            events.Add(eventModel);
+                        }
+                    }
+                }, token);
+            }
+            catch (FormatException)
+            {
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return;
+            }
+        });
+
+        return events;
+    }
+
+    [Benchmark]
+    public async Task<List<EventModel>> Import_ParallelForeachAsync_InitializedCapacityFromIEnumerable()
+    {
+        IEnumerable<string> rows = this.ReadLinesEnumerable().Skip(1);
+        List<EventModel> events = new(rows.Count());
         object lockObj = new();
 
         await Parallel.ForEachAsync(rows, async (line, token) =>
