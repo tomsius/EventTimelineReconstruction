@@ -12,7 +12,7 @@ namespace EventTimelineReconstruction.Benchmarks;
 [RankColumn]
 public class WorkLoaderBenchmarks
 {
-    [Params(1000, 100_000, 1_000_000)]
+    [Params(1000, 10_000, 100_000, 1_000_000)]
     public int N;
 
     private AbstractionLevelFactory _factory;
@@ -22,13 +22,61 @@ public class WorkLoaderBenchmarks
     {
         _factory = new();
 
-        // padalinti is 5, kad butu po lygiai ivykiu
+        if (!File.Exists(@"EventsBenchmark.etr"))
+        {
+            using StreamWriter writeStream = new(@"EventsBenchmark.etr", false);
+
+            for (int i = 0; i < N / 5; i += 4)
+            {
+                writeStream.WriteLine("2020,4,6,5,23,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB1,Source1,Source Type1,Type1,Username1,Hostname1,Short Description1,Full Description1,2.5,Filename1,iNode number1,Notes1,Format1,Key11:Value11;Key12:Value12,1,True,#FF000000");
+                writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB3,Source3,Source Type3,Type3,Username3,Hostname3,Short Description3,Full Description3,2.5,Filename3,iNode number3,Notes3,Format3,Key31:Value31;Key32:Value32,3,True,#FF000000");
+                writeStream.WriteLine("\t\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB4,Source4,Source Type4,Type4,Username4,Hostname4,Short Description4,Full Description4,2.5,Filename4,iNode number4,Notes4,Format4,Key41:Value41;Key42:Value42,4,True,#FF000000");
+                writeStream.WriteLine("\t2021,12,1,17,53,0,UTC;0;(UTC) Coordinated Universal Time;Coordinated Universal Time;Coordinated Universal Time;;,MACB5,Source5,Source Type5,Type5,Username5,Hostname5,Short Description5,Full Description5,2.5,Filename5,iNode number5,Notes5,Format5,Key51:Value51;Key52:Value52,5,True,#FF000000");
+            }
+            writeStream.WriteLine();
+            for (int i = 0; i < N / 5; i++)
+            {
+                writeStream.WriteLine("2020,1,1,4,20,54,Source4,Short4,Visit4,4");
+            }
+            writeStream.WriteLine();
+            for (int i = 0; i < N / 5; i++)
+            {
+                writeStream.WriteLine("2020,1,3,4,22,54,Source6,Short6,Visit6,Extra6,6");
+            }
+            writeStream.WriteLine();
+            for (int i = 0; i < N / 5; i++)
+            {
+                writeStream.WriteLine("2020,1,5,4,22,54,Source8,Short8,Visit8,Extra8,8,MACB8,SourceType8,Desc8");
+            }
+            writeStream.WriteLine();
+            for (int i = 0; i < N / 5; i++)
+            {
+                writeStream.WriteLine("2020,1,7,4,22,54,Vilnius,MACB10,Source10,SourceType10,Type10,User10,Host10,Short10,Desc10,2,Filename10,Inode10,Notes10,Format10,Extra10,10");
+            }
+        }
+    }
+
+    [GlobalCleanup]
+    public void GlobalCleanup()
+    {
+        File.Delete(@"EventsBenchmark.etr");
+    }
+
+    public IEnumerable<string> ReadLinesEnumerable()
+    {
+        using StreamReader reader = new(@"EventsBenchmark.etr", new FileStreamOptions() { Access = FileAccess.Read, Mode = FileMode.Open, Share = FileShare.Read });
+        string? line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            yield return line;
+        }
     }
 
     [Benchmark(Baseline = true)]
-    public async Task<LoadedWork> LoadWork_LineByLine(string path)
+    public async Task<LoadedWork> LoadWork_LineByLine()
     {
-        using StreamReader inputStream = new(path);
+        using StreamReader inputStream = new(@"EventsBenchmark.etr", new FileStreamOptions() { Access = FileAccess.Read, Mode = FileMode.Open, Share = FileShare.Read });
+        //using StreamReader inputStream = new(path);
 
         LoadedWork loadedWork = new()
         {
@@ -344,9 +392,10 @@ public class WorkLoaderBenchmarks
     }
 
     [Benchmark]
-    public async Task<LoadedWorkFactory> LoadWork_Factory(string path)
+    public LoadedWorkFactory LoadWork_Factory()
     {
-        IEnumerable<string> rows = await File.ReadAllLinesAsync(path);
+        IEnumerable<string> rows = this.ReadLinesEnumerable();
+        //IEnumerable<string> rows = File.ReadAllLinesAsync();
         IEnumerator<string> enumerator = rows.GetEnumerator();
 
         LoadedWorkFactory loadedWork = new()
@@ -429,11 +478,5 @@ public class WorkLoaderBenchmarks
         }
 
         return abstractionEvents;
-    }
-
-    [GlobalCleanup]
-    public void GlobalCleanup()
-    {
-        File.Delete(@"EventsBenchmark.csv");
     }
 }
