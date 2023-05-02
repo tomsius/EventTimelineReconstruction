@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using EventTimelineReconstruction.Models;
 
 namespace EventTimelineReconstruction.Services;
@@ -12,12 +13,11 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
 
     public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
     {
-        IEnumerable<string> rows = File.ReadLines(path).Skip(1);
-        List<EventModel> events = new();
+        List<string> rows = File.ReadLines(path).Skip(1).ToList();
+        List<EventModel> events = new(rows.Count);
 
         int lineNumber = 2;
-
-        foreach (string line in rows)
+        foreach (string line in CollectionsMarshal.AsSpan(rows))
         {
             string[] columns = line.Split(',');
 
@@ -30,7 +30,8 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
             try
             {
                 EventModel eventModel = ConvertRowToModel(columns, lineNumber);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
                 if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
                 {
