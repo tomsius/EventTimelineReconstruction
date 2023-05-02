@@ -13,13 +13,13 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
     public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
     {
         IEnumerable<string> rows = File.ReadLines(path).Skip(1);
+        IEnumerator<string> enumerator = rows.GetEnumerator();
         List<EventModel> events = new();
-
         int lineNumber = 2;
 
-        foreach (string line in rows)
+        while (enumerator.MoveNext())
         {
-            string[] columns = line.Split(',');
+            string[] columns = enumerator.Current.Split(',');
 
             if (columns.Length != _colCount)
             {
@@ -30,7 +30,8 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
             try
             {
                 EventModel eventModel = ConvertRowToModel(columns, lineNumber);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                         eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
                 if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
                 {
