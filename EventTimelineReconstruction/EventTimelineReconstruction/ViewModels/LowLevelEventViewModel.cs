@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public sealed class LowLevelEventViewModel
+public sealed class LowLevelEventViewModel : ISerializableLevel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
