@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using EventTimelineReconstruction.Models;
 
 namespace EventTimelineReconstruction.Services;
@@ -10,46 +11,47 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
 {
     private const int _colCount = 17;
 
-    public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
+    public async Task<List<EventModel>> Import(string path, DateTime fromDate, DateTime toDate)
     {
         IEnumerable<string> rows = File.ReadLines(path).Skip(1);
         List<EventModel> events = new();
+        object lockObj = new();
 
-        int lineNumber = 2;
-
-        foreach (string line in rows)
+        await Parallel.ForEachAsync(rows, async (line, token) =>
         {
             string[] columns = line.Split(',');
 
             if (columns.Length != _colCount)
             {
-                lineNumber++;
-                continue;
+                return;
             }
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
-
-                if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
+                await Task.Run(() =>
                 {
-                    events.Add(eventModel);
-                }
+                    EventModel eventModel = ConvertRowToModel(columns, 0);
+                    DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                             eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+
+                    if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
+                    {
+                        lock (lockObj)
+                        {
+                            events.Add(eventModel);
+                        }
+                    }
+                }, token);
             }
             catch (FormatException)
             {
-                continue;
+                return;
             }
             catch (IndexOutOfRangeException)
             {
-                continue;
+                return;
             }
-            finally
-            {
-                lineNumber++;
-            }
-        }
+        });
 
         return events;
     }
