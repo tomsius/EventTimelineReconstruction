@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public sealed class HighLevelArtefactViewModel
+public sealed class HighLevelArtefactViewModel : ISerializableLevel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
