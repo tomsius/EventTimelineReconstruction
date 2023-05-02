@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using EventTimelineReconstruction.Services;
 using EventTimelineReconstruction.ViewModels;
@@ -32,11 +33,11 @@ public sealed class SaveWorkCommand : AsyncCommandBase
 
         await _workSaver.SaveWork(
             _saveWorkViewModel.FileName, 
-            _eventTreeViewModel.Events, 
-            _abstractedEventsViewModel.HighLevelEvents, 
-            _abstractedEventsViewModel.LowLevelEvents, 
-            _abstractedEventsViewModel.HighLevelArtefacts, 
-            _abstractedEventsViewModel.LowLevelArtefacts);
+            _eventTreeViewModel.Events.ToList(), 
+            _abstractedEventsViewModel.HighLevelEvents.ToList(), 
+            _abstractedEventsViewModel.LowLevelEvents.ToList(), 
+            _abstractedEventsViewModel.HighLevelArtefacts.ToList(), 
+            _abstractedEventsViewModel.LowLevelArtefacts.ToList());
 
         _saveWorkViewModel.IsSaving = false;
     }

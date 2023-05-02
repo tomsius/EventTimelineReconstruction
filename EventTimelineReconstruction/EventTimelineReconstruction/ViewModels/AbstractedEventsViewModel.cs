@@ -16,7 +16,7 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
 
     private readonly RangeEnabledObservableCollection<HighLevelEventViewModel> _highLevelEvents;
 
-    public IEnumerable<HighLevelEventViewModel> HighLevelEvents
+    public IEnumerable<ISerializableLevel> HighLevelEvents
     {
         get
         {
@@ -41,7 +41,7 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
 
     private readonly RangeEnabledObservableCollection<LowLevelEventViewModel> _lowLevelEvents;
 
-    public IEnumerable<LowLevelEventViewModel> LowLevelEvents
+    public IEnumerable<ISerializableLevel> LowLevelEvents
     {
         get
         {
@@ -66,7 +66,7 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
 
     private readonly RangeEnabledObservableCollection<HighLevelArtefactViewModel> _highLevelArtefacts;
 
-    public IEnumerable<HighLevelArtefactViewModel> HighLevelArtefacts
+    public IEnumerable<ISerializableLevel> HighLevelArtefacts
     {
         get
         {
@@ -91,7 +91,7 @@ public class AbstractedEventsViewModel : ViewModelBase, INotifyDataErrorInfo
 
     private readonly RangeEnabledObservableCollection<LowLevelArtefactViewModel> _lowLevelArtefacts;
 
-    public IEnumerable<LowLevelArtefactViewModel> LowLevelArtefacts
+    public IEnumerable<ISerializableLevel> LowLevelArtefacts
     {
         get
         {
