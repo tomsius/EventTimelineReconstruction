@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using EventTimelineReconstruction.Models;
 
 namespace EventTimelineReconstruction.Services;
@@ -12,25 +14,25 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
 
     public List<EventModel> Import(string path, DateTime fromDate, DateTime toDate)
     {
-        IEnumerable<string> rows = File.ReadLines(path).Skip(1);
-        List<EventModel> events = new();
+        string[] rows = File.ReadLines(path).Skip(1).ToArray();
+        List<EventModel> events = new(rows.Length);
+        ref var searchSpace = ref MemoryMarshal.GetArrayDataReference(rows);
 
-        int lineNumber = 2;
-
-        foreach (string line in rows)
+        for (int i = 0; i < rows.Length; i++)
         {
-            string[] columns = line.Split(',');
+            string row = Unsafe.Add(ref searchSpace, i);
+            string[] columns = row.Split(',');
 
             if (columns.Length != _colCount)
             {
-                lineNumber++;
                 continue;
             }
 
             try
             {
-                EventModel eventModel = ConvertRowToModel(columns, lineNumber);
-                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day, eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
+                EventModel eventModel = ConvertRowToModel(columns, i + 2);
+                DateTime eventDate = new(eventModel.Date.Year, eventModel.Date.Month, eventModel.Date.Day,
+                                            eventModel.Time.Hour, eventModel.Time.Minute, eventModel.Time.Second);
 
                 if (DateTime.Compare(eventDate, fromDate) >= 0 && DateTime.Compare(eventDate, toDate) <= 0)
                 {
@@ -44,10 +46,6 @@ public sealed class L2tCSVEventsImporter : IEventsImporter
             catch (IndexOutOfRangeException)
             {
                 continue;
-            }
-            finally
-            {
-                lineNumber++;
             }
         }
 
