@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata;
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility;
 using EventTimelineReconstruction.Benchmarks.ChainOfResponsibility.HighLevelArtefacts;
