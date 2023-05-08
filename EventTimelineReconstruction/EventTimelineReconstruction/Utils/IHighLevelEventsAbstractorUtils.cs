@@ -1,9 +1,12 @@
-﻿using EventTimelineReconstruction.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Utils;
 
 public interface IHighLevelEventsAbstractorUtils
 {
+    int FindLastEventIndexOf(List<ISerializableLevel> highLevelEvents, DateTime newEventDate, string source);
     string GenerateVisitValue(string data);
     string GetDownloadedFileName(string data);
     string GetMacAddress(string data);

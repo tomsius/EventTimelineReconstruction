@@ -15,4 +15,5 @@ public interface ILowLevelEventsAbstractorUtils
     string GetUrl(string data);
     bool IsValidFileEvent(EventViewModel eventViewModel);
     bool IsValidRegEvent(EventViewModel eventViewModel);
+    bool DoesNeedComposing(List<EventViewModel> events, int startIndex, EventViewModel current);
 }

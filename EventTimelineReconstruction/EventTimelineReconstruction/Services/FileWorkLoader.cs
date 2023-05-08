@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using EventTimelineReconstruction.Factory;
 using EventTimelineReconstruction.Models;
 using EventTimelineReconstruction.ViewModels;
 
@@ -13,34 +14,39 @@ namespace EventTimelineReconstruction.Services;
 public sealed class FileWorkLoader : IWorkLoader
 {
     private const int _expectedEventColumnCount = 24;
-    private const int _expectedLowLevelArtefactColumnCount = 22;
+    private readonly IAbstractionLevelFactory _factory;
+
+    public FileWorkLoader(IAbstractionLevelFactory factory)
+    {
+        _factory = factory;
+    }
 
     public async Task<LoadedWork> LoadWork(string path)
     {
-        using StreamReader inputStream = new(path);
+        IEnumerable<string> rows = await File.ReadAllLinesAsync(path);
+        IEnumerator<string> enumerator = rows.GetEnumerator();
 
         LoadedWork loadedWork = new()
         {
-            Events = await LoadEvents(inputStream),
-            HighLevelEvents = await LoadHighLevelEvents(inputStream),
-            LowLevelEvents = await LoadLowLevelEvents(inputStream),
-            HighLevelArtefacts = await LoadHighLevelArtefacts(inputStream),
-            LowLevelArtefacts = await LoadLowLevelArtefacts(inputStream)
+            Events = LoadEvents(enumerator),
+            HighLevelEvents = LoadAbstractionLevel(enumerator, AbstractionLevel.HighLevelEvent),
+            LowLevelEvents = LoadAbstractionLevel(enumerator, AbstractionLevel.LowLevelEvent),
+            HighLevelArtefacts = LoadAbstractionLevel(enumerator, AbstractionLevel.HighLevelArtefact),
+            LowLevelArtefacts = LoadAbstractionLevel(enumerator, AbstractionLevel.LowLevelArtefact)
         };
 
         return loadedWork;
     }
 
-    private static async Task<List<EventViewModel>> LoadEvents(StreamReader inputStream)
+    private List<EventViewModel> LoadEvents(IEnumerator<string> enumerator)
     {
-        List<EventViewModel> events = new();
-        string row = await inputStream.ReadLineAsync();
         int currentDepth = 0;
+        List<EventViewModel> events = new();
         Stack<EventViewModel> stack = new();
 
-        while (row != "")
+        while (enumerator.MoveNext() && string.IsNullOrEmpty(enumerator.Current) == false)
         {
-            string[] columns = row.Split(',');
+            string[] columns = enumerator.Current.Split(',');
             int depth = GetDepth(columns[0]);
             columns[0] = columns[0].Trim(new char[] { '\t' });
 
@@ -53,7 +59,8 @@ public sealed class FileWorkLoader : IWorkLoader
             }
             else if (depth == currentDepth)
             {
-                while (depth <= currentDepth) {
+                while (depth <= currentDepth)
+                {
                     stack.Pop();
                     currentDepth--;
                 }
@@ -83,7 +90,6 @@ public sealed class FileWorkLoader : IWorkLoader
             }
 
             stack.Push(eventViewModel);
-            row = await inputStream.ReadLineAsync();
         }
 
         return events;
@@ -191,144 +197,16 @@ public sealed class FileWorkLoader : IWorkLoader
         return eventViewModel;
     }
 
-    private static async Task<List<HighLevelEventViewModel>> LoadHighLevelEvents(StreamReader inputStream)
+    private List<ISerializableLevel> LoadAbstractionLevel(IEnumerator<string> enumerator, AbstractionLevel abstractionLevel)
     {
-        List<HighLevelEventViewModel> highLevelEvents = new();
+        List<ISerializableLevel> abstractionEvents = new();
 
-        string row = await inputStream.ReadLineAsync();
-
-        while (row != "")
+        while (enumerator.MoveNext() && string.IsNullOrEmpty(enumerator.Current) == false)
         {
-            string[] columns = row.Split(',');
-            HighLevelEventViewModel highLevelEvent = ConvertRowToHighLevelEvent(columns);
-            highLevelEvents.Add(highLevelEvent);
-
-            row = await inputStream.ReadLineAsync();
+            ISerializableLevel abstractionEvent = _factory.CreateAbstractionLevel(enumerator.Current, abstractionLevel);
+            abstractionEvents.Add(abstractionEvent);
         }
 
-        return highLevelEvents;
-    }
-
-    private static HighLevelEventViewModel ConvertRowToHighLevelEvent(string[] columns)
-    {
-        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
-        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
-        string source = columns[6];
-        string shortDescription = columns[7];
-        string visit = columns[8];
-        int reference = int.Parse(columns[9]);
-
-        HighLevelEventViewModel highLevelEvent = new(date, time, source, shortDescription, visit, reference);
-        return highLevelEvent;
-    }
-
-    private static async Task<List<LowLevelEventViewModel>> LoadLowLevelEvents(StreamReader inputStream)
-    {
-        List<LowLevelEventViewModel> lowLevelEvents = new();
-
-        string row = await inputStream.ReadLineAsync();
-
-        while (row != "")
-        {
-            string[] columns = row.Split(',');
-            LowLevelEventViewModel lowLevelEvent = ConvertRowToLowLevelEvent(columns);
-            lowLevelEvents.Add(lowLevelEvent);
-
-            row = await inputStream.ReadLineAsync();
-        }
-
-        return lowLevelEvents;
-    }
-
-    private static LowLevelEventViewModel ConvertRowToLowLevelEvent(string[] columns)
-    {
-        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
-        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
-        string source = columns[6];
-        string shortDescription = columns[7];
-        string visit = columns[8];
-        string extra = columns[9];
-        int reference = int.Parse(columns[10]);
-
-        LowLevelEventViewModel lowLevelEvent = new(date, time, source, shortDescription, visit, extra, reference);
-        return lowLevelEvent;
-    }
-
-    private static async Task<List<HighLevelArtefactViewModel>> LoadHighLevelArtefacts(StreamReader inputStream)
-    {
-        List<HighLevelArtefactViewModel> highLevelArtefacts = new();
-
-        string row = await inputStream.ReadLineAsync();
-
-        while (row != "")
-        {
-            string[] columns = row.Split(',');
-            HighLevelArtefactViewModel highLevelArtefact = ConvertRowToHighLevelArtefact(columns);
-            highLevelArtefacts.Add(highLevelArtefact);
-
-            row = await inputStream.ReadLineAsync();
-        }
-
-        return highLevelArtefacts;
-    }
-
-    private static HighLevelArtefactViewModel ConvertRowToHighLevelArtefact(string[] columns)
-    {
-        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
-        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
-        string source = columns[6];
-        string shortDescription = columns[7];
-        string visit = columns[8];
-        string extra = columns[9];
-        int reference = int.Parse(columns[10]);
-        string macb = columns[11];
-        string sourceType = columns[12];
-        string description = columns[13];
-
-        HighLevelArtefactViewModel highLevelArtefact = new(date, time, source, shortDescription, visit, extra, reference, macb, sourceType, description);
-        return highLevelArtefact;
-    }
-
-    private static async Task<List<LowLevelArtefactViewModel>> LoadLowLevelArtefacts(StreamReader inputStream)
-    {
-        List<LowLevelArtefactViewModel> lowLevelArtefacts = new();
-
-        string row = await inputStream.ReadLineAsync();
-
-        while (row != null)
-        {
-            string[] columns = row.Split(',');
-            LowLevelArtefactViewModel lowLevelArtefact = ConvertRowToLowLevelArtefact(columns);
-            lowLevelArtefacts.Add(lowLevelArtefact);
-
-            row = await inputStream.ReadLineAsync();
-        }
-
-        return lowLevelArtefacts;
-    }
-
-    private static LowLevelArtefactViewModel ConvertRowToLowLevelArtefact(string[] columns)
-    {
-        DateOnly date = ConvertColumnsToDate(columns[0], columns[1], columns[2]);
-        TimeOnly time = ConvertColumnsToTime(columns[3], columns[4], columns[5]);
-        string timezone = GetSerializedTimezoneString(columns, _expectedLowLevelArtefactColumnCount);
-        string macb = columns[^15];
-        string source = columns[^14];
-        string sourceType = columns[^13];
-        string type = columns[^12];
-        string user = columns[^11];
-        string host = columns[^10];
-        string shortDescription = columns[^9];
-        string description = columns[^8];
-        string version = columns[^7];
-        string filename = columns[^6];
-        string inode = columns[^5];
-        string notes = columns[^4];
-        string format = columns[^3];
-        string extra = columns[^2];
-        int reference = int.Parse(columns[^1]);
-
-        LowLevelArtefactViewModel lowLevelArtefact = new (date, time, timezone, macb, source, sourceType, type, user, host, shortDescription, description, version, filename, inode, notes, format, extra, reference);
-        return lowLevelArtefact;
+        return abstractionEvents;
     }
 }

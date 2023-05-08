@@ -5,5 +5,5 @@ namespace EventTimelineReconstruction.Abstractors;
 
 public interface IHighLevelEventsAbstractor
 {
-    List<HighLevelEventViewModel> FormHighLevelEvents(List<EventViewModel> events);
+    List<ISerializableLevel> FormHighLevelEvents(List<EventViewModel> events);
 }

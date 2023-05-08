@@ -6,5 +6,5 @@ namespace EventTimelineReconstruction.Services;
 
 public interface IWorkSaver
 {
-    public Task SaveWork(string path, IEnumerable<EventViewModel> events, IEnumerable<HighLevelEventViewModel> highLevelEvents, IEnumerable<LowLevelEventViewModel> lowLevelEvents, IEnumerable<HighLevelArtefactViewModel> highLevelArtefacts, IEnumerable<LowLevelArtefactViewModel> lowLevelArtefacts);
+    public Task SaveWork(string path, List<EventViewModel> events, List<ISerializableLevel> highLevelEvents, List<ISerializableLevel> lowLevelEvents, List<ISerializableLevel> highLevelArtefacts, List<ISerializableLevel> lowLevelArtefacts);
 }

@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public sealed class HighLevelEventViewModel
+public sealed class HighLevelEventViewModel : ISerializableLevel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
@@ -35,5 +35,24 @@ public sealed class HighLevelEventViewModel
             Visit,
             Reference
             );
+    }
+
+    public static HighLevelEventViewModel Deserialize(string row)
+    {
+        string[] columns = row.Split(',');
+        return ConvertRowToHighLevelEvent(columns);
+    }
+
+    private static HighLevelEventViewModel ConvertRowToHighLevelEvent(string[] columns)
+    {
+        DateOnly date = new(int.Parse(columns[0]), int.Parse(columns[1]), int.Parse(columns[2]));
+        TimeOnly time = new(int.Parse(columns[3]), int.Parse(columns[4]), int.Parse(columns[5]));
+        string source = columns[6];
+        string shortDescription = columns[7];
+        string visit = columns[8];
+        int reference = int.Parse(columns[9]);
+
+        HighLevelEventViewModel highLevelEvent = new(date, time, source, shortDescription, visit, reference);
+        return highLevelEvent;
     }
 }

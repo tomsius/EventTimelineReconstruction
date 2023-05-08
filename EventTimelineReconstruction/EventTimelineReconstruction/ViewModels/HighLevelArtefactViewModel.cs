@@ -2,7 +2,7 @@
 
 namespace EventTimelineReconstruction.ViewModels;
 
-public sealed class HighLevelArtefactViewModel
+public sealed class HighLevelArtefactViewModel : ISerializableLevel
 {
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
@@ -49,5 +49,28 @@ public sealed class HighLevelArtefactViewModel
             SourceType,
             Description
             );
+    }
+
+    public static HighLevelArtefactViewModel Deserialize(string row)
+    {
+        string[] columns = row.Split(',');
+        return ConvertRowToHighLevelArtefact(columns);
+    }
+
+    private static HighLevelArtefactViewModel ConvertRowToHighLevelArtefact(string[] columns)
+    {
+        DateOnly date = new(int.Parse(columns[0]), int.Parse(columns[1]), int.Parse(columns[2]));
+        TimeOnly time = new(int.Parse(columns[3]), int.Parse(columns[4]), int.Parse(columns[5]));
+        string source = columns[6];
+        string shortDescription = columns[7];
+        string visit = columns[8];
+        string extra = columns[9];
+        int reference = int.Parse(columns[10]);
+        string macb = columns[11];
+        string sourceType = columns[12];
+        string description = columns[13];
+
+        HighLevelArtefactViewModel highLevelArtefact = new(date, time, source, shortDescription, visit, extra, reference, macb, sourceType, description);
+        return highLevelArtefact;
     }
 }

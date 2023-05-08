@@ -1,9 +1,32 @@
-﻿using EventTimelineReconstruction.ViewModels;
+﻿using System.Collections.Generic;
+using System;
+using EventTimelineReconstruction.ViewModels;
 
 namespace EventTimelineReconstruction.Utils;
 
 public sealed class HighLevelEventsAbstractorUtils : IHighLevelEventsAbstractorUtils
 {
+    public int FindLastEventIndexOf(List<ISerializableLevel> highLevelEvents, DateTime newEventDate, string source)
+    {
+        for (int i = highLevelEvents.Count - 1; i >= 0; i--)
+        {
+            HighLevelEventViewModel highLevelEvent = (HighLevelEventViewModel)highLevelEvents[i];
+            DateTime highLevelEventDate = new(highLevelEvent.Date.Year, highLevelEvent.Date.Month, highLevelEvent.Date.Day, highLevelEvent.Time.Hour, highLevelEvent.Time.Minute, highLevelEvent.Time.Second);
+
+            if (highLevelEventDate.CompareTo(newEventDate) == -1)
+            {
+                break;
+            }
+
+            if (highLevelEvent.Source == source && highLevelEventDate.CompareTo(newEventDate) == 0)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public string GenerateVisitValue(string data)
     {
         bool isGoogleBrowser = data.Contains("Type");

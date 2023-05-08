@@ -32,6 +32,28 @@ public sealed class LowLevelEventsAbstractorUtils : ILowLevelEventsAbstractorUti
         return description.Substring(startIndex, mailUserLength);
     }
 
+    public bool DoesNeedComposing(List<EventViewModel> events, int startIndex, EventViewModel current)
+    {
+        for (int i = startIndex; i >= 0; i--)
+        {
+            EventViewModel previous = events[i];
+            if (previous.FullDate.CompareTo(current.FullDate) != 0)
+            {
+                break;
+            }
+
+            string previousFilename = GetFilename(previous);
+            string currentFilename = GetFilename(current);
+
+            if (previousFilename == currentFilename)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public string GetExtraTillSha256(Dictionary<string, string> extra)
     {
         StringBuilder sb = new();
