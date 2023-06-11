@@ -3,7 +3,7 @@ using EventTimelineReconstruction.Benchmarks.Models;
 
 namespace EventTimelineReconstruction.Benchmarks.Utils;
 
-public sealed class HighLevelArtefactsAbstractorUtils
+public sealed class HighLevelArtefactsAbstractorUtils : IHighLevelArtefactsAbstractorUtils
 {
     private const double _secondsThreshold = 2.0;
 

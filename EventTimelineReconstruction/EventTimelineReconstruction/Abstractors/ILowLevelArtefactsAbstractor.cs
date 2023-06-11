@@ -8,5 +8,5 @@ public interface ILowLevelArtefactsAbstractor
     int LinesNeglected { get; }
     int LinesSkipped { get; }
 
-    List<LowLevelArtefactViewModel> FormLowLevelArtefacts(List<EventViewModel> events, double periodInMinutes = 1);
+    List<ISerializableLevel> FormLowLevelArtefacts(List<EventViewModel> events, double periodInMinutes = 1);
 }

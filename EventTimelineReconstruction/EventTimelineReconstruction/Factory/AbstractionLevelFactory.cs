@@ -1,8 +1,9 @@
-﻿using EventTimelineReconstruction.Benchmarks.Models;
+﻿using System;
+using EventTimelineReconstruction.ViewModels;
 
-namespace EventTimelineReconstruction.Benchmarks;
+namespace EventTimelineReconstruction.Factory;
 
-public class AbstractionLevelFactory
+public class AbstractionLevelFactory : IAbstractionLevelFactory
 {
     public ISerializableLevel CreateAbstractionLevel(string row, AbstractionLevel level)
     {
